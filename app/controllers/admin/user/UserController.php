@@ -30,18 +30,12 @@ class UserController extends CommonController{
 
   //add userinfo to database
   function store(){
-    // die("atest");
-    return Redirect::back()->with('message','$errors');
     $input = Input::all();
-    return Redirect::back()->with('msg','添加失败');
 
-    // return back()->with('msg','该用户名已被占用！');
     $err=[];
     $res = User::checkName($input['name']);
     if(!$res){
       $err[]='该用户名已被占用！';
-      // $err[] = ;
-      // return Redirect::to('user/register')->with('msg','该用户名已被占用！');
     }
 
     $res = User::checkEmail($input['email']);
@@ -54,21 +48,17 @@ class UserController extends CommonController{
           $err[]='请至少填写一个电话！';
     }
 
-    // dd($err);
-
     //check if the $input data is legal
     $res = User::validatorUser($input);
-    // dd($err);
-    // dd($res);
-    // dd($res->toArray());
-    $errors = array_merge($res->toArray(),$err);
-    // dd(array_merge($res->toArray(),$err));
-    if($res===true)
+    $err = array_merge($res->all(),$err);
+
+
+    if($res===true && $err!=[])
     {
       User::addUser($input);
     }
     else{
-      return Redirect::back()->with('errors',$errors);
+      return Redirect::back()->with('msg',$err);
     }
   }
 
@@ -80,14 +70,11 @@ class UserController extends CommonController{
 
   function loginVerify(){
     $input = Input::except('_token');
-    // dd(encode($input['password']));
 
     if(User::checkUser(Input::except('_token'))){
-      // Session::set('user', 'test');
-      return Redirect::to('user/info')->with('user','test');
-      // Session::set('user')=$input['name'];
+      return Redirect::to('user/info')->with('msg','loginfinished');
     }
-      // return Redirect::back()->with('message','failed to login');
+      return Redirect::back()->with('msg','failed to login');
   }
 
   function info(){

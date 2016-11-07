@@ -2,8 +2,8 @@
 
 
 
-@if(Session::has('message'))
-           <p class="alert">{{ Session::get('message') }}</p>
+@if(Session::has('msg'))
+           <p class="alert">{{ var_dump(Session::get('msg')); }}</p>
            @endif
 
   注册信息
