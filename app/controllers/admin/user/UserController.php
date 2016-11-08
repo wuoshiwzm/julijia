@@ -1,7 +1,9 @@
 <?php
-
+// use app\controllers\admin\user\LeonEvent;
 
 class UserController extends CommonController{
+
+
 
 
   public function __construct()
@@ -13,17 +15,18 @@ class UserController extends CommonController{
   function index(){
     return $this->view('admin.user.register');
     // echo "controller-index()";
+  }
 
+  //test only
+  function guest(){
+    echo "usercontroller-guest()";
+    // Auth::logout();
   }
 
 
 
-
   function register(){
-
-
     $this->view('admin.user.register');
-
     // return $this->view('admin.user.register');
   }
 
@@ -65,24 +68,15 @@ class UserController extends CommonController{
 
 
   function login(){
-
     return $this->view('admin.user.login');
   }
 
   function loginVerify(){
- 
 
+    $username =  Input::get('name');
+    $password = Input::get('password');
 
-          $username =  Input::get('name');
-          echo $username;
-            $password = Input::get('password');
-            echo $password;
-
-        // Auth::attempt(array('name'=>Input::get('name'), 'password'=>'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxMTExMTE=')));
-
-    dd(Auth::attempt(array('name' => $username, 'password' => $password)));
-
-    if (Auth::attempt(array('name'=>Input::get('name'), 'password'=>'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxMTExMTE='))){
+    if (Auth::attempt(array('name'=>Input::get('name'), 'password'=>$password))){
       return Redirect::to('user/info');
     }
     return Redirect::back()->with('msg','failed to login')->withInput();
@@ -102,10 +96,10 @@ class UserController extends CommonController{
   function info(){
     // Session::set($user[], 'asdf');
     // Session::push('user', 'test');
-
+    // echo Auth::check();
+    // var_dump(Session::all());
 
     return $this->view('admin.user.info');
-    echo "usercontroller - info";
   }
 
 

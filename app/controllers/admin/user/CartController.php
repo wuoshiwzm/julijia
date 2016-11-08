@@ -10,6 +10,8 @@ class CartController extends CommonController {
 	public function index()
 	{
 		echo "cartcontroller - cart";
+		$this->view('admin.cart.index');
+		// Auth::logout();
 	}
 
 

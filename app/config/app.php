@@ -121,7 +121,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Anchu\Ftp\FtpServiceProvider',
 		'Mews\Captcha\CaptchaServiceProvider',
-		'Intervention\Image\ImageServiceProvider'
+		'Intervention\Image\ImageServiceProvider',
+		'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
 
 	),
 
@@ -191,5 +192,6 @@ return array(
 		'View'              => 'Illuminate\Support\Facades\View',
 		'Captcha'           => 'Mews\Captcha\Facades\Captcha',
 		'Image'			 => 'Intervention\Image\Facades\Image',
+		'Cart' => 'Gloudemans\Shoppingcart\Facades\Cart',
 	),
 );

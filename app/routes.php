@@ -1,19 +1,24 @@
 <?php
 Route::group(array('domain' => 'shop.com'), function() {
-
-
-
     //后台
 
-    Route::get('user','UserController@index');
+    //test only
+
+
+    Route::group(array('before' => 'auth','prefix' => 'user'), function()
+    {
+      Route::get('/guest', 'UserController@guest');
+      Route::resource('/cart', 'CartController');
+      Route::resource('/info','UserController@info');
+    });
+
+
+
     Route::get('login','UserController@login');
     Route::get('user/register','UserController@register');
     Route::any('user/store','UserController@store');
     Route::any('user/loginVerify','UserController@loginVerify');
-    Route::group(array('prefix' => 'user'),function(){
-      Route::resource('/info','UserController@info');
 
-    });
     //shopping cart
     Route::get('user/cart','CartController@index');
 
