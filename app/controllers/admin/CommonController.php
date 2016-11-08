@@ -3,7 +3,7 @@ class CommonController extends \Controller
 {
     static protected  $adminPage;
     //定义主模板
-    protected $layout = 'layouts.admin';
+    protected $layout = 'layouts.admin_right';
     public function __construct()
     {
         self::$adminPage = Config::get('tools.adminPage');

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit59a30ef01960a5db8d2a33675fb27fae
+class ComposerStaticInit0ece55e346d7c8df1b96b08f990bca93
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -244,19 +244,25 @@ class ComposerStaticInit59a30ef01960a5db8d2a33675fb27fae
 
     public static $classMap = array (
         'AdminUser' => __DIR__ . '/../..' . '/app/models/AdminUser.php',
+        'AttbuteSeeder' => __DIR__ . '/../..' . '/app/database/seeds/AttbuteSeeder.php',
         'BaseController' => __DIR__ . '/../..' . '/app/controllers/BaseController.php',
         'Cart' => __DIR__ . '/../..' . '/app/models/Cart.php',
+        'CartController' => __DIR__ . '/../..' . '/app/controllers/admin/user/CartController.php',
         'CategoryController' => __DIR__ . '/../..' . '/app/controllers/admin/product/CategoryController.php',
         'CheckOut' => __DIR__ . '/../..' . '/app/models/CheckOut.php',
         'Cms' => __DIR__ . '/../..' . '/app/models/Cms.php',
+        'CommentController' => __DIR__ . '/../..' . '/app/controllers/admin/order/CommentContorller.php',
         'CommonController' => __DIR__ . '/../..' . '/app/controllers/admin/CommonController.php',
+        'ComplainController' => __DIR__ . '/../..' . '/app/controllers/admin/order/ComplainController.php',
         'Customer' => __DIR__ . '/../..' . '/app/models/Customer.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/app/database/seeds/DatabaseSeeder.php',
+        'DeliverController' => __DIR__ . '/../..' . '/app/controllers/admin/order/DeliverController.php',
         'IlluminateQueueClosure' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
         'IndexController' => __DIR__ . '/../..' . '/app/controllers/test/IndexController.php',
         'News' => __DIR__ . '/../..' . '/app/models/News.php',
         'Normalizer' => __DIR__ . '/..' . '/patchwork/utf8/src/Normalizer.php',
         'Order' => __DIR__ . '/../..' . '/app/models/Order.php',
+        'OrderController' => __DIR__ . '/../..' . '/app/controllers/admin/order/OrderController.php',
         'Product' => __DIR__ . '/../..' . '/app/models/Product.php',
         'ProductBrand' => __DIR__ . '/../..' . '/app/models/ProductBrand.php',
         'ProductBrandController' => __DIR__ . '/../..' . '/app/controllers/admin/product/ProductBrandController.php',
@@ -264,9 +270,16 @@ class ComposerStaticInit59a30ef01960a5db8d2a33675fb27fae
         'ProductController' => __DIR__ . '/../..' . '/app/controllers/admin/product/ProductController.php',
         'ProductEav' => __DIR__ . '/../..' . '/app/models/ProductEav.php',
         'ProductEavController' => __DIR__ . '/../..' . '/app/controllers/admin/product/ProductEavController.php',
+        'PublicController' => __DIR__ . '/../..' . '/app/controllers/admin/PublicController.php',
+        'RefundController' => __DIR__ . '/../..' . '/app/controllers/admin/order/RefundController.php',
         'SessionHandlerInterface' => __DIR__ . '/..' . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
+        'ShopController' => __DIR__ . '/../..' . '/app/controllers/admin/user/ShopController.php',
         'ShopManage' => __DIR__ . '/../..' . '/app/models/ShopManage.php',
+        'Source_Area_Area' => __DIR__ . '/../..' . '/app/models/Source/Area/Area.php',
+        'Source_Area_City' => __DIR__ . '/../..' . '/app/models/Source/Area/City.php',
+        'Source_Area_Province' => __DIR__ . '/../..' . '/app/models/Source/Area/Province.php',
         'Source_Cart_Cart' => __DIR__ . '/../..' . '/app/models/Source/Cart/Cart.php',
+        'Source_Category_Category' => __DIR__ . '/../..' . '/app/models/Source/Category/Category.php',
         'Source_Eav_Attrbute' => __DIR__ . '/../..' . '/app/models/Source/Eav/Attrbute.php',
         'Source_Eav_AttrbuteSet' => __DIR__ . '/../..' . '/app/models/Source/Eav/AttrbuteSet.php',
         'Source_Eav_AttrbuteValue' => __DIR__ . '/../..' . '/app/models/Source/Eav/AttrbuteValue.php',
@@ -283,10 +296,12 @@ class ComposerStaticInit59a30ef01960a5db8d2a33675fb27fae
         'Source_Product_ProductFlatDetail' => __DIR__ . '/../..' . '/app/models/Source/Product/ProductFlatDetail.php',
         'Source_Product_ProductImage' => __DIR__ . '/../..' . '/app/models/Source/Product/ProductImages.php',
         'Source_Product_ProductInt' => __DIR__ . '/../..' . '/app/models/Source/Product/ProductInt.php',
+        'Source_User_ShopInfo' => __DIR__ . '/../..' . '/app/models/Source/User/ShopInfo.php',
         'Source_User_SupplierInfo' => __DIR__ . '/../..' . '/app/models/Source/User/SupplierInfo.php',
         'Source_User_UserInfo' => __DIR__ . '/../..' . '/app/models/Source/User/UserInfo.php',
         'SupplierController' => __DIR__ . '/../..' . '/app/controllers/admin/user/SupplierController.php',
         'TestCase' => __DIR__ . '/../..' . '/app/tests/TestCase.php',
+        'Upload' => __DIR__ . '/../..' . '/app/models/Upload.php',
         'User' => __DIR__ . '/../..' . '/app/models/User.php',
         'UserController' => __DIR__ . '/../..' . '/app/controllers/admin/user/UserController.php',
         'Whoops\\Module' => __DIR__ . '/..' . '/filp/whoops/src/deprecated/Zend/Module.php',
@@ -297,10 +312,10 @@ class ComposerStaticInit59a30ef01960a5db8d2a33675fb27fae
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit59a30ef01960a5db8d2a33675fb27fae::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit59a30ef01960a5db8d2a33675fb27fae::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit59a30ef01960a5db8d2a33675fb27fae::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit59a30ef01960a5db8d2a33675fb27fae::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0ece55e346d7c8df1b96b08f990bca93::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0ece55e346d7c8df1b96b08f990bca93::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit0ece55e346d7c8df1b96b08f990bca93::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit0ece55e346d7c8df1b96b08f990bca93::$classMap;
 
         }, null, ClassLoader::class);
     }

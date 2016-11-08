@@ -58,30 +58,52 @@ class UserController extends CommonController{
       User::addUser($input);
     }
     else{
-      return Redirect::back()->with('msg',$err);
+      return Redirect::back()->with('msg',$err)->withInput();
     }
   }
 
 
 
   function login(){
+
     return $this->view('admin.user.login');
   }
 
   function loginVerify(){
-    $input = Input::except('_token');
+ 
 
-    if(User::checkUser(Input::except('_token'))){
-      return Redirect::to('user/info')->with('msg','loginfinished');
+
+          $username =  Input::get('name');
+          echo $username;
+            $password = Input::get('password');
+            echo $password;
+
+        // Auth::attempt(array('name'=>Input::get('name'), 'password'=>'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxMTExMTE=')));
+
+    dd(Auth::attempt(array('name' => $username, 'password' => $password)));
+
+    if (Auth::attempt(array('name'=>Input::get('name'), 'password'=>'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxMTExMTE='))){
+      return Redirect::to('user/info');
     }
-      return Redirect::back()->with('msg','failed to login');
+    return Redirect::back()->with('msg','failed to login')->withInput();
+    // $input = Input::except('_token');
+    //
+    // if($id = User::checkUser(Input::except('_token'))){
+    //   Session::push('userid', $id);
+    //   return Redirect::to('user/info');
+    // }
+    //   return Redirect::back()->with('msg','failed to login')->withInput();
+  }
+
+  function quit(){
+
   }
 
   function info(){
     // Session::set($user[], 'asdf');
     // Session::push('user', 'test');
-    // Session::push('user', 'test1');
-    // dd(Session::all());
+
+
     return $this->view('admin.user.info');
     echo "usercontroller - info";
   }
