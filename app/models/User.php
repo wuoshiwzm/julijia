@@ -88,7 +88,9 @@ class User
 
     }
 
-
+    static function getUser($username){
+      // Source_User_UserInfo
+    }
 
     /**
      * @param $data

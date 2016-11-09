@@ -35,7 +35,6 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	Auth::logout();
 	if (Auth::guest())
 	{
 		if (Request::ajax())

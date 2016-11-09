@@ -72,11 +72,12 @@ class UserController extends CommonController{
 
   function loginVerify(){
     // dd(Input::all());
-    $username =  Input::get('name');
-    $password = Input::get('password');
 
-    if (Auth::attempt(array('name'=>Input::get('name'), 'password'=>$password))){
-      return Redirect::to('user/welc');
+    if (Auth::attempt(array('name'=>Input::get('name'), 'password'=>Input::get('password')))){
+      // die("ok");
+    // dd(Session::all());
+    // Auth::logout();
+    return Redirect::to('user/welc');
     }
     return Redirect::back()->with('msg','failed to login')->withInput();
     // $input = Input::except('_token');
@@ -89,7 +90,7 @@ class UserController extends CommonController{
   }
 
   function quit(){
-
+    Auth::logout();
   }
 
   function info(){
