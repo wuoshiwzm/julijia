@@ -402,7 +402,7 @@ margin-left: -60px; top:145px;}
 .goodspic-upload .show-sort .text:focus { color: #28B779; text-decoration: underline; box-shadow: none;}
 .goodspic-upload .upload-btn { width: 60px; height: 30px; margin: 0; position: absolute; z-index: 1px; left: 60px; top: 0px;}
 .goodspic-upload .upload-btn a{ display: block; position: relative; z-index: 1;}
-.goodspic-upload .upload-btn span { width: 60px;height: 30px; position: absolute; left: 0; top: 0; z-index: 2; cursor: pointer;}
+.goodspic-upload .upload-btn span { width: 60px;height: 30px; position: absolute; left: 0; top: 0; }
 .goodspic-upload .upload-btn .input-file { width: 60px; height: 30px; padding: 0; margin: 0; border: none 0; opacity:0; filter: alpha(opacity=0); cursor: pointer;}
 .goodspic-upload .upload-btn a p { width: 58px; height: 30px; font-size: 12px; line-height: 30px; background-color: #F5F5F5; color: #999; text-align: center; color: #666; border: solid 1px; border-color: #E6E6E6; position: absolute; left: 0; top: 0; z-index: 1;}
 .goodspic-upload .upload-btn a p i.fa{ font-size: 12px; margin-top: -2px;}

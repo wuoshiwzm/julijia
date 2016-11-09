@@ -8,8 +8,21 @@ Route::group(array('domain' => 'shop.com'), function() {
     Route::group(array('before' => 'auth','prefix' => 'user'), function()
     {
       Route::get('/guest', 'UserController@guest');
-      Route::resource('/cart', 'CartController');
-      Route::resource('/info','UserController@info');
+
+      //welcome page
+      Route::get('/welc','UserController@index');
+      //user info page
+      Route::get('/info','UserController@info');
+
+      //picking address page
+      Route::resource('/pkadd','PkaddCon  troller');
+
+      //cart page
+      Route::resource('/cart','CartController');
+
+      //collection page
+      Route::resource('/collect','CltController');
+
     });
 
 
