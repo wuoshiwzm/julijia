@@ -11,12 +11,11 @@ Route::group(array('domain' => 'shop.com'), function() {
       // ...
     });
 
-
     //后台
 
 
     //shopping cart  test only
-    Route::get('test','CartController@index');
+    // Route::get('test','CartController@index');
 
     //user info
     Route::group(array('before' => 'auth','prefix' => 'user'), function()
@@ -32,7 +31,16 @@ Route::group(array('domain' => 'shop.com'), function() {
       Route::resource('/pkadd','PkaddController');
 
       //cart page
-      Route::resource('/cart','CartController');
+      // Route::resource('/cart','CartController');
+      Route::get('/cart','CartController@index');
+      Route::get('/cart/addItem/{itemId}/{itemName}/{qantity}/{price}/{attr}','CartController@addItem');
+      Route::get('/cart/deleteItem/{rowid}','CartController@deleteItem');
+
+
+
+
+
+
 
       //collection page
       Route::resource('/collect','CltController');
@@ -40,15 +48,10 @@ Route::group(array('domain' => 'shop.com'), function() {
     });
 
 
-    Route::get('user','UserController@index');
     Route::get('login','UserController@login');
     Route::get('user/register','UserController@register');
     Route::any('user/store','UserController@store');
     Route::any('user/loginVerify','UserController@loginVerify');
-    Route::group(array('prefix' => 'user'),function(){
-      Route::resource('/info','UserController@info');
-
-    });
 
 
     Route::group(array('prefix' => 'admin'),function(){
