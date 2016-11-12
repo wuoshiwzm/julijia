@@ -1,10 +1,24 @@
 <?php
 Route::group(array('domain' => 'shop.com'), function() {
-    //后台
 
     //test only
 
 
+    Route::group(array('before' => 'auth'), function()
+    {
+      Route::get('guest', 'UserController@guest');
+      Route::get('guest1', 'UserController@guest');
+      // ...
+    });
+
+
+    //后台
+
+
+    //shopping cart  test only
+    Route::get('test','CartController@index');
+
+    //user info
     Route::group(array('before' => 'auth','prefix' => 'user'), function()
     {
       Route::get('/guest', 'UserController@guest');
@@ -15,7 +29,7 @@ Route::group(array('domain' => 'shop.com'), function() {
       Route::get('/info','UserController@info');
 
       //picking address page
-      Route::resource('/pkadd','PkaddCon  troller');
+      Route::resource('/pkadd','PkaddController');
 
       //cart page
       Route::resource('/cart','CartController');
@@ -26,20 +40,28 @@ Route::group(array('domain' => 'shop.com'), function() {
     });
 
 
-
+    Route::get('user','UserController@index');
     Route::get('login','UserController@login');
     Route::get('user/register','UserController@register');
     Route::any('user/store','UserController@store');
     Route::any('user/loginVerify','UserController@loginVerify');
+    Route::group(array('prefix' => 'user'),function(){
+      Route::resource('/info','UserController@info');
 
-    //shopping cart
-    Route::get('user/cart','CartController@index');
+    });
+
 
     Route::group(array('prefix' => 'admin'),function(){
+        Route::get('/index','IndexController@index');
+        //缓存管理
+        Route::resource('/cache','CacheController');
+        //供应商管理
         //供应商管理
         Route::resource('/user/supplier','SupplierController');
         //产品属性基
         Route::get('/product/attribute_base_index','ProductEavController@attributeBaseIndex');
+        Route::get('/product/attribute_data','ProductEavController@attributeGetData');
+        Route::get('/product/attribute_customerdata','ProductEavController@attributeGetCusonterData');
         Route::get('/product/attribute_base_create','ProductEavController@attributeBaseCreate');
         Route::post('/product/attribute_base_store','ProductEavController@attributeBaseStore');
         Route::any('/product/attribute_base_edit','ProductEavController@attributeBaseEdit');
@@ -58,7 +80,9 @@ Route::group(array('domain' => 'shop.com'), function() {
         Route::resource('/product/brand','ProductBrandController');
         //添加产品
         Route::resource('/product/goods','ProductController');
-        Route::post('/editsort','PublicController@editSort');
+        Route::post('/product/goods/add','ProductController@add');
+        //检索产品分类二级菜单
+        Route::get('/product/getcategory/{pid}','ProductController@getCategory')->where( 'pid', '[0-9]+' );
         //门店管理
         Route::resource('/user/shop','ShopController');
 
@@ -71,26 +95,6 @@ Route::group(array('domain' => 'shop.com'), function() {
         Route::post('/getonlyinfo','PublicController@getInfo');
         //修改排序
         Route::post('/editsort','PublicController@editSort');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         //订单模块

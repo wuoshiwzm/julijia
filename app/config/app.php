@@ -25,7 +25,7 @@ return array(
 	| your application so that it is used when running Artisan tasks.
 	|
 	*/
-	'url' => 'shop.julijia.cn',
+	'url' => 'shop.com',
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
