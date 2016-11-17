@@ -27,6 +27,9 @@ class CartController extends CommonController {
 	}
 
 	public function addItem($itemId,$itemName,$qantity,$price,$attr=null){
+		$input = Input::all();
+
+		Cart::add('电脑', 'Product 1', 1, 9.99, '台式机大优惠');
 		var_dump($itemId);
 		echo "<hr>";
 		var_dump($itemName);
@@ -66,6 +69,7 @@ class CartController extends CommonController {
 		$this->view('admin.cart.index',compact('cart'));
 		die('store');
 	}
+
 
 
 	/**

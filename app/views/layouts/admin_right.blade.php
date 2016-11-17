@@ -28,7 +28,6 @@
         </p>
     </div>
 </div>
-<input type="hidden" id="msg" value="{{Session::get('msg')}}">
 <!-- 底部js -->
 <script type="text/javascript" src="{{url('js/public/layer/layer.js')}}"></script>
 <script type="text/javascript" src="{{url('js/public/Validform/Validform_v5.3.2_min.js')}}"></script>
