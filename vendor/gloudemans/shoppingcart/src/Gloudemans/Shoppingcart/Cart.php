@@ -96,7 +96,7 @@ class Cart {
 	 * @param float  	    $price    Price of one item
 	 * @param array  	    $options  Array of additional options, such as 'size' or 'color'
 	 */
-	public function add($id, $name = null, $qty = null, $price = null, $options = '')
+	public function add($id, $shop_id, $name = null, $qty = null, $price = null,  array $options = array())
 	{
 		// If the first parameter is an array we need to call the add() function again
 		if(is_array($id))
@@ -110,7 +110,7 @@ class Cart {
 				foreach($id as $item)
 				{
 					$options = array_get($item, 'options', array());
-					$this->addRow($item['id'], $item['name'], $item['qty'], $item['price'], $options);
+					$this->addRow($item['id'],$item['shop_id'],$item['name'], $item['qty'], $item['price'], $options);
 				}
 
 				return;
@@ -118,7 +118,7 @@ class Cart {
 
 			$options = array_get($id, 'options', array());
 
-			$result = $this->addRow($id['id'], $id['name'], $id['qty'], $id['price'], $options);
+			$result = $this->addRow($id['id'],$id['shop_id'], $id['name'], $id['qty'], $id['price'], $options);
 
 
 			return $result;
@@ -126,8 +126,8 @@ class Cart {
 
 
 
-		$result = $this->addRow($id, $name, $qty, $price, $options);
-
+		$result = $this->addRow($id,$shop_id, $name, $qty, $price, $options);
+		// dd($result);
 
 		return $result;
 	}
@@ -146,7 +146,7 @@ class Cart {
 		if(is_array($attribute))
 		{
 
-
+			//call update for array attribute no ony quantity
 			$result = $this->updateAttribute($rowId, $attribute);
 
 			return $result;
@@ -301,9 +301,9 @@ class Cart {
 	 * @param float   $price    Price of one item
 	 * @param array   $options  Array of additional options, such as 'size' or 'color'
 	 */
-	protected function addRow($id, $name, $qty, $price, $options = '')
+	protected function addRow($id,$shop_id, $name, $qty, $price, array $options = array())
 	{
-		if(empty($id) || empty($name) || empty($qty) || ! isset($price))
+		if(empty($id) || empty($name) || empty($qty) || empty($shop_id) || ! isset($price))
 		{
 			throw new Exceptions\ShoppingcartInvalidItemException;
 		}
@@ -320,7 +320,9 @@ class Cart {
 
 		$cart = $this->getContent();
 
-		$rowId = $this->generateRowId($id, $options);
+		$rowId = $this->generateRowId($id, $shop_id, $options);
+
+		// dd($cart);
 
 		if($cart->has($rowId))
 		{
@@ -331,7 +333,7 @@ class Cart {
 		}
 		else
 		{
-			$cart = $this->createRow($rowId, $id, $name, $qty, $price, $options);
+			$cart = $this->createRow($rowId, $id, $shop_id, $name, $qty, $price, $options);
 		}
 
 		return $this->updateCart($cart);
@@ -344,12 +346,10 @@ class Cart {
 	 * @param  array   $options  Array of additional options, such as 'size' or 'color'
 	 * @return boolean
 	 */
-	protected function generateRowId($id, $options)
+	protected function generateRowId($id, $shop_id, $options)
 	{
-		// ksort($options);
-		//
-		// return md5($id . serialize($options));
-		return md5($id . $options);
+		ksort($options);
+		return md5($id . $shop_id . serialize($options));
 	}
 
 	/**
@@ -446,23 +446,26 @@ class Cart {
 	 * @param  array   $options  Array of additional options, such as 'size' or 'color'
 	 * @return Gloudemans\Shoppingcart\CartCollection
 	 */
-	protected function createRow($rowId, $id, $name, $qty, $price, $options)
+	protected function createRow($rowId, $id, $shop_id, $name, $qty, $price, $options)
 	{
 		$cart = $this->getContent();
 
 		$newRow = new CartRowCollection(array(
 			'rowid' => $rowId,
 			'id' => $id,
+			'shop_id' => $shop_id,
 			'name' => $name,
 			'qty' => $qty,
 			'price' => $price,
-			'options' => $options,
+			'options' => new CartRowOptionsCollection($options),
 			'subtotal' => $qty * $price
 		), $this->associatedModel, $this->associatedModelNamespace);
 
 		$cart->put($rowId, $newRow);
 
+		// dd($cart);
 		return $cart;
+
 	}
 
 	/**

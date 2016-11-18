@@ -25,7 +25,7 @@ return array(
 	| your application so that it is used when running Artisan tasks.
 	|
 	*/
-	'url' => 'shop.com',
+	'url' => '.shop.com',
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
@@ -191,7 +191,7 @@ return array(
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
 		'Captcha'           => 'Mews\Captcha\Facades\Captcha',
-		'Image'			 => 'Intervention\Image\Facades\Image',
-		'Cart' => 'Gloudemans\Shoppingcart\Facades\Cart',
+		'Image'			 				=> 'Intervention\Image\Facades\Image',
+		'Cart'							=> 'Gloudemans\Shoppingcart\Facades\Cart',
 	),
 );

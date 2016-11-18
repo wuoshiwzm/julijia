@@ -63,6 +63,7 @@ function steCategory( id,ietm )
       {
          li += '<li><a href="javascript:;" class="category-name" data-leavel="'+data[i].leavel+'" data-search="'+data[i].name+'"  onclick="setItem('+data[i].id+',this,3)"> '+data[i].name+'</a></li>';
       }
+      $("."+ietm ).find('li').remove();
       $("."+ietm ).append( li );
    },'json')
 }
@@ -95,7 +96,7 @@ function addProduct()
  */
 function getSupplier( index )
 {
-    var name = $( index ).find('option:selected').val();
+    var name = $( index ).find('option:selected').text();
     $( index ).parent('div').find('input').val( name );
 }
 
@@ -129,4 +130,87 @@ function setStatus( type,index,id )
 
         }, 'json');
     });
+}
+
+/**
+ *  编辑器
+ */
+KindEditor.ready(function(K) {
+    K.create('#desc', {
+        items: ['source', '|', 'fullscreen', 'undo', 'redo','cut', 'copy', 'paste',
+            'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+            'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+            'superscript', '|', 'selectall',
+            'title', 'fontname', 'fontsize', '|','textcolor','bgcolor','bold','italic', 'underline', 'strikethrough', 'removeformat', '|', 'image',
+            'flash', 'media', 'advtable', 'link', 'unlink'],
+        afterBlur: function ()
+        {
+            this.sync();
+        },
+        afterChange: function () {
+            var content = this.text();
+            $("#desc").val(content);
+        }
+    });
+});
+
+/**
+ * 全选
+ * @param val
+ * @constructor
+ */
+function CheckAll( val )
+{
+
+    $("input[name='check[]']").each(function()
+    {
+        this.checked = val;
+    });
+}
+
+function CheckOne(val,index)
+{
+    var PValue = false;
+    var i = 0;
+    var inputLength = $(index).parents('tbody').find("input[name='check[]']").length;
+    $(index).parents('tbody').find("input[name='check[]']").each(function()
+    {
+        if( this.checked == val )
+        {
+            i++;
+        }
+    });
+
+    if( inputLength == i )
+    {
+        PValue = val;
+    }
+    
+    $(index).parents('.table-hover').find('th').find('input').each(function()
+    {
+        this.checked = PValue;
+    });
+}
+
+/**
+ *  批量上架下架
+ */
+function setStatusAll() {
+
+    var i = 0;
+    $("input[name='check[]']").each(function()
+    {
+       if( this.checked == true )
+       {
+            i++;
+       }
+    });
+
+    if( i == false )
+    {
+        layer.msg('请选择产品',{icon:7});
+    }else
+    {
+        $(".goods").submit();
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+// use 	Illuminate\
 
 class CartController extends CommonController {
 
@@ -10,113 +11,60 @@ class CartController extends CommonController {
 	public function index()
 	{
 
-		// show cart page
-		Cart::add('293ad', 'Product 1', 1, 9.99, 'sadasd');
-		Cart::add('电脑', 'Product 1', 1, 9.99, '笔记本');
-		// Cart::add('电脑', 'Product 1', 1, 9.99, '台式机');
-		Cart::add('电脑', 'Product 1', 1, 9.99, '台式机大优惠');
-		Cart::add('电脑', 'Product 1', 1, 9.99, '台式机大优惠');
+
 		$cart = Cart::getContent();
-		$this->view('admin.cart.index',compact('cart'));
+		// dd(Session::get('cart.main'));
+		return $this->view('admin.cart.index',compact('cart'));
+
 	}
 
 	//delete the item you choose
 	public function deleteItem($rowid){
-		// dd($rowid);
 		Cart::remove($rowid);
 	}
 
-	public function addItem($itemId,$itemName,$qantity,$price,$attr=null){
+	public function addItem(){
+		//createRow($rowId, $id, $shop_id, $name, $qty, $price, $options)
+		Cart::add('293ad', 'shopid','Product 1', 1, 9.99, array('size' => 'smallss'));
+		echo 'add successful!';
+
+		return ;
+
 		$input = Input::all();
+		if(empty($input['id']))
+		App::abort(403, 'no product id,should pass with name: id.');
 
-		Cart::add('电脑', 'Product 1', 1, 9.99, '台式机大优惠');
-		var_dump($itemId);
-		echo "<hr>";
-		var_dump($itemName);
-		echo "<hr>";
-		var_dump($qantity);
-		echo "<hr>";
-		var_dump($price);
-		echo "<hr>";
-		die($attr);
-		Cart::add($rowid);
+		if(empty($input['shop_id']))
+		App::abort(403, 'no shop id,should pass with name: shop_id.');
+
+		if(empty($input['name']))
+		App::abort(403, 'no product name,should pass with name: name.');
+
+		if(empty($input['qty']))
+		App::abort(403, 'no product quantity,should pass with name: qty.');
+
+		if(empty($input['price']))
+		App::abort(403, 'no product price,should pass with name: price.');
+
+		if(!is_array($input['options']))
+		App::abort(403, '$input["options"],should be array like size=>small color=>blue.');
+
+		Cart::add('293ad', 'shopid','Product 1', 1, 9.99, array('size' => 'smallss'));
+
 	}
 
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		// add product to cart
-		Cart::add('293ad', 'Product 1', 1, 9.99, array('size' => 'large'));
-		$cart = Cart::getContent();
-		$this->view('admin.cart.index',compact('cart'));
-	}
+	public function update(){
+			$input = Input::all();
 
+			if(empty($input['rowid']))
+			App::abort(403, 'no rowid ');
 
+			if(empty($input['attr']))
+			App::abort(403, 'no attr, should be a number if you want to change the quantity, or a array for mutiple attributes as quantity,price or options
+			should name it as "qty", "price", "options" ');
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-
-		$this->view('admin.cart.index',compact('cart'));
-		die('store');
-	}
-
-
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		die('destroy');
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($rowid)
-	{
-
+			Cart::update($input['rowid'], $input['attr']);
 	}
 
 
