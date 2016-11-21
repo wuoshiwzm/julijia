@@ -1,15 +1,7 @@
 <?php
 Route::group(array('domain' => 'shop.com'), function() {
 
-    //test only
 
-
-    Route::group(array('before' => 'auth'), function()
-    {
-      Route::get('guest', 'UserController@guest');
-      Route::get('guest1', 'UserController@guest');
-      // ...
-    });
 
     //后台
 
@@ -74,6 +66,15 @@ Route::group(array('domain' => 'shop.com'), function() {
         //供应商管理
         //供应商管理
         Route::resource('/user/supplier','SupplierController');
+
+        //news category
+        Route::resource('/newscate','NewsCateController');
+        Route::post('/newscate/add','NewsCateController@add');
+
+        //news article
+        Route::resource('/newsart','NewsArticleController');
+
+
         //产品属性基
         Route::get('/product/attribute_base_index','ProductEavController@attributeBaseIndex');
         Route::get('/product/attribute_data','ProductEavController@attributeGetData');
