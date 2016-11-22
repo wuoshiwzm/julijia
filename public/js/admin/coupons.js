@@ -12,6 +12,7 @@ function setType( index )
         $( index ).parents('.simple-form-field').next('.simple-form-field').find('input').attr('maxlength','3');
         $( index ).parents('.simple-form-field').next('.simple-form-field').find('input').attr('tipsrmsg','请输入百分比');
         $( index ).parents('.simple-form-field').next('.simple-form-field').find('input').attr('errormsg','输入有误');
+        $("#danwei").html('%');
     }else
     {
         var name = '折扣金额';
@@ -19,6 +20,7 @@ function setType( index )
         $( index ).parents('.simple-form-field').next('.simple-form-field').find('input').attr('maxlength','10');
         $( index ).parents('.simple-form-field').next('.simple-form-field').find('input').attr('tipsrmsg','请输入折扣金额');
         $( index ).parents('.simple-form-field').next('.simple-form-field').find('input').attr('errormsg','折扣金额限制2位小数（大于0）');
+        $("#danwei").html('元');
     }
     $( index ).parents('.simple-form-field').next('.simple-form-field').find('.ng-binding').text(name);
     $( index ).parents('.simple-form-field').next('.simple-form-field').find('input').val('');
@@ -95,9 +97,94 @@ function steCategory( index  )
 
 function addCategory( index ) {
 
-    var top ='<label class="col-sm-4 control-label"><span class="ng-binding">选定分类：</span></label>';
-    var item = $(index).parents('.xuanding_bg_div').prop("outerHTML");
-    $(index).parents('.form-group').append( top );
-    $(index).parents('.form-group').append( item );
+    var name =  $('#category_id option:selected').text();
+    var id = $('#category_id option:selected').val();
+    var ids = true;
+    $(".add_fen").find('input').each(function () {
+        if( $(this).val() == id )
+        {
+            ids = false;
+            layer.msg('次分类您已经选择了');
+        }
+    });
+    if( id != false && ids != false )
+    {
+        var str = '<div>'+name+'（'+id+'）<a href="javascript:;" onclick="remCategory( this )">x</a><input type="hidden" name="category_id[]" value="'+id+'"></div>';
+        $(".add_fen").append( str );
+    }
+}
 
+/**
+ * 移除选择的分类
+ * @param index
+ */
+function  remCategory( index ) {
+
+    $(index).parent('div').remove();
+}
+/**
+ * 获取产品
+ * @param index
+ */
+function getGoods( index ) {
+
+    var type = 'goodslist';
+    var id = $( index ).val();
+    $.get("/admin/marketing/coupon/"+type+'?id='+id,function ( data )
+    {
+        $("#goodslist").find('div').remove();
+        if( data )
+        {
+            $("#goodslist").append(data);
+        }
+    });
+}
+
+/**
+ * 产品分页
+ * @param page
+ */
+function getProducts( page )
+{
+    var type = 'goodslist';
+    var id =  $('#category_id option:selected').val();
+    $.get("/admin/marketing/coupon/"+type+'?id='+id+'&page='+page,function ( data )
+    {
+        $("#goodslist").find('div').remove();
+        if( data )
+        {
+            $("#goodslist").append(data);
+        }
+    });
+}
+
+/**
+ * 动态添加产品
+ * @param index
+ */
+function addItem( index )
+{
+    var img = $( index ).parents('dl').find("img").attr('src');
+    var name = $( index ).parents('dl').find(".dd_h a").text();
+    var price = $( index ).parents('dl').find("font").text();
+    var id =  $( index ).parents('dl').find("input").val();
+    var str =  '<li><dl>'+
+                '<dt><img src="'+img+'"></dt>'+
+                    '<dd class="dd_h"><a href="javascript:;">'+name+'</a></dd>'+
+                    '<dd class="dd_size"><font>'+price+'</font></dd>'+
+                    '<dd class="dd_add"><a href="javascript:;" onclick="reItem( this )"><i></i><span>删除</span></a></dd>'+
+                    '<input type="hidden" name="entity_id[]" value="'+id+'">'+
+                '</dl></li>';
+
+    $(".shop_ppp").find("ul").append(str);
+
+}
+
+/**
+ * 移除产品
+ * @param index
+ */
+function reItem( index ) {
+
+    $(index).parents('li').remove();
 }
