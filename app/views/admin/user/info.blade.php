@@ -88,7 +88,7 @@
                 <span class="ng-binding">用户名：</span>
               </label>
               <div class="col-sm-8">
-                <label class="control-label cur-p m-r-10">3133089*86</label>
+                <label class="control-label cur-p m-r-10"><?php echo Auth::user()->name;?></label>
               </div>
           </div>
         </div>
@@ -99,7 +99,7 @@
                 <span class="ng-binding">用户昵称：</span>
               </label>
               <div class="col-sm-8">
-                <label class="control-label cur-p m-r-10">握手的中年人</label>
+                <label class="control-label cur-p m-r-10">{{$userAddr->name}}</label>
               </div>
           </div>
         </div>
@@ -110,7 +110,15 @@
                 <span class="ng-binding">性别：</span>
               </label>
               <div class="col-sm-8">
-                  <label class="control-label cur-p m-r-10">男</label>
+                  <label class="control-label cur-p m-r-10">
+                    <?php if(Auth::user()->sex == 1){
+                      echo '男';
+                    }else{
+                      echo '女';
+                    }
+                    ?>
+
+                  </label>
               </div>
           </div>
         </div>
@@ -121,9 +129,14 @@
                   <span class="ng-binding">出生日期：</span>
                 </label>
               <div class="col-sm-8">
-                <label class="control-label cur-p m-r-10">2016 年</label>
-                <label class="control-label cur-p m-r-10">12 月</label>
-                <label class="control-label cur-p m-r-10">10 日</label>
+                <?php
+                //$time = mktime(Auth::user()->birthday);
+                $t = strtotime(Auth::user()->birthday);
+                echo '<label class="control-label cur-p m-r-10">';
+                echo date('Y年 m月 d日',$t);
+                echo '</label>';
+                 ?>
+
 
               </div>
           </div>
@@ -135,7 +148,7 @@
                     <span class="ng-binding">邮 箱：</span>
                   </label>
                   <div class="col-sm-8">
-                    <label class="control-label cur-p m-r-10">313308939@qq.com</label>
+                    <label class="control-label cur-p m-r-10"><?php echo Auth::user()->email; ?></label>
                   </div>
               </div>
             </div>
@@ -147,9 +160,9 @@
               </label>
               <div class="col-sm-8">
                  <div class="form-control-box">
-                  <label class="control-label cur-p m-r-10">陕西省</label>
-                  <label class="control-label cur-p m-r-10">西安市</label>
-                  <label class="control-label cur-p m-r-10">高新区</label>
+                  <label class="control-label cur-p m-r-10">{{$province}}</label>
+                  <label class="control-label cur-p m-r-10">{{$city}}</label>
+                  <label class="control-label cur-p m-r-10">{{$district}}</label>
 		         </div>
               </div>
           </div>
@@ -161,7 +174,7 @@
                 <span class="ng-binding">详细地址：</span>
               </label>
               <div class="col-sm-8">
-                <label class="control-label cur-p m-r-10">高科广场d坐</label>
+                <label class="control-label cur-p m-r-10">{{$userAddr->address}}</label>
               </div>
           </div>
         </div>
@@ -172,7 +185,7 @@
                 <span class="ng-binding">手机号码：</span>
               </label>
               <div class="col-sm-8">
-                <label class="control-label cur-p m-r-10">13259805469</label>
+                <label class="control-label cur-p m-r-10">{{$userAddr->phone}}</label>
               </div>
           </div>
         </div>
@@ -184,7 +197,7 @@
                 <span class="ng-binding">用户积分：</span>
               </label>
               <div class="col-sm-8">
-              <label class="control-label cur-p m-r-10">10000分</label>
+              <label class="control-label cur-p m-r-10"><?php echo Auth::user()->user_points ?></label>
             </div>
           </div>
           <div class="form-group">
@@ -192,7 +205,7 @@
                 <span class="ng-binding">用户等级：</span>
               </label>
               <div class="col-sm-8">
-              <label class="control-label cur-p m-r-10">普通用户</label>
+              <label class="control-label cur-p m-r-10">{{$group}}</label>
             </div>
           </div>
         </div>
@@ -203,11 +216,14 @@
             <span class="ng-binding">是否登录：</span>
             </label>
             <div class="col-sm-8">
-               <label class="control-label cur-p m-r-10">是</label>
+               <label class="control-label cur-p m-r-10"><?php if(!Auth::guest())
+               echo '是';
+               else
+               echo '否';
+               ?></label>
             </div>
           </div>
         </div>
-
         <div class="simple-form-field">
         </div>
 

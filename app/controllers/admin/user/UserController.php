@@ -98,7 +98,16 @@ class UserController extends CommonController{
   }
 
   function info(){
-    return $this->view('admin.user.info');
+    $userId = Auth::user()->id;
+    $userAddr = User::getAddrFromUser($userId)->first();
+
+    $province = (User::getProv($userAddr->province)->first())?User::getProv($userAddr->province)->first()->province : '未填写';
+    $city = (User::getCity($userAddr->city)->first())?User::getCity($userAddr->city)->first()->city : '无城市信息';
+    $district = (User::getDist($userAddr->district)->first())?User::getDist($userAddr->district)->first()->area : '无无地区信息';
+
+    $group = (User::getGroup(Auth::user()->group_id)->first())? User::getGroup(Auth::user()->group_id)->first()->name: '无分组信息';
+    // dd($group);
+    return $this->view('admin.user.info',compact('userAddr','province','city','district','group'));
   }
 
 

@@ -106,15 +106,22 @@
 				</dl>
 				<dl>
 					<dt>账号来源：</dt>
-					<dd>PC站</dd>
+          <dd>
+          <?php
+          if(ToolsUtils::isMobileDevice()){echo '手机端';}
+          else{
+            echo 'PC端';
+          }
+           ?>
+         </dd>
 				</dl>
                 <dl>
 					<dt>用户等级：</dt>
-					<dd>PC站</dd>
+					<dd>???</dd>
 				</dl>
                 <dl>
 					<dt>账号来源：</dt>
-					<dd>普通用户</dd>
+					<dd>???</dd>
 				</dl>
 			</div>
 		</div>

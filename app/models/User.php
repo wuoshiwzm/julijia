@@ -165,4 +165,25 @@ class User
             return false;
         }
     }
+
+    static function getAddrFromUser($id){
+      return Source_User_UserInfoAdd::where('user_id',$id);
+    }
+
+    static function getProv($provId){
+      return Source_Area_Province::where('id',$provId);
+    }
+    static function getCity($cityId){
+      return Source_Area_City::where('id',$cityId);
+    }
+    static function getDist($distId){
+      return Source_Area_Area::where('id',$distId);
+    }
+
+    static function getGroup($groupId){
+      return Source_User_UserInfoGroup::where('id',$groupId);
+    }
+    static function calcPoint($userId){
+
+    }
 }
