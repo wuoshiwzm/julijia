@@ -78,6 +78,9 @@ class UserController extends CommonController{
       // die("ok");
     // dd(Session::all());
     // Auth::logout();
+    $user = User::getUser(Input::get('name'));
+
+    $user->update(array('last_time' => date('Y-m-d h:m:s')));
     return Redirect::to('user/welc');
     }
     return Redirect::back()->with('msg','failed to login')->withInput();

@@ -89,7 +89,7 @@ class User
     }
 
     static function getUser($username){
-      // Source_User_UserInfo
+      return Source_User_UserInfo::where('name',$username);
     }
 
     /**

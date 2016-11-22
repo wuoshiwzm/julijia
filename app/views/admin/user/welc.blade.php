@@ -22,7 +22,6 @@
 @section('content')
 
 
-
 <div class="page">
 	<div class="fixed-bar">
 	<div class="item-title item-title02">
@@ -78,7 +77,7 @@
 		</div>
 	</div>
 </div>
-
+<?php  //dd(Auth::user()); ?>
 <div class="order-info m-b-10">
 		<!--概要信息-->
 		<div class="order-details">
@@ -86,19 +85,24 @@
 			<div class="content">
 				<dl>
 					<dt>&nbsp;用&nbsp;户&nbsp;名：</dt>
-					<dd>李四</dd>
+					<dd><?php echo Auth::user()->name?></dd>
 				</dl>
                 <dl>
 					<dt>性&nbsp;别：</dt>
-					<dd>男</dd>
+					<dd><?php if(Auth::user()->sex == 1) {
+            echo '男';
+          }else{
+            echo '女';
+          }?></dd>
 				</dl>
 				<dl>
 					<dt>Email：</dt>
-					<dd>lisi@163.com</dd>
+					<dd><?php echo Auth::user()->email?></dd>
 				</dl>
 				<dl>
+
 					<dt>最后一次登录：</dt>
-					<dd>2016-12-10 13:34:34</dd>
+					<dd><?php echo Auth::user()->last_time?></dd>
 				</dl>
 				<dl>
 					<dt>账号来源：</dt>
