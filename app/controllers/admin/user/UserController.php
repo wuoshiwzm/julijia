@@ -99,17 +99,42 @@ class UserController extends CommonController{
 
   function info(){
     $userId = Auth::user()->id;
+    if(!User::getAddrFromUser($userId)->first()){
+      $province =  '未填写';
+      $city = '无城市信息';
+      $district ='无无地区信息';
+
+      $group = (User::getGroup(Auth::user()->group_id)->first())? User::getGroup(Auth::user()->group_id)->first()->name: '无分组Group信息';
+      return $this->view('admin.user.info',compact('userAddr','province','city','district','group'));
+    }
     $userAddr = User::getAddrFromUser($userId)->first();
-
-    $province = (User::getProv($userAddr->province)->first())?User::getProv($userAddr->province)->first()->province : '未填写';
+    $province = (User::getProv($userAddr->province)->first())?User::getProv($userAddr->province)->first()->province : '未省份信息';
     $city = (User::getCity($userAddr->city)->first())?User::getCity($userAddr->city)->first()->city : '无城市信息';
-    $district = (User::getDist($userAddr->district)->first())?User::getDist($userAddr->district)->first()->area : '无无地区信息';
+    $district = (User::getDist($userAddr->district)->first())?User::getDist($userAddr->district)->first()->area : '无地区信息';
 
-    $group = (User::getGroup(Auth::user()->group_id)->first())? User::getGroup(Auth::user()->group_id)->first()->name: '无分组信息';
+    $group = (User::getGroup(Auth::user()->group_id)->first())? User::getGroup(Auth::user()->group_id)->first()->name: '无分组Group信息';
     // dd($group);
     return $this->view('admin.user.info',compact('userAddr','province','city','district','group'));
   }
 
+  function infoEdit(){
 
+    //infos maybe empty: $userAddr $province $city $address
+    $userId = Auth::user()->id;
+    $group = (User::getGroup(Auth::user()->group_id)->first())? User::getGroup(Auth::user()->group_id)->first()->name: '无分组Group信息';
+    dd($userId);
+    //address
+    if(!User::getAddrFromUser($userId)->first()){
+
+
+
+      return $this->view('admin.user.info',compact('group'));
+    }
+    return $this->view('admin.user.info_edit',compact('userAddr','province','city','district','group'));
+  }
+
+  function infoUpdate(){
+    dd(Input::all());
+  }
 
 }

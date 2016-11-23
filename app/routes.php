@@ -18,6 +18,8 @@ Route::group(array('domain' => 'shop.com'), function() {
       Route::get('/welc','UserController@index');
       //user info page
       Route::get('/info','UserController@info');
+      Route::get('/info/edit','UserController@infoEdit');
+
 
       //picking address page
       Route::resource('/pkadd','PkaddController');

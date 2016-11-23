@@ -20,7 +20,10 @@
 
 
 @section('content')
+
+
 <div class="page">
+  <a href="{{url('user/info/edit')}}"> 更改信息</a>
 	<div class="fixed-bar">
 	<div class="item-title item-title02">
 		<div class="subject">
@@ -99,7 +102,7 @@
                 <span class="ng-binding">用户昵称：</span>
               </label>
               <div class="col-sm-8">
-                <label class="control-label cur-p m-r-10">{{$userAddr->name}}</label>
+                <label class="control-label cur-p m-r-10"><?php echo Auth::user()->alias;?>
               </div>
           </div>
         </div>
@@ -174,7 +177,14 @@
                 <span class="ng-binding">详细地址：</span>
               </label>
               <div class="col-sm-8">
-                <label class="control-label cur-p m-r-10">{{$userAddr->address}}</label>
+                <label class="control-label cur-p m-r-10">
+                  @if(isset($userAddr))
+                  {{$userAddr->address}}
+                  @else
+                  无地址信息
+                  @endif
+
+                </label>
               </div>
           </div>
         </div>
@@ -185,7 +195,7 @@
                 <span class="ng-binding">手机号码：</span>
               </label>
               <div class="col-sm-8">
-                <label class="control-label cur-p m-r-10">{{$userAddr->phone}}</label>
+                <label class="control-label cur-p m-r-10"><?php echo Auth::user()->mobile_phone; ?></label>
               </div>
           </div>
         </div>
