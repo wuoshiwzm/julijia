@@ -6,8 +6,10 @@ Route::group(array('domain' => 'shop.com'), function() {
     //后台
 
 
-    //shopping cart  test only
-    // Route::get('test','CartController@index');
+    //get location info
+    Route::any('getProvince','LocationController@getProvince');
+    Route::any('getCity','LocationController@getCity');
+    Route::any('getArea','LocationController@getArea');
 
     //user info
     Route::group(array('before' => 'auth','prefix' => 'user'), function()
@@ -19,6 +21,7 @@ Route::group(array('domain' => 'shop.com'), function() {
       //user info page
       Route::get('/info','UserController@info');
       Route::get('/info/edit','UserController@infoEdit');
+      Route::post('/info/update','UserController@infoUpdate');
 
 
       //picking address page

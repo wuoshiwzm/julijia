@@ -39,7 +39,7 @@
 
 <form  class="form-horizontal form" action="{{url('admin/newsart/'.encode($data->news_id))}}"  method="post"  novalidate>
 	{{ Form::token() }}
-	<input type="hidden" name="_method" value="PUT">
+
 
 		<div class="table-content m-t-30 ">
         <div class="simple-form-field">

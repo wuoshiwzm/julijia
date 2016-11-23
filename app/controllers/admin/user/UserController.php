@@ -121,20 +121,24 @@ class UserController extends CommonController{
 
     //infos maybe empty: $userAddr $province $city $address
     $userId = Auth::user()->id;
+    $userAddr = User::getAddrFromUser($userId)->first();
     $group = (User::getGroup(Auth::user()->group_id)->first())? User::getGroup(Auth::user()->group_id)->first()->name: '无分组Group信息';
-    dd($userId);
+    // dd($userId);
     //address
-    if(!User::getAddrFromUser($userId)->first()){
+    if(!$userAddr){
 
-
-
-      return $this->view('admin.user.info',compact('group'));
+      return $this->view('admin.user.info_edit',compact('group'));
     }
-    return $this->view('admin.user.info_edit',compact('userAddr','province','city','district','group'));
+    $province = (User::getProv($userAddr->province)->first())?User::getProv($userAddr->province)->first()->province : '';
+    $city = (User::getCity($userAddr->city)->first())?User::getCity($userAddr->city)->first()->city : '';
+    $district = (User::getDist($userAddr->district)->first())?User::getDist($userAddr->district)->first()->area : '';
+
+    return $this->view('admin.user.info_edit',compact('userAddr','group','province','city','district'));
   }
 
   function infoUpdate(){
     dd(Input::all());
   }
+  
 
 }
