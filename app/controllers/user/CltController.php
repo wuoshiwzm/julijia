@@ -9,7 +9,7 @@ class CltController extends CommonController {
 	 */
 	public function index()
 	{
-		return $this->view('admin.user.collect');
+		return $this->view('user.collect');
 	}
 
 

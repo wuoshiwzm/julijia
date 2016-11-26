@@ -14,7 +14,7 @@ class CartController extends CommonController {
 
 		$cart = Cart::getContent();
 		// dd(Session::get('cart.main'));
-		return $this->view('admin.cart.index',compact('cart'));
+		return $this->view('user.cart',compact('cart'));
 
 	}
 

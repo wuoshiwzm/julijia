@@ -1,5 +1,5 @@
 <?php
-// use app\controllers\admin\user\LeonEvent;
+// use app\controllers\user\user\LeonEvent;
 
 class UserController extends CommonController{
 
@@ -20,14 +20,14 @@ class UserController extends CommonController{
   //test only
   function guest(){
 
-    return $this->view('admin.cart.index');
+    return $this->view('user.cart.index');
     // Auth::logout();
   }
 
 
   function register(){
-    $this->view('admin.user.register');
-    // return $this->view('admin.user.register');
+    $this->view('user.register');
+    // return $this->view('user.register');
   }
 
 
@@ -68,7 +68,7 @@ class UserController extends CommonController{
 
 
   function login(){
-    return $this->view('admin.user.login');
+    return $this->view('user.login');
   }
 
   function loginVerify(){
@@ -105,7 +105,7 @@ class UserController extends CommonController{
       $district ='无无地区信息';
 
       $group = (User::getGroup(Auth::user()->group_id)->first())? User::getGroup(Auth::user()->group_id)->first()->name: '无分组Group信息';
-      return $this->view('admin.user.info',compact('userAddr','province','city','district','group'));
+      return $this->view('user.info',compact('userAddr','province','city','district','group'));
     }
     $userAddr = User::getAddrFromUser($userId)->first();
     $province = (User::getProv($userAddr->province)->first())?User::getProv($userAddr->province)->first()->province : '未省份信息';
@@ -114,7 +114,7 @@ class UserController extends CommonController{
 
     $group = (User::getGroup(Auth::user()->group_id)->first())? User::getGroup(Auth::user()->group_id)->first()->name: '无分组Group信息';
     // dd($group);
-    return $this->view('admin.user.info',compact('userAddr','province','city','district','group'));
+    return $this->view('user.info',compact('userAddr','province','city','district','group'));
   }
 
   function infoEdit(){
@@ -127,13 +127,13 @@ class UserController extends CommonController{
     //address
     if(!$userAddr){
 
-      return $this->view('admin.user.info_edit',compact('group'));
+      return $this->view('user.info_edit',compact('group'));
     }
     $province = (User::getProv($userAddr->province)->first())?User::getProv($userAddr->province)->first()->province : '';
     $city = (User::getCity($userAddr->city)->first())?User::getCity($userAddr->city)->first()->city : '';
     $district = (User::getDist($userAddr->district)->first())?User::getDist($userAddr->district)->first()->area : '';
 
-    return $this->view('admin.user.info_edit',compact('userAddr','group','province','city','district'));
+    return $this->view('user.info_edit',compact('userAddr','group','province','city','district'));
   }
 
   function infoUpdate(){

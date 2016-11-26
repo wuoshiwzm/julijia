@@ -9,7 +9,7 @@ class PkaddController extends CommonController {
 	 */
 	public function index()
 	{
-		return $this->view('admin.user.pkadd');
+		return $this->view('user.pkadd');
 	}
 
 
