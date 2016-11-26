@@ -1,25 +1,18 @@
 <?php
-Route::group(array('domain' => 'shop.julijia.cn'), function() {
+Route::group(array('domain' => 'shop.com'), function() {
 
-    //test only
-
-
-    Route::group(array('before' => 'auth'), function()
-    {
-      Route::get('guest', 'UserController@guest');
-      Route::get('guest1', 'UserController@guest');
-      // ...
-    });
 
 
     //后台
 
 
-    //shopping cart  test only
-    Route::get('test','CartController@index');
+    //get location info
+    Route::any('getProvince','LocationController@getProvince');
+    Route::any('getCity','LocationController@getCity');
+    Route::any('getArea','LocationController@getArea');
 
     //user info
-    Route::group(array('prefix' => 'user'), function()
+    Route::group(array('before' => 'auth','prefix' => 'user'), function()
     {
       Route::get('/guest', 'UserController@guest');
 
@@ -27,12 +20,24 @@ Route::group(array('domain' => 'shop.julijia.cn'), function() {
       Route::get('/welc','UserController@index');
       //user info page
       Route::get('/info','UserController@info');
+      Route::get('/info/edit','UserController@infoEdit');
+      Route::post('/info/update','UserController@infoUpdate');
+
 
       //picking address page
       Route::resource('/pkadd','PkaddController');
 
       //cart page
-      Route::resource('/cart','CartController');
+      // there will be a rowid for each row in cart, and it will pass to you
+      Route::any('/cart','CartController@index');
+
+
+      Route::post('/cart/addItem','CartController@addItem');
+
+      
+      Route::post('/cart/updateItem/','CartController@addItem');
+      Route::any('/cart/deleteItem/{rowid}','CartController@deleteItem');
+
 
       //collection page
       Route::resource('/collect','CltController');
@@ -40,25 +45,28 @@ Route::group(array('domain' => 'shop.julijia.cn'), function() {
     });
 
 
-    Route::get('user','UserController@index');
     Route::get('login','UserController@login');
     Route::get('user/register','UserController@register');
     Route::any('user/store','UserController@store');
     Route::any('user/loginVerify','UserController@loginVerify');
-    Route::group(array('prefix' => 'user'),function(){
-      Route::resource('/info','UserController@info');
-
-    });
 
 
     Route::group(array('prefix' => 'admin'),function(){
         Route::get('/index','IndexController@index');
-        Route::controller('index','IndexController');
         //缓存管理
         Route::resource('/cache','CacheController');
         //供应商管理
         //供应商管理
         Route::resource('/user/supplier','SupplierController');
+
+        //news category
+        Route::resource('/newscate','NewsCateController');
+        Route::post('/newscate/add','NewsCateController@add');
+
+        //news article
+        Route::resource('/newsart','NewsArticleController');
+
+
         //产品属性基
         Route::get('/product/attribute_base_index','ProductEavController@attributeBaseIndex');
         Route::get('/product/attribute_data','ProductEavController@attributeGetData');
@@ -75,7 +83,6 @@ Route::group(array('domain' => 'shop.julijia.cn'), function() {
         Route::post('/product/attribute_del','ProductEavController@attributeDel');
         //属性集和属性挂靠关系
         Route::any('/product/abstoab','ProductEavController@absToAb');
-        Route::any('/producteav/abstoab/save','ProductEavController@absToAbSave');
         //产品分类管理
         Route::resource('/product/category','CategoryController');
         //品牌管理
@@ -83,10 +90,6 @@ Route::group(array('domain' => 'shop.julijia.cn'), function() {
         //添加产品
         Route::resource('/product/goods','ProductController');
         Route::post('/product/goods/add','ProductController@add');
-        Route::post('/product/goods/status','ProductController@status');
-        //添加产品图片页面
-        Route::get('/product/goodsimg/{id}','ProductImgController@create');
-        Route::post('/product/goodsimg/store','ProductImgController@store');
         //检索产品分类二级菜单
         Route::get('/product/getcategory/{pid}','ProductController@getCategory')->where( 'pid', '[0-9]+' );
         //门店管理

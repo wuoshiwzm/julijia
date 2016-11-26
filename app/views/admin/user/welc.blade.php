@@ -22,6 +22,7 @@
 @section('content')
 
 
+
 <div class="page">
 	<div class="fixed-bar">
 	<div class="item-title item-title02">
@@ -77,7 +78,7 @@
 		</div>
 	</div>
 </div>
-<?php  //dd(Auth::user()); ?>
+
 <div class="order-info m-b-10">
 		<!--概要信息-->
 		<div class="order-details">
@@ -85,43 +86,31 @@
 			<div class="content">
 				<dl>
 					<dt>&nbsp;用&nbsp;户&nbsp;名：</dt>
-					<dd><?php echo Auth::user()->name?></dd>
+					<dd>李四</dd>
 				</dl>
                 <dl>
 					<dt>性&nbsp;别：</dt>
-					<dd><?php if(Auth::user()->sex == 1) {
-            echo '男';
-          }else{
-            echo '女';
-          }?></dd>
+					<dd>男</dd>
 				</dl>
 				<dl>
 					<dt>Email：</dt>
-					<dd><?php echo Auth::user()->email?></dd>
+					<dd>lisi@163.com</dd>
 				</dl>
 				<dl>
-
 					<dt>最后一次登录：</dt>
-					<dd><?php echo Auth::user()->last_time?></dd>
+					<dd>2016-12-10 13:34:34</dd>
 				</dl>
 				<dl>
 					<dt>账号来源：</dt>
-          <dd>
-          <?php
-          if(ToolsUtils::isMobileDevice()){echo '手机端';}
-          else{
-            echo 'PC端';
-          }
-           ?>
-         </dd>
+					<dd>PC站</dd>
 				</dl>
                 <dl>
 					<dt>用户等级：</dt>
-					<dd>???</dd>
+					<dd>PC站</dd>
 				</dl>
                 <dl>
 					<dt>账号来源：</dt>
-					<dd>???</dd>
+					<dd>普通用户</dd>
 				</dl>
 			</div>
 		</div>
