@@ -34,6 +34,7 @@ Route::group(array('domain' => 'shop.com'), function() {
         //引入路由文件
         require(__DIR__ . '/Routes/UserRoute.php');
 
+
         Route::controller('index','IndexController');
         //缓存管理
         Route::resource('/cache','CacheController');
