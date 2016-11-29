@@ -16,6 +16,32 @@ class NewsCate {
   }
 
 
+    /**
+     * @param $id 分类id
+     * @param $input 更新分类信息内容
+     */
+  static function update($id,$input){
+      $res = Source_News_NewsCate::where('id',$id)->update( $input );
+      return $res;
+  }
+
+    /**
+     * @param $id 分类id
+     * @return mixed 返回查询结果
+     */
+  static function find($id){
+      $res = Source_News_NewsCate::find($id);
+      return $res;
+  }
+
+    /**
+     * @param $id 分类id
+     * @return mixed 返回是否有子分类
+     */
+  static function findChild($id){
+      $res = Source_News_NewsCate::where('pid',$id);
+      return $res;
+  }
 
 
 }

@@ -2,7 +2,24 @@
 
 class NewsArticleController extends CommonController {
 
-	/**
+
+    //对应模板为layouts.admin_news
+    protected $layout = 'layouts.admin_news';
+
+    /**
+     * 设置默认模板
+     */
+    protected function setupLayout()
+    {
+        if ( ! is_null($this->layout))
+        {
+            $this->layout = View::make($this->layout);
+        }
+    }
+
+
+
+    /**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
@@ -14,7 +31,7 @@ class NewsArticleController extends CommonController {
 		$cate = Source_News_NewsCate::all();
 
 		$news = Source_News_NewsArt::orderBy('news_id','desc');
-    $news_title = trim(Input::get('news_title'));
+        $news_title = trim(Input::get('news_title'));
 		$news_available = trim(Input::get('news_available'));
 		$news_cate_id = trim(Input::get('news_cate_id'));
 
@@ -44,10 +61,10 @@ class NewsArticleController extends CommonController {
 		 }
 
 
-    $setPage = Input::get('setpage')?Input::get('setpage'):self::$adminPage;
-    $data = $news->paginate($setPage);
-    $set['name'] = $news_title;
-    $set['setpage'] = $setPage;
+        $setPage = Input::get('setpage')?Input::get('setpage'):self::$adminPage;
+        $data = $news->paginate($setPage);
+        $set['name'] = $news_title;
+        $set['setpage'] = $setPage;
 		return $this->view('admin.news.newsart',compact('data','set','cate'));
 	}
 

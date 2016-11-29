@@ -1,5 +1,5 @@
-@foreach( $data as $K=>$name )
-    @if( $K )<h5 class="h5_bottom">{{$name['name']}}</h5>@endif
+@foreach( $data['data'] as $K=>$name )
+    <h5 class="h5_bottom">{{$name['name']}}</h5>
     @foreach( $name['value'] as $row )
         @if( isset($row->productEavToEav->id)  )
             <div class="simple-form-field">
@@ -22,7 +22,7 @@
                              <!-- time -->
                             @if( $row->productEavToEav->front_input == 'time' )
                             <?php $name = $row->productEavToEav->name; ?>
-                            <input type="date" class="form-control"   @if( $row->productEavToEav->is_system == 1 ) value="{{$flat->$name}}" @else value="{{$flat->productFlatToFlatDetail->$name}}" @endif  @if( $row->productEavToEav->is_required == 0 ) ignore="ignore" @endif name="{{$row->productEavToEav->id}}"  datatype="{{$row->productEavToEav->valid_rule}}"  errormsg="{{$row->productEavToEav->errormsg}}" tipsrmsg="{{$row->productEavToEav->tipgs}}" >
+                            <input type="text" class="form-control"  onfocus="WdatePicker()"  @if( $row->productEavToEav->is_system == 1 ) value="{{$flat->$name}}" @else value="{{$flat->productFlatToFlatDetail->$name}}" @endif  @if( $row->productEavToEav->is_required == 0 ) ignore="ignore" @endif name="{{$row->productEavToEav->id}}"  datatype="{{$row->productEavToEav->valid_rule}}"  errormsg="{{$row->productEavToEav->errormsg}}" tipsrmsg="{{$row->productEavToEav->tipgs}}" >
                             <span class="Validform_checktip"></span>
                             @endif
 
@@ -75,3 +75,80 @@
         @endif
     @endforeach
 @endforeach
+
+<!--可配属性-->
+@if( count($data['configure']) )
+    <h5 class="h5_bottom">{{$data['configure']['name']}}</h5>
+    <div class="div_contentlist">
+        @foreach( $data['configure']['value'] as $Keys=>$configure )
+            @if( isset($configure->productEavToEav->id)  )
+                <div class="simple-form-field plist">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="ng-binding Father_Title" data-id="{{$configure->productEavToEav->name}}" data-value="{{$configure->productEavToEav->admin_label}}">{{$configure->productEavToEav->admin_label}}：</span>
+                        </label>
+                        <div class="col-sm-9 color_un">
+                            <div class="form-control-box Father_Item{{$Keys}}">
+                                @if( isset($flat->productFlatToFlatDetail->attribute_json) &&  $flat->productFlatToFlatDetail->attribute_json)
+                                <?php
+                                  $jsonData = json_decode($flat->productFlatToFlatDetail->attribute_json);
+                                  $EavName = $configure->productEavToEav->name;
+                                ?>
+                                @foreach( Source_Eav_AttrbuteValue::where('attributeid', $configure->attbute_id)->orderBy('attributeid','asc')->get() as $keys=>$value )
+                                <label class="control-label cur-p m-r-10">
+                                     <input type="checkbox"  data-id="{{$value->attributeid}}" class="valid" @if( in_array($value->value,$jsonData[0]->$EavName) || in_array(Config::get('tools.imagePath').'attribute/'.$configure->attbute_id.'/'.$value->images,$jsonData[0]->$EavName) ) checked="checked" @endif>
+                                     <span title="{{$value->text}}">
+                                         @if( $value->images )
+                                             <img src="{{getImagesUrl('attribute',$value->attributeid,$value->images)}}" height="32" width="32">
+                                         @else
+                                             {{$value->value}}
+                                         @endif
+                                     </span>
+                                </label>
+                                @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    </div>
+
+    <!--可配置显示-->
+    <div class="simple-form-field">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">
+                <span class="ng-binding"> </span>
+            </label>
+            <div class="col-sm-9 unber_x">
+                <div class="form-control-box">
+                    <div class="form-control-box" id="createTable">
+                        <table class="table table-hover" style="border-bottom:0!important" id="process">
+                           @if( isset($jsonData[1]) && count($jsonData[1]) )
+                            @foreach( $jsonData[1] as $j=>$jrow )
+                                <tr>
+                                    @foreach( $jrow as $t=>$td )
+                                    <td>
+                                        @if( $t=='prices' )
+                                            <input name="prices[]" class="form-control w90" type="text" value="{{$td}}"> / 件
+                                        @else
+                                            @if( strstr($td,"http") )
+                                                <img src="{{$td}}" height="32" width="32">
+                                            @else
+                                                {{$td}}
+                                            @endif
+                                            <input name="{{$t}}[]" value="{{$td}}" type="hidden">
+                                        @endif
+                                    </td>
+                                    @endforeach
+                                </tr>
+                            @endforeach
+                        </table>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif

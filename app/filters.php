@@ -88,3 +88,8 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/**
+ * 验证会员的过滤器
+ */
+Route::filter('member', 'MemberFilter');

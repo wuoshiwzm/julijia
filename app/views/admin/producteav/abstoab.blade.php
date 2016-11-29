@@ -11,7 +11,6 @@
 	 .free_d .hd_left .easyui-panel{  }
 	 .free_d .hd_left .easyui-tree{  line-height:1.8; padding:14px;}
 	 .free_d .hd_left .easyui-tree  li{line-height:32px !important; font-size:14px; }
-	 
 	 .free_d .hd_right{ border:7px solid #f0f0f0; width:270px!important; float:left; padding:14px 0px; margin-left:136px; }
 	 .tree-node{ height:26px !important; padding-top:4px;}
 	 .clearfix hd_left .panel{ width:500px!important; }
@@ -50,7 +49,6 @@
                        }
                     }
                 })
-
                $.post('/admin/product/abstoab',{data:pushdata,fiter:setidd },function (index) {
                    if(index =='0'){
                        layer.alert('更新数据失败');
@@ -59,7 +57,18 @@
                        location.href ='/admin/product/attribute_base_index';
                    }
                })
-            })
+            });
+            $('#selecteaav').tree({
+                onBeforeDrop : function (target, source, point)
+                {
+                    tree  = $("#choosetree");
+                    root  = tree.tree('getRoots');
+                    if(root.length==1){
+                        layer.alert('最后一个选项不能移动');
+                        return false;
+                    }
+                }
+            });
         })
     </script>
 @stop
@@ -106,9 +115,8 @@
                             </ul>
                         </div>
                     </div>
-
                     <div class="easyui-panel hd_right" >
-                        <ul class="easyui-tree" data-options="
+                        <ul id="choosetree" class="easyui-tree" data-options="
                             url:'/admin/product/attribute_customerdata?setid={{$_GET['setid']}}',
                             method:'get',
                             animate:true,
@@ -116,12 +124,9 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
-
     </div>
     <input type="button" value="提交"  id="button" class="btn btn-primary">
+
 @stop

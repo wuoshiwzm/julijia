@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                         </div>
-                        @include('admin.product.getEav.editattbute',array('data'=>$data))
+                        @include('admin.product.getEav.editattbute',array('data'=>$data,'flat'=>$flat))
                         <div class="goods-next">
                             <input type="submit" id="btn_submit" value="确认提交" class="btn btn-primary">
                         </div>
@@ -106,6 +106,8 @@
 @stop
 @section('footer_js')
     <script charset="utf-8" src="/js/public/kindeditor/kindeditor.js"></script>
-    <script charset="utf-8"src="/js/public/kindeditor/lang/zh_CN.js"></script>
+    <script charset="utf-8" src="/js/public/kindeditor/lang/zh_CN.js"></script>
+    <script type="text/javascript" src="/js/public/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="/js/admin/product.js?v={{Config::get('tools.adminJsTime')}}"></script>
+    <script type="text/javascript" src="/js/admin/liandong.js?v={{Config::get('tools.adminJsTime')}}"></script>
 @stop

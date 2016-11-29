@@ -1,13 +1,5 @@
 @section('admincss')
-  <link type="text/css" rel="stylesheet" href="{{url('css/admin/login.css')}}">
-  <!-- ================== END BASE CSS STYLE ================== -->
-  <!--[if lt IE 9]>
-        <script type="text/javascript" src="../js/html5shiv.min.js"></script>
-        <script type="text/javascript" src="../js/respond.min.js"></script>
-      <![endif]-->
-  <!-- ================== BEGIN BASE JS ================== -->
-
-  <script type="text/javascript" src="{{url('js/public/js/jquery.js')}}"></script>
+    <link type="text/css" rel="stylesheet" href="{{url('css/admin/login.css')}}">
 @stop
 
 @section('content')

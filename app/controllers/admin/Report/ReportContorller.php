@@ -13,30 +13,7 @@ class  ReportController extends CommonController
      */
     public function getOrder()
     {
-        array(
-            'type'=>'manjian',
-            'use_tiaojian'=>'manjian',
-            'yunsuanfu'=>'>',
-            'value'=>'25'
-        );
-        array(
-            'type'=>'youhuiquan',
-            'use_tioajian'=>'pay_medth',
-            'yunsuanfu'=>'=',
-            'value'=>'paypal'
-        );
-        array(
-            'type'=>'youhuiquan',
-            'use_tioajian'=>'cart_weight',
-            'yunsuanfu'=>'>',
-            'value'=>'35'
-        );
-        array(
-            'type'=>'youhuiquan',
-            'use_tioajian'=>'product',
-            'yunsuanfu'=>'=',
-            'value'=>'product'
-        );
+
         $this->view("admin.report.order");
     }
 
@@ -55,7 +32,8 @@ class  ReportController extends CommonController
      */
     public function getCustomer()
     {
-        $this->view("admin.report.order");
+        $list =   Source_User_UserInfo::get();
+        $this->view("admin.report.customer",compact('list'));
     }
 
 

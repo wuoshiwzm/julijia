@@ -1,26 +1,3 @@
-@section('admincss')
-  <link type="text/css" rel="stylesheet" href="{{url('css/admin/loaders.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{url('js/public/jquery-easyui-1.5/themes/default/easyui.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{url('js/public/jquery-easyui-1.5/themes/icon.css')}}">
-
-
-  <!-- ================== END BASE CSS STYLE ================== -->
-  <!--[if lt IE 9]>
-        <script type="text/javascript" src="../js/html5shiv.min.js"></script>
-        <script type="text/javascript" src="../js/respond.min.js"></script>
-      <![endif]-->
-  <!-- ================== BEGIN BASE JS ================== -->
-
-	<script type="text/javascript" src="{{url('js/public/jquery-easyui-1.5/jquery.min.js')}}"></script>
-	<script type="text/javascript" src="{{url('js/public/jquery-easyui-1.5/jquery.easyui.min.js')}}"></script>
-  <!-- ================== END BASE CSS STYLE ================== -->
-  <!--[if lt IE 9]>
-        <script type="text/javascript" src="../js/html5shiv.min.js"></script>
-        <script type="text/javascript" src="../js/respond.min.js"></script>
-      <![endif]-->
-  <!-- ================== BEGIN BASE JS ================== -->
-@stop
-
 @section('content')
 
 

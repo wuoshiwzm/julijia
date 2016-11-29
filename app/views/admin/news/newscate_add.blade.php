@@ -1,21 +1,7 @@
 @section('title')
 新闻分类
 @stop
-@section('admincss')
-<meta content="" name="description">
-<meta content="" name="author">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
-<link type="text/css" rel="stylesheet" href="{{url('css/admin/loaders.css')}}">
-@stop
 
-<!-- ================== BEGIN BASE CSS STYLE ================== -->
-
-<!-- ================== END BASE CSS STYLE ================== -->
-<!--[if lt IE 9]>
-      <script type="text/javascript" src="../js/html5shiv.min.js"></script>
-      <script type="text/javascript" src="../js/respond.min.js"></script>
-    <![endif]-->
-<!-- ================== BEGIN BASE JS ================== -->
 
 @section('content')
 

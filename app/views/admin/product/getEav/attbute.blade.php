@@ -20,7 +20,7 @@
 
                      <!-- time -->
                      @if( $row->productEavToEav->front_input == 'time' )
-                     <input type="date" class="form-control" name="{{$row->productEavToEav->id}}" @if( $row->productEavToEav->is_required == 0 ) ignore="ignore" @endif  datatype="{{$row->productEavToEav->valid_rule}}"  errormsg="{{$row->productEavToEav->errormsg}}" tipsrmsg="{{$row->productEavToEav->tipgs}}" >
+                     <input type="text" class="form-control" onfocus="WdatePicker()"  name="{{$row->productEavToEav->id}}" @if( $row->productEavToEav->is_required == 0 ) ignore="ignore" @endif  datatype="{{$row->productEavToEav->valid_rule}}"  errormsg="{{$row->productEavToEav->errormsg}}" tipsrmsg="{{$row->productEavToEav->tipgs}}" >
                      <span class="Validform_checktip"></span>
                      @endif
 

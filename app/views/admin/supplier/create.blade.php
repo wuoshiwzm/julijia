@@ -135,7 +135,7 @@
                                 @endforeach
                             </select>
                             <select id="city" class="form-control m-r-5 m-l-5 w150" datatype="*|select" name="city">
-                                <option value="0">请选择城市</option>
+                                <option value="">请选择城市</option>
                             </select>
                             <span class="Validform_checktip"></span>
                         </div>
@@ -150,6 +150,7 @@
                     <div class="col-sm-8">
                         <div class="form-control-box">
                             <input type="text"  class="form-control valid" name="address" datatype="s4-50"   tipsrmsg="请输入公司地址" errormsg="公司地址为4-50个字符">
+                            <span class="Validform_checktip"></span>
                         </div>
                     </div>
                 </div>
@@ -162,6 +163,7 @@
                     <div class="col-sm-8">
                         <div class="form-control-box">
                             <input type="text"  class="form-control valid" name="faren" datatype="un"  maxlength="6" tipsrmsg="请输入法人" errormsg="法人格式不正确">
+                            <span class="Validform_checktip"></span>
                         </div>
                     </div>
                 </div>
@@ -173,7 +175,8 @@
                     </label>
                     <div class="col-sm-8">
                         <div class="form-control-box">
-                            <input type="text"  class="form-control valid" name="zhuce_zijin" maxlength="11" datatype="n1-11"  tipsrmsg="请输入注册资金" errormsg="注册资金最大长度11位">
+                            <input type="text"  class="form-control valid" name="zhuce_zijin" maxlength="11" datatype="n1-11"  tipsrmsg="请输入注册资金" errormsg="注册资金最大长度11位">&nbsp;&nbsp;万
+                            <span class="Validform_checktip"></span>
                         </div>
                     </div>
                 </div>
@@ -202,6 +205,7 @@
                     <div class="col-sm-8">
                         <div class="form-control-box">
                             <input type="text"  class="form-control valid" name="bank_num" maxlength="11" datatype="n1-20"  tipsrmsg="请输入公司账号" errormsg="公司账号最大长度20位">
+                            <span class="Validform_checktip"></span>
                         </div>
                         <div class="help-block help-block-t"><div class="help-block help-block-t">公司汇款和财务结账</div></div>
                     </div>

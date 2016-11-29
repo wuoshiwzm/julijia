@@ -1,25 +1,16 @@
 <?php
 Route::group(array('domain' => 'shop.com'), function() {
 
-    //test only
-
-
-    Route::group(array('before' => 'auth'), function()
-    {
-      Route::get('guest', 'UserController@guest');
-
-      // ...
-    });
-
 
     //后台
 
+    //用户登录
+    Route::get('user/login','UserController@login');
+    //用户登录验证
+    Route::any('user/loginVerify','UserController@loginVerify');
 
-    //shopping cart  test only
-    Route::get('test','CartController@index');
-
-    //user info
-    Route::group(array('prefix' => 'user'),function( $router ){
+    //会员后台
+    Route::group(array('prefix' => 'user','before'=>'member'),function( $router ){
       //引入路由文件
       require(__DIR__ . '/Routes/MemberRoute.php');
     });

@@ -1,19 +1,8 @@
 @section('title')
-新闻分类
-@stop
-@section('admincss')
-<meta content="" name="description">
-<meta content="" name="author">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
-<link type="text/css" rel="stylesheet" href="{{url('css/admin/loaders.css')}}">
+    新闻分类
 @stop
 
-<!-- ================== END BASE CSS STYLE ================== -->
-<!--[if lt IE 9]>
-      <script type="text/javascript" src="../js/html5shiv.min.js"></script>
-      <script type="text/javascript" src="../js/respond.min.js"></script>
-    <![endif]-->
-<!-- ================== BEGIN BASE JS ================== -->
+
 @section('content')
 
 <div class="page">
@@ -31,10 +20,11 @@
 	</div>
 </div>
 
-	<form  class="form-horizontal form" action="{{url('admin/newscate/'.encode($data->news_cate_id))}}"  method="post"  novalidate>
+	<form  class="form-horizontal form" action="{{url('admin/newscate/'.encode($data->id))}}"
+           method="post"  novalidate>
     {{ Form::token() }}
     <input type="hidden" name="_method" value="PUT">
-    <input type="hidden" name="news_cate_id" value="{{$data->news_cate_id}}">
+    <input type="hidden" name="id" value="{{$data->id}}">
 	<div class="table-content m-t-10">
 
 
@@ -45,16 +35,16 @@
               </label>
               <div class="col-sm-6">
                  <div class="form-control-box">
-                   <select class="form-control valid w250" name="news_cate_pid">
+                   <select class="form-control valid w250" name="pid">
 
                    <option value="0">根目录</option>
 
                    @foreach($cateName as $k =>$v)
-                     @if( $v->news_cate_id == $data->news_cate_pid)
-                       <option value={{$v->news_cate_id}} selected="select"> {{$v->news_cate_name}} </option>
-                     @else
-                       <option value={{$v->news_cate_id}}> {{$v->news_cate_name}} </option>
-                     @endif
+                         @if( $v->id == $data->pid)
+                           <option value={{$v->id}} selected="select"> {{$v->name}} </option>
+                         @else
+                           <option value={{$v->id}}> {{$v->name}} </option>
+                         @endif
                    @endforeach
                    </select>
 		         </div>
@@ -69,10 +59,36 @@
               </label>
               <div class="col-sm-6">
                  <div class="form-control-box">
-                    <input type="text" class="form-control valid w250" name="news_cate_name" value="{{$data->news_cate_name}}">
+                    <input type="text" class="form-control valid w250" name="name" value="{{$data->name}}">
 		         </div>
               </div>
           </div>
+        </div>
+
+        <div class="simple-form-field">
+            <div class="form-group">
+                <label class="col-sm-6 control-label">
+                    <span class="ng-binding">关键字：</span>
+                </label>
+                <div class="col-sm-6">
+                    <div class="form-control-box">
+                        <input type="text" class="form-control valid w250" name="keyword" value="{{$data->keyword}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="simple-form-field">
+            <div class="form-group">
+                <label class="col-sm-6 control-label">
+                    <span class="ng-binding">详细信息：</span>
+                </label>
+                <div class="col-sm-6">
+                    <div class="form-control-box">
+                        <textarea class="form-control valid w250" name="meta_desc">{{$data->meta_desc}}</textarea>
+                    </div>
+                </div>
+            </div>
         </div>
 
 

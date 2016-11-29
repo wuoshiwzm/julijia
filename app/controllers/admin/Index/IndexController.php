@@ -24,7 +24,7 @@ class IndexController extends CommonController
     /**
      *  首页 base
      */
-    public function  index()
+    public function  getIndex()
     {
        $this->view('layouts.admin_index');
     }

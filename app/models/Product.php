@@ -24,8 +24,7 @@ class Product
      * @return array
      * 添加产品from表单
      */
-    static function
-    getProductFrom( $setID )
+    static function getProductFrom( $setID )
     {
        // 1标准2 价格，3seo,4图片 5 描述
         $result = array();
@@ -76,12 +75,18 @@ class Product
      */
     static function addGoods( $data, $eID )
     {
-        dd( $data );
         $result = DB::transaction(function() use ( $data, $eID)
         {
+            //产品flat表
             $flat = array();
+            //产品动态表
             $flatDetail = array();
+            //配置产品数组
             $additional = array();
+            //配置产品
+            $attribute_json = array();
+            //配置产品分类
+            $attribute_ones = array();
             //添加
             foreach ( $data as $key=>$row )
             {
@@ -164,9 +169,14 @@ class Product
                    }
                }else
                {
-                    if( is_array($row) )
+
+                    if( is_array( $data[$key] ) )
                     {
                         $additional[$key] = $row;
+                        if( $key != 'prices' )
+                        {
+                            $attribute_ones[$key] = array_unique($row);
+                        }
                     }
                }
             }
@@ -199,8 +209,33 @@ class Product
             $flat['attribute_set_id'] = $data['attribute_set_id'];
             Source_Product_ProductFlat::insert( $flat );
             //插入flat扩展表
-            $flatDetail['attribute_json'] = '';
+            if( count( $additional ) )
+            {
+                foreach ( $additional as $k=>$r )
+                {
+                    $keyaName[] = $k;
+                    $vCount = count($r);
+                }
+
+                for ( $n=0; $n < $vCount; $n++ )
+                {
+                    foreach ( $keyaName as $k )
+                    {
+                        $attribute_json[$n][$k] = $additional[ $k ][ $n ];
+                    }
+                }
+            }
+
+            $jsonData[ 0 ] = $attribute_ones;
+            $jsonData[ 1 ] = $attribute_json ;
+            $flatDetail['attribute_json'] = json_encode( $jsonData );
             Source_Product_ProductFlatDetail::insert( $flatDetail );
+            if( count($attribute_json) )
+            {
+                $attribute['entity_id'] = $eID;
+                $attribute['value'] = json_encode( $jsonData );
+                Source_Product_ProductAttbuteJson::insert( $attribute );
+            }
 
         });
 
@@ -220,8 +255,16 @@ class Product
     {
         $result = DB::transaction(function() use ( $data, $eID)
         {
+            //产品flat表
             $flat = array();
+            //产品动态表
             $flatDetail = array();
+            //配置产品数组
+            $additional = array();
+            //配置产品
+            $attribute_json = array();
+            //配置产品分类
+            $attribute_ones = array();
             //添加
             foreach ( $data as $key=>$row )
             {
@@ -354,6 +397,16 @@ class Product
                             }
                             break;
                     }
+                }else
+                {
+                    if( is_array( $data[$key] ) )
+                    {
+                        $additional[$key] = $row;
+                        if( $key != 'prices' )
+                        {
+                            $attribute_ones[$key] = array_unique($row);
+                        }
+                    }
                 }
             }
             //实体表插入
@@ -375,8 +428,38 @@ class Product
             $flat['shop'] = $data['shop'];
             $flat['kc_qty'] = $data['stock'];
             Source_Product_ProductFlat::where( 'entity_id', $eID )->update( $flat );
-            //插入flat扩展表
+            //编辑flat扩展表
+            if( count( $additional ) )
+            {
+                foreach ( $additional as $k=>$r )
+                {
+                    $keyaName[] = $k;
+                    $vCount = count($r);
+                }
+
+                for ( $n=0; $n < $vCount; $n++ )
+                {
+                    foreach ( $keyaName as $k )
+                    {
+                        $attribute_json[$n][$k] = $additional[ $k ][ $n ];
+                    }
+                }
+            }
+
+            $jsonData[ 0 ] = $attribute_ones;
+            $jsonData[ 1 ] = $attribute_json ;
+            $flatDetail['attribute_json'] = json_encode( $jsonData );
             Source_Product_ProductFlatDetail::where( 'entity_id', $eID )->update( $flatDetail );
+            if( count($attribute_json) )
+            {
+                $attribute['entity_id'] = $eID;
+                $attribute['value'] = json_encode( $jsonData );
+                Source_Product_ProductAttbuteJson::where( 'entity_id', $eID )->update( $attribute );
+            }else
+            {
+                Source_Product_ProductAttbuteJson::where( 'entity_id', $eID )->delete();
+            }
+
         });
 
         if( is_null($result) )

@@ -1,8 +1,6 @@
 <?php
 
 
-
-
 //用户中心欢迎页
 $router->get('/welc','UserController@index');
 
@@ -21,17 +19,16 @@ $router->resource('/collect','CltController');
 //用户页
 $router->get('','UserController@index');
 
-//用户登录
-Route::get('/login','UserController@login');
-
 //用户注册
 Route::get('/register','UserController@register');
 
 //用户
 Route::any('/store','UserController@store');
 
-//用户登录验证
-Route::any('/loginVerify','UserController@loginVerify');
+
 
 //用户信息
 Route::resource('/info','UserController@info');
+
+//购物车
+Route::get('test','CartController@index');

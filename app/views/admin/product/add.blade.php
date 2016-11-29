@@ -121,7 +121,7 @@
                     </div>
                     @include('admin.product.getEav.attbute',array('data'=>$data))
                     <div class="goods-next">
-                        <input type="button" value="上一步，选择商品分类" class="btn btn-primary m-r-10 btn-top" onclick="history.go(-1);">
+                        <input type="button" value="上一步，选择商品分类" class="btn btn-primary m-r-10" onclick="history.go(-1);">
                         <input type="button" id="btn_submit" value="下一步，上传商品图片" class="btn btn-primary">
                     </div>
                 </form>
@@ -133,6 +133,7 @@
 @section('footer_js')
     <script charset="utf-8" src="/js/public/kindeditor/kindeditor.js"></script>
     <script charset="utf-8"src="/js/public/kindeditor/lang/zh_CN.js"></script>
+    <script type="text/javascript" src="/js/public/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="/js/admin/product.js?v={{Config::get('tools.adminJsTime')}}"></script>
     <script type="text/javascript" src="/js/admin/liandong.js?v={{Config::get('tools.adminJsTime')}}"></script>
 @stop

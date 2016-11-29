@@ -7,53 +7,82 @@
 class User
 {
 
+    /**
+     * @param $username
+     * @param $password
+     * 用户登录
+     */
+    static function login($username,$password){
+        $password = encode($password);
+        $user = Source_User_UserInfo::where('name',$username)->first();
+        if($user){
+            if($password == $user->password){
+                return true;
+            }
+            return false;
+        }
+        return false;
+
+    }
+
+    /**
+     * @param $id
+     * 返回当前登录的用户信息
+     */
+    static function userinfo($id){
+
+    }
+
     static function validatorUser($data){
-      $rules =  [
-        'name'=>'required|regex:/\w/',
-        'password'=>'required|min:6|same:repassword',
-        'repassword'=>'required|min:6',
-        'email'=>'required|email',
+        $rules =  [
+            'name'=>'required|regex:/\w/|unique:user_info,name',
+            'password'=>'required|min:6|same:repassword',
+            'repassword'=>'required|min:6',
+            'email'=>'required|email',
+            'office_phone'=>'min:7|max:20',
+            'mobile_phone'=>'min:7|max:20',
+            'home_phone'=>'min:|max:20',
+            'sex'=>'required',
+            'qq'=>'min:4|max:13',
+            'wechat'=>'regex:/\w/',
+        ];
+        $message = [
 
-        'office_phone'=>'min:7|max:20',
-        'mobile_phone'=>'min:7|max:20',
-        'home_phone'=>'min:|max:20',
-        'sex'=>'required',
-        'qq'=>'min:4|max:13',
-        'wechat'=>'regex:/\w/',
-
-
-
-      ];
-      $message = [
-
-      ];
-      $validator = Validator::make( $data, $rules, $message );
-      if( $validator->passes() )
-      {
+        ];
+        $validator = Validator::make( $data, $rules, $message );
+        if( $validator->passes() )
+        {
           return true;
 
-      }else
-      {
+        }else
+        {
           return $validator->messages();
-      }
+        }
     }
 
 
     //check if the name is occupied
     static function checkName($name){
-      $res = Source_User_UserInfo::where('name',$name)->get()->toArray();
-      // dd(Empty($res));
-      return Empty($res)? true:false;
+      $res = Source_User_UserInfo::where('name',$name)->count();
+      return $res? true:false;
     }
 
-    //check if the email is occupied
+    /**
+     * @param $email
+     * @return bool
+     * check if the email is occupied
+     */
     static function checkEmail($email){
       $res = Source_User_UserInfo::where('email',$email)->get()->toArray();
-      // dd(Empty($res));
-      return Empty($res)? true:false;
+      return $res? true:false;
     }
 
-    //check if the tel is filled at least one
+
+    /**
+     * @param $arr
+     * @return bool
+     * check if the tel is filled at least one
+     */
     static function checkTel($arr){
       $res='';
       foreach($arr as $k){
@@ -66,29 +95,29 @@ class User
     //add user to database
     static function addUser($data){
 
-      $info['name'] = $data['name'];
-      $info['password'] = encode($data['password']);
-      $info['email'] = $data['email'];
+        $info['name'] = $data['name'];
+        $info['password'] = encode($data['password']);
+        $info['email'] = $data['email'];
 
-      $info['office_phone'] = $data['office_phone'];
-      $info['mobile_phone'] = $data['mobile_phone'];
-      $info['home_phone'] = $data['home_phone'];
-      $info['sex'] = $data['sex'];
-      $info['qq'] = $data['qq'];
-      $info['wechat'] = $data['wechat'];
+        $info['office_phone'] = $data['office_phone'];
+        $info['mobile_phone'] = $data['mobile_phone'];
+        $info['home_phone'] = $data['home_phone'];
+        $info['sex'] = $data['sex'];
+        $info['qq'] = $data['qq'];
+        $info['wechat'] = $data['wechat'];
 
-      // dd($info['password']);
-      return Source_User_UserInfo::create( $info );
+
+        return Source_User_UserInfo::create( $info );
     }
 
     static function checkUser($data){
-      $name = $data['name'];
-      $password= encode($data['password']);
-      return  Source_User_UserInfo::where('name',$name)->where('password',$password)->first()? true : false;
+        $name = $data['name'];
+        $password= encode($data['password']);
+        return  Source_User_UserInfo::where('name',$name)->where('password',$password)->first()? true : false;
 
     }
 
-    static function getUser($username){
+    static function getUserByName($username){
       return Source_User_UserInfo::where('name',$username);
     }
 
@@ -166,23 +195,52 @@ class User
         }
     }
 
+    /**
+     * @param $id 用户id
+     * @return mixed
+     * 返回用户地址
+     */
     static function getAddrFromUser($id){
       return Source_User_UserInfoAdd::where('user_id',$id);
     }
 
+    /**
+     * @param $provId
+     * @return mixed
+     * 返回省份
+     */
     static function getProv($provId){
       return Source_Area_Province::where('id',$provId);
     }
+
+    /**
+     * @param $cityId
+     * @return mixed
+     * 返回城市
+     */
     static function getCity($cityId){
       return Source_Area_City::where('id',$cityId);
     }
+
+    /**
+     * @param $distId
+     * @return mixed
+     * 返回地区
+     */
     static function getDist($distId){
       return Source_Area_Area::where('id',$distId);
     }
 
+    /**
+     * @param $groupId
+     * @return mixed
+     * 返回用户组
+     */
     static function getGroup($groupId){
       return Source_User_UserInfoGroup::where('id',$groupId);
     }
+
+
     static function calcPoint($userId){
 
     }

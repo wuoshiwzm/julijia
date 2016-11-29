@@ -21,19 +21,25 @@ class System {
           if($key =='shipping'){
            foreach ($val as $key1 =>$v){
                DB::table('config_shipping')->where('name',$key1)->update( array('value'=>$v));
-               return true;
             }
           }
           if($key =='payment'){
-
+              foreach ($val as $key1 =>$v){
+                  DB::table('config_payment')->where('name',$key1)->update( array('value'=>$v));
+              }
           }
           if($key =='product'){
-
+              foreach ($val as $key1 =>$v){
+                  DB::table('config_product')->where('name',$key1)->update( array('value'=>$v));
+              }
           }
           if($key =='core'){
-
+              foreach ($val as $key1 =>$v){
+                  DB::table('config_core')->where('name',$key1)->update( array('value'=>$v));
+              }
           }
       }
+        return true;
 
     }
 }

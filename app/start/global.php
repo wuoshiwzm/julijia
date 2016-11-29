@@ -21,6 +21,7 @@ ClassLoader::addDirectories(array(
 	app_path().'/libraries/combo-master',
 	app_path().'/libraries/class',
 	app_path().'/events',
+    app_path().'/filters',
 
 ));
 

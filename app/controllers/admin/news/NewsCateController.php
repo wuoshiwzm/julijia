@@ -2,10 +2,31 @@
 
 class NewsCateController extends CommonController {
 
-  public function __construct()
-  {
-      parent::__construct();
-  }
+
+
+    protected $layout = 'layouts.admin_news';
+
+
+    protected function setupLayout()
+    {
+        if ( ! is_null($this->layout))
+        {
+            $this->layout = View::make($this->layout);
+        }
+    }
+
+    public function view($path, $data = [])
+    {
+        $this->layout->content = View::make( $path, $data );
+    }
+
+
+
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -47,33 +68,33 @@ class NewsCateController extends CommonController {
 	 * Store a newly created resource in storage.
 	 *
 	 * @return Response
+     * 存取新闻分类 信息
 	 */
 	public function store()
 	{
 
         $input = Input::all();
-        //为顶级目录
+            //pid = 0 为顶级目录
         if($input['pid'] == 0){
             $input['deepth'] = 0;
             Source_News_NewsCate::create($input);
-            return  Redirect::back();
+            return  Redirect::to('admin/newscate');
         }
-        $parent_deepth = Source_News_NewsCate::where('news_cate_id',$input['news_cate_pid'])->first()->news_cate_deepth;
+
+        //如果非顶级目录，层级属性deepth+1
+        $parent_deepth = Source_News_NewsCate::where('id',$input['pid'])->first()->news_cate_deepth;
         $input['news_cate_deepth'] = $parent_deepth+1;
         $res = Source_News_NewsCate::create($input);
-        return  Redirect::back();
+        return  Redirect::to('admin/newscate');
+
 	}
 
-
-    public function add(){
-
-    }
 
 
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  int  $id
+	 * @param  int  $id 新闻分类ID
 	 * @return Response
 	 */
 	public function show($id)
@@ -91,9 +112,12 @@ class NewsCateController extends CommonController {
 	public function edit($id)
 	{
         $id = decode( trim($id) );
+
         $data = Source_News_NewsCate::findOrFail( $id );
-        $cateName = Source_News_NewsCate::where('news_cate_deepth','<',2)->select('news_cate_name','news_cate_id')->get();
-        dd($cateName);
+
+        $cateName = Source_News_NewsCate::where('deepth','<',2)
+            ->where('id','!=',$id)->select('name','id')->get();
+
         $this->view('admin.news.newscate_edit',compact('data','cateName'));
 	}
 
@@ -106,15 +130,13 @@ class NewsCateController extends CommonController {
 	 */
 	public function update($id)
 	{
-        $input = trimValue( Input::except('_token') );
-
-        $validator = NewsCate::validatorBrand( $input );
+        $input = trimValue( Input::except('_token','_method'));
+        $validator = NewsCate::validatorNewsCate( $input );
         $id = decode( trim($id) );
         if( $validator === true )
         {
 
-            $input = array_except( $input, ['_token','_method'] );
-            $res = Source_News_NewsCate::where('news_cate_id',$id)->update( $input );
+            $res = NewsCate::update($id,$input);
 
             if ( $res )
             {
@@ -142,33 +164,44 @@ class NewsCateController extends CommonController {
 	 */
 	public function destroy($id)
 	{
-          $id = decode( trim($id) );
-          $res = Source_News_NewsCate::find( $id );
-          // return 'test';
-          if( $res )
-          {
+        $id = decode( trim($id) );
 
-              if( $res->delete() )
-              {
-                  $obj = new stdClass();
-                  $obj->status = 0;
-                  $obj->msg = '删除成功';
-                  return json_encode($obj);
+        $res = NewsCate::find( $id );
 
-              }else
-              {
-                  $obj = new stdClass();
-                  $obj->status = 1;
-                  $obj->msg = '删除失败';
-                  return json_encode($obj);
-              }
-          }else
-          {
-              $obj = new stdClass();
-              $obj->status = 1;
-              $obj->msg = '没有这个分类？删除失败';
-              return json_encode($obj);
-          }
+        // 判断是否有该分类
+        if( $res )
+        {
+            //判断是否有子分类
+            if(NewsCate::findChild($id)->count()){
+                $obj = new stdClass();
+                $obj->status = 1;
+                $obj->msg = '删除失败!有子分类未删除!';
+                return json_encode($obj);
+            }
+
+
+            if( $res->delete() )
+            {
+                $obj = new stdClass();
+                $obj->status = 0;
+                $obj->msg = '删除成功';
+                return json_encode($obj);
+
+            }else
+            {
+                $obj = new stdClass();
+                $obj->status = 1;
+                $obj->msg = '删除失败';
+                return json_encode($obj);
+            }
+        }else
+        {
+                $obj = new stdClass();
+                $obj->status = 1;
+                $obj->msg = '没有这个分类？删除失败';
+                return json_encode($obj);
+        }
+
     }
 
 

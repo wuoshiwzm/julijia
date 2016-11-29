@@ -19,7 +19,7 @@
                         <span>名称：</span>
                     </label>
                     <div class="form-control-wrap">
-                        <input type="text" id="searchmodel-keyword" class="form-control" name="name" value="{{$set['name']}}" placeholder="品牌名称">
+                        <input type="text" id="searchmodel-keyword" class="form-control" name="name" value="{{$set['name']}}" placeholder="输入名称">
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
     </div>
     <div class="common-title">
         <div class="ftitle">
-            <h3>属性列表</h3>
+            <h3>供应商列表</h3>
             <h5>(&nbsp;共<span data-total-record="true">{{$user->getTotal()}}</span>条记录&nbsp;)</h5>
         </div>
         <div class="operate">
@@ -63,15 +63,14 @@
         <table id="table_list" class="table table-hover">
             <thead>
             <tr>
-                <th class="w50" style="cursor: pointer;">编号<span class="sort"></span></th>
-                <th class="w100 active" style="cursor: pointer;">名称<span class="sort desc"></span></th>
-                <th class="w80" style="cursor: pointer;">公司类型<span class="sort"></span></th>
-                <th class="w80"  style="cursor: pointer;">联系人<span class="sort"></span></th>
-                <th class="w100" style="cursor: pointer;">联系电话<span class="sort"></span></th>
-                <th class="w80" style="cursor: pointer;">邮编<span class="sort"></span></th>
-                <th class="w80" style="cursor: pointer;">所在城市<span class="sort"></span></th>
-                <th class="w200" style="cursor: pointer;">详细地址<span class="sort"></span></th>
-                <th class="handle w100">操作</th>
+                <th class="w50" style="cursor: pointer;">编号</th>
+                <th class="w200 active" style="cursor: pointer;">名称</th>
+                <th class="w80" style="cursor: pointer;">公司类型</th>
+                <th class="w80"  style="cursor: pointer;">联系人</th>
+                <th class="w50" style="cursor: pointer;">联系电话</th>
+                <th class="w100" style="cursor: pointer;">所在城市</th>
+                <th class="w200" style="cursor: pointer;">详细地址</th>
+                <th class="handle w150">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -80,10 +79,27 @@
             <tr>
                 <td>{{$row->id}}</td>
                 <td>{{$row->name}}</td>
-                <td>{{$row->type}}</td>
+                <td>
+                 <?php
+                    switch ( $row->type )
+                    {
+                        case "0":
+                            echo "有限公司";
+                            break;
+                        case "1":
+                            echo "集团公司";
+                            break;
+                        case "2":
+                            echo "股份公司";
+                            break;
+                        case "3":
+                            echo "个人";
+                            break;
+                    }
+                 ?>
+                </td>
                 <td>{{$row->lianxiren}}</td>
                 <td>{{$row->phone}}</td>
-                <td>{{$row->postcode}}</td>
                 <td>{{$row->city}}</td>
                 <td>{{$row->address}}</td>
                 <td class="handle">
