@@ -32,7 +32,7 @@ class OrderController extends CommonController
             $model->where("order_info.status",'=',$status);
         }
         //过滤字段
-        $model->select("order_info.id","order_info.form","order_info.total_amount","order_info.cost_freight",
+        $model->select("order_info.id","order_info.source","order_info.total_amount","order_info.cost_freight",
             "order_info.status","order_info.order_sn","order_info.created_at","userinfo.real_name"
             );
         $data = $model->with("item")->paginate($setPage);

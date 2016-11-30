@@ -1,18 +1,7 @@
 @section('title')
 资讯新闻 -  修改新闻
 @stop
-@section('admincss')
-<meta content="" name="description">
-<meta content="" name="author">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
-<link type="text/css" rel="stylesheet" href="{{url('css/admin/loaders.css')}}">
-@stop
 
-<!--[if lt IE 9]>
-      <script type="text/javascript" src="../js/html5shiv.min.js"></script>
-      <script type="text/javascript" src="../js/respond.min.js"></script>
-    <![endif]-->
-<!-- ================== BEGIN BASE JS ================== -->
 @section('content')
 <div class="page">
 	<div class="fixed-bar">

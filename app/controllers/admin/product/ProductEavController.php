@@ -32,7 +32,11 @@ class ProductEavController extends CommonController
 		$name = trim(Input::get('name'));
 		if( $name )
 		{
-			$sql->where('attribute_name','like','%'.$name.'%');
+			if( $name == '%' )
+			{
+				$name = ' ';
+			}
+			$sql->where('attribute_name','like','%'.addslashes($name).'%');
 		}
 		$setPage = Input::get('setpage')?Input::get('setpage'):self::$adminPage;
 		$data = $sql->paginate( $setPage );
@@ -160,7 +164,7 @@ class ProductEavController extends CommonController
 
 	/**
 	 * @return mixed
-	 * 产品属性基列表
+	 * 产品属性列表
 	 */
 	public function attributeIndex()
 	{
@@ -168,6 +172,10 @@ class ProductEavController extends CommonController
 		$name = trim(Input::get('name'));
 		if( $name )
 		{
+			if( $name == '%' )
+			{
+				$name = ' ';
+			}
 			$sql->where('name','like','%'.$name.'%');
 		}
 		$setPage = Input::get('setpage')?Input::get('setpage'):self::$adminPage;

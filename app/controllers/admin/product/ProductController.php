@@ -96,10 +96,12 @@ class ProductController extends CommonController
 		$supplier = Source_User_SupplierInfo::get();
 		//线下门店
 		$shop = Source_User_ShopInfo::get();
+		//品牌
+		$brand = Source_Product_ProductBrand::get();
 		$data = Product::getProductFrom( $setID );
 		//查询表
 		$flat = Source_Product_ProductFlat::where( 'entity_id', $id )->with('productFlatToFlatDetail')->first();
-		$this->view('admin.product.edit',compact('data','shop','supplier','id','setID','flat'));
+		$this->view('admin.product.edit',compact('data','shop','supplier','id','setID','flat','brand'));
 	}
 
 	/**
@@ -153,8 +155,10 @@ class ProductController extends CommonController
 		$supplier = Source_User_SupplierInfo::get();
 		//线下门店
 		$shop = Source_User_ShopInfo::get();
+		//品牌
+		$brand = Source_Product_ProductBrand::get();
 		$data =  Product::getProductFrom( $setID );
-		$this->view('admin.product.add',compact('data','categoryName','categoryID','supplier','shop','setID'));
+		$this->view('admin.product.add',compact('data','categoryName','categoryID','supplier','shop','setID','brand'));
 	}
 
 
