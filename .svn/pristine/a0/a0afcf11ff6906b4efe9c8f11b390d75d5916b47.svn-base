@@ -1,0 +1,132 @@
+<?php
+
+// use app\controllers\user\user\LeonEvent;
+
+class MemberController extends CommonController
+{
+
+    protected $layout = 'layouts.member';
+
+
+    protected function setupLayout()
+    {
+        if (!is_null($this->layout)) {
+            $this->layout = View::make($this->layout);
+        }
+    }
+
+    public function view($path, $data = [])
+    {
+        $this->layout->content = View::make($path, $data);
+    }
+
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * @param $user_id 用户id
+     * 显示
+     */
+    function index($user_id)
+    {
+
+        return $this->view('admin.member.index');
+    }
+
+    function welc($user_id)
+    {
+
+        return $this->view('admin.member.welc');
+    }
+
+
+    /**
+     * @param $user_id 用户id
+     * 会员信息页
+     */
+    function info($user_id)
+    {
+        $userId = Session::get('user')->id;
+        $user = Session::get('user');
+
+        if (!User::getAddrFromUser($userId)->first()) {
+            $province = '未填写';
+            $city = '无城市信息';
+            $district = '无无地区信息';
+
+            //$group_id : 分组ID
+            $group_id = $user->group_id;
+            $group = (User::getGroup($group_id)->first()) ?
+                User::getGroup($group_id)->first()->name : '无分组Group信息';
+            return $this->view('admin.member.info', compact('userAddr', 'province', 'city', 'district', 'group'));
+        }
+
+        $userAddr = User::getAddrFromUser($userId)->first();
+        $province = (User::getProv($userAddr->province)->first()) ? User::getProv($userAddr->province)->first()->province : '未省份信息';
+        $city = (User::getCity($userAddr->city)->first()) ? User::getCity($userAddr->city)->first()->city : '无城市信息';
+        $district = (User::getDist($userAddr->district)->first()) ? User::getDist($userAddr->district)->first()->area : '无地区信息';
+
+        $group = (User::getGroup(Auth::user()->group_id)->first()) ? User::getGroup(Auth::user()->group_id)->first()->name : '无分组Group信息';
+        // dd($group);
+        return $this->view('admin.member.info', compact('userAddr', 'province', 'city', 'district', 'group'));
+    }
+
+
+    /**
+     * @param $user_id 用户id
+     * 收货地址
+     */
+    function address($user_id)
+    {
+
+    }
+
+    /**
+     * @param $user_id 用户id
+     * 用户订单
+     */
+    function orders($user_id)
+    {
+
+    }
+
+    /**
+     * @param $user_id 用户id
+     * 用户购物车
+     */
+    function cart($user_id)
+    {
+
+    }
+
+    /**
+     * @param $user_id 用户id
+     * 用户收藏
+     */
+    function collect($user_id)
+    {
+
+    }
+
+    /**
+     * @param $user_id 用户id
+     * 用户评价
+     */
+    function comment($user_id)
+    {
+
+    }
+
+    /**
+     * @param $user_id 用户id
+     * 用户投诉
+     */
+    function feedback($user_id)
+    {
+
+    }
+
+}

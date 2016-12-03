@@ -1,0 +1,5 @@
+@if( count($data) == false )
+<tr>
+    <td colspan="{{$cols}}" style="text-align:center;">没有数据</td>
+</tr>
+@endif

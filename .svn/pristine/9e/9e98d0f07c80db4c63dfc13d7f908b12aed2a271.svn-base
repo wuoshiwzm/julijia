@@ -1,0 +1,51 @@
+<?php
+
+// use app\controllers\user\user\LeonEvent;
+
+class OrderMemberController extends CommonController
+{
+
+    protected $layout = 'layouts.member.index';
+
+
+    protected function setupLayout()
+    {
+        if (!is_null($this->layout)) {
+            $this->layout = View::make($this->layout);
+        }
+    }
+
+    public function view($path, $data = [])
+    {
+        $this->layout->content = View::make($path, $data);
+    }
+
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * 欢迎页
+     */
+    function index()
+    {
+
+        return $this->view('member.order.order_all');
+    }
+
+
+    /**
+     * 注册
+     */
+    function register()
+    {
+        $this->view('member.register');
+    }
+
+
+
+
+
+}
