@@ -10,8 +10,9 @@ class CartController extends CommonController
      */
     public function index($id)
     {
+        $product_id = decode($id);
 
-        $cart = Cart::getContent();
+
         return $this->view('user.cart', compact('cart'));
 
     }
@@ -21,7 +22,7 @@ class CartController extends CommonController
      */
     public function deleteItem($rowid)
     {
-        Cart::remove($rowid);
+
     }
 
 
@@ -31,7 +32,7 @@ class CartController extends CommonController
      */
     public function addItem($id)
     {
-        $id = decode(trim($id));
+
 
 
     }
