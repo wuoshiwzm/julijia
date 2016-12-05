@@ -11,7 +11,7 @@ class CartController extends CommonController
     public function index($id)
     {
         $product_id = decode($id);
-
+        Cart::addItemById($id);
 
         return $this->view('user.cart', compact('cart'));
 

@@ -14,15 +14,16 @@ class Cart
      * @param $productid 商品ID
      * 添加物品到购物车
      */
-    static function add($productid)
+    static function addItemById($productid, $guige)
     {
-        //
+
+        //$guige json拼接
     }
 
     /**
      * @param $productid 购物车商品ID
      */
-    static function remove($productid)
+    static function removeItemById($productid)
     {
         //
     }
@@ -36,6 +37,10 @@ class Cart
         //
     }
 
+    /**
+     * @param $productid
+     * 更新商品数量
+     */
     static function updateQty($productid)
     {
         //
