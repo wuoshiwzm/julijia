@@ -22,7 +22,11 @@ class Source_Order_OrderInfo extends  \Eloquent
     
     public function item()
     {
-        return $this->hasMany( 'Source_Order_OrderItem', 'order_id');
+        return $this->hasMany('Source_Order_OrderItem', 'order_id');
     }
 
+    public function pay()
+    {
+        return $this->hasOne("Source_Order_OrderPayment","order_id","id");
+    }
 }

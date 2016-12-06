@@ -1,6 +1,7 @@
 <?php
 //商城会员模块用户中心
 
+Route::any('/test', 'CartController@addItem');
 
 //用户中心欢迎页
 $router->get('', 'MemberController@index');
@@ -31,7 +32,7 @@ $router->get('/info', 'UserController@info');
 $router->resource('/pkadd', 'PkaddController');
 
 //用户中心 购物车
-$router->resource('/cart', 'CartController');
+//$router->resource('/cart', 'CartController');
 
 //用户中心 收藏
 $router->resource('/collect', 'CltController');
@@ -48,4 +49,4 @@ Route::any('/store', 'UserController@store');
 Route::resource('/info', 'UserController@info');
 
 //购物车
-Route::get('test', 'CartController@index');
+//Route::get('test', 'CartController@index');

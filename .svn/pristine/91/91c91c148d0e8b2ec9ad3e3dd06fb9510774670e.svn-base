@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2016/10/8
+ * Time: 16:53
+ */
+class Cart
+{
+
+
+    /**
+     * @param $product_id 商品ID
+     * @param null $guige 商品规格信息 数组形式
+     *
+     * 添加物品到购物车
+     */
+    static function addItem($product_id, $guige = null)
+    {
+        //获得商品属性
+        $productInfo = Product::getProductById($product_id);
+        //得到quote_id
+        $shop_id = $productInfo->shop;
+        $quoteId = self::getQuoteId($product_id, $shop_id, $guige);
+        //判断是否已经有同类商品
+        //有同样商品 - 更新商品数量
+        if (self::checkQuoteId($quoteId)) {
+
+        }
+
+        //没有同样商品 - 生成新商品条目
+
+
+        //$guige json拼接
+        if (!$guige) {
+            $guigeJson = json_encode($guige);
+        }
+
+        dd($productInfo);
+
+
+    }
+
+    /**
+     * @param $productid 购物车商品ID
+     */
+    static function removeItemById($productid)
+    {
+        //
+    }
+
+    /**
+     * @param array $productids 数组形式传商品ID
+     * 确认折扣信息
+     */
+    static function chkDiscount(array $productids)
+    {
+        //
+    }
+
+    /**
+     * @param $productid
+     * 更新商品数量
+     */
+    static function updateQty($productid)
+    {
+        //
+    }
+
+    /**
+     * @param $product_id
+     * @param $shop_id
+     * @param $guige
+     * 生成QuoteId 同一个商品id 同一个shop_id 同一个规格 被当作一种商品， 添加同一种商品时只更新数量
+     */
+    private static function getQuoteId($product_id, $shop_id, $guige)
+    {
+        $guige = serialize($guige);
+        $quoteId = encode($product_id . $shop_id . $guige);
+        return $quoteId;
+    }
+
+    /**
+     * @param $quoteId 商品编码列
+     * 当前是否购物车有该种商品  quote_id
+     * 返回true表示有该产品，返加false表示没有该产品
+     */
+    private static function checkQuoteId($quote_id)
+    {
+        $res = Source_Cart_CartItem::where('quote_id', $quote_id)->count();
+        return $res ? true : false;
+    }
+
+
+}

@@ -2,6 +2,8 @@
 Route::group(array('domain' => 'shop.com'), function () {
 
 
+
+
     //后台 - 会员
 
     //用户登录

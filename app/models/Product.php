@@ -485,7 +485,7 @@ class Product
             $oldPath = $data['oldvalue'];
             $sort = $data['sort'];
             $ID = $data['id'];
-            $arr = array();
+            $small_image = '';
             foreach ( $path as $key=>$row )
             {
                 //添加
@@ -496,6 +496,10 @@ class Product
                     $img['sort'] = $sort[$key];
                     Source_Product_ProductImage::insert( $img );
                     (new Upload())->uploadProductImage( $entityID, $row, 'goods' );
+                    if( $data['default'][$key] == '1' )
+                    {
+                        $small_image = $row;
+                    }
                 }
 
                 //删除
@@ -506,13 +510,20 @@ class Product
                 }
 
                 //修改
-                if( $oldPath[$key] != $row && $row != '' && $ID[$key] != '' )
+                if(  $row != '' && $ID[$key] != '' )
                 {
                     Source_Product_ProductImage::where('id',$ID[$key])->update(['value'=>$row,'sort'=>$sort[$key]]);
-                    (new Upload())->uploadProductImage( $entityID, $row, 'goods' );
-                    (new Upload())->delImg( 'goods', $entityID, $oldPath[$key] );
+                    if( $oldPath[$key] != $row )
+                    {
+                        (new Upload())->uploadProductImage( $entityID, $row, 'goods' );
+                        (new Upload())->delImg( 'goods', $entityID, $oldPath[$key] );
+                    }
+
+                    if( $data['default'][$key] == '1' )
+                    {
+                        $small_image = $row;
+                    }
                 }
-                $small_image = $row;
             }
             Source_Product_ProductFlat::where('entity_id',$entityID)->update(['small_image'=>$small_image]);
         });
@@ -524,5 +535,10 @@ class Product
         {
             return false;
         }
+    }
+
+
+    static function getProductById($product_id){
+      return Source_Product_ProductFlat::find($product_id);
     }
 }

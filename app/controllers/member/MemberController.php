@@ -86,7 +86,7 @@ class MemberController extends CommonController
     {
 
         if (isset(Session::get('member')->id)) {
-            return Redirect::to('member/welc');
+            return Redirect::to('member');
         }
         return $this->view('member.login');
     }
@@ -113,7 +113,7 @@ class MemberController extends CommonController
 
             // 存入session
             Session::put('member', $user);
-            return Redirect::to('member/welc');
+            return Redirect::to('member');
         }
         return Redirect::back()->with('msg', 'failed to login')->withInput();
 

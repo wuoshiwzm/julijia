@@ -128,7 +128,7 @@ class Upload {
     {
         $Path = $this->filepath.'/'.$dir.'/'.$id;
         $data = $this->connect->getDirListing($Path);
-        if( count($data) )
+        if( count($data) && $data != false)
         {
             foreach ( $data as $v )
             {

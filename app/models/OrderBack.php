@@ -40,20 +40,22 @@ class OrderBack
 
     /**
      *
-     * @param int $type
+     * @param int $type 退款类型
      * @param string $order_sn 订单编号
-     * @param string $refund_sn 退款单编号
+     * @param string $back_sn 退款单编号
+     * @param int $reason_type 退款原因分类id
      * @param int $status 退款单状态
      * @param int $setPage 分页大小
      * @param array $column 字段
-     * @return
+     * @return object Collection 结果集合
      */
-    public static  function getRefund($type = 0,$order_sn = "",$refund_sn = "",$status = 0,$setPage = 0,$column = array())
+    public static  function getRefund($type = 0,$order_sn = "",$back_sn = "",$reason_type = 0,$status = 0,$setPage = 0,$column = array())
     {
         if (empty($column)) {
             $column = array(
                 "order_back.order_sn","order_back.status","order_back.created_at",
-                "order_back.order_id","order_back.order_item_id","userinfo.real_name",
+                "order_back.order_id","order_back.back_sn","order_back.order_item_id",
+                "userinfo.real_name",
             );
         }
         $model = Source_Order_OrderBack::join("userinfo","order_back.user_id","=","userinfo.id");
@@ -61,10 +63,13 @@ class OrderBack
             $model->where("order_back.type","=",$type);
         }
         if ($order_sn != "" && is_string($order_sn)) {
-            $model->where("order_back.order_sn","=",$order_sn);
+            $model->where("order_back.order_sn","like","%{$order_sn}%");
         }
-        if ($refund_sn != "" && is_string($refund_sn)) {
-            $model->where("order_back.refund_sn","=",$refund_sn);
+        if ($back_sn != "" && is_string($back_sn)) {
+            $model->where("order_back.back_sn","like","%{$back_sn}%");
+        }
+        if (is_int($reason_type) && $reason_type != 0) {
+            $model->where("order_back.refund_reason","=",$reason_type);
         }
         if (is_int($status) && $status != 0) {
             $model->where("order_back.status","=",$status);
@@ -78,4 +83,18 @@ class OrderBack
         $data = $model->paginate($setPage);
         return $data;
     }
+
+    /**
+     * @param  int $type 分类id
+     * @return object collection
+     * @des 退款退款原因分类
+     */
+    public static function getReason($type = 0)
+    {
+        if (is_int($type)&& $type != 0) {
+            return Source_Order_OrderRefundreasonType::where("type","=",$type)->get();
+        }
+        return Source_Order_OrderRefundreasonType::all();
+    }
+
 }

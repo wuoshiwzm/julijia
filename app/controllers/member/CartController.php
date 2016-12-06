@@ -8,12 +8,11 @@ class CartController extends CommonController
     /**
      * 显示购物车
      */
-    public function index($id)
+    public function index()
     {
-        $product_id = decode($id);
-        Cart::addItemById($id);
 
-        return $this->view('user.cart', compact('cart'));
+
+//        return $this->view('user.cart', compact('cart'));
 
     }
 
@@ -27,13 +26,33 @@ class CartController extends CommonController
 
 
     /**
-     * @param $id 商品ID
+     * @param $product_id 商品ID
+     * @param $guige 商品规格
+     * @param $quantity 商品数量 不传默认是1
+     *
      * 添加物品
      */
-    public function addItem($id)
+    public function addItem()
     {
 
 
+//        if(!Input::has('id'))
+//            return false;
+//        $product_id = Input::get('id');
+//
+//        $guige = Input::has('guige')?Input::get('guige'):'';
+//        $quantity = Input::has('quantity')?Input::get('quantity'):1;
+//        $guige =  [
+//            array('arrbute_name'=>'color','attbute_id'=>1,'attbute_title'=>'颜色','vaue'=>'red'),
+//            array('arrbute_name'=>'size','attbute_id'=>2,'attbute_title'=>'大小','vaue'=>'blue'),
+//        ];
+
+        Cart::checkCart();
+        die('tesst');
+
+//        private function getQuoteId($product_id,$shop_id,$quantity,$guige)
+        Cart::addItem(1,$guige);
+//        Cart::getQuoteId(1,2,$guige);
 
     }
 
