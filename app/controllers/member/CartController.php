@@ -4,24 +4,34 @@
 
 class CartController extends CommonController
 {
+    /**
+     * CartController constructor.
+     * 注册购物车
+     */
+    function __construct()
+    {
+        $res = Cart::getCart();
+        if (!$res) {
+            die('无法创建购物车！');
+        }
+    }
 
     /**
      * 显示购物车
      */
     public function index()
     {
-
-
-//        return $this->view('user.cart', compact('cart'));
+        $cartContent = Cart::getContent();
+//      return $this->view('member.cart', compact('cartContent'));
 
     }
 
     /**
      * @param $rowid 删除物品
      */
-    public function deleteItem($quote_id)
+    public function removeItem($rowId)
     {
-        //
+        Cart::remove($rowId);
     }
 
 
@@ -36,40 +46,19 @@ class CartController extends CommonController
     public function addItem()
     {
 
+        if (!Input::has('entity_id'))
+            return false;
+        $entity_id = Input::get('entity_id');
 
-        Cart::getCart();
-
+        $guigeArr = Input::has('guige') ? Input::get('guige') : '';
+        $quantity = Input::has('quantity') ? Input::get('quantity') : 1;
         //测试商品：entity_id:1479264267 $guige
-
-
-//        if(!Input::has('entity_id'))
-//            return false;
-//        $entity_id = Input::get('entity_id');
-//
-//        $guige = Input::has('guige')?Input::get('guige'):'';
-//        $quantity = Input::has('quantity')?Input::get('quantity'):1;
-        $guige = [
-            array('arrbute_name' => 'color', 'attbute_id' => 1, 'attbute_title' => '颜色', 'vaue' => 'red'),
-            array('arrbute_name' => 'size', 'attbute_id' => 2, 'attbute_title' => '大小', 'vaue' => 'blue'),
-        ];
-        $res = Cart::addItem('1479264267', 2, $guige);
-
-        !$res?die('yes ! saved!'): die('not saved!');
-
-        Cart::checkCart();
-
-//        private function getQuoteId($product_id,$shop_id,$quantity,$guige)
-//        Cart::getQuoteId(1,2,$guige);
-
+        //        $guigeArr = [
+        //            array('arrbute_name' => 'color', 'attbute_id' => 1, 'attbute_title' => '颜色', 'vaue' => 'red'),
+        //            array('arrbute_name' => 'size', 'attbute_id' => 2, 'attbute_title' => '大小', 'vaue' => 'blue'),
+        //        ];
+        $res = Cart::addItem($entity_id, $quantity, $guigeArr);
+        return $res ? true : false;
     }
-
-    /**
-     * 更新购物车
-     */
-    public function update()
-    {
-
-    }
-
 
 }

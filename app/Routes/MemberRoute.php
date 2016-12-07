@@ -1,7 +1,7 @@
 <?php
 //商城会员模块用户中心
 
-Route::any('/test', 'CartController@addItem');
+Route::any('/test', 'CartController@index');
 
 //用户中心欢迎页
 $router->get('', 'MemberController@index');

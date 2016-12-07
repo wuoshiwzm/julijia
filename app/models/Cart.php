@@ -14,10 +14,7 @@ class Cart
     //先判断有没有购物车，如果没有新建一个
     static function getCart()
     {
-
-
         $userInfo = Session::get('member');
-
         $cart = Source_Cart_CartInfo::where('user_id', $userInfo->id)->first();
 
         //购物车数据已经存在
@@ -25,7 +22,6 @@ class Cart
             self::$quoteId = $cart->user_id;
             return true;
         }
-
         //当前用户名下购物车还不存在，则新建一个购物车
 
         //毫秒数为订单号
@@ -36,7 +32,8 @@ class Cart
         //订单来源 1pc 2wap
         $quote['source'] = 1;
 
-        Source_Cart_CartInfo::create($quote);
+        $res = Source_Cart_CartInfo::create($quote);
+        return $res ? true : false;
 
 
     }
@@ -63,22 +60,16 @@ class Cart
         //判断是否已经有同类商品
         //没有同样商品 - 生成新商品条目
         if (!self::checkRowId($rowId)) {
-            self::addRow($entityId, $quantity, $guigeArr = null, $rowId);
-
+            //addRow($entityId, $quantity, $guigeArr = null, $rowId)
+            $res = self::addRow($entityId, $quantity, $guigeArr, $rowId);
+            return $res;
         } else {
             //有同样商品 - 更新商品数量
-            self::addQty($rowId, $quantity);
+            $res = self::addQty($rowId, $quantity);
+            return $res;
         }
-
     }
 
-    /**
-     * @param $entityId 商品ID
-     */
-    static function removeItem($rowId)
-    {
-        //
-    }
 
     /**
      * @param array $entityIds 数组形式传商品ID
@@ -96,9 +87,12 @@ class Cart
      */
     static function updateQty($rowId, $quantity)
     {
-        $item = Source_Cart_CartItem::where('row_id',$rowId)->first();
+        $item = Source_Cart_CartItem::where('row_id', $rowId)->first();
         $item->num = $quantity;
-        $item->save();
+        $item->row_totatl = $item->price * $quantity;
+        $item->row_weight = $item->weight * $quantity;
+        $res = $item->save();
+        return $res ? true : false;
     }
 
 
@@ -110,15 +104,16 @@ class Cart
     static function addQty($rowId, $quantity)
     {
 
-        $item = Source_Cart_CartItem::where('row_id',$rowId)->first();
-        $totalQuantity =$item->num + $quantity;
+        $item = Source_Cart_CartItem::where('row_id', $rowId)->first();
+        $totalQuantity = $item->num + $quantity;
 
         //如果商品数量小于 1 则删除该行商品
-        if($totalQuantity < 1){
-            self::remove($rowId);
+        if ($totalQuantity < 1) {
+            $res = self::remove($rowId);
+            return $res;
         }
-
-        self::updateQty($rowId,$totalQuantity);
+        $res = self::updateQty($rowId, $totalQuantity);
+        return $res;
     }
 
 
@@ -131,16 +126,12 @@ class Cart
      */
     private static function addRow($entityId, $quantity, $guigeArr = null, $rowId)
     {
-
-
         //获得商品属性
-
         $productInfo = Product::getProductById($entityId);
-
         //获取订单Id
-        $addInfo['quote_id'] = self::quoteId;
+        $addInfo['quote_id'] = self::$quoteId;
 
-        $addInfo['rowId'] = $rowId;
+        $addInfo['row_id'] = $rowId;
         $addInfo['product_id'] = $productInfo['id'];
         $addInfo['categry_id'] = $productInfo['categry_id'];
         $addInfo['product_name'] = $productInfo['name'];
@@ -150,16 +141,14 @@ class Cart
         $addInfo['price'] = $productInfo['price'];
         $addInfo['weight'] = $productInfo['weight'];
         $addInfo['num'] = $quantity;
-        $addInfo['guige'] = encode($guigeArr);
+        $addInfo['guige'] = json_encode($guigeArr);
         $productInfo['cost_price'] == 0 ? $addInfo['free_shipping'] = 1 : $addInfo['free_shipping'] = 0;
 
         $addInfo['row_total'] = $productInfo['price'] * $quantity;
         $addInfo['row_wegith'] = $productInfo['weight'] * $quantity;
+
         $res = Source_Cart_CartItem::create($addInfo);
-
-        //成功为$res = NULL
-        return !$res;
-
+        return $res;
     }
 
 
@@ -168,10 +157,14 @@ class Cart
      */
     static function remove($rowId)
     {
-        $item = Source_Cart_CartItem::where('row_id',$rowId)->delete();
+        $res = Source_Cart_CartItem::where('row_id', $rowId)->delete();
+        return $res ? true : false;
     }
 
-
+    static function getContent(){
+        $res = Source_Cart_CartItem::where('quote_id',self::$quoteId);
+        return $res?$res:false;
+    }
     /**
      * @param $entityId
      * @param $shopId
@@ -192,7 +185,7 @@ class Cart
      */
     private static function checkRowId($rowId)
     {
-        $res = Source_Cart_CartItem::where('rowId', $rowId)->count();
+        $res = Source_Cart_CartItem::where('row_id', $rowId)->count();
         return $res ? true : false;
     }
 
