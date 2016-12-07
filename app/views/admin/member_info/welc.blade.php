@@ -12,9 +12,9 @@
 
                     <h5>
 				<span class="action-span">
-					<a href="{{url('admin/member/wel')}}" class="btn btn-warning click-loading">
+                    <a href="{{url('admin/member/wel')}}" class="btn btn-warning click-loading">
                         <i class="iconfont">&#xe6d4;</i>
-						返回会员列表
+                        返回会员列表
 					</a>
 				</span>
                     </h5>
@@ -52,6 +52,7 @@
                                 <span>投诉</span>
                             </a>
                         </li>
+
                     </ul>
 
                 </div>
@@ -98,7 +99,7 @@
                     </dl>
                     <dl>
                         <dt>用户等级：</dt>
-                        <dd>{{$group->name}}</dd>
+                        <dd>{{$group_name}}</dd>
                     </dl>
                     <dl>
                         <dt>账号来源：</dt>

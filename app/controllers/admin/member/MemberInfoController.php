@@ -48,15 +48,16 @@ class MemberInfoController extends CommonController
      */
     function welc($user_id)
     {
-
         //用户详细信息
         $welc = User::getUserinfoById($user_id);
         //用户组信息
         $group = User::getGroup($user_id);
-        $group = $group ? $group : '无分组Group信息';
+
+        $group_name =$group?$group->name:'无分组Group信息';
+
         //用户地址信息
         $address = User::getUsingAddrByUser($user_id);
-        return $this->view('admin.member_info.welc', compact('welc', 'group', 'address', 'user_id'));
+        return $this->view('admin.member_info.welc', compact('welc', 'group_name', 'address', 'user_id'));
     }
 
 
@@ -73,9 +74,9 @@ class MemberInfoController extends CommonController
         $address = User::getUsingAddrByUser($user_id);
         //用户组信息
         $group = User::getGroup($user_id);
-        $group = $group ? $group : '无分组Group信息';
+        $group_name =$group?$group->name:'无分组Group信息';
 
-        return $this->view('admin.member_info.info', compact('address','group','user','user_id'));
+        return $this->view('admin.member_info.info', compact('address','group_name','user','user_id'));
     }
 
 

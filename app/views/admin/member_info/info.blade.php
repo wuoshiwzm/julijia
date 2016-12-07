@@ -172,7 +172,7 @@
                         </label>
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
-                                {{$user->mobile_phone}} ?>
+                                {{$user->mobile_phone}}
                              </label>
                          </div>
                      </div>
@@ -188,13 +188,14 @@
                              <label class="control-label cur-p m-r-10">
                                  {{$user->user_points}}</label>
                          </div>
+
                      </div>
                      <div class="form-group">
                          <label class="col-sm-4 control-label">
                              <span class="ng-binding">用户等级：</span>
                          </label>
                          <div class="col-sm-8">
-                             <label class="control-label cur-p m-r-10">{{$group->name}}</label>
+                             <label class="control-label cur-p m-r-10">{{$group_name}}</label>
                         </div>
                     </div>
                 </div>
@@ -206,7 +207,7 @@
                         </label>
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
-                                <?php if (Session::get('user')->id)
+                                <?php if (Session::get('member')->id)
                                     echo '是';
                                 else
                                     echo '否';

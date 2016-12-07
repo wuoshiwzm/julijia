@@ -2,8 +2,6 @@
 Route::group(array('domain' => 'shop.com'), function () {
 
 
-
-
     //后台 - 会员
 
     //用户登录
@@ -34,7 +32,7 @@ Route::group(array('domain' => 'shop.com'), function () {
         require(__DIR__ . '/Routes/NewsRoute.php');
 
         //管理员用户中心路由
-        require(__DIR__ . '/Routes/MemberInfoRoute.php');
+        require(__DIR__ . '/Routes/AdminRoute.php');
 
 
         Route::controller('index', 'IndexController');

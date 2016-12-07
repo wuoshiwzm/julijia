@@ -144,7 +144,7 @@ class User
     {
         return Source_User_UserInfo::where('name', $username);
     }
-    
+
 
     /**
      * @param $user_id 用户id
@@ -313,6 +313,15 @@ class User
     {
         $data = Source_User_UserInfoComment::where('user_id', $user_id);
         return $data;
+    }
+
+    /**
+     * @param $userId用户id
+     * 获取用户的收藏商品
+     */
+    static function getCollectByUser($userId)
+    {
+        return Source_User_UserInfoCollect::where('user_id',$userId);
     }
 
 

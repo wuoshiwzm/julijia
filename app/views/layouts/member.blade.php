@@ -20,7 +20,6 @@
     <![endif]-->
     <!-- ================== BEGIN BASE JS ================== -->
 
-    <script type="text/javascript" src="{{url('js/public/js/jquery.js')}}"></script>
 
     <!-- ================== END BASE CSS STYLE ================== -->
     <!--[if lt IE 9]>

@@ -182,6 +182,7 @@ class NewsArticleController extends CommonController
             return json_encode($obj);
         }
 
+
         //在blog 和 blog_detail中删除信息
         $res = News::delete($id);
 

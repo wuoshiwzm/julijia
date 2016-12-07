@@ -50,7 +50,7 @@
             <ul>
                 <li><a href="##"><font class="iconfont">&#x343f;</font>我的购物车</a></li>
                 <li><a href="{{url('member/order')}}"><font class="iconfont">&#xe601;</font>我的订单</a></li>
-                <li><a href="ge_admin_shoucang.html"><font class="iconfont">&#xe637;</font>我的收藏</a></li>
+                <li><a href="{{url('member/collect')}}"><font class="iconfont">&#xe637;</font>我的收藏</a></li>
                 <li><a href="ge_admin_jifen.html"><font class="iconfont">&#xe682;</font>我的积分</a></li>
                 <li><a href="ge_admin_tuikuan.html"><font class="iconfont">&#xe6be;</font>我的退款</a></li>
                 <li><a href="ge_admin_ts.html"><font class="iconfont">&#xe608;</font>我的投诉</a></li>
@@ -105,6 +105,7 @@
 <script type="text/javascript" src="{{asset('js/member/jquery-1.9.1.min.js')}}"></script>
 <script src="{{asset('js/member/layer-v1.9.3/layer/layer.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/member/er_admin.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/member/layui.js')}}."></script>
 
 
 

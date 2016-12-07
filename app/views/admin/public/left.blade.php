@@ -75,7 +75,7 @@
                     <ul>
                         <li><a href="javascript:void(0);" onclick="openMenu('/admin/member/index',this)">用户列表</a></li>
                         <li><a href="javascript:void(0);" onclick="openMenu(vip_jy.html,this )">交易记录</a></li>
-                        <li><a href="javascript:void(0);" onclick="openMenu(vip_dj.html,this )">用户等级</a></li>
+                        <li><a href="javascript:void(0);" onclick="openMenu('/admin/group',this )">用户等级</a></li>
                         <li><a href="javascript:void(0);" onclick="openMenu(set.html,this )">用户设置</a></li>
                     </ul>
                 </div>
