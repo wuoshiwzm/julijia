@@ -14,7 +14,7 @@ class Group
      */
     static function getGroup()
     {
-        return Source_User_UserInfoGroup::orderBy('beg_ponits', 'asc');
+        return Source_User_UserInfoGroup::select('*');
     }
 
     /**
@@ -65,7 +65,7 @@ class Group
     {
         $group = Source_User_UserInfoGroup::find($groupId);
         $group->name = $data['name'];
-        $group->beg_ponits = $data['beg_ponits'];
+        $group->beg_points = $data['beg_points'];
         $group->end_ponits = $data['end_ponits'];
         $res = $group->save();
         return $res;

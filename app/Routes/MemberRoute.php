@@ -3,18 +3,20 @@
 $router->get('', 'MemberController@index');
 
 //商城会员模块用户中心
+
+//会员积分
+$router->get('/rank', 'RankMemberController@index');
+
+
+
+
+
 //我的收藏
 $router->get('/collect', 'CollectMemberController@index');
 $router->get('/collect/notshow', 'CollectMemberController@notShow');
 
-
-
-
-
-
 //购物车
-Route::any('/cart', 'CartController@index');
-
+$router->any('/cart', 'CartController@index');
 
 //用户订单
 $router->get('/order', 'OrderMemberController@index');
