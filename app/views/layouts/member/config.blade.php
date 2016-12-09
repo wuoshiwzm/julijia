@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>@yield('title')</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
@@ -10,13 +8,19 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
 
+
     <!-- 网站头像 -->
-    <link rel="icon" type="image/x-icon" href="{{asset('images/icon.png')}}">
-    <link rel="shortcut icon" type="image/x-icon" href="../images/icon.png">
+    <link rel="icon" type="image/x-icon" href="{{asset('images/member/icon.png')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('images/member/icon.png')}}">
+
+    {{--css--}}
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/admin.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/css.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/iconfont.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/member/layui.css')}}">
     @yield('css')
+
+
 </head>
 
 <body>
@@ -34,10 +38,10 @@
 
 <div class="ge_admin01">
     <div class="ge_admin_xin">
-        <h2><img src="../images/logo.png"></h2>
+        <h2><img src="{{asset('images/member/logo.png')}}"></h2>
         <ul>
-            <li class="nav_on"><a href="ge_admin.html">个人中心</a></li>
-            <li class="nav_on02"><a href="ge_admin_mi.html">账号设置</a></li>
+            <li class=""><a href="ge_admin.html">个人中心</a></li>
+            <li class="nav_on02 nav_on"><a href="ge_admin_mi.html">账号设置</a></li>
             <li class="nav_on03"><a href="ge_admin_message.html">消息<span>2</span></a></li>
         </ul>
         <div class="tui"><a href="##">退出</a></div>
@@ -48,20 +52,16 @@
     <div class="ge_admin_nei">
         <div class="ge_admin_nei_left">
             <ul>
-                <li><a href="##"><font class="iconfont">&#x343f;</font>我的购物车</a></li>
-                <li><a href="{{url('member/order')}}"><font class="iconfont">&#xe601;</font>我的订单</a></li>
-                <li><a href="{{url('member/collect')}}"><font class="iconfont">&#xe637;</font>我的收藏</a></li>
-                <li><a href="{{url('member/rank')}}"><font class="iconfont">&#xe682;</font>我的积分</a></li>
-                <li><a href="ge_admin_tuikuan.html"><font class="iconfont">&#xe6be;</font>我的退款</a></li>
-                <li><a href="ge_admin_ts.html"><font class="iconfont">&#xe608;</font>我的投诉</a></li>
-                <li><a href="ge_admin_pingjia.html"><font class="iconfont">&#xe6ae;</font>我的评论</a></li>
-                <li><a href="ge_admin_zuji.html"><font class="iconfont">&#xe616;</font>我的足迹</a></li>
+                <li class="c_on"><a href="{{url('member/config')}}"><font class="iconfont">&#xe65d;</font>个人设置</a></li>
+                <li><a href=""><font class="iconfont">&#xe651;</font>收货地址</a></li>
+                <li><a href=""><font class="iconfont">&#xe657;</font>密码设置</a></li>
+                <li><a href=""><font class="iconfont">&#xe621;</font>网站提醒</a></li>
             </ul>
         </div>
 
-
         @yield('content')
     </div>
+</div>
 
 
     <!-- footer -->
@@ -102,18 +102,29 @@
 
 </div>
 </body>
-<script type="text/javascript" src="{{asset('js/member/jquery-1.9.1.min.js')}}"></script>
-<script src="{{asset('js/member/layer-v1.9.3/layer/layer.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/member/er_admin.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/member/layui.js')}}."></script>
 
+<script type="text/javascript" src="{{asset('js/member/jquery-1.9.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/member/Validform_v5.3.2_min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/member/er_admin.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/member/rules.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/member/layer-v1.9.3/layer/layer.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/member/layui.js')}}"></script>
+
+<script>
+    layui.use('form', function(){
+        var form = layui.form(); //只有执行了这一步，部分表单元素才会修饰成功
+
+        //……
+    });
+</script>
 
 
 <script type="text/javascript">
-        $(document).ready(function () {
-                $(".spinner").hide();
-        });
+    $(document).ready(function () {
+        $(".spinner").hide();
+    });
 </script>
+
 @yield('js')
 
 

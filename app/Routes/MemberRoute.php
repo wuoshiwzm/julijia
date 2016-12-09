@@ -4,12 +4,32 @@ $router->get('', 'MemberController@index');
 
 //商城会员模块用户中心
 
+//账号设置 - 个人设置
+$router->get('/config', 'ConfigMemberController@index');
+
+
+
+//账号设置 - 收货地址
+$router->get('/address', ' ');
+
+//账号设置 - 密码设置
+$router->get('/pass', ' ');
+
+//账号设置 - 网站提醒
+$router->get('/notice', ' ');
+
+
+
+
+
+
+
+
+//我的退款
+$router->get('/refund', 'RefundMemberController@index');
+
 //会员积分
 $router->get('/rank', 'RankMemberController@index');
-
-
-
-
 
 //我的收藏
 $router->get('/collect', 'CollectMemberController@index');
