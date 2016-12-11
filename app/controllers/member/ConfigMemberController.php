@@ -36,12 +36,7 @@ class ConfigMemberController extends CommonController
     {
         //获取当前用户信息
         $userInfo = User::getUserinfoById($this->user_id);
-
-
-
-
-
-        return $this->view('member.config');
+        return $this->view('member.config',compact('userInfo'));
 
     }
 

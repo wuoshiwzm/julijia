@@ -18,7 +18,6 @@
                 <li>会员等级<span>{{$memberGroupInfo->name}}</span></li>
                 <li><i>再有{{$nextGroupGap}}分升级到{{$nextGroupName}}</i></li>
             </ul>
-
         </div>
         <!--订单切换-->
         <div class="table_div">

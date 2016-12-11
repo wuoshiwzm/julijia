@@ -283,6 +283,7 @@ class ComposerStaticInita104512b3ab53a1c6b011be99c9fd69e
     );
 
     public static $classMap = array (
+        'Address' => __DIR__ . '/../..' . '/app/models/Adress.php',
         'AddressMemberController' => __DIR__ . '/../..' . '/app/controllers/member/AddressMemberController.php',
         'AdminUser' => __DIR__ . '/../..' . '/app/models/AdminUser.php',
         'AttbuteSeeder' => __DIR__ . '/../..' . '/app/database/seeds/AttbuteSeeder.php',
@@ -323,6 +324,7 @@ class ComposerStaticInita104512b3ab53a1c6b011be99c9fd69e
         'IlluminateQueueClosure' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
         'IndexController' => __DIR__ . '/../..' . '/app/controllers/admin/Index/IndexController.php',
         'Location' => __DIR__ . '/../..' . '/app/models/Location.php',
+        'LocationController' => __DIR__ . '/../..' . '/app/controllers/member/LocationController.php',
         'Maatwebsite\\Excel\\Classes\\Cache' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/Cache.php',
         'Maatwebsite\\Excel\\Classes\\FormatIdentifier' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/FormatIdentifier.php',
         'Maatwebsite\\Excel\\Classes\\LaravelExcelWorksheet' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/LaravelExcelWorksheet.php',

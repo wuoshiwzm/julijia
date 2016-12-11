@@ -1,7 +1,7 @@
 <?php
 /**
  * 控制器问价说明：
- *   1. 网站管理后台控制器所有内容放置在AdminRoute.php 文件中。
+ *   1.网站管理后台控制器所有内容放置在AdminRoute.php 文件中。
  *   2.网站普通用户会员中心控制器放置在MemberRoute.php 文件中.
  *   4 前端控制器控制器存放在本文件中routes.php。
  *   3.如果需要对控制器二次分组，第二次分组以功能模块划分。会员中心放置在 /Routes/Member/file_name.php。
@@ -17,6 +17,14 @@ Route::group(array('domain' => 'shop.julijia.cn'), function () {
     Route::any('member/loginVerify', 'MemberController@loginVerify');
     //用户注册
     Route::get('member/register', 'MemberController@register');
+
+
+    //获取省份信息
+    Route::any('/getProvince', 'LocationController@getProvince');
+    //获取城市信息
+    Route::any('/getCity', 'LocationController@getCity');
+    //获取区域信息
+    Route::any('/getArea', 'LocationController@getArea');
 
 
     //用户中心页（会员中心）面控制器文件组

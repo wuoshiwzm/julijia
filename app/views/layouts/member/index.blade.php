@@ -11,8 +11,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
 
     <!-- 网站头像 -->
-    <link rel="icon" type="image/x-icon" href="{{asset('images/icon.png')}}">
-    <link rel="shortcut icon" type="image/x-icon" href="../images/icon.png">
+    <!-- 网站头像 -->
+    <link rel="icon" type="image/x-icon" href="{{asset('images/member/icon.png')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('images/member/icon.png')}}">
+
+
+
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/admin.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/css.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/iconfont.css')}}">
@@ -24,7 +28,7 @@
     <div>
         <span>李四<font>vip1</font><a href="##">退出</a></span>
         <ul>
-            <li><a href="##">商城首页</a></li>
+            <li><a href="">商城首页</a></li>
             <li><a href="##">购物车 ( <font>2</font> )</a></li>
             <li><a href="##">收藏夹 ( <font>2</font> )</a></li>
             <li><a href="##">消息 ( <font>2</font> )</a></li>
@@ -34,10 +38,10 @@
 
 <div class="ge_admin01">
     <div class="ge_admin_xin">
-        <h2><img src="../images/logo.png"></h2>
+        <h2><img src="{{asset('images/member/logo.png')}}"></h2>
         <ul>
-            <li class="nav_on"><a href="ge_admin.html">个人中心</a></li>
-            <li class="nav_on02"><a href="ge_admin_mi.html">账号设置</a></li>
+            <li class="nav_on"><a href="{{url('member/order')}}">个人中心</a></li>
+            <li class="nav_on02"><a href="{{url('member/config/index')}}">账号设置</a></li>
             <li class="nav_on03"><a href="ge_admin_message.html">消息<span>2</span></a></li>
         </ul>
         <div class="tui"><a href="##">退出</a></div>
@@ -48,14 +52,14 @@
     <div class="ge_admin_nei">
         <div class="ge_admin_nei_left">
             <ul>
-                <li><a href="##"><font class="iconfont">&#x343f;</font>我的购物车</a></li>
-                <li><a href="{{url('member/order')}}"><font class="iconfont">&#xe601;</font>我的订单</a></li>
-                <li><a href="{{url('member/collect')}}"><font class="iconfont">&#xe637;</font>我的收藏</a></li>
-                <li><a href="{{url('member/rank')}}"><font class="iconfont">&#xe682;</font>我的积分</a></li>
-                <li><a href="ge_admin_tuikuan.html"><font class="iconfont">&#xe6be;</font>我的退款</a></li>
-                <li><a href="ge_admin_ts.html"><font class="iconfont">&#xe608;</font>我的投诉</a></li>
-                <li><a href="ge_admin_pingjia.html"><font class="iconfont">&#xe6ae;</font>我的评论</a></li>
-                <li><a href="ge_admin_zuji.html"><font class="iconfont">&#xe616;</font>我的足迹</a></li>
+                <li @if(exiturl('cart'))class="c_on" @endif><a  href="##"><font class="iconfont">&#x343f;</font>我的购物车</a></li>
+                <li @if(exiturl('order'))class="c_on" @endif><a  href="{{url('member/order')}}"><font class="iconfont">&#xe601;</font>我的订单</a></li>
+                <li @if(exiturl('collect'))class="c_on" @endif><a  href="{{url('member/collect')}}"><font class="iconfont">&#xe637;</font>我的收藏</a></li>
+                <li @if(exiturl('rank'))class="c_on" @endif><a  href="{{url('member/rank')}}"><font class="iconfont">&#xe682;</font>我的积分</a></li>
+                <li @if(exiturl('cart'))class="c_on" @endif><a  href="ge_admin_tuikuan.html"><font class="iconfont">&#xe6be;</font>我的退款</a></li>
+                <li @if(exiturl('cart'))class="c_on" @endif><a  href="ge_admin_ts.html"><font class="iconfont">&#xe608;</font>我的投诉</a></li>
+                <li @if(exiturl('cart'))class="c_on" @endif><a  href="ge_admin_pingjia.html"><font class="iconfont">&#xe6ae;</font>我的评论</a></li>
+                <li @if(exiturl('cart'))class="c_on" @endif><a  href="ge_admin_zuji.html"><font class="iconfont">&#xe616;</font>我的足迹</a></li>
             </ul>
         </div>
 

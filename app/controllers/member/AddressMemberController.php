@@ -34,7 +34,14 @@ class AddressMemberController extends CommonController {
 	 */
 	public function index()
 	{
-		return $this->view('member.config_address');
+        $addrInfo = User::getAllAddrByUser($this->user_id)
+            ->leftjoin('province','userinfo_address.province','=','province.id')
+            ->leftjoin('city','userinfo_address.city','=','city.id')
+            ->leftjoin('area','userinfo_address.district','=','area.id')
+            ->select('province.province as province_name','city.city as city_name','area.area as area_name','userinfo_address.*')
+            ->get();
+
+		return $this->view('member.config_address',compact('addrInfo'));
 	}
 
 
@@ -56,7 +63,8 @@ class AddressMemberController extends CommonController {
 	 */
 	public function store()
 	{
-		//
+
+	    dd(Input::all());
 	}
 
 
@@ -80,7 +88,23 @@ class AddressMemberController extends CommonController {
 	 */
 	public function edit($id)
 	{
-		//
+
+
+        $addrEdit = Address::getAddress($id);
+
+        $addrInfo = User::getAllAddrByUser($this->user_id)
+            ->leftjoin('province','userinfo_address.province','=','province.id')
+            ->leftjoin('city','userinfo_address.city','=','city.id')
+            ->leftjoin('area','userinfo_address.district','=','area.id')
+            ->select('province.province as province_name','city.city as city_name','area.area as area_name','userinfo_address.*')
+            ->get();
+
+
+        return $this->view('member.config_address_edit',compact('addrInfo','addrEdit'));
+
+
+
+
 	}
 
 
@@ -92,7 +116,28 @@ class AddressMemberController extends CommonController {
 	 */
 	public function update($id)
 	{
-		//
+        $input = trimValue( Input::except('_token','_method','quiz1','quiz2','quiz3'));
+        $validator = Address::validatorAddress( $input );
+        if( $validator === true )
+        {
+
+            $res = Address::update($id,$input);
+
+            if ( $res )
+            {
+                //修改成功
+                return Redirect::to('member/config/address')->with('msg','修改成功');
+
+            }else
+            {
+                //修改失败
+                return Redirect::back()->with('msg','修改失败');
+            }
+
+        }else
+        {
+            return Redirect::back()->withErrors($validator);
+        }
 	}
 
 

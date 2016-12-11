@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Address' => $baseDir . '/app/models/Adress.php',
     'AddressMemberController' => $baseDir . '/app/controllers/member/AddressMemberController.php',
     'AdminUser' => $baseDir . '/app/models/AdminUser.php',
     'AttbuteSeeder' => $baseDir . '/app/database/seeds/AttbuteSeeder.php',
@@ -46,6 +47,7 @@ return array(
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     'IndexController' => $baseDir . '/app/controllers/admin/Index/IndexController.php',
     'Location' => $baseDir . '/app/models/Location.php',
+    'LocationController' => $baseDir . '/app/controllers/member/LocationController.php',
     'Maatwebsite\\Excel\\Classes\\Cache' => $vendorDir . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/Cache.php',
     'Maatwebsite\\Excel\\Classes\\FormatIdentifier' => $vendorDir . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/FormatIdentifier.php',
     'Maatwebsite\\Excel\\Classes\\LaravelExcelWorksheet' => $vendorDir . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/LaravelExcelWorksheet.php',
