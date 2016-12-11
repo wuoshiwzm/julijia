@@ -4,41 +4,25 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita168950f473700807f765beb208a2177
+class ComposerStaticInita104512b3ab53a1c6b011be99c9fd69e
 {
     public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        'e40631d46120a9c38ea139981f8dab26' => __DIR__ . '/..' . '/ircmaxell/password-compat/lib/password.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
-        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'e40631d46120a9c38ea139981f8dab26' => __DIR__ . '/..' . '/ircmaxell/password-compat/lib/password.php',
         '3919eeb97e98d4648304477f8ef734ba' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/Crypt/Random.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '88be58ff0468fccc1bf7be0bd2f47f4c' => __DIR__ . '/../..' . '/app/libraries/function/helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'TijsVerkoyen\\CssToInlineStyles\\' => 31,
+        ),
         'S' => 
         array (
-            'Symfony\\Polyfill\\Mbstring\\' => 26,
-            'Symfony\\Component\\Translation\\' => 30,
-            'Symfony\\Component\\Security\\Core\\' => 32,
-            'Symfony\\Component\\Routing\\' => 26,
-            'Symfony\\Component\\Process\\' => 26,
-            'Symfony\\Component\\HttpKernel\\' => 29,
-            'Symfony\\Component\\HttpFoundation\\' => 33,
-            'Symfony\\Component\\Finder\\' => 25,
             'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\EventDispatcher\\' => 34,
-            'Symfony\\Component\\DomCrawler\\' => 29,
-            'Symfony\\Component\\Debug\\' => 24,
-            'Symfony\\Component\\CssSelector\\' => 30,
-            'Symfony\\Component\\Console\\' => 26,
-            'Symfony\\Component\\BrowserKit\\' => 29,
-        ),
-        'P' => 
-        array (
-            'Psr\\Log\\' => 8,
-            'Patchwork\\' => 10,
         ),
         'M' => 
         array (
@@ -49,44 +33,12 @@ class ComposerStaticInita168950f473700807f765beb208a2177
         array (
             'Intervention\\Image\\' => 19,
         ),
-        'C' => 
-        array (
-            'Carbon\\' => 7,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Mbstring\\' => 
+        'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
-        ),
-        'Symfony\\Component\\Translation\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/translation',
-        ),
-        'Symfony\\Component\\Security\\Core\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/security-core',
-        ),
-        'Symfony\\Component\\Routing\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/routing',
-        ),
-        'Symfony\\Component\\Process\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/process',
-        ),
-        'Symfony\\Component\\HttpKernel\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/http-kernel',
-        ),
-        'Symfony\\Component\\HttpFoundation\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/http-foundation',
-        ),
-        'Symfony\\Component\\Finder\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/finder',
+            0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
         ),
         'Symfony\\Component\\Filesystem\\' => 
         array (
@@ -95,34 +47,6 @@ class ComposerStaticInita168950f473700807f765beb208a2177
         'Symfony\\Component\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
-        ),
-        'Symfony\\Component\\DomCrawler\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/dom-crawler',
-        ),
-        'Symfony\\Component\\Debug\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/debug',
-        ),
-        'Symfony\\Component\\CssSelector\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/css-selector',
-        ),
-        'Symfony\\Component\\Console\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/console',
-        ),
-        'Symfony\\Component\\BrowserKit\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/browser-kit',
-        ),
-        'Psr\\Log\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
-        ),
-        'Patchwork\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/patchwork/utf8/src/Patchwork',
         ),
         'Monolog\\' => 
         array (
@@ -135,10 +59,6 @@ class ComposerStaticInita168950f473700807f765beb208a2177
         'Intervention\\Image\\' => 
         array (
             0 => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image',
-        ),
-        'Carbon\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
     );
 
@@ -160,6 +80,54 @@ class ComposerStaticInita168950f473700807f765beb208a2177
             array (
                 0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
             ),
+            'Symfony\\Component\\Translation\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/translation',
+            ),
+            'Symfony\\Component\\Security\\Core\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/security-core',
+            ),
+            'Symfony\\Component\\Routing\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/routing',
+            ),
+            'Symfony\\Component\\Process\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/process',
+            ),
+            'Symfony\\Component\\HttpKernel\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/http-kernel',
+            ),
+            'Symfony\\Component\\HttpFoundation\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/http-foundation',
+            ),
+            'Symfony\\Component\\Finder\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/finder',
+            ),
+            'Symfony\\Component\\DomCrawler\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/dom-crawler',
+            ),
+            'Symfony\\Component\\Debug\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/debug',
+            ),
+            'Symfony\\Component\\CssSelector\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/css-selector',
+            ),
+            'Symfony\\Component\\Console\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/console',
+            ),
+            'Symfony\\Component\\BrowserKit\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/browser-kit',
+            ),
             'Stack' => 
             array (
                 0 => __DIR__ . '/..' . '/stack/builder/src',
@@ -167,17 +135,44 @@ class ComposerStaticInita168950f473700807f765beb208a2177
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/psr/log',
+            ),
             'Predis' => 
             array (
                 0 => __DIR__ . '/..' . '/predis/predis/lib',
+            ),
+            'Patchwork' => 
+            array (
+                0 => __DIR__ . '/..' . '/patchwork/utf8/class',
             ),
             'PHPParser' => 
             array (
                 0 => __DIR__ . '/..' . '/nikic/php-parser/lib',
             ),
+            'PHPExcel' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes',
+            ),
+        ),
+        'O' => 
+        array (
+            'Omnipay\\Common\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/omnipay/common/src',
+            ),
+            'Omnipay\\Alipay\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/lokielse/omnipay-alipay/src',
+            ),
         ),
         'N' => 
         array (
+            'Normalizer' => 
+            array (
+                0 => __DIR__ . '/..' . '/patchwork/utf8/class',
+            ),
             'Net' => 
             array (
                 0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
@@ -188,6 +183,24 @@ class ComposerStaticInita168950f473700807f765beb208a2177
             'Math' => 
             array (
                 0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+            ),
+            'Maatwebsite\\Excel\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/maatwebsite/excel/src',
+            ),
+        ),
+        'L' => 
+        array (
+            'Liebig\\Cron' => 
+            array (
+                0 => __DIR__ . '/..' . '/liebig/cron/src',
+            ),
+        ),
+        'K' => 
+        array (
+            'Krucas\\Notification' => 
+            array (
+                0 => __DIR__ . '/..' . '/edvinaskrucas/notification/src',
             ),
         ),
         'J' => 
@@ -202,6 +215,17 @@ class ComposerStaticInita168950f473700807f765beb208a2177
             'Illuminate' => 
             array (
                 0 => __DIR__ . '/..' . '/laravel/framework/src',
+            ),
+        ),
+        'G' => 
+        array (
+            'Guzzle\\Tests' => 
+            array (
+                0 => __DIR__ . '/..' . '/guzzle/guzzle/tests',
+            ),
+            'Guzzle' => 
+            array (
+                0 => __DIR__ . '/..' . '/guzzle/guzzle/src',
             ),
         ),
         'F' => 
@@ -221,9 +245,21 @@ class ComposerStaticInita168950f473700807f765beb208a2177
             array (
                 0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
             ),
+            'Cron' => 
+            array (
+                0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src',
+            ),
             'ClassPreloader' => 
             array (
                 0 => __DIR__ . '/..' . '/classpreloader/classpreloader/src',
+            ),
+            'Cartalyst\\Sentry' => 
+            array (
+                0 => __DIR__ . '/..' . '/cartalyst/sentry/src',
+            ),
+            'Carbon' => 
+            array (
+                0 => __DIR__ . '/..' . '/nesbot/carbon/src',
             ),
         ),
         'B' => 
@@ -235,6 +271,10 @@ class ComposerStaticInita168950f473700807f765beb208a2177
         ),
         'A' => 
         array (
+            'Artisaninweb\\SoapWrapper' => 
+            array (
+                0 => __DIR__ . '/..' . '/artisaninweb/laravel-soap/src',
+            ),
             'Anchu\\Ftp\\' => 
             array (
                 0 => __DIR__ . '/..' . '/anchu/ftp/src',
@@ -243,12 +283,25 @@ class ComposerStaticInita168950f473700807f765beb208a2177
     );
 
     public static $classMap = array (
+        'AddressMemberController' => __DIR__ . '/../..' . '/app/controllers/member/AddressMemberController.php',
         'AdminUser' => __DIR__ . '/../..' . '/app/models/AdminUser.php',
         'AttbuteSeeder' => __DIR__ . '/../..' . '/app/database/seeds/AttbuteSeeder.php',
         'BaseController' => __DIR__ . '/../..' . '/app/controllers/BaseController.php',
         'CacheController' => __DIR__ . '/../..' . '/app/controllers/admin/system/CacheController.php',
         'Cart' => __DIR__ . '/../..' . '/app/models/Cart.php',
         'CartController' => __DIR__ . '/../..' . '/app/controllers/member/CartController.php',
+        'Cartalyst\\Sentry\\Groups\\GroupExistsException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Groups/Exceptions.php',
+        'Cartalyst\\Sentry\\Groups\\GroupNotFoundException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Groups/Exceptions.php',
+        'Cartalyst\\Sentry\\Groups\\NameRequiredException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Groups/Exceptions.php',
+        'Cartalyst\\Sentry\\Throttling\\UserBannedException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Throttling/Exceptions.php',
+        'Cartalyst\\Sentry\\Throttling\\UserSuspendedException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Throttling/Exceptions.php',
+        'Cartalyst\\Sentry\\Users\\LoginRequiredException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
+        'Cartalyst\\Sentry\\Users\\PasswordRequiredException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
+        'Cartalyst\\Sentry\\Users\\UserAlreadyActivatedException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
+        'Cartalyst\\Sentry\\Users\\UserExistsException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
+        'Cartalyst\\Sentry\\Users\\UserNotActivatedException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
+        'Cartalyst\\Sentry\\Users\\UserNotFoundException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
+        'Cartalyst\\Sentry\\Users\\WrongPasswordException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Users/Exceptions.php',
         'CategoryController' => __DIR__ . '/../..' . '/app/controllers/admin/product/CategoryController.php',
         'CheckOut' => __DIR__ . '/../..' . '/app/models/CheckOut.php',
         'Cms' => __DIR__ . '/../..' . '/app/models/Cms.php',
@@ -259,24 +312,56 @@ class ComposerStaticInita168950f473700807f765beb208a2177
         'ComplainController' => __DIR__ . '/../..' . '/app/controllers/admin/order/ComplainController.php',
         'ConfigMemberController' => __DIR__ . '/../..' . '/app/controllers/member/ConfigMemberController.php',
         'CouponController' => __DIR__ . '/../..' . '/app/controllers/admin/marketing/CouponController.php',
+        'CreateCronjobTable' => __DIR__ . '/..' . '/liebig/cron/src/migrations/2013_06_27_144035_create_cronjob_table.php',
+        'CreateCronmanagerTable' => __DIR__ . '/..' . '/liebig/cron/src/migrations/2013_06_27_143953_create_cronmanager_table.php',
         'Customer' => __DIR__ . '/../..' . '/app/models/Customer.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/app/database/seeds/DatabaseSeeder.php',
         'DeliverController' => __DIR__ . '/../..' . '/app/controllers/admin/order/DeliverController.php',
         'FullCutController' => __DIR__ . '/../..' . '/app/controllers/admin/marketing/FullCutController.php',
         'Group' => __DIR__ . '/../..' . '/app/models/Group.php',
-        'GroupController' => __DIR__ . '/../..' . '/app/controllers/admin/marketing/GroupController.php',
+        'GroupController' => __DIR__ . '/../..' . '/app/controllers/admin/member/GrouController.php',
         'IlluminateQueueClosure' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
         'IndexController' => __DIR__ . '/../..' . '/app/controllers/admin/Index/IndexController.php',
         'Location' => __DIR__ . '/../..' . '/app/models/Location.php',
-        'LocationController' => __DIR__ . '/../..' . '/app/controllers/admin/LocationController.php',
+        'Maatwebsite\\Excel\\Classes\\Cache' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/Cache.php',
+        'Maatwebsite\\Excel\\Classes\\FormatIdentifier' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/FormatIdentifier.php',
+        'Maatwebsite\\Excel\\Classes\\LaravelExcelWorksheet' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/LaravelExcelWorksheet.php',
+        'Maatwebsite\\Excel\\Classes\\PHPExcel' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Classes/PHPExcel.php',
+        'Maatwebsite\\Excel\\Collections\\CellCollection' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Collections/CellCollection.php',
+        'Maatwebsite\\Excel\\Collections\\ExcelCollection' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Collections/ExcelCollection.php',
+        'Maatwebsite\\Excel\\Collections\\RowCollection' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Collections/RowCollection.php',
+        'Maatwebsite\\Excel\\Collections\\SheetCollection' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Collections/SheetCollection.php',
+        'Maatwebsite\\Excel\\Excel' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Excel.php',
+        'Maatwebsite\\Excel\\ExcelServiceProvider' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/ExcelServiceProvider.php',
+        'Maatwebsite\\Excel\\Exceptions\\LaravelExcelException' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Exceptions/LaravelExcelException.php',
+        'Maatwebsite\\Excel\\Facades\\Excel' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Facades/Excel.php',
+        'Maatwebsite\\Excel\\Files\\ExcelFile' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Files/ExcelFile.php',
+        'Maatwebsite\\Excel\\Files\\ExportHandler' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Files/ExportHandler.php',
+        'Maatwebsite\\Excel\\Files\\File' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Files/File.php',
+        'Maatwebsite\\Excel\\Files\\ImportHandler' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Files/ImportHandler.php',
+        'Maatwebsite\\Excel\\Files\\NewExcelFile' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Files/NewExcelFile.php',
+        'Maatwebsite\\Excel\\Filters\\ChunkReadFilter' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Filters/ChunkReadFilter.php',
+        'Maatwebsite\\Excel\\Parsers\\CssParser' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Parsers/CssParser.php',
+        'Maatwebsite\\Excel\\Parsers\\ExcelParser' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Parsers/ExcelParser.php',
+        'Maatwebsite\\Excel\\Parsers\\ViewParser' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Parsers/ViewParser.php',
+        'Maatwebsite\\Excel\\Readers\\Batch' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Readers/Batch.php',
+        'Maatwebsite\\Excel\\Readers\\ConfigReader' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Readers/ConfigReader.php',
+        'Maatwebsite\\Excel\\Readers\\Html' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Readers/HtmlReader.php',
+        'Maatwebsite\\Excel\\Readers\\LaravelExcelReader' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Readers/LaravelExcelReader.php',
+        'Maatwebsite\\Excel\\Writers\\CellWriter' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Writers/CellWriter.php',
+        'Maatwebsite\\Excel\\Writers\\LaravelExcelWriter' => __DIR__ . '/..' . '/maatwebsite/excel/src/Maatwebsite/Excel/Writers/LaravelExcelWriter.php',
         'Marketing' => __DIR__ . '/../..' . '/app/models/Marketing.php',
         'MemberController' => __DIR__ . '/../..' . '/app/controllers/member/MemberController.php',
         'MemberInfoController' => __DIR__ . '/../..' . '/app/controllers/admin/member/MemberInfoController.php',
+        'MigrationCartalystSentryInstallGroups' => __DIR__ . '/..' . '/cartalyst/sentry/src/migrations/2012_12_06_225929_migration_cartalyst_sentry_install_groups.php',
+        'MigrationCartalystSentryInstallThrottle' => __DIR__ . '/..' . '/cartalyst/sentry/src/migrations/2012_12_06_225988_migration_cartalyst_sentry_install_throttle.php',
+        'MigrationCartalystSentryInstallUsers' => __DIR__ . '/..' . '/cartalyst/sentry/src/migrations/2012_12_06_225921_migration_cartalyst_sentry_install_users.php',
+        'MigrationCartalystSentryInstallUsersGroupsPivot' => __DIR__ . '/..' . '/cartalyst/sentry/src/migrations/2012_12_06_225945_migration_cartalyst_sentry_install_users_groups_pivot.php',
         'News' => __DIR__ . '/../..' . '/app/models/News.php',
         'NewsArticleController' => __DIR__ . '/../..' . '/app/controllers/admin/news/NewsArticleController.php',
         'NewsCate' => __DIR__ . '/../..' . '/app/models/NewsCate.php',
         'NewsCateController' => __DIR__ . '/../..' . '/app/controllers/admin/news/NewsCateController.php',
-        'Normalizer' => __DIR__ . '/..' . '/patchwork/utf8/src/Normalizer.php',
+        'Omnipay\\Omnipay' => __DIR__ . '/..' . '/omnipay/common/src/Omnipay/Omnipay.php',
         'Order' => __DIR__ . '/../..' . '/app/models/Order.php',
         'OrderBack' => __DIR__ . '/../..' . '/app/models/OrderBack.php',
         'OrderController' => __DIR__ . '/../..' . '/app/controllers/admin/order/OrderController.php',
@@ -296,7 +381,7 @@ class ComposerStaticInita168950f473700807f765beb208a2177
         'RefundMemberController' => __DIR__ . '/../..' . '/app/controllers/member/RefundMemberController.php',
         'ReportController' => __DIR__ . '/../..' . '/app/controllers/admin/Report/ReportContorller.php',
         'Review' => __DIR__ . '/../..' . '/app/models/Review.php',
-        'SessionHandlerInterface' => __DIR__ . '/..' . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
+        'SessionHandlerInterface' => __DIR__ . '/..' . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
         'ShopController' => __DIR__ . '/../..' . '/app/controllers/admin/user/ShopController.php',
         'ShopManage' => __DIR__ . '/../..' . '/app/models/ShopManage.php',
         'Source_Area_Area' => __DIR__ . '/../..' . '/app/models/Source/Area/Area.php',
@@ -341,6 +426,7 @@ class ComposerStaticInita168950f473700807f765beb208a2177
         'Source_Salerule_FavoutableProduct' => __DIR__ . '/../..' . '/app/models/Source/Salerule/FavoutableProduct.php',
         'Source_Salerule_FavoutableRule' => __DIR__ . '/../..' . '/app/models/Source/Salerule/FavoutableRule.php',
         'Source_System_Config_Shipping' => __DIR__ . '/../..' . '/app/models/Source/System/Config/Shipping.php',
+        'Source_System_Log_VisitorsLog' => __DIR__ . '/../..' . '/app/models/Source/System/Log/VisitorsLog.php',
         'Source_User_ShopInfo' => __DIR__ . '/../..' . '/app/models/Source/User/ShopInfo.php',
         'Source_User_SupplierInfo' => __DIR__ . '/../..' . '/app/models/Source/User/SupplierInfo.php',
         'Source_User_UserInfo' => __DIR__ . '/../..' . '/app/models/Source/User/UserInfo.php',
@@ -364,10 +450,10 @@ class ComposerStaticInita168950f473700807f765beb208a2177
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita168950f473700807f765beb208a2177::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita168950f473700807f765beb208a2177::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInita168950f473700807f765beb208a2177::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInita168950f473700807f765beb208a2177::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita104512b3ab53a1c6b011be99c9fd69e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita104512b3ab53a1c6b011be99c9fd69e::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInita104512b3ab53a1c6b011be99c9fd69e::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInita104512b3ab53a1c6b011be99c9fd69e::$classMap;
 
         }, null, ClassLoader::class);
     }
