@@ -35,8 +35,7 @@ class MemberController extends CommonController
         return $this->view('member.welc');
     }
 
-
-    /**
+     /**
      * 注册
      */
     function register()

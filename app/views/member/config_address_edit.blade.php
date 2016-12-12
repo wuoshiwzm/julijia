@@ -20,7 +20,7 @@
             收货地址<font>Shipping Address</font>
         </div>
         <form class="layui-form m-form" action="{{url('member/config/address/'.$addrEdit->id)}}" method="post" novalidate>
-            <input type="hidden" name="_method" value="PUT">
+            {{--<input type="hidden" name="_method" value="PUT">--}}
             {{ Form::token() }}
 
 
@@ -132,37 +132,43 @@
         </form>
     </div>
 
-    <div class="admin_table">
-        <div class="h-title">
-            <table border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                    <th width="10%">收货人</th>
-                    <th width="20%">所在地区</th>
-                    <th>详细地址</th>
-                    <th width="10%">邮编</th>
-                    <th width="16%">电话/手机</th>
-                    <th width="18%" class="border_rn">操作</th>
-                </tr>
+    {{--<div class="admin_table">--}}
+        {{--<div class="h-title">--}}
+            {{--<table border="0" cellpadding="0" cellspacing="0">--}}
+                {{--<tr>--}}
+                    {{--<th width="10%">收货人</th>--}}
+                    {{--<th width="20%">所在地区</th>--}}
+                    {{--<th>详细地址</th>--}}
+                    {{--<th width="10%">邮编</th>--}}
+                    {{--<th width="16%">电话/手机</th>--}}
+                    {{--<th width="18%" class="border_rn">操作</th>--}}
+                {{--</tr>--}}
 
-                @foreach($addrInfo as $addr)
-                <tr>
-                    <td>{{$addr->name}}</td>
-                    <td>{{$addr->province_name}}，{{$addr->city_name}}，{{$addr->area_name}}</td>
-                    <td>{{$addr->address}}</td>
-                    <td>{{$addr->zipcode}}</td>
-                    <td>{{$addr->phone}}</td>
-                    <td class="border_rn">
-                        <a href="{{url('member/config/address/'.$addr->id."/edit")}}">修改</a>&nbsp;&nbsp;&nbsp;
-                        <a href="javascript:;" onclick="delAddr({{"'".encode($addr->id)."'"}});">删除</a>&nbsp;&nbsp;&nbsp;
-                        <a href="##">设为默认</a>
-                    </td>
-                </tr>
-                @endforeach
+                {{--@foreach($addrInfo as $addr)--}}
+                {{--<tr>--}}
+                    {{--<td>{{$addr->name}}</td>--}}
+                    {{--<td>{{$addr->province_name}}，{{$addr->city_name}}，{{$addr->area_name}}</td>--}}
+                    {{--<td>{{$addr->address}}</td>--}}
+                    {{--<td>{{$addr->zipcode}}</td>--}}
+                    {{--<td>{{$addr->phone}}</td>--}}
+                    {{--<td class="border_rn">--}}
+                        {{--<a href="{{url('member/config/address/'.$addr->id."/edit")}}">修改</a>&nbsp;&nbsp;&nbsp;--}}
+                        {{--&nbsp;&nbsp;--}}
+
+                        {{--@if($addr->status == 1)--}}
+                            {{--这是默认地址--}}
+                        {{--@else--}}
+                            {{--<a href="javascript:;" onclick="delAddr({{"'".encode($addr->id)."'"}});">删除</a>&nbsp;--}}
+                            {{--<a href="{{url('member/config/address/set_default/'.encode($addr->id))}}">设为默认</a>--}}
+                        {{--@endif--}}
+                    {{--</td>--}}
+                {{--</tr>--}}
+                {{--@endforeach--}}
 
 
-            </table>
-        </div>
-    </div>
+            {{--</table>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
 
 </div>

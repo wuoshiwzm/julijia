@@ -1,6 +1,6 @@
 <?php
 //用户积分管理
-class RefundMemberController extends CommonController
+class CommentMemberController extends CommonController
 {
     private $user_id;
     protected $layout = 'layouts.member.index';
@@ -28,14 +28,14 @@ class RefundMemberController extends CommonController
     }
 
     /**
-     * 我的退款
+     * 我的评论
      *
      * @return Response
      */
     public function index()
     {
 
-        return $this->view('member.refund');
+        return $this->view('member.comment');
 
         die('refund');
 

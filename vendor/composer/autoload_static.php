@@ -283,7 +283,7 @@ class ComposerStaticInita104512b3ab53a1c6b011be99c9fd69e
     );
 
     public static $classMap = array (
-        'Address' => __DIR__ . '/../..' . '/app/models/Adress.php',
+        'Address' => __DIR__ . '/../..' . '/app/models/Address.php',
         'AddressMemberController' => __DIR__ . '/../..' . '/app/controllers/member/AddressMemberController.php',
         'AdminUser' => __DIR__ . '/../..' . '/app/models/AdminUser.php',
         'AttbuteSeeder' => __DIR__ . '/../..' . '/app/database/seeds/AttbuteSeeder.php',
@@ -308,6 +308,7 @@ class ComposerStaticInita104512b3ab53a1c6b011be99c9fd69e
         'Cms' => __DIR__ . '/../..' . '/app/models/Cms.php',
         'CollectMemberController' => __DIR__ . '/../..' . '/app/controllers/member/CollectMemberController.php',
         'CommentController' => __DIR__ . '/../..' . '/app/controllers/admin/order/CommentContorller.php',
+        'CommentMemberController' => __DIR__ . '/../..' . '/app/controllers/member/CommentMemberController.php',
         'CommonController' => __DIR__ . '/../..' . '/app/controllers/admin/CommonController.php',
         'Complain' => __DIR__ . '/../..' . '/app/models/Complain.php',
         'ComplainController' => __DIR__ . '/../..' . '/app/controllers/admin/order/ComplainController.php',
@@ -318,9 +319,11 @@ class ComposerStaticInita104512b3ab53a1c6b011be99c9fd69e
         'Customer' => __DIR__ . '/../..' . '/app/models/Customer.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/app/database/seeds/DatabaseSeeder.php',
         'DeliverController' => __DIR__ . '/../..' . '/app/controllers/admin/order/DeliverController.php',
+        'FeedbackMemberController' => __DIR__ . '/../..' . '/app/controllers/member/FeedbackMemberController.php',
         'FullCutController' => __DIR__ . '/../..' . '/app/controllers/admin/marketing/FullCutController.php',
         'Group' => __DIR__ . '/../..' . '/app/models/Group.php',
         'GroupController' => __DIR__ . '/../..' . '/app/controllers/admin/member/GrouController.php',
+        'HistoryMemberController' => __DIR__ . '/../..' . '/app/controllers/member/HistoryMemberController.php',
         'IlluminateQueueClosure' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
         'IndexController' => __DIR__ . '/../..' . '/app/controllers/admin/Index/IndexController.php',
         'Location' => __DIR__ . '/../..' . '/app/models/Location.php',

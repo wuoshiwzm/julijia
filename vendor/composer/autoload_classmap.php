@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Address' => $baseDir . '/app/models/Adress.php',
+    'Address' => $baseDir . '/app/models/Address.php',
     'AddressMemberController' => $baseDir . '/app/controllers/member/AddressMemberController.php',
     'AdminUser' => $baseDir . '/app/models/AdminUser.php',
     'AttbuteSeeder' => $baseDir . '/app/database/seeds/AttbuteSeeder.php',
@@ -31,6 +31,7 @@ return array(
     'Cms' => $baseDir . '/app/models/Cms.php',
     'CollectMemberController' => $baseDir . '/app/controllers/member/CollectMemberController.php',
     'CommentController' => $baseDir . '/app/controllers/admin/order/CommentContorller.php',
+    'CommentMemberController' => $baseDir . '/app/controllers/member/CommentMemberController.php',
     'CommonController' => $baseDir . '/app/controllers/admin/CommonController.php',
     'Complain' => $baseDir . '/app/models/Complain.php',
     'ComplainController' => $baseDir . '/app/controllers/admin/order/ComplainController.php',
@@ -41,9 +42,11 @@ return array(
     'Customer' => $baseDir . '/app/models/Customer.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'DeliverController' => $baseDir . '/app/controllers/admin/order/DeliverController.php',
+    'FeedbackMemberController' => $baseDir . '/app/controllers/member/FeedbackMemberController.php',
     'FullCutController' => $baseDir . '/app/controllers/admin/marketing/FullCutController.php',
     'Group' => $baseDir . '/app/models/Group.php',
     'GroupController' => $baseDir . '/app/controllers/admin/member/GrouController.php',
+    'HistoryMemberController' => $baseDir . '/app/controllers/member/HistoryMemberController.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     'IndexController' => $baseDir . '/app/controllers/admin/Index/IndexController.php',
     'Location' => $baseDir . '/app/models/Location.php',

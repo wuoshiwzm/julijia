@@ -57,7 +57,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>详细地址</label>
                     <div class="layui-input-block">
-                        <textarea name="desc" class="layui-textarea w80b f_left"
+                        <textarea name="address" class="layui-textarea w80b f_left"
                                   placeholder="建议您如实填写详细收货地址，例如街道名称，门牌号码，楼层和房间号等信息" autocomplete="off" ignore="ignore"
                                   datatype="n" errormsg="5-120个字符，一个汉字为两个字符" tipsrmsg="请输入详细地址"></textarea><span
                                 class="Validform_checktip"></span>
@@ -67,7 +67,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">邮政编码</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" placeholder="如您不清楚邮递区号，请填写000000" autocomplete="off"
+                        <input type="text" name="zipcode" placeholder="如您不清楚邮递区号，请填写000000" autocomplete="off"
                                class="layui-input w40b f_left" errormsg="请输入邮政编码" tipsrmsg="请输入邮政编码"><span
                                 class="Validform_checktip"></span>
                     </div>
@@ -76,7 +76,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>收货人</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" placeholder="长度不超过25个字符" autocomplete="off"
+                        <input type="text" name="name" placeholder="长度不超过25个字符" autocomplete="off"
                                class="layui-input w40b f_left" ignore="ignore" datatype="n"
                                errormsg="收货人姓名应为2-25个字符，一个汉字为两个字符" tipsrmsg="请输入收货人姓名"><span
                                 class="Validform_checktip"></span>
@@ -86,7 +86,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>手机号码</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" placeholder="电话号码、手机号码必须填一项" autocomplete="off"
+                        <input type="text" name="phone" placeholder="电话号码、手机号码必须填一项" autocomplete="off"
                                class="layui-input w40b f_left" ignore="ignore" datatype="n" errormsg="6-20个数字"
                                tipsrmsg="请输入手机号码"><span class="Validform_checktip"></span>
                     </div>
@@ -95,16 +95,16 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">电话号码</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" placeholder="区号" class="layui-input w20b f_left m_r_10">
-                        <input type="text" name="title" placeholder="电话号码" class="layui-input w30b f_left m_r_10">
-                        <input type="text" name="title" placeholder="分机" class="layui-input w20b f_left m_r_10">
+                        {{--<input type="text" name="title" placeholder="区号" class="layui-input w20b f_left m_r_10">--}}
+                        <input type="text" name="tel" placeholder="电话号码" class="layui-input w30b f_left m_r_10">
+                        {{--<input type="text" name="title" placeholder="分机" class="layui-input w20b f_left m_r_10">--}}
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label"> </label>
                     <div class="layui-input-block">
-                        <input type="checkbox" name="like[write]" title="设为默认地址">
+                        <input type="checkbox" name="status" title="设为默认地址" value=1>
                         <div class="layui-unselect layui-form-checkbox layui-form-checked"><span>设为默认地址</span><i
                                     class="layui-icon"></i></div>
                     </div>
@@ -139,8 +139,14 @@
                             <td>{{$addr->phone}}</td>
                             <td class="border_rn">
                                 <a href="{{url('member/config/address/'.$addr->id."/edit")}}">修改</a>&nbsp;&nbsp;&nbsp;
-                                <a href="javascript:;" onclick="delAddr({{"'".encode($addr->id)."'"}});">删除</a>&nbsp;&nbsp;&nbsp;
-                                <a href="##">设为默认</a>
+                                &nbsp;&nbsp;
+
+                                @if($addr->status == 1)
+                                    这是默认地址
+                                @else
+                                    <a href="javascript:;" onclick="delAddr({{"'".encode($addr->id)."'"}});">删除</a>&nbsp;
+                                    <a href="{{url('member/config/address/set_default/'.encode($addr->id))}}">设为默认</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -157,7 +163,6 @@
 
 @section('js')
     <script>
-
         function delAddr(id) {
             var token = $("input[name='_token']").val();
             layer.confirm('确定要删除吗？', {

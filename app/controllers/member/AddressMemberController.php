@@ -63,8 +63,14 @@ class AddressMemberController extends CommonController {
 	 */
 	public function store()
 	{
+//        dd(Input::all());
+        $input = Input::except('_token','method','quiz1','quiz2','quiz3');
+        $input['user_id']=$this->user_id;
+        $res = Address::createAddr($input);
 
-	    dd(Input::all());
+        if($res){
+            return Redirect::to('member/config/address')->with('msg','修改成功');
+        }
 	}
 
 
@@ -147,9 +153,41 @@ class AddressMemberController extends CommonController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
-		//
+    public function destroy($id)
+    {
+        $id = decode(trim($id));
+        $res = Address::deleteById($id);
+
+
+        if ($res) {
+            $obj = new stdClass();
+            $obj->status = 0;
+            $obj->msg = '删除成功';
+            return json_encode($obj);
+
+        } else {
+            $obj = new stdClass();
+            $obj->status = 1;
+            $obj->msg = '删除失败,此地址为默认地址或者网络不佳';
+            return json_encode($obj);
+        }
+
+    }
+
+
+    /**
+     * @param $id
+     * 设为默认地址
+     */
+    public function setDefault($id)
+    {
+        $id = decode(trim($id));
+        $user_id = $this->user_id;
+         $res = Address::setDefault($id,$user_id);
+        if($res){
+            return Redirect::to('member/config/address')->with('msg','修改成功');
+        }
+
 	}
 
 

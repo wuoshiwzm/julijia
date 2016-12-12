@@ -321,7 +321,26 @@ class User
      */
     static function getCollectByUser($userId)
     {
-        return Source_User_UserInfoCollect::where('user_id',$userId);
+        return Source_User_UserInfoCollect::where('user_id', $userId);
+    }
+
+
+    /**
+     * @param $user_id
+     * @param $newPass
+     * 更改密码
+     */
+    static function changePass($user_id, $newPass)
+    {
+
+        $user = Source_User_UserInfo::find($user_id);
+        $user->password = $newPass;
+        $res = $user->save();
+
+
+        return $res;
+
+
     }
 
 

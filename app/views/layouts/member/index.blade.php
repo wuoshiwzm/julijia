@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/admin.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/css.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/iconfont.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/member/layui.css')}}">
     @yield('css')
 </head>
 
@@ -56,10 +57,10 @@
                 <li @if(exiturl('order'))class="c_on" @endif><a  href="{{url('member/order')}}"><font class="iconfont">&#xe601;</font>我的订单</a></li>
                 <li @if(exiturl('collect'))class="c_on" @endif><a  href="{{url('member/collect')}}"><font class="iconfont">&#xe637;</font>我的收藏</a></li>
                 <li @if(exiturl('rank'))class="c_on" @endif><a  href="{{url('member/rank')}}"><font class="iconfont">&#xe682;</font>我的积分</a></li>
-                <li @if(exiturl('cart'))class="c_on" @endif><a  href="ge_admin_tuikuan.html"><font class="iconfont">&#xe6be;</font>我的退款</a></li>
-                <li @if(exiturl('cart'))class="c_on" @endif><a  href="ge_admin_ts.html"><font class="iconfont">&#xe608;</font>我的投诉</a></li>
-                <li @if(exiturl('cart'))class="c_on" @endif><a  href="ge_admin_pingjia.html"><font class="iconfont">&#xe6ae;</font>我的评论</a></li>
-                <li @if(exiturl('cart'))class="c_on" @endif><a  href="ge_admin_zuji.html"><font class="iconfont">&#xe616;</font>我的足迹</a></li>
+                <li @if(exiturl('refund'))class="c_on" @endif><a  href="{{url('member/refund')}}"><font class="iconfont">&#xe6be;</font>我的退款</a></li>
+                <li @if(exiturl('feedback'))class="c_on" @endif><a  href="{{url('member/feedback')}}"><font class="iconfont">&#xe608;</font>我的投诉</a></li>
+                <li @if(exiturl('comment'))class="c_on" @endif><a  href="{{url('member/comment')}}"><font class="iconfont">&#xe6ae;</font>我的评论</a></li>
+                <li @if(exiturl('history'))class="c_on" @endif><a  href="{{url('member/history')}}"><font class="iconfont">&#xe616;</font>我的足迹</a></li>
             </ul>
         </div>
 
@@ -111,7 +112,13 @@
 <script type="text/javascript" src="{{asset('js/member/er_admin.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/member/layui.js')}}."></script>
 
+<script>
+    layui.use('form', function(){
+        var form = layui.form(); //只有执行了这一步，部分表单元素才会修饰成功
 
+        //……
+    });
+</script>
 
 <script type="text/javascript">
         $(document).ready(function () {

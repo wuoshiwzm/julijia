@@ -13,9 +13,11 @@ $router->get('/config/index', 'ConfigMemberController@index');
 
 //账号设置 - 收货地址
 $router->resource('/config/address', 'AddressMemberController');
+//账号设置 - 收货地址 - 默认地址
+$router->get('/config/address/set_default/{id}', 'AddressMemberController@setDefault');
 
 //账号设置 - 密码设置
-$router->get('/config/pass', 'ConfigMemberController@changePass');
+$router->any('/config/pass', 'ConfigMemberController@changePass');
 
 //账号设置 - 网站提醒
 $router->get('/config/notice', 'ConfigMemberController@notice');
@@ -29,6 +31,18 @@ $router->get('/config/notice', 'ConfigMemberController@notice');
 
 //我的退款
 $router->get('/refund', 'RefundMemberController@index');
+
+//我的投诉
+$router->get('/feedback', 'FeedbackMemberController@index');
+
+//我的评论
+$router->get('/comment', 'CommentMemberController@index');
+
+//我的足迹
+$router->get('/history', 'HistoryMemberController@index');
+
+
+
 
 //会员积分
 $router->get('/rank', 'RankMemberController@index');
