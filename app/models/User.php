@@ -43,7 +43,8 @@ class User
             ->get();
 
         foreach ($data as $v) {
-            $orderinfos = $v->hasOrders()->get();
+            $orderinfos = $v->get();
+//            $orderinfos = $v->hasOrders()->get();
             $v->orderinfo = $orderinfos ? $orderinfos : 'null';
             $v->orderCount = $orderinfos->count();
             $v->orderLasttime = $orderinfos->max('created_at');
@@ -52,6 +53,10 @@ class User
     }
 
 
+    /**
+     * @param $data
+     * @return bool
+     */
     static function validatorUser($data)
     {
         $rules = [

@@ -1,4 +1,5 @@
 <?php
+
 //用户积分管理
 class RefundMemberController extends CommonController
 {
@@ -34,41 +35,130 @@ class RefundMemberController extends CommonController
      */
     public function index()
     {
-
-        return $this->view('member.refund');
-
-        die('refund');
-
         //当前对应的用户退款信息
-        $refundInfo = OrderBack::getRefundByUser($this->user_id);
+        $data = OrderBack::getRefundByUser($this->user_id);
+        $refundInfos = OrderBack::getRefundByUser($this->user_id)->get();
 
-        return $this->view('member.refund',compact('refundInfo'));
-
-
-
-
-        //获取所有会员积分信息
-        $allGroup = Group::getGroup();
-
-        //确认最接近的的一个用户等级
-        //目前用户的总积分
-        $userPoint = $userInfo->user_points;
-        $nextGroup = $allGroup->where('beg_points','>',$userPoint)
-            ->orderBy('beg_points','asc')->first();
-        $nextGroupName = $nextGroup->name;
-        $nextGroupGap = $nextGroup->beg_points - $userPoint;
-
-        $allGroup = Group::getGroup()->get();
-
-        //如果用户已经是最高等级
+        //分页
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
+        $data = $data->paginate($setPage);
+        $set['setpage'] = $setPage;
 
 
+        //搜索条件
+        if (!empty(Input::all())) {
+            die('input here');
+        }
 
 
-
+        return $this->view('member.refund', compact('refundInfos', 'data', 'set'));
 
     }
 
+
+    public function applyChoose($orderId, $orderItemId)
+    {
+
+    }
+
+    /**
+     * @param $orderId 订单id
+     * @param $orderItemId 订单商品id
+     * 提交退款
+     * url : '/refund/apply_refund/{order_id}/{order_item_id}'
+     */
+    public function applyRefund($orderId, $orderItemId)
+    {
+
+
+        $orderId = decode($orderId);
+        $orderItemId = decode($orderItemId);
+
+        $orderInfo = Order::getOrdersById($orderId);
+        $orderItem = Order::getOrderItemsById($orderItemId);
+
+        //退款原因
+        $orderBackReasons = OrderBack::getReason();
+
+        //提交退款
+        if (!empty(Input::all())) {
+
+            dd(Input::all());
+
+            //退款的订单id
+            $refund['order_id'] = $orderId;
+
+            //退赛款的商品id
+            $refund['order_item_id'] = $orderItemId;
+
+            $refund['back_sn'] = getMicroTimestamp();
+
+
+        }
+        return $this->view('member.order.apply', compact('orderItem', 'orderInfo','orderBackReasons'));
+
+    }
+
+
+    /**
+     * 存储退款信息
+     */
+    public function createRefund()
+    {
+
+
+
+        if (!Input::all())
+            return Redirect::back();
+
+
+        $orderId = Input::get('orderId');
+        $orderItemId = Input::get('orderItemId');
+
+        $orderInfo = Order::getOrdersById($orderId);
+        $orderItem = Order::getOrderItemsById($orderItemId);
+
+        $product = Product::getProductById($orderItem->product_id);
+
+        //退款的订单id
+        $refund['order_id'] = $orderId;
+
+        //退赛款的商品id
+        $refund['order_item_id'] = $orderItemId;
+        $refund['back_sn'] = getMicroTimestamp();
+        $refund['order_sn'] = $orderInfo->order_sn;
+        $refund['order_item_id'] = $orderItem->id;
+        $refund['type'] = Input::get('type');
+        $refund['p_entity_id'] = $orderItem->product_id;
+        $refund['p_sku'] = $orderItem->sku;
+        $refund['price'] = $orderItem->price;
+        $refund['p_suppliers_id'] = $product->supplier;
+        $refund['p_mendian_id'] = 1;
+
+
+
+        $refund['is_delivery'] = Input::get('is_delivery');
+        $refund['content'] = Input::get('content');
+
+
+
+        $refund['back_delivery_address'] =  Input::get('back_delivery_address');
+
+
+//        $refund[''] =  ;
+
+
+        $type = Input::get('type');
+
+
+        if ($type == 1) {
+            //只退货
+        } elseif ($type == 2) {
+            //退款退货
+        }
+
+
+    }
 
 
 }

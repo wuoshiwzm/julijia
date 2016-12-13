@@ -3,10 +3,19 @@
 $router->get('/', 'MemberController@index');
 
 
+//我的退款
+$router->get('/refund', 'RefundMemberController@index');
+//提交退款
+$router->get('/refund/apply_refund/{order_id}/{order_item_id}', 'RefundMemberController@applyRefund');
+$router->any('/refund/create_refund', 'RefundMemberController@createRefund');
 
 
 
-//商城会员模块用户中心
+
+
+
+
+//商城会员模块个人设置
 
 //账号设置 - 个人设置
 $router->get('/config/index', 'ConfigMemberController@index');
@@ -29,8 +38,6 @@ $router->get('/config/notice', 'ConfigMemberController@notice');
 
 //商城会员模块用户中心
 
-//我的退款
-$router->get('/refund', 'RefundMemberController@index');
 
 //我的投诉
 $router->get('/feedback', 'FeedbackMemberController@index');
@@ -55,7 +62,7 @@ $router->get('/collect/notshow', 'CollectMemberController@notShow');
 $router->any('/cart', 'CartController@index');
 
 //用户订单
-$router->get('/order', 'OrderMemberController@index');
+$router->get('/order/all', 'OrderMemberController@index');
 
 //用户订单 等待付款
 $router->get('/order/topay', 'OrderMemberController@toPay');

@@ -14,20 +14,8 @@
         </div>
         <!--订单切换-->
         <div class="table_div">
-            <div class="table_div_hd">
-                <ul class="layui-nav">
-                    <li class="layui-nav-item layui-this"><a
-                                href="{{url('member/order')}}">全部订单&nbsp;(&nbsp;1&nbsp;)</a>
-                    </li>
-                    <li class="layui-nav-item"><a href="{{url('member/order/topay')}}">等待付款&nbsp;(&nbsp;6&nbsp;)</a>
-                    </li>
-                    <li class="layui-nav-item"><a href="{{url('member/order/toship')}}">等待发货&nbsp;(&nbsp;0&nbsp;)</a>
-                    </li>
-                    <li class="layui-nav-item"><a href="{{url('member/order/toreceive')}}">待收货&nbsp;(&nbsp;10&nbsp;)</a>
-                    </li>
-                    <li class="layui-nav-item"><a href="{{url('member/order/tocomment')}}">待评价</a></li>
-                </ul>
-            </div>
+            @include('layouts.member.order_nav')
+
             <div class="table_div_hd table_div_hd_table">
                 <table border="0" cellpadding="0" cellspacing="0">
                     <tr>
@@ -129,9 +117,9 @@
                                     </td>
 
 
-                                    <td width="16%" class="operation"><a href="{{url('admin/refund')}}">退货退款</a><a
-                                                href="##"
-                                                class="margin_top">确认收货</a>
+                                    <td width="16%" class="operation">
+                                        <a href="{{url('member/refund/apply_refund/'.encode($order->id).'/'.encode($item->id))}}">退货退款</a>
+                                        <a href="##" class="margin_top">确认收货</a>
                                     </td>
 
                                     <td width="16%"><font class="price_y">91.00</font>{{$item->row_total}}</td>

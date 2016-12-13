@@ -87,9 +87,27 @@ class Order
      */
     public static function getItemByOrder($order_id)
     {
-        $items = Source_Order_OrderItem::where('order_id',$order_id);
+        $items = Source_Order_OrderItem::where('order_id', $order_id);
         return $items;
+    }
 
+    /**
+     * @param $order_id
+     * 通过id 获取orders 数据
+     */
+    public static function getOrdersById($orderId)
+    {
+        return Source_Order_OrderInfo::find($orderId);
+    }
+
+
+    /**
+     * @param $item_id
+     * 获得对应的订单商品
+     */
+    public static function getOrderItemsById($itemId)
+    {
+        return Source_Order_OrderItem::find($itemId);
     }
 
 

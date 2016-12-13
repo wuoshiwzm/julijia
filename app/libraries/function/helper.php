@@ -199,3 +199,11 @@ function exiturl($urlKey)
     };
     return false;
 }
+
+/**
+ * 获取毫秒时间戳
+ */
+function getMicroTimestamp()
+{
+    return floor(microtime(true) * 1000);
+}
