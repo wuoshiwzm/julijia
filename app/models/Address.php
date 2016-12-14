@@ -98,4 +98,13 @@ class Address
     }
 
 
+    /**
+     * @param $userId
+     */
+    static function getDefaultByUser($userId){
+        return Source_User_UserInfoAdd::where('user_id',$userId)
+            ->where('status',1)
+            ->first();
+    }
+
 }

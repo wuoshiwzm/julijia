@@ -95,7 +95,7 @@ class RefundMemberController extends CommonController
 
 
         }
-        return $this->view('member.order.apply', compact('orderItem', 'orderInfo','orderBackReasons'));
+        return $this->view('member.order.apply', compact('orderItem', 'orderInfo', 'orderBackReasons'));
 
     }
 
@@ -106,7 +106,8 @@ class RefundMemberController extends CommonController
     public function createRefund()
     {
 
-
+        $user = Session::get('member');
+        $userAddr = Address::getDefaultByUser($this->user_id);
 
         if (!Input::all())
             return Redirect::back();
@@ -136,13 +137,36 @@ class RefundMemberController extends CommonController
         $refund['p_mendian_id'] = 1;
 
 
-
         $refund['is_delivery'] = Input::get('is_delivery');
         $refund['content'] = Input::get('content');
+        $refund['reason'] = Input::get('reason');
+
+        $refund['user_id'] = $this->user_id;
+        $refund['user_phone'] = $user->mobile_phone;
+        $refund['province'] = $userAddr->province;
+        $refund['city'] = $userAddr->city;
+        $refund['district'] = $userAddr->district;
+        $refund['address'] = $userAddr->address;
+        $refund['zipcode'] = $userAddr->zipcode;
 
 
+        // 上传图片
+        $refund['image'] = Input::get('image');
 
-        $refund['back_delivery_address'] =  Input::get('back_delivery_address');
+
+        // 状态： 1 未确认 2 确认 3 未发货 4 运输中 5 已收货 6 退款
+        $refund['status'] = 2;
+
+        $refund['shipping_fee'] ???
+
+        //收货状态 从订单处获取
+        $refund['shipping_name'] ???
+
+        //收货人名称 从订单处获取
+        $refund['shipping_status']
+
+
+        ？？？ $refund['back_delivery_address'] = Input::get('back_delivery_address');
 
 
 //        $refund[''] =  ;
