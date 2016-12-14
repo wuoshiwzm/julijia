@@ -82,15 +82,17 @@
                                         break;
 
                                     case 2:
-                                        echo "确认";
+                                        if($refund->type == 1){
+                                            echo "已经安排退款";
+                                        }elseif ($refund->type == 2)
+                                            {
+                                                echo "<a href=".url('member/refund/ship_back/'.encode($refund->id)).">已经审核通过，点击输入你的退货信息</a>";
+                                            }
                                         break;
-
 
                                     case 3:
                                         echo "未发货";
                                         break;
-
-
                                     case 4:
                                         echo "运输中";
                                         break;
@@ -109,24 +111,7 @@
                         </tr>
                     @endforeach
 
-                    <tr>
-                        <td>
-                            <dl class="tab_dl">
-                                <dt><a href="##" target="_blank"><img src="../images/04.jpg" class="goods-thumb"
-                                                                      width="60" height="60"></a></dt>
-                                <dd><a href="##" target="_blank">的软件行业的软的软件行业的软件行业同仁同仁的软件行业的软件行业同仁同仁件行业同仁同仁</a></dd>
-                                <dd><font>订单编号</font>32163416546546</dd>
-                                <dd><font>退款编号</font>32163416546546</dd>
-                            </dl>
-                        </td>
-                        <td>1件</td>
-                        <td>¥232109.99</td>
-                        <td>2016-08-10 08:59:09</td>
-                        <td>2016-08-10 08:59:09</td>
-                        <td>仅退款</td>
-                        <td>买家申请，待卖家确认</td>
-                        <td class="operation"><a href="##">详情</a></td>
-                    </tr>
+
                 </table>
 
 

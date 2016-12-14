@@ -51,5 +51,17 @@ class Location
             ->toJson();
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    static function getAreaNameById($id)
+    {
+        if (!$id) {
+            return '';
+        }
+        return Source_Area_Area::find($id)->name;
+    }
+
 
 }

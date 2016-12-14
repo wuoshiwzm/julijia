@@ -105,12 +105,85 @@ class OrderBack
      */
     public static function getRefundByUser($userId)
     {
-       return Source_Order_OrderBack::where('user_id',$userId);
+        return Source_Order_OrderBack::where('user_id', $userId);
     }
 
 
-    public static function addRefund($refund){
+    /**
+     * @param $itemId
+     * 判断是否已经提交过了退款
+     */
+    public static function CheckItem($orderId, $itemId)
+    {
+        if (Source_Order_OrderBack::where('order_item_id', $itemId)->where('order_id', $orderId)->count()) {
+            return true;
+        }
 
+    }
+
+
+    /**
+     * @param $refund
+     * 添加退款
+     */
+    public static function createRefund($refund)
+    {
+        if(self::CheckItem($refund['order_id'], $refund['order_item_id']))
+        {
+            die('此商品已经提交过了退款');
+        }
+        //添加
+        return Source_Order_OrderBack::create($refund);
+    }
+
+
+    /**
+     * @param $refund
+     * 添加客户退货物流信息
+     */
+    public static function updateShipInfo($refundId,$input)
+    {
+
+        //添加
+        return Source_Order_OrderBack::find($refundId)
+            ->update($input);
+    }
+
+
+    /**
+     * @param $data
+     * @return bool
+     * 验证
+     */
+    static function validatorRefund($data)
+    {
+        $rules = [];
+        $message = [];
+        $validator = Validator::make($data, $rules, $message);
+        if ($validator->passes()) {
+            return true;
+
+        } else {
+            return $validator;
+        }
+    }
+
+    /**
+     * @param $data
+     * @return bool
+     * 验证
+     */
+    static function validatorShipBack($data)
+    {
+        $rules = [];
+        $message = [];
+        $validator = Validator::make($data, $rules, $message);
+        if ($validator->passes()) {
+            return true;
+
+        } else {
+            return $validator;
+        }
     }
 
 }

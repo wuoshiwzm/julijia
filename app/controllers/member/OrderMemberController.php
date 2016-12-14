@@ -44,6 +44,18 @@ class OrderMemberController extends CommonController
         //获取订单下的商品并插入订单表 $orders
         foreach ($orders as $order) {
             $items = Order::getItemByOrder($order->id)->get();
+
+            //判断此订单下的商品有否有已经提交过退货的
+            foreach ($items as $item) {
+                $isRefund = OrderBack::CheckItem($order->id, $item->id);
+                if ($isRefund) {
+                    $item['isRefund'] = 1;
+                } else {
+                    $item['isRefund'] = 0;
+                }
+            }
+
+
             if (!$items) {
                 $order->items = '';
             }

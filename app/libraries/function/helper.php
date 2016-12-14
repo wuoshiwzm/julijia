@@ -25,6 +25,31 @@ function getImagesUrl($directories, $id, $path, $type = null)
 }
 
 /**
+ * 查询图片图片
+ * @param $directories
+ * @param $id
+ * @param $path
+ * @param null $w
+ * @param null $h
+ * @return string
+ */
+function getImgSize( $directories, $id, $path, $w=null, $h= null  )
+{
+    if( $id == false || $path == false )
+    {
+        return '/images/frontend/mo.png';
+    }
+    if( $w == null || $h == null )
+    {
+        $productPath = Config::get('tools.imagePath') . $directories . '/' . $id . '/' . $path;
+        return $productPath;
+    }
+}
+
+
+
+
+/**
  * 加密函数
  * @param $data
  * @return string
@@ -143,14 +168,17 @@ function dstrpos($string, $arr, $returnvalue = false)
  * @return array
  * 递归去除空格
  */
-function trimValue($data)
+function trimValue( $data )
 {
     $t_data = array();
-    foreach ($data as $k => $v) {
-        if (is_array($v)) {
-            $t_data[$k] = trimValue($v);
-        } else {
-            $t_data[$k] = trim($v);
+    foreach ( $data as $k=>$v )
+    {
+        if( is_array($v) )
+        {
+            $t_data[$k] = trimValue( $v );
+        }else
+        {
+            $t_data[$k] = trim( $v );
         }
     }
     return $t_data;
@@ -206,4 +234,17 @@ function exiturl($urlKey)
 function getMicroTimestamp()
 {
     return floor(microtime(true) * 1000);
+}
+
+
+/**
+ * @param $end_time
+ * @return int
+ * 计算时间差
+ */
+function getSecond( $end_time )
+{
+    $end = strtotime($end_time);
+    $start = strtotime(date("Y-m-d H:i:s"));
+    return $end-$start;
 }

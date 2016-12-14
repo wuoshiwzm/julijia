@@ -118,7 +118,14 @@
 
 
                                     <td width="16%" class="operation">
-                                        <a href="{{url('member/refund/apply_refund/'.encode($order->id).'/'.encode($item->id))}}">退货退款</a>
+
+                                            @if($item->isRefund == 1)
+                                                <a href="{{url('member/refund')}}">点击查看退款/退货详情</a>
+                                            @elseif(!$item->isRefund)
+                                            <a href="{{url('member/refund/apply_refund/'.encode($order->id).'/'.encode($item->id))}}">
+                                                退货退款 </a>
+                                            @endif
+
                                         <a href="##" class="margin_top">确认收货</a>
                                     </td>
 

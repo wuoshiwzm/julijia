@@ -120,7 +120,7 @@
                                 <form class="layui-form m-form" action="{{url('member/refund/create_refund')}}"
                                       method="post">
                                     {{Form::token()}}
-                                    <input type="hidden" name="type" value="1">
+                                    <input type="hidden" name="type" value="2">
                                     <input type="hidden" name="orderId" value="{{$orderInfo->id}}">
                                     <input type="hidden" name="orderItemId" value="{{$orderItem->id}}">
                                     <div class="layui-form-item">
@@ -185,7 +185,7 @@
                                 <form class="layui-form m-form" action="{{url('member/refund/create_refund')}}"
                                       method="post">
                                     {{Form::token()}}
-                                    <input type="hidden" name="type" value="2">
+                                    <input type="hidden" name="type" value="1">
                                     <input type="hidden" name="orderId" value="{{$orderInfo->id}}">
                                     <input type="hidden" name="orderItemId" value="{{$orderItem->id}}">
                                     <div class="layui-form-item">

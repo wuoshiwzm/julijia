@@ -117,7 +117,7 @@
 <script type="text/javascript" src="{{asset('js/member/jquery-1.9.1.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/member/er_admin.js')}}"></script>
 <script src="{{asset('js/member/layer-v1.9.3/layer/layer.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/member/layui.js')}}."></script>
+<script type="text/javascript" src="{{asset('js/member/layui.js')}}"></script>
 
 <script>
     layui.use('form', function () {
