@@ -100,7 +100,7 @@ class OrderBack
     }
 
     /**
-     * 获取用户对应的所有对款
+     * 获取用户对应的所有退款
      * @param $userId 用户id
      */
     public static function getRefundByUser($userId)

@@ -75,21 +75,7 @@ class RefundMemberController extends CommonController
         //退款原因
         $orderBackReasons = OrderBack::getReason();
 
-        //提交退款
-        if (!empty(Input::all())) {
-
-
-            //退款的订单id
-            $refund['order_id'] = $orderId;
-
-            //退赛款的商品id
-            $refund['order_item_id'] = $orderItemId;
-
-            $refund['back_sn'] = getMicroTimestamp();
-
-
-        }
-        return $this->view('member.order.apply', compact('orderItem', 'orderInfo', 'orderBackReasons'));
+        return $this->view('member.order.apply_refund', compact('orderItem', 'orderInfo', 'orderBackReasons'));
 
     }
 

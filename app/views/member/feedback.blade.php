@@ -65,36 +65,39 @@
                         <th width="14%">操作</th>
                     </tr>
 
-                    <tr>
-                        <td>32312642323</td>
-                        <td>jds21221412</td>
-                        <td>
-                            <dl>
-                                <dt><a href="##" target="_blank"><img src="../images/04.jpg" class="goods-thumb"
-                                                                      width="60" height="60"></a></dt>
-                                <dd><a href="##" target="_blank">的软件行业的软的软件行业的软件行业同仁同仁的软件行业的软件行业同仁同仁件行业同仁同仁</a></dd>
-                            </dl>
-                        </td>
-                        <td>订单延时</td>
-                        <td>2016-08-10 08:59:09</td>
-                        <td>买家申请，待卖家确认</td>
-                        <td class="operation"><a href="##">取消</a></td>
-                    </tr>
+
+                    @foreach($feedbackInfos as $feedback)
+                        <tr>
+                            <td>{{$feedback->feedback_sn}}</td>
+                            <td>{{$feedback->order_id}}</td>
+                            <td>
+                                <dl>
+                                    <dt><a href="##" target="_blank">
+                                            <img src="{{$feedback->img}}" class="goods-thumb"
+                                                 width="60" height="60"></a></dt>
+                                    <dd><a href="##" target="_blank">{{$feedback->productName}}</a></dd>
+                                </dl>
+                            </td>
+                            <td>{{$feedback->reasonName}}</td>
+                            <td>{{$feedback->created_at}}</td>
+                            <td>
+                                @if($feedback->status == 1)
+                                    买家申请，待卖家确认
+                                @elseif($feedback->status ==2)
+                                    <a href="##">已经回复 点击查看</a>
+                                @endif
+                            </td>
+
+                            <td class="operation"><a href="##" onclick="delFeedback({{"'".encode($feedback->id)."'"}})">取消</a></td>
+                        </tr>
+                    @endforeach
+
+
                 </table>
 
 
                 <div id="paging">
-                    <div class="layui-box layui-laypage layui-laypage-default">
-                        <a href="javascript:;" class="layui-laypage-prev"><em>&lt;</em></a>
-                        <a href="javascript:;">1</a>
-                        <a href="javascript:;">2</a>
-                        <a href="javascript:;" class="paging_on">3</a>
-                        <a href="javascript:;">4</a>
-                        <a href="javascript:;">5</a>
-                        <a href="javascript:;">…</a>
-                        <a href="javascript:;" title="尾页" data-page="100">100</a>
-                        <a href="javascript:;" class="layui-laypage-next" data-page="3"><em>&gt;</em></a>
-                    </div>
+                    @include('admin.public.page',array('data'=>$data,'set'=>$set))
                 </div>
 
 
@@ -104,5 +107,30 @@
 
 @stop
 @section('js')
+    <script>
+
+        /**
+         * Created by Administrator on 2016/11/4 0004.
+         */
+        function delFeedback( id )
+        {
+
+            var token = $("input[name='_token']").val();
+            layer.confirm('确定要删除此等级信息吗？', {
+                btn: ['确定','取消']
+            }, function(){
+                $.post('/member/feedback/remove_feedback/'+id,{_token:token},function (msg) {
+                    if( msg.status == '0')
+                    {
+                        layer.msg(msg.msg, {icon: 1});
+                        location=location;
+                    }else
+                    {
+                        layer.msg(msg.msg, {icon: 2});
+                    }
+                },'json')
+            });
+        }
+    </script>
 
 @stop

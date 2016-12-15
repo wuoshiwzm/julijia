@@ -13,6 +13,13 @@ $router->any('/refund/ship_back/{id?}', 'RefundMemberController@shipBack');
 
 
 
+//我的投诉
+$router->get('/feedback', 'FeedbackMemberController@index');
+//我的投诉 - 提交投诉
+$router->get('/feedback/apply_feedback/{order_id}/{order_item_id}', 'FeedbackMemberController@applyFeedback');
+$router->any('/feedback/create_feedback', 'FeedbackMemberController@createFeedback');
+$router->any('/feedback/remove_feedback/{id}', 'FeedbackMemberController@removeFeedback');
+
 
 
 
@@ -37,14 +44,12 @@ $router->get('/config/notice', 'ConfigMemberController@notice');
 
 
 
-//商城会员模块用户中心
+//商城会员模块个人中心
 
 
-//我的投诉
-$router->get('/feedback', 'FeedbackMemberController@index');
 
-//我的评论
-$router->get('/comment', 'CommentMemberController@index');
+
+
 
 //我的足迹
 $router->get('/history', 'HistoryMemberController@index');
@@ -76,6 +81,13 @@ $router->get('/order/toreceive', 'OrderMemberController@toReceive');
 
 //用户订单 等待评论
 $router->get('/order/tocomment', 'OrderMemberController@toComment');
+
+
+//我的评论
+$router->get('/review', 'ReviewMemberController@index');
+//我的评论 - 提交评论
+$router->get('/review/apply_review/{order_id}/{item_id}', 'ReviewMemberController@applyReview');
+$router->any('/review/create_review', 'ReviewMemberController@createReview');
 
 
 

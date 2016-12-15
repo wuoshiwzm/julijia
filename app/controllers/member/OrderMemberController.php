@@ -55,6 +55,18 @@ class OrderMemberController extends CommonController
                 }
             }
 
+//            //判断此订单下是否有评价 评价针对商品
+//            foreach ($items as $item) {
+//                $isFeedback= Review::checkItem($order->id, $item->id);
+//                if ($isFeedback) {
+//                    $item['isFeedback'] = 1;
+//                } else {
+//                    $item['isFeedback'] = 0;
+//                }
+//            }
+
+
+
 
             if (!$items) {
                 $order->items = '';

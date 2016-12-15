@@ -64,7 +64,7 @@
                             &#xe6be;</font>我的退款</a></li>
                 <li @if(exiturl('feedback'))class="c_on" @endif><a href="{{url('member/feedback')}}"><font
                                 class="iconfont">&#xe608;</font>我的投诉</a></li>
-                <li @if(exiturl('comment'))class="c_on" @endif><a href="{{url('member/comment')}}"><font
+                <li @if(exiturl('review'))class="c_on" @endif><a href="{{url('member/review')}}"><font
                                 class="iconfont">&#xe6ae;</font>我的评论</a></li>
                 <li @if(exiturl('history'))class="c_on" @endif><a href="{{url('member/history')}}"><font
                                 class="iconfont">&#xe616;</font>我的足迹</a></li>

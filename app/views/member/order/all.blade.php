@@ -119,14 +119,24 @@
 
                                     <td width="16%" class="operation">
 
-                                            @if($item->isRefund == 1)
-                                                <a href="{{url('member/refund')}}">点击查看退款/退货详情</a>
-                                            @elseif(!$item->isRefund)
+                                        @if($item->isRefund == 1)
+                                            <a href="{{url('member/refund')}}">点击查看退款/退货详情</a>
+                                        @elseif(!$item->isRefund)
                                             <a href="{{url('member/refund/apply_refund/'.encode($order->id).'/'.encode($item->id))}}">
                                                 退货退款 </a>
-                                            @endif
+                                        @endif
 
-                                        <a href="##" class="margin_top">确认收货</a>
+                                        @if($item->shipping_status == 3)
+                                            <a href="{{url('member/review/apply_review/'
+                                            .encode($order->id).'/'.encode($item->id))}}"
+                                               class="margin_top">评价</a>
+
+                                                <a href="{{url('member/feedback/apply_feedback/'
+                                            .encode($order->id).'/'.encode($item->id))}}"
+                                                   class="margin_top">投诉</a>
+                                        @elseif($item->shipping_status == 2)
+                                            <a href="##" class="margin_top">确认收货</a>
+                                        @endif
                                     </td>
 
                                     <td width="16%"><font class="price_y">91.00</font>{{$item->row_total}}</td>
