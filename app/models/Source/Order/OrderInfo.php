@@ -34,4 +34,14 @@ class Source_Order_OrderInfo extends  \Eloquent
     {
         return $this->hasOne("Source_Order_OrderPayment","order_id","id");
     }
+
+    public function feedback()
+    {
+        return $this->hasMany('Source_Feedback_FeedbackInfo', 'order_id');
+    }
+
+    public function refund()
+    {
+        return $this->hasMany('Source_Order_OrderBack', 'order_id');
+    }
 }

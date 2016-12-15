@@ -28,96 +28,9 @@
                         <th width="14%">操作</th>
                     </tr>
                 </table>
-                @foreach($orders as $order)
-                    @if($order->show)
-                        <table cellpadding="0" cellspacing="0" class="order_tab">
-                            <tr>
-                                <td colspan="7" class="order_ding"><span>订单编号：
-                                <a href="#">{{$order->order_sn}}</a></span>
-                                    <span>下单时间：{{$order->created_at}}</span>
-                                    <span>订单来源：
-                                        @if($order->source == 1)
-                                            PC端
-                                        @elseif($order->source == 2)
-                                            手机端
-                                        @endif
-                                </span>
-                                    <span>订单金额：{{$order->total_amount}}</span>
-                                    <span>优惠金额：<font>{{$order->cost_freight}}</font></span>
-                                    <span>订单状态：
-                                        <?php
-                                        switch ($order->status) {
-                                            case(1):
-                                                echo '待付款';
-                                                break;
-                                            case(2):
-                                                echo '已取消';
-                                                break;
-                                            case(3):
-                                                echo '无效';
-                                                break;
-                                            case(4):
-                                                echo '待发货';
-                                                break;
-                                            case(5):
-                                                echo '待收货';
-                                                break;
-                                            case(6):
-                                                echo '部分完成';
-                                                break;
-                                            case(7):
-                                                echo '完成';
-                                                break;
-                                            case(8):
-                                                echo '退款退货';
-                                                break;
-                                            case(9):
-                                                echo '退款完成';
-                                                break;
-                                        }
-                                        ?>
-                                </span>
-                                </td>
-                            </tr>
 
-                            @foreach($order->items as $item)
-                                {{--运输中--}}
-                                @if($item->shipping_status == 2)
-                                    <tr>
-                                        <td>
-                                            <dl>
-                                                <dt><a href="##" target="_blank">
-                                                        <img src="../images/04.jpg" class="goods-thumb" width="60"
-                                                             height="60"></a>
-                                                </dt>
-                                                <dd><a href="##" target="_blank">
-                                                        {{$item->product_name}}
-                                                    </a>
-                                                </dd>
-                                            </dl>
-                                        </td>
-                                        <td width="10%">{{$item->price}}</td>
-                                        <td width="8%">{{$item->num}}</td>
-                                        <td width="12%">
-                                            {{--商品运输状态 1 未发货 2运输中 3 已收货--}}
+                @include('layouts.member.order_content')
 
-                                            待发货
-
-                                        </td>
-
-
-                                        <td width="16%" class="operation"><a href="{{url('admin/refund')}}">退货退款</a>
-                                            <a href="##" class="margin_top">确认收货</a>
-                                        </td>
-
-                                        <td width="16%"><font class="price_y">91.00</font>{{$item->row_total}}</td>
-                                        <td width="14%" class="operation"><a href="##">详情</a></td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </table>
-                    @endif
-                @endforeach
                 <div id="paging">
                     @include('admin.public.page',array('data'=>$data,'set'=>$set))
 
