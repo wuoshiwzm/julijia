@@ -27,7 +27,8 @@ class GroupController extends CommonController
      */
     public function index()
     {
-        $groups = Group::getGroup()->orderBy('beg_points');
+
+        $groups = Source_User_UserInfoGroup::orderBy('beg_points');
         $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
         $data = $groups->paginate($setPage);
 

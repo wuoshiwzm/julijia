@@ -39,7 +39,6 @@
         </div>
 
 
-
         <form id="SystemConfigModel" class="form-horizontal" action="{{url('admin/group')}}" method="post" novalidate>
             <input type="hidden" name="method" value="PUT">
             {{ Form::token() }}
@@ -60,18 +59,22 @@
                     </div>
                 </div>
 
+
                 <div class="simple-form-field">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">
-                            <span class="ng-binding">等级图标：</span>
+                            <span class="ng-binding">推广：</span>
                         </label>
                         <div class="col-sm-8">
                             <div class="form-control-box addimg">
-                                <a href="##"><img src="../images/addimg.png" width="100"
-                                                  height="100"></a><span>删除</span>
+                                <a href="javascript:;">
+                                    <img onclick="getImgTemplet( this,'extension' )"
+                                         src="/images/admin/addimg.png"
+                                         width="100" height="100"></a>
+                                <input type="hidden" id="extension" name="extension"/>
                             </div>
                             <div class="help-block help-block-t">
-                                <div class="help-block help-block-t">请上传图片，做为等级图标，建议尺寸20*20像素</div>
+                                <div class="help-block help-block-t">建议尺寸20*20像素</div>
                             </div>
                         </div>
                     </div>
@@ -108,4 +111,8 @@
     </div>
 
 
+@stop
+
+@section('footer_js')
+    <script type="text/javascript" src="{{asset('js/admin/group.js')}}"></script>
 @stop

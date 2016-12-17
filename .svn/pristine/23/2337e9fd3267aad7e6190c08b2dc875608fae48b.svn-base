@@ -130,7 +130,7 @@ class OrderMemberController extends CommonController
             //如果该订单没有付款 则显示
             $order->show = 1;
 
-            $items = $order->item;
+            $items = Order::getItemByOrder($order->id)->get();
             if (!$items) {
                 $order->items = '';
             }

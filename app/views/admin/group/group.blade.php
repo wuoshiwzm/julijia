@@ -77,6 +77,7 @@
                             <td>{{$group->name}}</td>
                             <td class="text-c">
 
+
                                 <img src="{{$group->name}}" class="user-level m-r-5"
                                      style="width: 20px; height: 20px;">
                                 <span class="btn btn-success btn-sm pos-r upload-img"

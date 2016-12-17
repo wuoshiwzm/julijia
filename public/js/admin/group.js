@@ -22,3 +22,22 @@ function delGroup( id )
 }
 
 
+
+
+/**
+ * 图象上传
+ */
+function getImgTemplet( index, id )
+{
+    layer.open({
+        type: 2,
+        title:false,
+        shadeClose: true,
+        shade: 0.8,
+        area: ['460px', '480px'],
+        content: ['/admin/get/imgtemplet/'+id,'no']
+    });
+}
+
+
+
