@@ -31,8 +31,7 @@ class MemberController extends CommonController
      */
     function index()
     {
-
-        return $this->view('member.welc');
+        return $this->view('member.cart.index');
     }
 
      /**
