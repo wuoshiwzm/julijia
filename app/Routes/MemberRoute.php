@@ -7,7 +7,9 @@ $router->get('/', 'MemberController@index');
 
 
 //购物车
+
 $router->any('/cart', 'CartMemberController@index');
+$router->any('/carttest', 'CartMemberController@checkDiscount');
 
 
 //会员积分

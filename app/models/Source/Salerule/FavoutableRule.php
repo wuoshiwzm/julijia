@@ -24,4 +24,15 @@ class Source_Salerule_FavoutableRule extends  \Eloquent
         return $this->hasMany( 'Source_Salerule_FavoutableRule', 'rule_id');
     }
 
+
+    /**
+     * @return mixed
+     * 对应使用过规则的订单
+     */
+    public function  order()
+    {
+        return $this->belongsTo( 'Source_Order_OrderFavoutable', 'pmt_id');
+    }
+
+
 }
