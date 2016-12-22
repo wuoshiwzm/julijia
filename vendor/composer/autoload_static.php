@@ -290,7 +290,6 @@ class ComposerStaticInita104512b3ab53a1c6b011be99c9fd69e
         'BaseController' => __DIR__ . '/../..' . '/app/controllers/BaseController.php',
         'CacheController' => __DIR__ . '/../..' . '/app/controllers/admin/system/CacheController.php',
         'Cart' => __DIR__ . '/../..' . '/app/models/Cart.php',
-        'CartController' => __DIR__ . '/../..' . '/app/controllers/member/CartController.php',
         'CartMemberController' => __DIR__ . '/../..' . '/app/controllers/member/CartMemberController.php',
         'Cartalyst\\Sentry\\Groups\\GroupExistsException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Groups/Exceptions.php',
         'Cartalyst\\Sentry\\Groups\\GroupNotFoundException' => __DIR__ . '/..' . '/cartalyst/sentry/src/Cartalyst/Sentry/Groups/Exceptions.php',

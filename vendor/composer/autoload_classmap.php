@@ -13,7 +13,6 @@ return array(
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'CacheController' => $baseDir . '/app/controllers/admin/system/CacheController.php',
     'Cart' => $baseDir . '/app/models/Cart.php',
-    'CartController' => $baseDir . '/app/controllers/member/CartController.php',
     'CartMemberController' => $baseDir . '/app/controllers/member/CartMemberController.php',
     'Cartalyst\\Sentry\\Groups\\GroupExistsException' => $vendorDir . '/cartalyst/sentry/src/Cartalyst/Sentry/Groups/Exceptions.php',
     'Cartalyst\\Sentry\\Groups\\GroupNotFoundException' => $vendorDir . '/cartalyst/sentry/src/Cartalyst/Sentry/Groups/Exceptions.php',
