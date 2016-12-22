@@ -31,7 +31,7 @@ class Source_Salerule_FavoutableRule extends  \Eloquent
      */
     public function  order()
     {
-        return $this->belongsTo( 'Source_Order_OrderFavoutable', 'pmt_id');
+        return $this->hasMany( 'Source_Order_OrderFavoutable', 'pmt_id');
     }
 
 

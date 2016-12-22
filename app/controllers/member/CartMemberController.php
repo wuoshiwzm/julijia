@@ -72,33 +72,21 @@ class CartMemberController extends CommonController
 
 
     /**
-     * @param $weight
-     * 总价和重量满减的确认
+     * @param int $weight
+     * @param int $money
+     * @param $couponCode
+     * 总价和重量满减优惠券的确认
+     * 返回数组 ，如果有对应的折扣，第一个元素为生效的折扣规则，
+     * 第二个元素为对应的折扣金额，如果没有生效的折扣规则则为空
+     * @return array
      */
-    public function CheckDiscount($weight = 10, $money = 100)
+    public function CheckDiscount($weight = 1000, $money = 100000,$couponCode)
     {
-
-
-        //所有规则的数组
-        /**
-         * array (size=4)
-         * 'type' => string 'weight' (length=6)
-         * 'use_tiaojian' => string 'weight' (length=6)
-         * 'yunsuanfu' => string '<' (length=1)
-         * 'value' => string '20' (length=2)
-         */
-
-        //返回数组 ，如果有对应的折扣，第一个元素为生效的折扣规则，
-        //第二个元素为对应的折扣金额，如果没有生效的折扣规则则为空
-
-
         $result = array();
-
-
-        $allrule = Source_Salerule_FavoutableRule::whereNotNull('conditions_use')->get();
-
+        $allrule = Source_Salerule_FavoutableRule::whereNotNull('conditions_use')
+            ->where('conditions_type',1)
+            ->get();
         foreach ($allrule as $rule) {
-
             //from_date to_date 检测
             if (time() <= strtotime($rule->from_date) || time() >= strtotime($rule->to_date)) {
                 continue;
@@ -109,59 +97,89 @@ class CartMemberController extends CommonController
                 continue;
             }
 
-            //conditions_type规则类型  1满减 2 优惠券 3收银台 4 礼品
-
-            //action_type使用类型 1 固定金额 2 百分比 3 买*件折扣
-
             //lssue_num 发行数量
 
 
             //use_person 使用人数
-            if($rule->order->groupBy('user_id')->count() >= $rule->userd_num){
-                continue;
+            if ($rule->order->count() > 0) {
+                if ($rule->order->groupBy('user_id')->count() >= $rule->userd_num) {
+                    continue;
+                }
             }
 
             //userd_num 使用次数
-            if($rule->order->count() >= $rule->userd_num){
+            if ($rule->order->count() >= $rule->userd_num) {
                 continue;
             }
 
             //per_num 每人/每天使用
             //当天开始
-            $dayStart = strtotime(date('Y-m-d',time()));
+            $dayStart = strtotime(date('Y-m-d', time()));
             //当天结束
-            $dayEnd = date('Y-m-d H:m:s',$dayStart +24*60*60);
+            $dayEnd = date('Y-m-d H:m:s', $dayStart + 24 * 60 * 60);
             //当天开始 date-time
-            $dayStart = date('Y-m-d H:m:s',$dayStart);
+            $dayStart = date('Y-m-d H:m:s', $dayStart);
 
-            if($rule->order->where('use_time','>',$dayStart)
-                    ->where('use_time','<',$dayEnd)
-                    ->count() >= 1){
+            if (Source_Order_OrtderFavoutable::where('pmt_id', $rule->id)
+                    ->where('use_time', '>', $dayStart)
+                    ->where('use_time', '<', $dayEnd)
+                    ->count() >= 1
+            ) {
                 continue;
             }
 
+            //conditions_type规则类型  1满减 2 优惠券 3收银台 4 礼品
+            //action_type使用类型 1 固定金额 2 百分比 3 买*件折扣
             //discount_amount 折抵金额计算
+            //所有规则的数组
+            /**
+             * array (size=4)
+             * 'type' => string 'weight' (length=6)
+             * 'use_tiaojian' => string 'weight' (length=6)
+             * 'yunsuanfu' => string '<' (length=1)
+             * 'value' => string '20' (length=2)
+             */
 
             $rul = json_decode($rule->conditions_use);
+
             if ($rul->type == 'weight') {
 
                 //重量优惠
                 if ($weight . "$rul->yunsuanfu" . $rul->value) {
-                    $rule->mark = 'slakjhflksadhlfkjhasldkjfhlasjhfd';
-                }
 
+                    switch ($rule->conditions_type) {
+                        case 1:
+                            $result[] = ['rule' => $rule, 'mount' => $rule->discount_amount];
+                            break;
+
+                        case 2:
+                            $result[] = ['rule' => $rule, 'mount' => $money * $rule->discount_amount];
+                            break;
+                        case 3:
+
+                            break;
+                    }
+//                    $rule->mark = 'slakjhflksadhlfkjhasldkjfhlasjhfd';
+                }
             } elseif ($rul->type == 'manjian') {
                 //金额满减
+                if ($money . "$rul->yunsuanfu" . $rul->value) {
+                    switch ($rule->conditions_type) {
+                        case 1:
+                            $result[] = ['rule' => $rule, 'mount' => $rule->discount_amount];
+                            break;
 
+                        case 2:
+                            $result[] = ['rule' => $rule, 'mount' => $money * $rule->discount_amount];
+                            break;
+                        case 3:
+
+                            break;
+                    }
+                }
             }
-
-
-            //节省的金额 额度
-//            $rul['save'] = 1;
-//            $ruleArr[] = $rul;
         }
-
-
+        return $result;
     }
 
 
@@ -169,8 +187,17 @@ class CartMemberController extends CommonController
      * @param $couponCode 折扣郑号码
      * 折扣卷的确认
      */
-    public function checkCoupon($couponCode)
+    public function checkCoupon($couponCode='0040040041')
+
     {
+        $rule = Source_Salerule_FavoutableRule::whereNotNull('conditions_use')
+            ->where('conditions_type',2)
+            ->where('rule_code',$couponCode)
+            ->first();
+
+        if(!$rule)
+            return false;
+
 
     }
 

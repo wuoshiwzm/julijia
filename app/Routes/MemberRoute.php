@@ -10,6 +10,7 @@ $router->get('/', 'MemberController@index');
 
 $router->any('/cart', 'CartMemberController@index');
 $router->any('/carttest', 'CartMemberController@checkDiscount');
+$router->any('/carttest2', 'CartMemberController@checkCoupon');
 
 
 //会员积分
