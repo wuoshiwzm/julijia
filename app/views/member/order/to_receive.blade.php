@@ -2,6 +2,10 @@
     全部订单
 @stop
 
+@section('left')
+    @include('member.public.left_center')
+@stop
+
 @section(('content'))
     <div class="ge_admin_nei_right">
         <div class="spinner">
@@ -14,7 +18,7 @@
         </div>
         <!--订单切换-->
         <div class="table_div">
-            @include('layouts.member.order_nav')
+            @include('member.public.order_nav')
 
             <div class="table_div_hd table_div_hd_table">
                 <table border="0" cellpadding="0" cellspacing="0">
@@ -29,7 +33,7 @@
                     </tr>
                 </table>
 
-                @include('layouts.member.order_content')
+                @include('member.public.order_content')
 
                 <div id="paging">
                     @include('admin.public.page',array('data'=>$data,'set'=>$set))
