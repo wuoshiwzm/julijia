@@ -1,5 +1,5 @@
 <div class="bulid_info">
-    <h1 title="{{$data->name}}">{{$data->name}}</h1>
+    <h1 title="{{$data->name}}" id="entity_name">{{$data->name}}</h1>
     <div class="detail_msg">
         <ul>
             <li class="phone_bg">
@@ -42,9 +42,9 @@
                 </div>
             </li>
             <li class="phone_umber">
-                <a href="##" class="u-buy1">立即购买</a>
-                <a href="##" class="u-buy2">加入购物车</a>
-                <a href="##" class="love">收藏</a>
+                <a href="##" class="u-buy1" rel="nofollow">立即购买</a>
+                <a href="##" class="u-buy2" rel="nofollow">加入购物车</a>
+                <a href="javascript:;" class="love collect" rel="nofollow">收藏</a>
             </li>
         </ul>
     </div>

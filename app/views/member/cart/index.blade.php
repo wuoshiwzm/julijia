@@ -43,7 +43,8 @@
 
                             @foreach($items as $item)
                                 <tr>
-                                    <td><input type="checkbox" class="item_checkbox" width="30" name="item" value="{{encode($item->row_id)}}" ></td>
+                                    <td><input type="checkbox" class="item_checkbox" width="30" name="item"
+                                               value="{{encode($item->row_id)}}"></td>
                                     <td class="padding_left">
                                         <dl>
                                             <dt><a href="##" target="_blank">
@@ -54,7 +55,6 @@
                                             <dd><a href="##" target="_blank">{{$item->product_name}}</a>
                                             </dd>
                                             <dd class="order_tab_color">
-
 
 
                                                 @if(isset($item->guige))
@@ -106,7 +106,7 @@
                                     <dt><a href="##" target="_blank"><img src="{{asset('images/frontend/yhq.jpg')}}"
                                                                           width="80"
                                                                           height="80"></a></dt>
-                                    <dd class="order_btn"><input type="text" name="email" lay-verify="email"
+                                    <dd class="order_btn"><input type="text" name="coupon"  class="coupon"
                                                                  autocomplete="off" class="layui-input"
                                                                  placeholder="请输入优惠码"></dd>
                                     <dd>
@@ -120,10 +120,13 @@
                             </div>
                             <div class="jiesuan_right">
                                 <ul>
-                                    <li class="jiesuan_right_li"><span>应付总额:</span><font><i>¥&nbsp;{{$cart->grand_total -$cart->discount }}</i></font>
+                                    <li class="jiesuan_right_li">
+                                        <span>应付总额:</span><font><i>¥&nbsp;{{$cart->grand_total -$cart->discount }}</i></font>
                                     </li>
                                     <li><span>商品总价：</span><font>¥&nbsp;{{$cart->grand_total}}</font></li>
-                                    <li><span>优&nbsp;&nbsp;惠&nbsp;&nbsp;券：</span><font>-&nbsp;¥&nbsp;{{$cart->discount }}</font></li>
+                                    <li>
+                                        <span>优&nbsp;&nbsp;惠&nbsp;&nbsp;券：</span><font>-&nbsp;¥&nbsp;{{$cart->discount }}</font>
+                                    </li>
                                     <li>
                                         <span>运&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费：</span><font>¥&nbsp;0.00</font>
                                     </li>

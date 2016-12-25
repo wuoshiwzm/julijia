@@ -25,7 +25,10 @@
             <!--评论-->
             @include('frontend.details.comment',array('comment'=>$comment))
         </div>
-        <input type="hidden" value="{{$data->entity_id}}" id="entity_id">
+        <input type="hidden" value="{{encode($data->entity_id)}}" id="entity_id">
+        <input type="hidden" value="{{$data->price}}" id="entity_price">
+        <input type="hidden" value="{{$data->sku}}" id="sku">
+        {{Form::token()}}
     </div>
 </div>
 @stop
