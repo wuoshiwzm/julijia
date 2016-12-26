@@ -5,7 +5,7 @@
 class CartMemberController extends \BaseController
 {
 
-    private $cart;
+
     private $items;
 
     protected $layout = 'layouts.frontend';
@@ -28,13 +28,8 @@ class CartMemberController extends \BaseController
      */
     function __construct()
     {
-        $this->cart = Cart::getCart();
-
         $this->items = Cart::getContent()->get();
-
         parent::__construct();
-
-
     }
 
     /**;
@@ -43,21 +38,36 @@ class CartMemberController extends \BaseController
     function index()
     {
         //测试
-        // echo json_encode(array('颜色'=>'红色','尺寸'=>'xxl','包装'=>'小包')) ;
+        //static function addItem($userId,$entityId, $quantity, $guige = null)
+        //echo json_encode(array('颜色'=>'红色','尺寸'=>'xxl','包装'=>'小包')) ;
         //Cart::updateQty('sad4',1);
         //Cart::updateQty('sad3',1);
-        //Cart::addItem('1479370490',2,["size"=>"超大","color"=>"银灰"]);
-        //Cart::addItem('1479372520',2,["size"=>"超大","color"=>"银灰"]);
-        //Cart::addItem('1479970726',2,["size"=>"超大","color"=>"银灰"]);
-        //Cart::addItem('1480497516',2,["size"=>"超大","color"=>"银灰"]);
 
-        //$this->checkCoupon($money, $weight, $num, $productIds, $couponCode = '0040040041');
-//        dd($this->checkCoupon(11, 15, 2, 123123,'004004004'));
+        //测试添加商品
+//        Cart::addItem(Session::get('member')->id,'1479370490',2,["size"=>"超大","color"=>"银灰"]);
+//        Cart::addItem(Session::get('member')->id,'1479372520',2,["size"=>"超大","color"=>"银灰"]);
+//        Cart::addItem(Session::get('member')->id,'1479970726',2,["size"=>"超大","color"=>"银灰"]);
+//        Cart::addItem(Session::get('member')->id,'1480497516',2,["size"=>"超大","color"=>"银灰"]);
 
-        $cart = $this->cart;
+
+        //测试优惠券
+
+//        $this->checkCoupon($money, $weight, $num, $productIds, $couponCode = '0040040041');
+//        $res = $this->checkCoupon(11, 15, 2, 123123, '004004004');
+//        dd($res['amount']);
+
+        //测试商品集
+//        $res = $this->checkItem();
+//        dd($res);
+
+
+        //测试满减
+//        public function CheckDiscount($money, $weight)
+//        $res = $this->CheckDiscount(1100, 1500);
+//        dd($res);
+
         $items = $this->items;
-
-        return $this->view('member.cart.index', compact('cart', 'items'));
+        return $this->view('member.cart.index', compact('items'));
 
     }
 
@@ -122,14 +132,22 @@ class CartMemberController extends \BaseController
     function checkItem()
     {
 
-
         //input: rowid数组： Input::get('rowIds') 优惠券： Input::get('coupon')
 
         //判断rowIds 和 coupon 是否为空数据
 
 
+
         //获取对应 quoteSn数组
-        $rowIds = Input::get('rowIds');
+
+        $input = trimValue(Input::all());
+        $rowIds = $input['rowIds'];
+        $couponCode = $input['couponCode'];
+
+        if(empty($rowIds)){
+            return false;
+        }
+
 
         //对应总的重量
         $weight = 0;
@@ -140,16 +158,42 @@ class CartMemberController extends \BaseController
         //商品列表
         $productIds = [];
 
+
+
         //对应对应总的折扣价格  减少的价格
         $discount = 0;
 
+
         foreach ($rowIds as $rowId) {
-            $money += Source_Cart_CartItem::where('row_id', $rowId)->first()->row_total;
-            $weight += Source_Cart_CartItem::where('row_id', $rowId)->first()->row_weight;
-            $num += Source_Cart_CartItem::where('row_id', $rowId)->first()->num;
-            $productIds[] = Source_Cart_CartItem::where('row_id', $rowId)->first()->product_id;
+            $item = Source_Cart_CartItem::where('row_id', $rowId)->first();
+            $money += $item->price * $item->num;
+            $weight += $item->weight * $item->num;
+            $num += $item->num;
+            $productIds[] = $item->product_id;
         }
 
+        //优惠券检测
+        $couponRes = $this->checkCoupon($money, $weight, $num, $productIds,$couponCode);
+
+        //满减检测
+        $discountRes = $this->CheckDiscount($money, $weight);
+
+        //都不为空
+        if($couponRes && $discountRes){
+            if($couponRes['amount'] >= $discountRes){
+                return $couponRes;
+            }
+            return $discountRes;
+        }
+
+
+        //都为空
+        if(!$couponRes && !$discountRes){
+
+            return false;
+        }
+
+        return ($couponRes || $discountRes);
 
     }
 
@@ -163,7 +207,7 @@ class CartMemberController extends \BaseController
      * 第二个元素为对应的折扣金额，如果没有生效的折扣规则则为空
      * @return array
      */
-    public function CheckDiscount($money = 100000, $weight = 1000, $couponCode)
+    public function CheckDiscount($money, $weight)
     {
         $result = array();
         $allrule = Source_Salerule_FavoutableRule::whereNotNull('conditions_use')
@@ -179,6 +223,7 @@ class CartMemberController extends \BaseController
             if ($rule->status === 0) {
                 continue;
             }
+
 
             //lssue_num 发行数量
 
@@ -225,6 +270,7 @@ class CartMemberController extends \BaseController
 
             $rul = json_decode($rule->conditions_use);
 
+
             if ($rul->type == 'weight') {
 
                 //重量优惠
@@ -232,14 +278,13 @@ class CartMemberController extends \BaseController
 
                     switch ($rule->conditions_type) {
                         case 1:
-                            $result[] = ['rule' => $rule, 'mount' => $rule->discount_amount];
+                            $result[] = ['rule' => $rule, 'amount' => $rule->discount_amount];
                             break;
 
                         case 2:
-                            $result[] = ['rule' => $rule, 'mount' => $money * $rule->discount_amount];
+                            $result[] = ['rule' => $rule, 'amount' => $money * $rule->discount_amount];
                             break;
                         case 3:
-
                             break;
                     }
 //                    $rule->mark = 'slakjhflksadhlfkjhasldkjfhlasjhfd';
@@ -249,20 +294,34 @@ class CartMemberController extends \BaseController
                 if ($money . "$rul->yunsuanfu" . $rul->value) {
                     switch ($rule->conditions_type) {
                         case 1:
-                            $result[] = ['rule' => $rule, 'mount' => $rule->discount_amount];
+                            $result[] = ['rule' => $rule, 'amount' => $rule->discount_amount];
                             break;
-
                         case 2:
-                            $result[] = ['rule' => $rule, 'mount' => $money * $rule->discount_amount];
+                            $result[] = ['rule' => $rule, 'amount' => $money * $rule->discount_amount];
                             break;
                         case 3:
-
                             break;
                     }
                 }
             }
+
+
         }
-        return $result;
+
+
+        if (!empty($result)) {
+
+            foreach ($result as $k => $v) {
+
+                $amount[$k] = $v['amount'];
+            }
+
+            array_multisort($amount, SORT_NUMERIC, SORT_DESC, $result);
+
+            return $result[0];
+
+        }
+
     }
 
 
@@ -277,11 +336,9 @@ class CartMemberController extends \BaseController
      * @param $num 总商品数量
      * 折扣卷的确认
      */
-    public function checkCoupon($money, $weight, $num, $productIds, $couponCode = '0040040041')
+    public function checkCoupon($money, $weight, $num, $productIds, $couponCode)
 
     {
-
-
 
         $rule = Source_Salerule_FavoutableRule::whereNotNull('conditions_use')
             ->where('conditions_type', 2)
@@ -290,9 +347,10 @@ class CartMemberController extends \BaseController
             ->first();
 
 
-
-        if (!$rule)
+        if (!$rule) {
             return false;
+        }
+
 
         /**规则：
          * 发行数量
@@ -339,6 +397,7 @@ class CartMemberController extends \BaseController
             return false;
         }
 
+
         /**
          * 购物车规则:type
          *
@@ -360,30 +419,32 @@ class CartMemberController extends \BaseController
             case 'subtotal':
                 if ($money . "$rul->yunsuanfu" . $rul->value) {
                     if ($rule->action_type == 1) {
-                        return ['rule' => $rule, 'mount' => $rule->discount_amount];
+                        return ['rule' => $rule, 'amount' => $rule->discount_amount];
                     } elseif ($rule->action_type == 2) {
-                        return ['rule' => $rule, 'mount' => $money * $rule->discount_amount];
+                        return ['rule' => $rule, 'amount' => $money * $rule->discount_amount];
                     }
                 }
                 break;
 
             case 'number':
+
                 if ($num . "$rul->yunsuanfu" . $rul->value) {
                     if ($rule->action_type == 1) {
-                        return ['rule' => $rule, 'mount' => $rule->discount_amount];
+                        return ['rule' => $rule, 'amount' => $rule->discount_amount];
                     } elseif ($rule->action_type == 2) {
-                        return ['rule' => $rule, 'mount' => $money * $rule->discount_amount];
+                        return ['rule' => $rule, 'amount' => $money * $rule->discount_amount];
                     }
                 }
                 break;
 
             case 'weight':
 
+
                 if ($weight . "$rul->yunsuanfu" . $rul->value) {
                     if ($rule->action_type == 1) {
-                        return ['rule' => $rule, 'mount' => $rule->discount_amount];
+                        return ['rule' => $rule, 'amount' => $rule->discount_amount];
                     } elseif ($rule->action_type == 2) {
-                        return ['rule' => $rule, 'mount' => $money * $rule->discount_amount];
+                        return ['rule' => $rule, 'amount' => $money * $rule->discount_amount];
                     }
                 }
                 break;
@@ -396,15 +457,17 @@ class CartMemberController extends \BaseController
                 foreach ($productIds as $productId) {
                     if ($productId . "$rul->yunsuanfu" . $rul->value) {
                         if ($rule->action_type == 1) {
-                            return ['rule' => $rule, 'mount' => $rule->discount_amount];
+                            return ['rule' => $rule, 'amount' => $rule->discount_amount];
                         } elseif ($rule->action_type == 2) {
-                            return ['rule' => $rule, 'mount' => $money * $rule->discount_amount];
+                            return ['rule' => $rule, 'amount' => $money * $rule->discount_amount];
                         }
                     }
                 }
                 break;
 
         }
+
+
     }
 
 
