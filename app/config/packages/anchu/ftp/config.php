@@ -25,10 +25,10 @@ return array(
     'connections' => array(
 
         'connection1' => array(
-            'host'   => '192.168.2.115',
-            'port'  => 21,
-            'username' => 'admin',
-            'password'   => 'wdf468922',
+            'host'   => '127.0.0.2',
+            'port'  =>  21,
+            'username' => '',
+            'password'   => '',
             'passive'   => false,
         ),
     ),

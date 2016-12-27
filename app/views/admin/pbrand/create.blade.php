@@ -102,7 +102,9 @@
                     </label>
                     <div class="col-sm-8">
                         <div class="form-control-box addimg">
-                            <a href="javascript:;"><img  onclick="getImgTemplet( this,'extension' )"  src="/images/admin/addimg.png"  width="100" height="100"></a>
+                            <a href="javascript:;"><img  onclick="getImgTemplet( this,'extension' )"
+                                                         src="/images/admin/addimg.png"
+                                                         width="100" height="100"></a>
                             <input type="hidden" id="extension" name="extension" />
                         </div>
                         <div class="help-block help-block-t"><div class="help-block help-block-t">品牌推广图，建议尺寸300*200像素，设置品牌推广图，该品牌会在品牌专区显示，否则不展示</div></div>

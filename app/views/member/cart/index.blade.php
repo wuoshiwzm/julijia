@@ -121,14 +121,19 @@
                             <div class="jiesuan_right">
                                 <ul>
                                     <li class="jiesuan_right_li">
-                                        <span>应付总额:</span><font><i>¥&nbsp; </i></font>
+                                        <span>应付总额:&nbsp;&nbsp;¥</span><font><i><span id="pay"></span>
+
+                                            </i></font>
                                     </li>
-                                    <li><span>商品总价：</span><font>¥&nbsp; </font></li>
-                                    <li>
-                                        <span>优&nbsp;&nbsp;惠&nbsp;&nbsp;券：</span><font>-&nbsp;¥&nbsp; </font>
+                                    <li><span>商品总价：&nbsp;&nbsp;¥</span> <span id="total">{{$total}}</span>
+
                                     </li>
                                     <li>
-                                        <span>运&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;费：</span><font>¥&nbsp;0.00</font>
+                                        <span>优&nbsp;&nbsp;惠&nbsp;&nbsp;额：-&nbsp;¥</span><font>&nbsp;<span
+                                                    id="discount"></span> </font>
+                                    </li>
+                                    <li>
+                                        <span>优惠信息：</span><font><span id="discount_info"></span> </font>
                                     </li>
                                 </ul>
                             </div>
