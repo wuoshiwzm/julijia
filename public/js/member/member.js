@@ -38,6 +38,7 @@ function delItem(rowId) {
                 layer.msg(msg.msg, {icon: 2});
             }
         }, 'json')
+        checkDiscount();
     });
 }
 
@@ -56,8 +57,8 @@ function multiDelItem() {
             $.post('/member/del_cart_item', {rowId: rowId, _token: token}, function (msg) {
             });
         });
-
         location = location;
+        checkDiscount();
     });
 
 
@@ -66,6 +67,7 @@ function multiDelItem() {
 
 //更改购物车数量
 function changeQuantity(obj, rowId) {
+
     num = $(obj).val();
 
     var token = $("input[name='_token']").val();
@@ -78,10 +80,14 @@ function changeQuantity(obj, rowId) {
         }
     }, 'json');
 
+    checkDiscount();
+
 }
 
 //支付
 function pay() {
+
+
     if ($('input:checkbox[name=item]:checked').length >= 1) {
         //有选择商品，对选择商品进行结算
 
@@ -99,10 +105,37 @@ function pay() {
  * @param $coupon 优惠券
  * 优惠券及满减优惠的检测 返回生效的优惠信息和优惠掉的钱数
  */
-function checkDiscount($rowIds, $coupon) {
-    //检测折扣
+function checkDiscount() {
 
+    //生成rowId的数组
+    var token = $("input[name='_token']").val();
+    var rowIds = new Array();
+    var coupon = $(".coupon").val();
+    //检测折扣
+    if ($('input:checkbox[name=item]:checked').length >= 1) {
+        //有选择商品，对选择商品进行结算
+        $('input:checkbox[name=item]:checked').each(function (i) {
+            rowIds[i] = $(this).val();
+        });
+    } else if ($('input:checkbox[name=item]:checked').length <= 1) {
+        //未选择商品，对所有商品进行结算
+        $('input:checkbox[name=item]').not("input:checked").each(function (i) {
+            rowIds[i] = $(this).val();
+        });
+    }
     //更新显示区域
+    $.post('/member/cart/check_item', {_token: token, rowIds: rowIds,coupon:coupon}, function (msg) {
+
+
+
+
+
+        if (msg.status == '0') {
+            layer.msg(msg.msg, {icon: 1});
+        } else {
+            layer.msg(msg.msg, {icon: 2});
+        }
+    }, 'json');
 
 }
 
@@ -117,21 +150,15 @@ $(function () {
         } else {
             $(".item_checkbox").prop("checked", false);
         }
+        checkDiscount();
     });
 
 
     $(".item_checkbox").bind("click", function () {
         // if ($('input:checkbox[name=item]:checked').length >= 1) {}
 
-        //生成rowId的数组
-        var rowIds = new Array();
-        var coupon = $(".coupon").val();
 
-        $('input:checkbox[name=item]:checked').each(function (i) {
-            rowIds[i] = $(this).val();
-        });
-
-        checkDiscount(rowIds, coupon)
+        checkDiscount();
 
 
     });

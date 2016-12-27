@@ -44,7 +44,7 @@
                             @foreach($items as $item)
                                 <tr>
                                     <td><input type="checkbox" class="item_checkbox" width="30" name="item"
-                                               value="{{encode($item->row_id)}}"></td>
+                                               value="{{encode($item->id)}}"></td>
                                     <td class="padding_left">
                                         <dl>
                                             <dt><a href="##" target="_blank">
@@ -74,14 +74,14 @@
                                     <td>
                                         <input type="number" name="number" lay-verify="number"
                                                class="layui-input" id="itemNum"
-                                               onchange="changeQuantity(this,{{"'".encode($item->row_id)."'"}})"
+                                               onchange="changeQuantity(this,{{"'".encode($item->id)."'"}})"
                                                placeholder="{{$item->num}}">
                                     </td>
 
                                     <td><font class="price">¥ {{$item->price * $item->num}}</font></td>
                                     <td class="operation ">
                                         <a href="##" class="dele_d"
-                                           onclick="delItem({{"'".encode($item->row_id)."'"}})">删除</a>
+                                           onclick="delItem({{"'".encode($item->id)."'"}})">删除</a>
 
 
                                         <a href="##" class="margin_top">移入收藏夹</a>
@@ -106,7 +106,7 @@
                                     <dt><a href="##" target="_blank"><img src="{{asset('images/frontend/yhq.jpg')}}"
                                                                           width="80"
                                                                           height="80"></a></dt>
-                                    <dd class="order_btn"><input type="text" name="coupon"  class="coupon"
+                                    <dd class="order_btn"><input type="text" name="coupon" class="coupon"
                                                                  autocomplete="off" class="layui-input"
                                                                  placeholder="请输入优惠码"></dd>
                                     <dd>

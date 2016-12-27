@@ -15,6 +15,8 @@ $router->any('/carttest2', 'CartMemberController@checkCoupon');
 Route::any('/del_cart_item', 'CartMemberController@delItem');
 //购物车  更改商品数量
 Route::any('/cart/change_quantity', 'CartMemberController@changeQuantity');
+//购物车 更新商品折扣
+Route::any('/cart/check_item', 'CartMemberController@checkItem');
 
 
 //会员积分
@@ -45,7 +47,7 @@ $router->get('/order/detail/{order_id}', 'InfoMemberController@orderDetail');
 //用户订单 物流详情
 $router->get('/order/shipping/{order_id}', 'InfoMemberController@shippingDetail');
 //确认收货
-Route::any('/receive', 'OrderMemberController@receive');
+$router->any('/receive', 'OrderMemberController@receive');
 
 
 //我的评论

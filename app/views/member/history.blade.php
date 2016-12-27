@@ -25,10 +25,9 @@
 
                 <div class="soucang">
 
-
                     @if(!empty($goods))
                         @foreach($goods as $visit)
-
+@if($visit->product)
                             <dl>
                                 <dt><a href="##"><img src="{{ getImgSize( 'goods', $visit->vs_value, $visit->small_image )}} "/></a>
                                 </dt>
@@ -39,6 +38,7 @@
                                                 href="##"><font class="iconfont">
                                                 &#xe629;</font></a></i></dd>
                             </dl>
+                  @endif
                         @endforeach
                     @endif
 

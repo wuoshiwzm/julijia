@@ -44,10 +44,10 @@ class CartMemberController extends \BaseController
         //Cart::updateQty('sad3',1);
 
         //测试添加商品
-//        Cart::addItem(Session::get('member')->id,'1479370490',2,["size"=>"超大","color"=>"银灰"]);
-//        Cart::addItem(Session::get('member')->id,'1479372520',2,["size"=>"超大","color"=>"银灰"]);
-//        Cart::addItem(Session::get('member')->id,'1479970726',2,["size"=>"超大","color"=>"银灰"]);
-//        Cart::addItem(Session::get('member')->id,'1480497516',2,["size"=>"超大","color"=>"银灰"]);
+//        Cart::addItem('1479370490',2,["size"=>"超大","color"=>"银灰"]);
+//        Cart::addItem('1479372520',2,["size"=>"超大","color"=>"银灰"]);
+//        Cart::addItem('1479970726',2,["size"=>"超大","color"=>"银灰"]);
+//        Cart::addItem('1480497516',2,["size"=>"超大","color"=>"银灰"]);
 
 
         //测试优惠券
@@ -67,6 +67,8 @@ class CartMemberController extends \BaseController
 //        dd($res);
 
         $items = $this->items;
+
+
         return $this->view('member.cart.index', compact('items'));
 
     }
@@ -131,23 +133,20 @@ class CartMemberController extends \BaseController
      */
     function checkItem()
     {
-
         //input: rowid数组： Input::get('rowIds') 优惠券： Input::get('coupon')
-
         //判断rowIds 和 coupon 是否为空数据
-
-
-
         //获取对应 quoteSn数组
 
         $input = trimValue(Input::all());
         $rowIds = $input['rowIds'];
+
+        dd($rowIds);
+
         $couponCode = $input['couponCode'];
 
         if(empty($rowIds)){
             return false;
         }
-
 
         //对应总的重量
         $weight = 0;
@@ -165,7 +164,7 @@ class CartMemberController extends \BaseController
 
 
         foreach ($rowIds as $rowId) {
-            $item = Source_Cart_CartItem::where('row_id', $rowId)->first();
+            $item = Source_Cart_CartItem::where('id', $rowId)->first();
             $money += $item->price * $item->num;
             $weight += $item->weight * $item->num;
             $num += $item->num;
@@ -174,10 +173,8 @@ class CartMemberController extends \BaseController
 
         //优惠券检测
         $couponRes = $this->checkCoupon($money, $weight, $num, $productIds,$couponCode);
-
         //满减检测
         $discountRes = $this->CheckDiscount($money, $weight);
-
         //都不为空
         if($couponRes && $discountRes){
             if($couponRes['amount'] >= $discountRes){
