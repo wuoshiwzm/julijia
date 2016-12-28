@@ -46,6 +46,7 @@ class Source_User_UserInfo extends \Eloquent
         return $this->hasMany('Source_User_UserInfoAdd','user_id');
     }
 
+
     /**
      * @return mixed
      */

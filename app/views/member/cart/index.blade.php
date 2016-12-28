@@ -69,16 +69,16 @@
 
                                     </td>
                                     <td>
-                                        <font class="price_y">¥ {{$item->price}}</font><br>¥ {{$item->price}}
+                                        ¥ <font class="price_y">{{$item->price}}</font><br>¥ {{$item->price}}
                                     </td>
                                     <td>
                                         <input type="number" name="number" lay-verify="number"
                                                class="layui-input" id="itemNum"
                                                onchange="changeQuantity(this,{{"'".encode($item->id)."'"}})"
-                                               placeholder="{{$item->num}}">
+                                               placeholder=""  value="{{$item->num}}">
                                     </td>
 
-                                    <td><font class="price">¥ {{$item->price * $item->num}}</font></td>
+                                    <td>¥<font class="price"> {{$item->price * $item->num}}</font></td>
                                     <td class="operation ">
                                         <a href="##" class="dele_d"
                                            onclick="delItem({{"'".encode($item->id)."'"}})">删除</a>

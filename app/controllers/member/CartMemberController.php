@@ -32,7 +32,7 @@ class CartMemberController extends \BaseController
         parent::__construct();
     }
 
-    /**;
+    /**
      *购物车首页
      */
     function index()
@@ -65,6 +65,19 @@ class CartMemberController extends \BaseController
 //        public function CheckDiscount($money, $weight)
 //        $res = $this->CheckDiscount(1100, 1500);
 //        dd($res);
+//        dd($this->collect(5));
+
+
+
+        $user = Session::get('member');
+        $address = $user->address->filter(function ($value) {
+            return $value->status = 1;
+        });
+
+        dd($address[0]->name);
+        $address = $user->address->sortByDesc('status')->first()->status;
+
+
 
         $items = $this->items;
         $total = 0;
@@ -164,8 +177,6 @@ class CartMemberController extends \BaseController
         $productIds = [];
 
 
-
-
         //对应对应总的折扣价格  减少的价格
         $discount = 0;
 
@@ -189,7 +200,7 @@ class CartMemberController extends \BaseController
                 $couponRes['total'] = $money;
                 return $couponRes;
             }
-            $discountRes = $money;
+            $discountRes['total'] = $money;
             return $discountRes;
         }
 
@@ -197,14 +208,14 @@ class CartMemberController extends \BaseController
         //都为空
         if (!$couponRes && !$discountRes) {
             $res['total'] = $money;
-            return '';
+            return $res;
         }
 
-        if(!$couponRes){
+        if (!$couponRes) {
             $discountRes['total'] = $money;
             return $discountRes;
 
-        }else{
+        } else {
             $couponRes['total'] = $money;
             return $couponRes;
         }
@@ -270,7 +281,6 @@ class CartMemberController extends \BaseController
             }
 
 
-
             $rul = json_decode($rule->conditions_use);
 
 
@@ -318,8 +328,8 @@ class CartMemberController extends \BaseController
             foreach ($result as $k => $v) {
                 $amount[$k] = $v['amount'];
             }
-                array_multisort($amount, SORT_NUMERIC, SORT_DESC, $result);
-                return $result[0];
+            array_multisort($amount, SORT_NUMERIC, SORT_DESC, $result);
+            return $result[0];
         }
 
     }
@@ -495,6 +505,149 @@ class CartMemberController extends \BaseController
                 break;
 
         }
+
+    }
+
+    /**
+     * @param $id
+     * 移到收藏夹
+     */
+    public function collect($id)
+    {
+        /**
+         * user_id
+         * entity_id
+         * is_show
+         * share_code
+         * entity_name
+         * price
+         * sku
+         * shop_id
+         */
+//        $input = decode(trim(Input::get('id')));
+
+        $item = Source_Cart_CartItem::where('id', $id)->first();
+        $colle['user_id'] = Session::get('member')->id;
+        $colle['entity_id'] = $item->product_id;
+        $colle['is_show'] = 1;
+        $colle['share_code'] = 'collect' . getMicroTimestamp();
+        $colle['entity_name'] = $item->product_name;
+        $colle['price'] = $item->price;
+        $colle['sku'] = $item->sku;
+        $colle['shop_id'] = $item->shop_id;
+
+
+        DB::transaction(function () use ($colle, $id) {
+            Source_User_UserInfoCollect::create($colle);
+            Source_Cart_CartItem::where('id', $id)->delete();
+        });
+
+        return true;
+    }
+
+
+    /**
+     * @param $rowIds
+     * @param $itemTotal 商品总价
+     * @param $itemNum 商品件数
+     * 支付
+     */
+    public function pay($rowIds)
+    {
+        $input = trimValue(Input::all());
+        $itemNum = $input->itemNum;
+        $itemTotal = $input->itemTotal;
+
+        $user = Session::get('member');
+        $address = $user->address->where('status', 1);
+
+
+        if (is_array($input['rowIds'])) {
+            foreach ($input['rowIds'] as $rowid) {
+                $rowIds[] = decode($rowid);
+            }
+        }
+
+        if (!empty($rowIds)) {
+            foreach ($rowIds as $rowId) {
+
+
+                Cart::remove($rowId);
+
+            }
+        }
+
+        /**
+         * order_info:
+         * order_sn
+         * user_id
+         * shop_id
+         * source
+         * status
+         * pay_status
+         * payment_id
+         * payment
+         * itemnum
+         * ship_name
+         * ship_addr
+         * ship_post
+         * ship_phone
+         * ship_time
+         * cost_item
+         * cost_freight
+         * shipping_amount
+         * total_amount
+         * pay_amount
+         */
+
+        $orderInfo['order_sn'] = 'order' . getMicroTimestamp();
+        $orderInfo['user_id'] = $user->id;
+        $orderInfo['shop_id'] = 1;
+        $orderInfo['source'] = 1;
+        $orderInfo['status'] = 1;
+        $orderInfo['pay_status'] = 1;
+        $orderInfo['payment_id'] = 'pay' . getMicroTimestamp();
+//        $orderInfo['payment'] = ??;
+//        $orderInfo['itemnum'] = ??;
+//        $orderInfo['ship_name'] = ??;
+//        $orderInfo['ship_addr'] = ??;
+//        $orderInfo['ship_post'] = ??;
+//        $orderInfo['ship_phone'] = ??;
+
+        /**
+         * order_item:
+         *id
+         * form
+         * order_id
+         * product_id
+         * product_name
+         * product_status
+         * sku
+         * price
+         * weight
+         * row_total
+         * row_weigth
+         * mendian_id
+         * mendian_name
+         * num
+         * guige
+         * shipping_name
+         * shipping_m_code
+         * shipping_id
+         * shipping_status
+         * shipping_fei
+         * support_cod
+         */
+        /*生成订单 和 订单相应商品  order_info order_item*/
+        if (!empty($rowIds)) {
+            foreach ($rowIds as $rowId) {
+
+
+                Cart::remove($rowId);
+
+            }
+        }
+
 
     }
 

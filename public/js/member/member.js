@@ -58,7 +58,7 @@ function multiDelItem() {
             });
         });
         location = location;
-        checkDiscount();
+        //checkDiscount();
     });
 
 
@@ -113,7 +113,7 @@ function checkDiscount() {
     // }
     //
     // $("#pay").html($("#total").html() - $("#discount").html());
-
+    $(".price").html($(".price_y").html() * $("#itemNum").val());
 
     //生成rowId的数组
     var token = $("input[name='_token']").val();
@@ -144,12 +144,14 @@ function checkDiscount() {
 
         } else {
             //有折扣信息，处理
-            alert(msg['amount']);
+
             $("#total").html(msg['total']);
             $("#discount").html(msg['amount']);
             $("#discount_info").html(msg['rule']['name']);
-
             $("#pay").html($("#total").html() - $("#discount").html());
+
+
+
         }
 
     });
