@@ -157,12 +157,9 @@ function getProducts( page, index  )
 /**
  * 收藏
  */
-$(".keep").click(function () {
+$(".keepYes").click(function () {
     var arr = {};
     arr.entity_id = $("#entity_id").val();
-    arr.entity_name = $("#entity_name").text();
-    arr.price = $("#entity_price").val();
-    arr.sku = $("#sku").val();
     arr.token = $("input[name='_token']").val();
     $.ajax({
         url:'/goods/keep',
@@ -172,9 +169,10 @@ $(".keep").click(function () {
         success:function( msg ){
             if( msg == 'no' )
             {
-                layer.msg('登录后才能收藏', {
-                    time: 20000,
-                    btn: ['明白了', '去登录']
+                layer.confirm('登录后才能收藏', {
+                    btn: ['暂不登录', '去登录']
+                },function(index){
+                    location.href = '/member/login?redirectURL='+encodeURIComponent($('meta[name="redirectURL"]').attr('content'));
                 });
 
             }else if( msg == 'success' )
@@ -196,6 +194,17 @@ $(".keep").click(function () {
 
 
 /**
+ * 收藏时去登录
+ */
+$(".keepNo").click(function () {
+    layer.confirm('登录后才能收藏', {
+        btn: ['去登录', '暂不登录']
+    },function( index ){
+        location.href = '/member/login?redirectURL='+encodeURIComponent($('meta[name="redirectURL"]').attr('content'));
+    });
+});
+
+/**
  * 选择属性
  */
 $(".checkd").click(function () {
@@ -211,7 +220,7 @@ $(".checkd").click(function () {
 /**
  * 加入购物车和立即购买下订单
  */
-$(".u-buy2").click(function () {
+$(".buy-button").click(function () {
     //验证数字
     var num = $.trim($("#num").val());
     if( num )
