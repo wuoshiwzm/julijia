@@ -245,7 +245,9 @@ i{font-style: normal; color:#dc4709;}
 
 /*分页*/
 .list_nei{padding-top:0px!important;padding-bottom:0px!important; height:30px;}
-
+.list_nei ul{ float:right;  }
+.list_nei ul li{ float:left; }
+.list_nei .pagination-info{ float:right!important; margin-right:10px; }
 #pagination{  clear:both; padding-top:14px; }
 #pagination .pagination-info{ float:left; margin-top:8px; margin-left:6px; color:#333; }
 #pagination .pagination-info font{ margin:0 4px;  }
