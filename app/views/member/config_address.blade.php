@@ -25,21 +25,22 @@
             <div class="h-title">
                 收货地址<font>Shipping Address</font>
             </div>
+
             <form class="layui-form m-form form" action="{{url('member/config/address')}}" method="post">
                 {{ Form::token() }}
 
+
+
                 <div class="layui-form-item">
-                    <label class="layui-form-label">居住地</label>
+                    <label class="layui-form-label">选择省市区</label>
                     <div class="layui-input-inline">
-                        <select name="province" id="address6" lay-filter="province">
+                        <select name="province" id="address" lay-filter="province">
                             <option value="">请选择省</option>
-                            @foreach( $province as $val )
-                                <option value="{{$val ->provinceID}}">{{$val ->province}}</option>
-                            @endforeach
+
                         </select>
                     </div>
                     <div class="layui-input-inline">
-                        <select name="city" id="address1"  lay-filter="city">
+                        <select name="city" id="address1" lay-filter="city">
                             <option value="">请选择市</option>
                         </select>
                     </div>
@@ -49,7 +50,6 @@
                         </select>
                     </div>
                 </div>
-
 
                 <div class="simple-form-field">
                     <div class="form-group">
@@ -70,19 +70,7 @@
                     </div>
                 </div>
 
-                {{--<div class="layui-form-item">
-                    <label class="layui-form-label"><span class="red">*</span>详细地址：</label>
-                    <div class="layui-input-block">
-                        <input type="text"
-                               name="address"
-                               placeholder="填写详细地址"
-                               autocomplete="off"
-                               class="layui-input w40b f_left"
-                               datatype="*"
-                               errormsg="详细地址" tipsrmsg="详细地址"
-                        ><span class="Validform_checktip"></span>
-                    </div>
-                </div>--}}
+              　
 
                 <div class="simple-form-field">
                     <div class="form-group">
@@ -104,22 +92,7 @@
                 </div>
 
 
-
-                {{--<div class="layui-form-item">--}}
-                    {{--<label class="layui-form-label"><span class="red">*</span>收货人信息：</label>--}}
-                    {{--<div class="layui-input-block">--}}
-                        {{--<input type="text"--}}
-                               {{--name="name"--}}
-                               {{--autocomplete="off"--}}
-                               {{--class="layui-input w40b f_left"--}}
-                               {{--placeholder="填写收货人姓名"--}}
-                               {{--datatype="un"--}}
-                               {{--errormsg="收货人信息必填" tipsrmsg="收货人信息"--}}
-                        {{-->--}}
-                        {{--<span class="Validform_checktip"></span>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
+　
 
                 <div class="simple-form-field">
                     <div class="form-group">
@@ -140,19 +113,7 @@
                     </div>
                 </div>
 
-                {{--<div class="layui-form-item">--}}
-                    {{--<label class="layui-form-label"><span class="red">*</span>手机号码：</label>--}}
-                    {{--<div class="layui-input-block">--}}
-                        {{--<input type="text"--}}
-                               {{--name="phone"--}}
-                               {{--placeholder="填写手机号码"--}}
-                               {{--class="layui-input w40b f_left"--}}
-                               {{--datatype="m"--}}
-                               {{--errormsg="手机号码必填" tipsrmsg="手机号码"--}}
-                        {{-->--}}
-                        {{--<span class="Validform_checktip"></span>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+              　
 
                 <div class="simple-form-field">
                     <div class="form-group">
@@ -174,20 +135,7 @@
                 </div>
 
 
-
-                {{--<div class="layui-form-item">
-                    <label class="layui-form-label">邮政编码：</label>
-                    <div class="layui-input-block">
-                        <input type="text"
-                               name="zipcode"
-                               autocomplete="off"
-                               class="layui-input w40b f_left"
-                               ignore="ignore"      placeholder="填写邮政编号"
-                               datatype="*"
-                               errormsg="邮政编码应为数字" tipsrmsg="邮政编码"
-                        ><span class="Validform_checktip"></span>
-                    </div>
-                </div>--}}
+　
 
 
                 <div class="simple-form-field">
@@ -209,21 +157,7 @@
                 </div>
 
 
-
-                {{--<div class="layui-form-item">
-                    <label class="layui-form-label">>电话：</label>
-                    <div class="layui-input-block">
-                        <input type="text"
-                               name="tel"
-                               placeholder="请填写电话号码"
-                               class="layui-input w40b f_left"
-                               datatype="n6-11"
-                               ignore="ignore"
-                               errormsg="请填写固定电话" tipsrmsg="请填写固定电话号码"
-                        >
-                        <span class="Validform_checktip"></span>
-                    </div>
-                </div>--}}
+　
 
 
                 <div class="layui-form-item">
@@ -236,6 +170,8 @@
                 </div>
 
 
+
+
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn">保存</button>
@@ -243,11 +179,7 @@
                 </div>
 
 
-                {{--<div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <input type="submit" class="layui-btn" value="保存"/>
-                    </div>
-                </div>--}}
+            　
             </form>
         </div>
 
@@ -268,8 +200,8 @@
 
 
                             <td>{{$addr->name}}</td>
-                            <td>{{isset($addr->provinceInfo->province)?$addr->provinceInfo->province:''}}，{{isset($addr->cityInfo->city)?$addr->cityInfo->city:''}}
-                                ，{{isset($addr->areaInfo->area)?$addr->areaInfo->area:''}}</td>
+                            <td>{{isset($addr->province)?$addr->province:''}}，{{isset($addr->city)?$addr->city:''}}
+                                ，{{isset($addr->area)?$addr->area:''}}</td>
                             <td>{{$addr->address}}</td>
                             <td>{{$addr->zipcode}}</td>
                             <td>{{$addr->phone}}</td>
@@ -317,6 +249,6 @@
         }
 
     </script>
-
     <script type="text/javascript" src="{{asset('js/public/location_pick/location_pick.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/member/config.js')}}"></script>
 @stop

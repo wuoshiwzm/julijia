@@ -39,6 +39,7 @@ class ConfigMemberController extends CommonController
     {
         //获取当前用户信息
 
+
         $userInfo = User::getUserinfoById($this->user_id);
         return $this->view('member.config', compact('userInfo'));
 
@@ -51,17 +52,17 @@ class ConfigMemberController extends CommonController
     {
 
 
-        $input = array_except(trimValue(Input::all()),['_token']);
+        $input = array_except(trimValue(Input::all()), ['_token']);
+        $input['area'] = '';
+        $res = DB::transaction(function () use ($input) {
+            $userAdd = ['province' => $input['province'], 'city' => $input['city'], 'district' => $input['area']];
+            $userInfo = array_except($input, ['province', 'city', 'area']);
 
-        $res = DB::transaction(function () use($input){
-            $userAdd = [$input['province'],$input['city'],$input['area']];
-            $userInfo = array_except($input,['province','city','area']);
-
-            Source_User_UserInfo::where('id',$this->user_id)->update($userInfo);
-            Source_User_UserInfoAdd::where('id',$this->user_id)->update($userAdd);
+            Source_User_UserInfo::where('id', $this->user_id)->update($userInfo);
+            Source_User_UserInfoAdd::where('id', $this->user_id)->update($userAdd);
         });
 
-        if($res){
+        if ($res) {
             return Redirect::to('member');
         }
 
@@ -106,9 +107,9 @@ class ConfigMemberController extends CommonController
      */
     public function notice()
     {
-        $notices = Source_User_UserInfoLog::where('user_id',$this->user_id)->get();
+        $notices = Source_User_UserInfoLog::where('user_id', $this->user_id)->get();
 
-        return $this->view('member.config_notice',compact('notices'));
+        return $this->view('member.config_notice', compact('notices'));
     }
 
 

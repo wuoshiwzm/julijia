@@ -66,9 +66,7 @@ class Address
         }
         //如果status没有值 ，则插入数据即可
         $res = Source_User_UserInfoAdd::create($input);
-
         return $res;
-
     }
 
     /**

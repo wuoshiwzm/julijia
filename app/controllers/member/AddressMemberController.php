@@ -62,6 +62,7 @@ class AddressMemberController extends CommonController {
 	public function store()
 	{
 
+//	    dd(Input::all());
 
         if(Input::get('_token') == csrf_token()){
             $input = Input::except('_token','area','status');
@@ -74,6 +75,7 @@ class AddressMemberController extends CommonController {
         }
         
         $input['user_id']=$this->user_id;
+
         $res = Address::createAddr($input);
 
         if($res){

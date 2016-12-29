@@ -76,7 +76,6 @@ $router->any('/feedback/remove_feedback/{id}', 'FeedbackMemberController@removeF
 //用户中心用户信息
 $router->get('/info', 'UserController@info');
 
-
 //我的足迹
 $router->get('/history', 'HistoryMemberController@index');
 

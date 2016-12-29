@@ -21,7 +21,7 @@ $(function () {
             $("#address3").empty();
             $.each(data, function (n, value) {
                 //clear the select options then add the new info
-                $("#address2").append("<option value=" + value["id"] + ">" + value["city"] + "</option>");
+                $("#address2").append("<option value=" + value["city"] + ">" + value["city"] + "</option>");
             });
         });
     });
@@ -37,7 +37,7 @@ $(function () {
             var data = $.parseJSON(data);
             $.each(data, function (n, value) {
                 //clear the select options then add the new info
-                $("#address3").append("<option value=" + value["id"] + ">" + value["area"] + "</option>");
+                $("#address3").append("<option value=" + value["area"] + ">" + value["area"] + "</option>");
             });
         });
     });
@@ -68,7 +68,7 @@ function loadProvince() {
     $.post("/getProvince", {}, function (data) {
         var data = $.parseJSON(data);
         $.each(data, function (n, value) {
-              phtml += "<option value=" + value["provinceID"] + ">" + value["province"] + "</option>";
+              phtml += "<option value=" + value["province"] + ">" + value["province"] + "</option>";
         });
         $form.find('select[name=province]').append(phtml);
         form.render();
@@ -76,6 +76,9 @@ function loadProvince() {
             var citydata = data.value;
             console.log(data.value);
             loadCity(citydata);
+
+            // $form.find('select[name=area]').empty();
+            // form.render();
         })
     });
 }
@@ -86,7 +89,7 @@ function loadCity(citydata) {
         var data = $.parseJSON(data);
         $.each(data, function (n, value) {
             //clear the select options then add the new info
-            phtml += "<option value=" + value["cityID"] + ">" + value["city"] + "</option>"
+            phtml += "<option value=" + value["city"] + ">" + value["city"] + "</option>"
         });
         $form.find('select[name=city]').append(phtml);
         form.render();
@@ -104,7 +107,7 @@ function loadCity(citydata) {
             var data = $.parseJSON(data);
             $.each(data, function (n, value) {
                 //clear the select options then add the new info
-                phtml +="<option value=" + value["areaID"] + ">" + value["area"] + "</option>"
+                phtml +="<option value=" + value["area"] + ">" + value["area"] + "</option>"
             });
             $form.find('select[name=area]').append(phtml);
             form.render();

@@ -21,13 +21,15 @@ class Location
     static function getCity($province = NULL)
     {
 
+        $provinceInfo = Source_Area_Province::where('province',$province)->first();
+
         if ($province) {
             return Source_Area_City::select('id', 'city', 'cityID')
-                ->where('parent',$province)
+                ->where('parent',$provinceInfo->provinceID)
                 ->get()
                 ->toJson();
         }
-        $parent = Source_Area_Province::where('id', $province)->first()->provinceID;
+        $parent = Source_Area_Province::where('province', $province)->first()->provinceID;
         return Source_Area_City::where('parent', $parent)
             ->select('id', 'city', 'cityID')
             ->get()
@@ -41,13 +43,16 @@ class Location
      */
     static function getArea($city = NULL)
     {
+
+        $cityInfo = Source_Area_City::where('city',$city)->first();
+
         if ($city) {
             return Source_Area_Area::select('id', 'area', 'areaID')
-                ->where('parent',$city)
+                ->where('parent',$cityInfo->cityID)
                 ->get()
                 ->toJson();
         }
-        $parent = Source_Area_City::where('id', $city)->first()->cityID;
+        $parent = Source_Area_City::where('city', $city)->first()->cityID;
         return Source_Area_Area::where('parent', $parent)
             ->select('id', 'area', 'areaID')
             ->get()

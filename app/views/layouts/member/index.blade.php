@@ -25,6 +25,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/layui.css')}}">
 
 
+
     @yield('css')
 </head>
 
@@ -93,6 +94,7 @@
 <div class="ge_admin02">
     <div class="ge_admin_nei">
         @yield('left')
+
 
 
         @yield('content')

@@ -68,9 +68,11 @@ class CartMemberController extends \BaseController
 //        dd($this->collect(5));
 
 
+
         $pay = $this->pay();
         dd($pay);
-        $address = $user->address->sortByDesc('status')->first()->status;
+
+
 
 
         $items = $this->items;

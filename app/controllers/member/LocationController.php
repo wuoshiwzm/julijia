@@ -17,6 +17,7 @@ class LocationController extends CommonController{
     public function getCity()
     {
         $province = Input::get('province');
+
         return Location::getCity($province);
     }
 

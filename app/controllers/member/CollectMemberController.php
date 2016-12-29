@@ -34,32 +34,31 @@ class CollectMemberController extends CommonController
      */
     public function index()
     {
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
         //获取收藏商品
-        $collects = User::getCollectByUser($this->user_id)->get();
-
+        $collects = User::getCollectByUser($this->user_id)->paginate($setPage);;
         //获取收藏商品的图片
         foreach($collects as $collect){
             $productInfo = Product::getProductById($collect->entity_id);
-            $collect->pic = $productInfo->small_image;
+            $collect->pic = Config::get('tools.imagePath') . 'goods/' . $productInfo->entity_id. '/' .$productInfo->small_image;
         }
-        return $this->view('member.collect', compact('collects'));
+        $set['setpage'] = $setPage;
+        return $this->view('member.collect', compact('collects','set'));
     }
 
     public function notShow()
     {
         //获取收藏商品
-        $collects = User::getCollectByUser($this->user_id)->get();
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
+        $collects = User::getCollectByUser($this->user_id,false)->paginate($setPage);;
 
         //获取收藏商品的图片
         foreach($collects as $collect){
-            if($collect->is_show == 1){
-                $collect->forget;
-                continue;
-            }
             $productInfo = Product::getProductById($collect->entity_id);
-            $collect->pic = $productInfo->small_image;
+            $collect->pic = Config::get('tools.imagePath') . 'goods/' . $productInfo->entity_id. '/' .$productInfo->small_image;
         }
-        return $this->view('member.collect_unshow', compact('collects'));
+        $set['setpage'] = $setPage;
+        return $this->view('member.collect_unshow', compact('collects','set'));
     }
 
 
