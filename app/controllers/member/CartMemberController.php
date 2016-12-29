@@ -68,15 +68,9 @@ class CartMemberController extends \BaseController
 //        dd($this->collect(5));
 
 
-
-        $user = Session::get('member');
-        $address = $user->address->filter(function ($value) {
-            return $value->status = 1;
-        });
-
-        dd($address[0]->name);
+        $pay = $this->pay();
+        dd($pay);
         $address = $user->address->sortByDesc('status')->first()->status;
-
 
 
         $items = $this->items;
@@ -542,24 +536,30 @@ class CartMemberController extends \BaseController
             Source_Cart_CartItem::where('id', $id)->delete();
         });
 
-        return true;
+        return 'true';
     }
 
 
     /**
      * @param $rowIds
-     * @param $itemTotal 商品总价
-     * @param $itemNum 商品件数
+     * 传递商品id数组 更新对应信息 生成支付订单数据
      * 支付
      */
-    public function pay($rowIds)
+    public function pay()
     {
         $input = trimValue(Input::all());
-        $itemNum = $input->itemNum;
-        $itemTotal = $input->itemTotal;
 
+        $inut['rowIds'] = [1479264267];
+
+        /*用户商品总数和件数*/
+        $payment = 0;
+        $itemnum = 0;
+        $orderNewId = '';
+
+        /*用户地址信息*/
         $user = Session::get('member');
-        $address = $user->address->where('status', 1);
+        $address = Source_User_UserInfoAdd::where('status', 1)
+            ->where('user_id', $user->id)->first();
 
 
         if (is_array($input['rowIds'])) {
@@ -567,38 +567,15 @@ class CartMemberController extends \BaseController
                 $rowIds[] = decode($rowid);
             }
         }
-
+        /*更新商品总数 和 总价*/
         if (!empty($rowIds)) {
             foreach ($rowIds as $rowId) {
-
-
-                Cart::remove($rowId);
-
+                $item = Source_Cart_CartItem::where('id', $rowId)->first();
+                $payment += $item->price * $item->num;
+                $itemnum += $item->num;
+//                Cart::remove($rowId);
             }
         }
-
-        /**
-         * order_info:
-         * order_sn
-         * user_id
-         * shop_id
-         * source
-         * status
-         * pay_status
-         * payment_id
-         * payment
-         * itemnum
-         * ship_name
-         * ship_addr
-         * ship_post
-         * ship_phone
-         * ship_time
-         * cost_item
-         * cost_freight
-         * shipping_amount
-         * total_amount
-         * pay_amount
-         */
 
         $orderInfo['order_sn'] = 'order' . getMicroTimestamp();
         $orderInfo['user_id'] = $user->id;
@@ -607,46 +584,56 @@ class CartMemberController extends \BaseController
         $orderInfo['status'] = 1;
         $orderInfo['pay_status'] = 1;
         $orderInfo['payment_id'] = 'pay' . getMicroTimestamp();
-//        $orderInfo['payment'] = ??;
-//        $orderInfo['itemnum'] = ??;
-//        $orderInfo['ship_name'] = ??;
-//        $orderInfo['ship_addr'] = ??;
-//        $orderInfo['ship_post'] = ??;
-//        $orderInfo['ship_phone'] = ??;
+        $orderInfo['payment'] = $payment;
+        $orderInfo['itemnum'] = $itemnum;
+        $orderInfo['ship_name'] = $address->name;
+        $orderInfo['ship_addr'] = $address->address;
+        $orderInfo['ship_post'] = $address->zipcode;
+        $orderInfo['ship_phone'] = $address->phone;
 
-        /**
-         * order_item:
-         *id
-         * form
-         * order_id
-         * product_id
-         * product_name
-         * product_status
-         * sku
-         * price
-         * weight
-         * row_total
-         * row_weigth
-         * mendian_id
-         * mendian_name
-         * num
-         * guige
-         * shipping_name
-         * shipping_m_code
-         * shipping_id
-         * shipping_status
-         * shipping_fei
-         * support_cod
-         */
         /*生成订单 和 订单相应商品  order_info order_item*/
-        if (!empty($rowIds)) {
-            foreach ($rowIds as $rowId) {
 
-
-                Cart::remove($rowId);
-
-            }
+        /*order_item数据 */
+        $orderItems = [];
+        foreach ($rowIds as $rowId) {
+            $item = Source_Cart_CartItem::where('id', $rowId)->first();
+            $orderItem['product_id'] = $item->product_id;
+            $orderItem['product_name'] = $item->product_name;
+            $orderItem['product_status'] = $item->product_name;
+            $orderItem['sku'] = $item->sku;
+            $orderItem['price'] = $item->price;
+            $orderItem['weight'] = $item->weight;
+            $orderItem['row_total'] = $item->price * $item->num;
+            $orderItem['row_weigth'] = $item->weight * $item->num;
+            $orderItem['mendian_id'] = $item->shop_id;
+            $orderItem['mendian_name'] = '';
+            $orderItem['num'] = $item->num;
+            $orderItem['guige'] = $item->guige;
+            $orderItem['shipping_name'] = $address->name;
+            $orderItem['shipping_m_code'] = '';
+            $orderItem['shipping_id'] = '';
+            $orderItem['shipping_status'] = 1;
+//        $orderItem['shipping_fei'] = '';
+//        $orderItem['support_cod'] = $item->cod;
+            $orderItems[] = $orderItem;
         }
+
+        DB::transaction(function() use ($orderItems,$orderInfo,$rowIds){
+            /*生成订单数据*/
+            $orderNew = Source_Order_OrderInfo::create($orderInfo);
+            
+            /*生成订单商品数据*/
+            foreach($orderItems as $item){
+                $item['order_id'] = $orderNew->id;
+                Source_Order_OrderItem::creat($item);
+            }
+            /*删除购物车对应商品*/
+            foreach($rowIds as $rowId){
+                Cart::remove($rowId);
+            }
+
+            return $orderNew->id;
+        });
 
 
     }

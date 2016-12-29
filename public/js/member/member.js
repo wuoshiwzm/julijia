@@ -86,15 +86,27 @@ function changeQuantity(obj, rowId) {
 
 //支付
 function pay() {
-
+    var token = $("input[name='_token']").val();
+    var rowIds = new Array();
     if ($('input:checkbox[name=item]:checked').length >= 1) {
         //有选择商品，对选择商品进行结算
-
+        $('input:checkbox[name=item]:checked').each(function (i) {
+            rowIds[i] = $(this).val();
+        });
     }
 
     if ($('input:checkbox[name=item]:checked').length <= 1) {
         //未选择商品，对所有商品进行结算
+        $('input:checkbox[name=item]').not("input:checked").each(function (i) {
+            rowIds[i] = $(this).val();
+        });
+
     }
+
+    $.post('member/cart/pay', {rowIds:rowIds,token:token},function(a){
+        alert(a);
+        /*如果成功，跳转至付款页面*/
+    });
 }
 
 /**
@@ -151,9 +163,18 @@ function checkDiscount() {
             $("#pay").html($("#total").html() - $("#discount").html());
 
 
-
         }
 
+    });
+}
+
+//收藏
+function collect(id) {
+    var id = id;
+    var token = $("input[name='_token']").val();
+
+    $.post('/member/cart/collect/'+id,{token:token},function(a){
+        alert(a);
     });
 }
 
@@ -185,6 +206,5 @@ $(function () {
     $("#itemNum").bind("change", function () {
         checkDiscount();
     })
-
 
 });

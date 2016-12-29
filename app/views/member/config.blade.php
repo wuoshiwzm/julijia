@@ -20,6 +20,12 @@
             <form class="layui-form m-form" action="">
                 {{ Form::token() }}
 
+
+
+
+
+
+
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>昵称</label>
                     <div class="layui-input-block">
