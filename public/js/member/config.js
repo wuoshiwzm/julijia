@@ -24,3 +24,21 @@ function setPathUrl( path, index  )
     $("#"+index).parents('.addimg').find('img').attr('src','/media/temp/'+path);
     $("#"+index).val(path);
 }
+
+
+//删除地址
+function delAddr(id) {
+    var token = $("input[name='_token']").val();
+    layer.confirm('确定要删除吗？', {
+        btn: ['确定', '取消']
+    }, function () {
+        $.post('/member/config/address/' + id, {_method: 'DELETE', _token: token}, function (msg) {
+            if (msg.status == '0') {
+                layer.msg(msg.msg, {icon: 1});
+                location = location;
+            } else {
+                layer.msg(msg.msg, {icon: 2});
+            }
+        }, 'json')
+    });
+}

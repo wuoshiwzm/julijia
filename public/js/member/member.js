@@ -173,9 +173,11 @@ function collect(id) {
     var id = id;
     var token = $("input[name='_token']").val();
 
-    $.post('/member/cart/collect/'+id,{token:token},function(a){
-        alert(a);
-    });
+    alert(1);
+
+    // $.post('/member/cart/collect/'+id,{token:token},function(a){
+    //     alert(a);
+    // });
 }
 
 

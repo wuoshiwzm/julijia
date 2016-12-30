@@ -124,23 +124,5 @@
 @stop
 
 @section('js')
-<script>
-
-    function delAddr(id) {
-        var token = $("input[name='_token']").val();
-        layer.confirm('确定要删除吗？', {
-            btn: ['确定', '取消']
-        }, function () {
-            $.post('/member/config/address/' + id, {_method: 'DELETE', _token: token}, function (msg) {
-                if (msg.status == '0') {
-                    layer.msg(msg.msg, {icon: 1});
-                    location = location;
-                } else {
-                    layer.msg(msg.msg, {icon: 2});
-                }
-            }, 'json')
-        });
-    }
-
-</script>
+    <script type="text/javascript" src="{{asset('js/member/config.js')}}"></script>
 @stop

@@ -1,4 +1,4 @@
-@section('title')
+    @section('title')
     购物车
 @stop
 

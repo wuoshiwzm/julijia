@@ -7,6 +7,7 @@ class CartMemberController extends \BaseController
 
 
     private $items;
+    private $userId;
 
     protected $layout = 'layouts.frontend';
 
@@ -28,8 +29,11 @@ class CartMemberController extends \BaseController
      */
     function __construct()
     {
+        $this->userId = Session::get('member')->id;
         $this->items = Cart::getContent()->get();
         parent::__construct();
+
+
     }
 
     /**
@@ -43,7 +47,7 @@ class CartMemberController extends \BaseController
         //Cart::updateQty('sad4',1);
         //Cart::updateQty('sad3',1);
 
-        //测试添加商品
+//        测试添加商品
 //        Cart::addItem('1479370490',2,["size"=>"超大","color"=>"银灰"]);
 //        Cart::addItem('1479372520',2,["size"=>"超大","color"=>"银灰"]);
 //        Cart::addItem('1479970726',2,["size"=>"超大","color"=>"银灰"]);
@@ -67,12 +71,9 @@ class CartMemberController extends \BaseController
 //        dd($res);
 //        dd($this->collect(5));
 
-
-
-        $pay = $this->pay();
-        dd($pay);
-
-
+        //支付测试
+        /*$pay = $this->pay();
+        dd($pay);*/
 
 
         $items = $this->items;
@@ -551,7 +552,14 @@ class CartMemberController extends \BaseController
     {
         $input = trimValue(Input::all());
 
-        $inut['rowIds'] = [1479264267];
+        /*test rowIds: 15 17 18*/
+        $input['rowIds'] = [
+            'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxNQ==',
+            'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxNw==',
+            'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxOA=='
+        ];
+
+
 
         /*用户商品总数和件数*/
         $payment = 0;
@@ -565,8 +573,8 @@ class CartMemberController extends \BaseController
 
 
         if (is_array($input['rowIds'])) {
-            foreach ($input['rowIds'] as $rowid) {
-                $rowIds[] = decode($rowid);
+            foreach ($input['rowIds'] as $rowId) {
+                $rowIds[] = decode($rowId);
             }
         }
         /*更新商品总数 和 总价*/
@@ -575,9 +583,9 @@ class CartMemberController extends \BaseController
                 $item = Source_Cart_CartItem::where('id', $rowId)->first();
                 $payment += $item->price * $item->num;
                 $itemnum += $item->num;
-//                Cart::remove($rowId);
             }
         }
+
 
         $orderInfo['order_sn'] = 'order' . getMicroTimestamp();
         $orderInfo['user_id'] = $user->id;
@@ -620,25 +628,47 @@ class CartMemberController extends \BaseController
             $orderItems[] = $orderItem;
         }
 
-        DB::transaction(function() use ($orderItems,$orderInfo,$rowIds){
+
+        $res = DB::transaction(function () use ($orderItems, $orderInfo, $rowIds) {
             /*生成订单数据*/
             $orderNew = Source_Order_OrderInfo::create($orderInfo);
-            
+
             /*生成订单商品数据*/
-            foreach($orderItems as $item){
+            foreach ($orderItems as $item) {
                 $item['order_id'] = $orderNew->id;
-                Source_Order_OrderItem::creat($item);
+                Source_Order_OrderItem::create($item);
             }
             /*删除购物车对应商品*/
-            foreach($rowIds as $rowId){
+            foreach ($rowIds as $rowId) {
                 Cart::remove($rowId);
             }
 
-            return $orderNew->id;
         });
 
 
+        //成功 返回加密的对应的订单id号
+        if(is_null($res)){
+            return encode(Source_Order_OrderInfo::where('user_id',Session::get('member')->id)->max('id'));
+        }
     }
 
+
+    /**
+     * @param $orderId 订单id
+     * 转到支付页面
+     */
+    public function payOrder($orderId)
+    {
+
+
+        $orderId = decode($orderId);
+        $order = Source_Order_OrderInfo::find($orderId);
+
+
+        $address = Source_User_UserInfoAdd::where('user_id',$this->userId)->get();
+        return $this->view('member.cart.pay_order',compact('order','address'));
+
+
+    }
 
 }

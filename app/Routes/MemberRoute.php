@@ -17,6 +17,8 @@ Route::any('/del_cart_item', 'CartMemberController@delItem');
 Route::any('/cart/change_quantity', 'CartMemberController@changeQuantity');
 //购物车 更新商品折扣
 Route::any('/cart/check_item', 'CartMemberController@checkItem');
+//购物车 对应支付页面
+Route::any('/cart/pay_order/{order_id}', 'CartMemberController@payOrder');
 
 
 //会员积分
