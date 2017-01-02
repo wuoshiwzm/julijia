@@ -145,6 +145,9 @@ function checkout() {
 function checkDiscount() {
 
 
+
+
+
     //更新每个商品的小计
     $(".price").each(function (i) {
         $(this).html(
@@ -165,6 +168,11 @@ function checkDiscount() {
         $('input:checkbox[name=item]:checked').each(function (i) {
             rowIds[i] = $(this).val();
         });
+
+        //更新商品件数 <span id="Pics">2</span>  {{$item->num}}  name="number"
+        //alert($("#itemNum").parent().parent().find().prop("tagName"));
+
+
     } else if ($('input:checkbox[name=item]:checked').length <= 1) {
         //未选择商品，对所有商品进行结算
         $('input:checkbox[name=item]').not("input:checked").each(function (i) {
