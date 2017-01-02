@@ -1,5 +1,5 @@
 @section('title')
-    会员积分
+    我的投诉
 @stop
 
 @section('left')
@@ -71,7 +71,8 @@
                     </tr>
 
 
-                    @foreach($feedbackInfos as $feedback)
+                    @foreach($data as $feedback)
+                        @if($feedback->item)
                         <tr>
                             <td>{{$feedback->feedback_sn}}</td>
                             <td>{{$feedback->order_id}}</td>
@@ -91,8 +92,6 @@
 
                             <td>{{$feedback->reason->value}}</td>
                             <td>{{$feedback->created_at}}</td>
-
-
                             <td>
                                 @if($feedback->status == 1)
                                     买家申请，待卖家确认
@@ -104,6 +103,7 @@
                             <td class="operation"><a href="##" onclick="delFeedback({{"'".encode($feedback->id)."'"}})">取消</a>
                             </td>
                         </tr>
+                        @endif
                     @endforeach
 
 
@@ -111,7 +111,8 @@
 
 
                 <div id="paging">
-                    @include('admin.public.page',array('data'=>$data,'set'=>$set))
+
+                    @include('member.public.page',array('data'=>$data,'set'=>$set))
                 </div>
 
 

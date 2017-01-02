@@ -29,7 +29,7 @@
                         @endif
                     @endforeach
                 </div>
-                <input type="hidden" name="guige[]" value="{{$row->name}}|{{isset($row->value[0])?$row->value[0]:''}}"/>
+                <input type="hidden" name="guige[]" value="{{$row->name}}|{{isset($row->value[0]) && is_array($row->value[0])?$row->value[0]:''}}"/>
             </li>
             @endforeach
             <!---可配结束-->
@@ -44,9 +44,9 @@
             </li>
             <input type="hidden" value="{{encode($data->entity_id)}}" name="product_id" id="entity_id">
             <li class="phone_umber">
-                <a href="##" class="u-buy1" rel="nofollow" data-url="{{url('goods/purchase')}}">立即购买</a>
-                <a href="javascript:;" class="u-buy2" rel="nofollow" data-url="{{url('goods/collect')}}">加入购物车</a>
-                <a href="javascript:;" class="love keep" rel="nofollow">收藏</a>
+                <a href="javascript:;" @if( Session::get('member') ) class="u-buy1 buy-button" @else class="u-buy1 keepNo" @endif rel="nofollow" data-url="{{url('goods/purchase')}}">立即购买</a>
+                <a href="javascript:;" @if( Session::get('member') ) class="u-buy2 buy-button" @else class="u-buy2 keepNo" @endif rel="nofollow" data-url="{{url('goods/collect')}}">加入购物车</a>
+                <a href="javascript:;" @if( Session::get('member') ) class="love keepYes" @else class="love keepNo" @endif rel="nofollow">收藏</a>
             </li>
             {{ Form::close() }}
         </ul>

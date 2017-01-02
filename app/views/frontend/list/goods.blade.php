@@ -41,8 +41,8 @@
                         @else
                             {{$row->price}}
                         @endif
-                        <a href="##" class="shop_car">加入购物车</a></dd>
-                    <dd class="qiang_div_add"><a href="##" class="love">喜欢</a></dd>
+                        <a href="{{url($row->entity_id.'.html')}}" class="shop_car">加入购物车</a></dd>
+                    <dd class="qiang_div_add"><a href="javascript:;" @if( Session::get('member') ) class="love keepYes" @else class="love keepNo" @endif>喜欢</a></dd>
                 </dl>
             </li>
             @endforeach

@@ -74,7 +74,7 @@ class sms
             return json_encode('手机号码验证失败');
         }
         $time = date("Y-m-d H:i");
-        $count = SmsHistory::whereRaw("DATE_FORMAT(created_at,'%Y-%m-%d %H:%i') = ?",array($time))->count();
+        $count = Source_System__SmsHistory::whereRaw("DATE_FORMAT(created_at,'%Y-%m-%d %H:%i') = ?",array($time))->count();
         if( $count == 100 )
         {
             sms::SendSms('15349232436','温馨提示：一分钟内发送短信超过200条');
@@ -82,13 +82,14 @@ class sms
 
         }elseif($count < 100)
         {
-            $rowCount = SmsHistory::whereRaw("DATE_FORMAT(created_at,'%Y-%m-%d %H:%i') = ? and phone = ? ",array( $time, $phone))->count();
+            $rowCount = Source_System__SmsHistory::whereRaw("DATE_FORMAT(created_at,'%Y-%m-%d %H:%i') = ? and phone = ? ",array( $time, $phone))->count();
             if( $rowCount > 5 )
             {
                 return json_encode('频繁操作导致发送失败');
             }else
             {
                 $code = sms::create_code();
+                return  $code;
                 Session::put('smsCode',$code,5);
                 switch ( $type )
                 {
@@ -111,7 +112,7 @@ class sms
                 $res = sms::SendSms( $phone, $content );
                 if( $res )
                 {
-                    $sms = new SmsHistory;
+                    $sms = new Source_System__SmsHistory;
                     $sms->type = 1;
                     $sms->content = $content;
                     $sms->status = 1;

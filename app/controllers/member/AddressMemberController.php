@@ -1,6 +1,7 @@
 <?php
 
-class AddressMemberController extends CommonController {
+class AddressMemberController extends CommonController
+{
 
     private $user_id;
     protected $layout = 'layouts.member.index';
@@ -30,124 +31,124 @@ class AddressMemberController extends CommonController {
     }
 
     /**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
 
-	    $addrs = Source_User_UserInfoAdd::where('user_id',$this->user_id)->get();
+        $addrs = Source_User_UserInfoAdd::where('user_id', $this->user_id)->get();
 
-		return $this->view('member.config_address',compact('addrs'));
-	}
-
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
+        return $this->view('member.config_address', compact('addrs'));
+    }
 
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        //
+    }
 
-//	    dd(Input::all());
 
-        if(Input::get('_token') == csrf_token()){
-            $input = Input::except('_token','area','status');
-            $input['district'] = Input::get('area');
-            if(Input::get('status')=='on'){
-                $input['status'] =1;
-            }else{
-                $input['status'] =0;
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
+
+
+        if (Input::get('_token') == csrf_token()) {
+
+            $input = trimValue(Input::except('_token', 'area', 'status'));
+            $input['province'] = Source_Area_Province::where('provinceID',Input::get('province'))->first()->province;
+            $input['city'] = Source_Area_City::where('cityID',Input::get('city'))->first()->city;
+            $input['district'] = Source_Area_Area::where('areaID',Input::get('area'))->first()->area;
+
+            if (Input::get('status') == 'on') {
+                $input['status'] = 1;
+            } else {
+                $input['status'] = 0;
             }
+
         }
-        
-        $input['user_id']=$this->user_id;
+
+        $input['user_id'] = $this->user_id;
 
         $res = Address::createAddr($input);
 
-        if($res){
-            return Redirect::to('member/config/address')->with('msg','修改成功');
+        if ($res) {
+            return Redirect::to('member/config/address')->with('msg', '修改成功');
         }
-	}
+    }
 
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit($id)
+    {
         $addrEdit = Address::getAddress($id);
-        return $this->view('member.config_address_edit',compact('addrEdit'));
-	}
+        return $this->view('member.config_address_edit', compact('addrEdit'));
+    }
 
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-        $input = trimValue( Input::except('_token','_method','quiz1','quiz2','quiz3'));
-        $validator = Address::validatorAddress( $input );
-        if( $validator === true )
-        {
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function update($id)
+    {
+        $input = trimValue(Input::except('_token', '_method', 'quiz1', 'quiz2', 'quiz3'));
+        $validator = Address::validatorAddress($input);
+        if ($validator === true) {
 
-            $res = Address::update($id,$input);
+            $res = Address::update($id, $input);
 
-            if ( $res )
-            {
+            if ($res) {
                 //修改成功
-                return Redirect::to('member/config/address')->with('msg','修改成功');
+                return Redirect::to('member/config/address')->with('msg', '修改成功');
 
-            }else
-            {
+            } else {
                 //修改失败
-                return Redirect::back()->with('msg','修改失败');
+                return Redirect::back()->with('msg', '修改失败');
             }
 
-        }else
-        {
+        } else {
             return Redirect::back()->withErrors($validator);
         }
-	}
+    }
 
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
     public function destroy($id)
     {
         $id = decode(trim($id));
@@ -177,12 +178,12 @@ class AddressMemberController extends CommonController {
     {
         $id = decode(trim($id));
         $user_id = $this->user_id;
-         $res = Address::setDefault($id,$user_id);
-        if($res){
-            return Redirect::to('member/config/address')->with('msg','修改成功');
+        $res = Address::setDefault($id, $user_id);
+        if ($res) {
+            return Redirect::to('member/config/address')->with('msg', '修改成功');
         }
 
-	}
+    }
 
 
 }

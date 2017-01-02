@@ -22,43 +22,30 @@
             <div class="table_div_hd table_div_hd_table">
 
 
-
                 <div class="soucang">
 
                     @if(!empty($goods))
                         @foreach($goods as $visit)
-@if($visit->product)
-                            <dl>
-                                <dt><a href="##"><img src="{{ getImgSize( 'goods', $visit->vs_value, $visit->small_image )}} "/></a>
-                                </dt>
-                                <dd class="c_dd"><a href="##">{{$visit->product->name}}</a></dd>
-                                <dd class="c_can">
+                            @if($visit->product)
+                                <dl>
+                                    <dt><a href="##"><img
+                                                    src="{{ getImgSize( 'goods', $visit->vs_value, $visit->small_image )}} "/></a>
+                                    </dt>
+                                    <dd class="c_dd"><a href="##">{{$visit->product->name}}</a></dd>
+                                    <dd class="c_can">
                                 <span><font class="font01">￥{{$visit->product->preferential_price}}</font><br><font
                                             class="font02">￥{{$visit->product->cost_price}}</font></span><i><a
-                                                href="##"><font class="iconfont">
-                                                &#xe629;</font></a></i></dd>
-                            </dl>
-                  @endif
+                                                    href="##"><font class="iconfont">
+                                                    &#xe629;</font></a></i></dd>
+                                </dl>
+                            @endif
                         @endforeach
                     @endif
-
-
-
                 </div>
+
+
                 <div id="paging">
-                    <div class="layui-box layui-laypage layui-laypage-default">
-                        <a href="javascript:;" class="layui-laypage-prev"><em>&lt;</em></a>
-                        <a href="javascript:;">1</a>
-                        <a href="javascript:;">2</a>
-                        <a href="javascript:;" class="paging_on">3</a>
-                        <a href="javascript:;">4</a>
-                        <a href="javascript:;">5</a>
-                        <a href="javascript:;">…</a>
-                        <a href="javascript:;" title="尾页" data-page="100">100</a>
-                        <a href="javascript:;" class="layui-laypage-next" data-page="3"><em>&gt;</em></a>
-                    </div>
-                </div><div id="paging">
-                    @include('admin.public.page',array('data'=>$data,'set'=>$set))
+                    @include('member.public.page',array('data'=>$data,'set'=>$set))
                 </div>
 
 

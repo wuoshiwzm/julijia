@@ -117,45 +117,36 @@
                                         </div>
                                     </div>
 
-                                    <div class="simple-form-field">
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">
-                                                <span class="text-danger ng-binding">*</span>
-                                                <span class="ng-binding">投诉说明：</span>
-                                            </label>
-                                            <div class="col-sm-8">
-                                                <div class="form-control-box">
-                                                    <textarea type="text" class="form-control valid" name="content"
-                                                              placeholder="填写评价说明"
-                                                              datatype="*"
-                                                              errormsg="投诉说明" tipsrmsg="投诉说明"></textarea>
-                                                    <span class="Validform_checktip"></span>
-                                                </div>
-                                            </div>
+
+
+
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label"><span class="red">*</span>投诉说明</label>
+                                        <div class="layui-input-block">
+                                            <textarea name="desc" class="layui-textarea w80b f_left"
+                                                      placeholder="填写具体投诉说明" autocomplete="off"
+                                                      datatype="*"
+                                                      errormsg="请填写说明" tipsrmsg="请填写说明"
+                                            ></textarea>
+                                            <span class="Validform_checktip"></span>
                                         </div>
                                     </div>
 
-                                    <div class="simple-form-field">
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">
-                                                <span class="ng-binding">图片：</span>
-                                            </label>
-                                            <div class="col-sm-8">
-                                                <div class="form-control-box addimg">
-                                                    <a href="javascript:;">
-                                                        <img onclick="getImgTemplet( this,'feedback' )"
-                                                             src="/images/admin/addimg.png"
-                                                             width="100" height="100"></a>
-                                                    <input type="hidden" id="feedback" name="feedback"/>
-                                                </div>
-                                                <div class="help-block help-block-t">
-                                                    <div class="help-block help-block-t">
-                                                        单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG
-                                                    </div>
-                                                </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">上传图片</label>
+                                        <div class="layui-input-block">
+                                            <div class="form-control-box addimg img_border">
+                                                <a href="javascript:;" class="">
+                                                    <img onclick="getImgTemplet( this,'feedback' )"
+                                                         src="/images/admin/addimg.png"
+                                                         width="100" height="100"></a>
+                                                <input type="hidden" id="feedback" name="feedback"/>
+                                                <span>删除</span>
                                             </div>
+                                            <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
                                         </div>
                                     </div>
+
 
 
                                     <div class="layui-form-item">

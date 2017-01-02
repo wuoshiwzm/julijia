@@ -20,7 +20,7 @@
         <div class="table_div">
 
             @include('member.public.order_nav')
-            
+
             <div class="table_div_hd table_div_hd_table">
                 <table border="0" cellpadding="0" cellspacing="0">
                     <tr>
@@ -37,8 +37,7 @@
                 @include('member.public.order_content')
 
                 <div id="paging">
-                    @include('admin.public.page',array('data'=>$data,'set'=>$set))
-
+                    @include('member.public.page',array('data'=>$data,'set'=>$set))
                 </div>
 
 

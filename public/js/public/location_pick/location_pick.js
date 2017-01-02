@@ -2,8 +2,10 @@
 var token = $("input[name='_token']").val();
 $(function () {
 
+    loadProvince();
 
- /*   $.post("/getProvince", {_token: token}, function (data) {
+
+    /*   $.post("/getProvince", {_token: token}, function (data) {
      var data = $.parseJSON(data);
      $.each(data, function (n, value) {
      $("#address1").append("<option value=" + value["id"] + ">" + value["province"] + "</option>");
@@ -21,7 +23,7 @@ $(function () {
             $("#address3").empty();
             $.each(data, function (n, value) {
                 //clear the select options then add the new info
-                $("#address2").append("<option value=" + value["city"] + ">" + value["city"] + "</option>");
+                $("#address2").append("<option value=" + value["id"] + ">" + value["city"] + "</option>");
             });
         });
     });
@@ -37,7 +39,7 @@ $(function () {
             var data = $.parseJSON(data);
             $.each(data, function (n, value) {
                 //clear the select options then add the new info
-                $("#address3").append("<option value=" + value["area"] + ">" + value["area"] + "</option>");
+                $("#address3").append("<option value=" + value["id"] + ">" + value["area"] + "</option>");
             });
         });
     });
@@ -53,32 +55,36 @@ $(function () {
 var $form;
 var form;
 //使用layui处理弹框
-layui.use(['jquery', 'form'], function() {
+layui.use(['jquery', 'form'], function () {
     $ = layui.jquery;
     form = layui.form();
     $form = $('form');
     //载入省份
-    loadProvince();
+    form.on('select(province)', function (data) {
+        var city = data.value;
+        loadCity(city);
+    });
+    form.on('select(city)', function (data) {
+        var eare = data.value;
+        loadArea(eare);
+    })
 
 });
 
 function loadProvince() {
-   var phtml ='';
-    $form.find('select[name=province]').empty();
+    var phtml = '';
+    // $form.find('select[name=province]').empty();
     $.post("/getProvince", {}, function (data) {
         var data = $.parseJSON(data);
         $.each(data, function (n, value) {
-              phtml += "<option value=" + value["province"] + ">" + value["province"] + "</option>";
+            phtml += "<option value=" + value["provinceID"] + ">" + value["province"] + "</option>";
         });
         $form.find('select[name=province]').append(phtml);
-        form.render();
-        form.on('select(province)',function (data) {
+        form.render('select');
+        form.on('select(province)', function (data) {
             var citydata = data.value;
             console.log(data.value);
             loadCity(citydata);
-
-            // $form.find('select[name=area]').empty();
-            // form.render();
         })
     });
 }
@@ -89,10 +95,10 @@ function loadCity(citydata) {
         var data = $.parseJSON(data);
         $.each(data, function (n, value) {
             //clear the select options then add the new info
-            phtml += "<option value=" + value["city"] + ">" + value["city"] + "</option>"
+            phtml += "<option value=" + value["cityID"] + ">" + value["city"] + "</option>"
         });
         $form.find('select[name=city]').append(phtml);
-        form.render();
+        form.render('select');
         form.on('select(city)', function (data) {
             var areaata = data.value;
             loadArea(areaata);
@@ -100,20 +106,18 @@ function loadCity(citydata) {
     });
 }
 
-    function loadArea(areaata) {
-        var phtml ='';
-        $form.find('select[name=area]').empty();
-        $.post("/getArea", {city: areaata}, function (data) {
-            var data = $.parseJSON(data);
-            $.each(data, function (n, value) {
-                //clear the select options then add the new info
-                phtml +="<option value=" + value["area"] + ">" + value["area"] + "</option>"
-            });
-            $form.find('select[name=area]').append(phtml);
-            form.render();
-            form.on('select(area)',function (data) {
-                var areaata = data.value;
-                loadArea(areaata);
-            })
+function loadArea(areaata) {
+    var phtml = '';
+    $form.find('select[name=area]').empty();
+    $.post("/getArea", {city: areaata}, function (data) {
+        var data = $.parseJSON(data);
+        $.each(data, function (n, value) {
+            //clear the select options then add the new info
+            phtml += "<option value=" + value["areaID"] + ">" + value["area"] + "</option>"
         });
+        $form.find('select[name=area]').append(phtml);
+        form.render('select');
+    });
 }
+
+

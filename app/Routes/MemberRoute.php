@@ -11,14 +11,20 @@ $router->get('/', 'OrderMemberController@welc');
 $router->any('/cart', 'CartMemberController@index');
 $router->any('/carttest', 'CartMemberController@checkDiscount');
 $router->any('/carttest2', 'CartMemberController@checkCoupon');
+//购物车  添加购物车商品
+Route::any('/cart/add_item', 'CartMemberController@addItem');
 //购物车  删除购物车商品
 Route::any('/del_cart_item', 'CartMemberController@delItem');
 //购物车  更改商品数量
 Route::any('/cart/change_quantity', 'CartMemberController@changeQuantity');
 //购物车 更新商品折扣
 Route::any('/cart/check_item', 'CartMemberController@checkItem');
+//购物车 生成支付订单
+Route::any('/cart/checkout', 'CartMemberController@pay');
 //购物车 对应支付页面
 Route::any('/cart/pay_order/{order_id}', 'CartMemberController@payOrder');
+//购物车 移到收藏夹
+Route::any('/cart/collect/{item_id}', 'CartMemberController@collect');
 
 
 //会员积分
@@ -48,8 +54,16 @@ $router->get('/order/tocomment', 'OrderMemberController@toComment');
 $router->get('/order/detail/{order_id}', 'InfoMemberController@orderDetail');
 //用户订单 物流详情
 $router->get('/order/shipping/{order_id}', 'InfoMemberController@shippingDetail');
+
+//删除订单
+$router->any('/order/remove/{row_id}', 'OrderMemberController@remove');
+
+
+
+
 //确认收货
 $router->any('/receive', 'OrderMemberController@receive');
+
 
 
 //我的评论

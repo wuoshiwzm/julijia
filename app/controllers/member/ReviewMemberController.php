@@ -37,20 +37,18 @@ class ReviewMemberController extends CommonController
         //当前对应的用户评价信息
 
         $data = Source_Order_OrderReview::where('user_id',$this->user_id);
-        $feedbackInfos = $data->get();
-
 
         //分页
-        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
         $data = $data->paginate($setPage);
         $set['setpage'] = $setPage;
 
         //搜索条件
-        if (!empty(Input::all())) {
-            die('input here');
+        if (!empty(Input::get('reviewClass'))) {
+            die('searching');
         }
 
-        return $this->view('member.review', compact('feedbackInfos', 'data', 'set'));
+        return $this->view('member.review', compact('data', 'set'));
 
     }
 
@@ -85,7 +83,7 @@ class ReviewMemberController extends CommonController
     {
 
         //$user = Session::get('member');
-//        dd(Input::all());
+        //dd(Input::all());
 
         if (!Input::all())
             return Redirect::back();

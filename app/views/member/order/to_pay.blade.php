@@ -39,9 +39,7 @@
 
 
                 <div id="paging">
-
-                    @include('admin.public.page',array('data'=>$data,'set'=>$set))
-
+                    @include('member.public.page',array('data'=>$data,'set'=>$set))
                 </div>
 
 

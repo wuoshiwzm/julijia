@@ -29,12 +29,35 @@ class MemberController extends \BaseController
     /**
      * 登录页
      */
-    function login()
+    function login($url = null)
     {
+        //登录验证
+        if (!empty(Input::all())) {
+
+            $username = Input::get('name');
+            $password = Input::get('password');
+            $url = decode(Input::get('url'));
+            if (Input::get('_token') != csrf_token()) {
+                return Redirect::back()->with('msg', 'failed to login')->withInput();
+            }
+            $res = User::login($username, $password);
+            if ($res) {
+                //更新上次登录时间
+                $user = User::getUserByName(Input::get('name'))->first();
+
+                $user->update(array('last_time' => date('Y-m-d h:m:s')));
+                // 存入session
+                Session::put('member', $user);
+
+                return Redirect::to($url);
+            }
+            return Redirect::back()->with('msg', 'failed to login')->withInput();
+        }
+
         if (isset(Session::get('member')->id)) {
             return Redirect::to('member');
         }
-        return $this->view('frontend.login');
+        return $this->view('frontend.login',compact('url'));
     }
 
 
@@ -59,52 +82,23 @@ class MemberController extends \BaseController
     function store()
     {
         $input = Input::all();
-
-        $err = [];
-        $res = User::checkName($input['name']);
-        if (!$res) {
-            $err[] = '该用户名已被占用！';
+        if ($input['_token'] = csrf_token() || isset($input['like']) && $input['like'] == 'on') {
+            $err = [];
+            $res = User::checkName($input['name']);
+            if (!$res) {
+                $err[] = '该用户名已被占用！';
+            }
+            $res = User::validatorUser($input);
+            $res ?: $err = array_merge($res->all(), $err);
+            if ($res === true && $err != []) {
+                User::addUser($input);
+            } else {
+                return Redirect::back()->with('msg', '注册失败')->withInput();
+            }
         }
-
-        //check if the $input data is legal
-        $res = User::validatorUser($input);
-        $res ?: $err = array_merge($res->all(), $err);
-
-
-        if ($res === true && $err != []) {
-            User::addUser($input);
-        } else {
-            return Redirect::back()->with('msg', $err)->withInput();
-        }
+        return Redirect::back()->with('msg', '注册失败')->withInput();
     }
 
-
-    /**
-     * @return mixed
-     * 判断登录
-     */
-    function loginVerify()
-    {
-
-        $username = Input::get('name');
-        $password = Input::get('password');
-
-
-        $res = User::login($username, $password);
-
-        if ($res) {
-
-            //更新上次登录时间
-            $user = User::getUserByName(Input::get('name'))->first();
-
-            $user->update(array('last_time' => date('Y-m-d h:m:s')));
-            // 存入session
-            Session::put('member', $user);
-//            dd(Session::get('member')->id);
-            return Redirect::to('member/cart');
-        }
-        return Redirect::back()->with('msg', 'failed to login')->withInput();
-    }
 
     /**
      * 退出登录
@@ -135,8 +129,8 @@ class MemberController extends \BaseController
      */
     function resetPass()
     {
-        if(!Input::all()){
-          return  $this->view('frontend.reset_pass');
+        if (!Input::all()) {
+            return $this->view('frontend.reset_pass');
         }
 
         //接受更新数据
@@ -144,17 +138,15 @@ class MemberController extends \BaseController
         $input = trimValue(Input::all());
 
 
-
-       $res =  Source_User_UserInfo::where('mobile_phone',$input['phone'])
+        $res = Source_User_UserInfo::where('mobile_phone', $input['phone'])
             ->first()
-            ->update(['password'=>$input['password']]);
+            ->update(['password' => $input['password']]);
 
-       if($res == true){
-           return Redirect::to('member');
-       }else{
-           return Redirect::back()->with('msg', '更改失败！');
-       }
-       ;
+        if ($res == true) {
+            return Redirect::to('member');
+        } else {
+            return Redirect::back()->with('msg', '更改失败！');
+        };
 
     }
 }

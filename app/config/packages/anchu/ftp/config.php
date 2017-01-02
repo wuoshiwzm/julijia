@@ -28,7 +28,7 @@ return array(
             'host'   => '127.0.0.2',
             'port'  =>  21,
             'username' => 'ftpuser',
-            'password'   => '',
+            'password'   => '111111',
             'passive'   => false,
         ),
     ),

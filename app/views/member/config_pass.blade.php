@@ -35,66 +35,42 @@
                 {{Form::token()}}
 
 
-                <div class="simple-form-field">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">
-                            <span class="text-danger ng-binding">*</span>
-                            <span class="ng-binding">原始密码：</span>
-                        </label>
-                        <div class="col-sm-8">
-                            <div class="form-control-box">
-                                <input type="password" class="form-control valid" name="pass_origin"
-                                       placeholder="填写原始密码"
-                                       datatype="*"
-                                       errormsg="原始密码" tipsrmsg="原始密码">
-                                <span class="Validform_checktip"></span>
-                            </div>
-                        </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="red">*</span>原始密码</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" class="layui-input w80b f_left"
+                               placeholder="原始密码" autocomplete="off"
+                               datatype="*" name="pass_origin"
+                               errormsg="原始密码" tipsrmsg="原始密码"/>
+                        <span class="Validform_checktip"></span>
                     </div>
                 </div>
 
-                <div class="simple-form-field">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">
-                            <span class="text-danger ng-binding">*</span>
-                            <span class="ng-binding">新密码：</span>
-                        </label>
-                        <div class="col-sm-8">
-                            <div class="form-control-box">
-                                <input type="password" class="form-control valid" name="pass_new"
-                                       placeholder="填写新密码"
-                                       datatype="*6-20"
-                                       errormsg="确认密码 不足6位" tipsrmsg="确认密码">
-                                <span class="Validform_checktip"></span>
-                            </div>
-                        </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="red">*</span>新密码</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" class="layui-input w80b f_left"
+                               placeholder="新密码" autocomplete="off"
+                               datatype="*" name="pass_new"
+                               errormsg="新密码" tipsrmsg="新密码"/>
+                        <span class="Validform_checktip"></span>
                     </div>
                 </div>
 
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="red">*</span>确认密码</label>
+                    <div class="layui-input-block">
 
-
-
-                <div class="simple-form-field">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">
-                            <span class="text-danger ng-binding">*</span>
-                            <span class="ng-binding">确认密码：</span>
-                        </label>
-                        <div class="col-sm-8">
-                            <div class="form-control-box">
-                                <input type="password" class="form-control valid" name="pass_double"
-                                       placeholder="填写确认密码"
-                                       recheck="pass_new"
-                                       errormsg="确认密码不一致" tipsrmsg="确认密码必须一致">
-                                <span class="Validform_checktip"></span>
-                            </div>
-                        </div>
+                        <input type="text" class="layui-input w80b f_left"
+                               placeholder="确认密码" autocomplete="off"
+                               datatype="*"
+                               recheck="pass_new" name="pass_new"
+                               errormsg="确认密码必须一致" tipsrmsg="确认密码"/>
+                        <span class="Validform_checktip"></span>
                     </div>
                 </div>
-
-
-
-
 
                 <div class="layui-form-item">
                     <div class="layui-input-block">

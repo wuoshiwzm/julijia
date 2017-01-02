@@ -41,7 +41,12 @@ class ConfigMemberController extends CommonController
 
 
         $userInfo = User::getUserinfoById($this->user_id);
-        return $this->view('member.config', compact('userInfo'));
+         $addres['province'] = Source_Area_Province::where('provinceID',$userInfo->province)->first();
+         $addres['city'] = Source_Area_City::where('cityID',$userInfo->city)->first();
+         $citylist  = Source_Area_City::where('parent',$userInfo->province)->get();
+         $addres['area'] = Source_Area_Area::where('areaID',$userInfo->area)->first();
+          $arealist  = Source_Area_Area::where('parent',$userInfo->city)->get();
+          return $this->view('member.config', compact('userInfo','addres','citylist','arealist'));
 
     }
 
@@ -51,19 +56,16 @@ class ConfigMemberController extends CommonController
     public function store()
     {
 
-
-        $input = array_except(trimValue(Input::all()), ['_token']);
-        $input['area'] = '';
-        $res = DB::transaction(function () use ($input) {
-            $userAdd = ['province' => $input['province'], 'city' => $input['city'], 'district' => $input['area']];
-            $userInfo = array_except($input, ['province', 'city', 'area']);
-
-            Source_User_UserInfo::where('id', $this->user_id)->update($userInfo);
-            Source_User_UserInfoAdd::where('id', $this->user_id)->update($userAdd);
-        });
-
-        if ($res) {
-            return Redirect::to('member');
+        if(csrf_token()==Input::get('_token')){
+            $input = array_except(trimValue(Input::all()), ['_token']);
+            $res = DB::transaction(function () use ($input) {
+                Source_User_UserInfo::where('id', $this->user_id)->update($input);
+            });
+        }
+        if (empty($res)) {
+            return Redirect::to('/member/config/index')->with('msg','更新成功');
+        }else{
+            return Redirect::to('/member/config/index')->with('msg','更新失败');
         }
 
     }
@@ -82,15 +84,13 @@ class ConfigMemberController extends CommonController
             $passNew = encode($input['pass_new']);//新密码
             $passConfirm = encode(Input::get('pass_double'));//确认密码
 
+//            dd($passOld,$passNew,$passConfirm);
+
             $passNow = Session::get('member')->password;//当前的密码
 
             //原始密码输入正常
             if ($passOld != $passNow)
                 return Redirect::back()->with('msg', '原始密码错误');
-//            //新密码格式正确
-//            if ($passNew != $passConfirm)
-//                return Redirect::back()->with('msg', '密码输入错误');
-//
             //更新密码
             $res = User::changePass($this->user_id, $passNew);
             if (!$res)

@@ -44,32 +44,32 @@
                 </tr>
                 </thead>
                 <tbody>
-                @if(count($list))
+                @if(isset($list)&&count($list)>0)
+                    @foreach($list as $val)
                 <tr>
                     <td>
-                        {{$list->entity_id}}
+                        {{$val->entity_id}}
                     </td>
                     <td>
-                        {{$list->entity_name}}
+                        {{$val->entity_name}}
                     </td>
                     <td>
-                        {{$list->sku}}
+                        {{$val->sku}}
                     </td>
                     <td>
-                        {{$list->price}}
+                        {{$val->price}}
                     </td>
                     <td>
-                        {{$list->created_at}}
+                        {{$val->created_at}}
                     </td>
 
                 </tr>
+                @endforeach
                 @else
-
                 <tr>
                     <td colspan="5">
                         <p style="text-align: center"> 对不起，没有查询到数据</p>
                     </td>
-
                 </tr>
                  @endif
                 </tbody>

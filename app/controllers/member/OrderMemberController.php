@@ -24,7 +24,6 @@ class OrderMemberController extends CommonController
     }
 
 
-
     function __construct()
     {
         if (!Session::has('member')) {
@@ -33,6 +32,8 @@ class OrderMemberController extends CommonController
         $userInfo = Session::get('member');
         $this->user_id = $userInfo->id;
         $this->orders = Source_Order_OrderInfo::where('user_id', $this->user_id);
+
+
 
         //计数信息
         $numOrders = 0;
@@ -66,16 +67,13 @@ class OrderMemberController extends CommonController
 
                 //待评价计数
                 foreach ($order->item as $item) {
-                    if ($item->shipping_status == 3 && $item->review->count()) {
+                    if ($item->shipping_status == 3 && $item->review->count() == 0) {
                         $numToReview++;
                         break;
                     }
                 }
             }
-
-
         }
-
 
         View::share('numOrders', $numOrders);
         View::share('numToPay', $numToPay);
@@ -148,7 +146,7 @@ class OrderMemberController extends CommonController
         }
 
         //分页
-        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
         $set['setpage'] = $setPage;
         $data = $this->orders->paginate($setPage);
 
@@ -163,11 +161,6 @@ class OrderMemberController extends CommonController
     function toPay()
     {
 
-        //session 获取用户id
-        if (!isset(Session::get('member')->id))
-            return $this->view(member . login);
-
-        $this->user_id = Session::get('member')->id;
         //pay_status 支付状态 1未付款 2 付款中  3 已付款
 
         //获取订单
@@ -184,12 +177,10 @@ class OrderMemberController extends CommonController
                 $order->items = '';
             }
             $order->items = $items;
-
-
         }
 
         //分页
-        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
         $set['setpage'] = $setPage;
         $data = User::getOrdersByUser($this->user_id)->paginate($setPage);
 
@@ -203,11 +194,6 @@ class OrderMemberController extends CommonController
     function toShip()
     {
 
-        //session 获取用户id
-        if (!isset(Session::get('member')->id))
-            return $this->view(member . login);
-
-        $this->user_id = Session::get('member')->id;
 
         //获取订单
         $orders = User::getOrdersByUser($this->user_id)->where('pay_status', 3)->get();
@@ -231,7 +217,7 @@ class OrderMemberController extends CommonController
         }
 
         //分页
-        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
         $set['setpage'] = $setPage;
         $data = User::getOrdersByUser($this->user_id)->paginate($setPage);
 
@@ -244,11 +230,7 @@ class OrderMemberController extends CommonController
      */
     function toReceive()
     {
-        //session 获取用户id
-        if (!isset(Session::get('member')->id))
-            return $this->view(member . login);
 
-        $this->user_id = Session::get('member')->id;
         //获取订单
         $orders = User::getOrdersByUser($this->user_id)->where('pay_status', 3)->get();
         //获取订单下的商品并插入订单表 $orders
@@ -272,7 +254,7 @@ class OrderMemberController extends CommonController
         }
 
         //分页
-        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
         $set['setpage'] = $setPage;
         $data = User::getOrdersByUser($this->user_id)->paginate($setPage);
 
@@ -285,11 +267,6 @@ class OrderMemberController extends CommonController
      */
     function toComment()
     {
-        //session 获取用户id
-        if (!isset(Session::get('member')->id))
-            return $this->view(member . login);
-
-        $this->user_id = Session::get('member')->id;
 
         //获取订单
         $orders = Source_Order_OrderInfo::where('user_id', $this->user_id)->where('pay_status', 3)->get();
@@ -317,7 +294,7 @@ class OrderMemberController extends CommonController
 
 
         //分页
-        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
         $set['setpage'] = $setPage;
         $data = User::getOrdersByUser($this->user_id)->paginate($setPage);
 
@@ -330,8 +307,10 @@ class OrderMemberController extends CommonController
     public function receive()
     {
         $input = trimValue(Input::all());
-        $res = Source_Order_OrderItem::where('id', decode($input['itemId']))->update(['shipping_status' => 3]);
 
+
+        $res = Source_Order_OrderItem::where('id', decode($input['itemId']))->update(['shipping_status' => 3]);
+        dd(decode($input['itemId']));
         if ($res) {
             $obj = new stdClass();
             $obj->status = 0;
@@ -346,7 +325,22 @@ class OrderMemberController extends CommonController
         }
     }
 
+    public function remove($rowId)
+    {
+        $rowId = decode($rowId);
 
+        $res = DB::transaction(function () use($rowId){
+            Source_Order_OrderInfo::where('id',$rowId)->delete();
+            Source_Order_OrderItem::where('order_id',$rowId)->delete();
+        });
+
+        if(is_null($res)){
+            return 'true';
+        }
+
+
+
+    }
 
 
 }

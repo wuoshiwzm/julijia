@@ -33,8 +33,24 @@ class SalesController extends CommonController
 
     public function saleslist(){
 
+         $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
          $list =  Source_Order_OrderInfo::orderBy('created_at','desc');
-        dd($list->get());
-        return $this->view('admin.sales.list');
+          $input = Input::get();
+          $username = Input::get('customername');
+
+         $list->whereHas('belongsToUser', function ($q) use ($username)
+         {
+             if(isset($username)&& $username !=''){
+                 $q->whereRaw(' name like  "%'.$username.'%"');
+             }
+         });
+         if(isset($input['status'])&&$input['status'] !=0){
+             $list ->where('status',$input['status']);
+         }
+         $res  =  $list->with('belongsToUser')->paginate($setPage);
+         $set['setpage'] = $setPage;
+         $set['customername'] = isset($username)?$username:'';
+         $set['status'] = isset($input['status'])?$input['status']:'';
+         return $this->view('admin.sales.list',compact('res','set'));
     }
 }

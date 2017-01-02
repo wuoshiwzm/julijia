@@ -47,11 +47,11 @@ class CartMemberController extends \BaseController
         //Cart::updateQty('sad4',1);
         //Cart::updateQty('sad3',1);
 
-//        测试添加商品
-//        Cart::addItem('1479370490',2,["size"=>"超大","color"=>"银灰"]);
-//        Cart::addItem('1479372520',2,["size"=>"超大","color"=>"银灰"]);
-//        Cart::addItem('1479970726',2,["size"=>"超大","color"=>"银灰"]);
-//        Cart::addItem('1480497516',2,["size"=>"超大","color"=>"银灰"]);
+        /*测试添加商品*/
+        Cart::addItem('1479370490', 2, ["size" => "超大", "color" => "银灰"]);
+        Cart::addItem('1479372520', 2, ["size" => "超大", "color" => "银灰"]);
+        Cart::addItem('1479970726', 2, ["size" => "超大", "color" => "银灰"]);
+        Cart::addItem('1480497516', 2, ["size" => "超大", "color" => "银灰"]);
 
 
         //测试优惠券
@@ -81,8 +81,18 @@ class CartMemberController extends \BaseController
         foreach ($items as $item) {
             $total += $item->price * $item->num;
         }
-
         return $this->view('member.cart.index', compact('items', 'total'));
+
+    }
+
+
+    /**
+     * 添加商品
+     */
+    public function addItem()
+    {
+        $input = trimValue(Input::all());
+        Cart::addItem($input['product_id'], $input['quantity'], $input['guige']);
 
     }
 
@@ -173,7 +183,6 @@ class CartMemberController extends \BaseController
         //商品列表
         $productIds = [];
 
-
         //对应对应总的折扣价格  减少的价格
         $discount = 0;
 
@@ -188,16 +197,16 @@ class CartMemberController extends \BaseController
 
         //优惠券检测
         $couponRes = $this->checkCoupon($money, $weight, $num, $productIds, $couponCode);
+        $couponRes['total'] = $money;
         //满减检测
         $discountRes = $this->CheckDiscount($money, $weight);
+        $discountRes['total'] = $money;
 
         //都不为空
         if ($couponRes && $discountRes) {
-            if ($couponRes['amount'] >= $discountRes) {
-                $couponRes['total'] = $money;
+            if ($couponRes['amount'] >= $discountRes['amount']) {
                 return $couponRes;
             }
-            $discountRes['total'] = $money;
             return $discountRes;
         }
 
@@ -209,11 +218,9 @@ class CartMemberController extends \BaseController
         }
 
         if (!$couponRes) {
-            $discountRes['total'] = $money;
             return $discountRes;
 
         } else {
-            $couponRes['total'] = $money;
             return $couponRes;
         }
     }
@@ -367,33 +374,29 @@ class CartMemberController extends \BaseController
          *结束时间
          */
 
-//from_date to_date 检测
+        /*from_date to_date 检测*/
         if (time() <= strtotime($rule->from_date) || time() >= strtotime($rule->to_date)) {
             return false;
         }
 
 
-//lssue_num 发行数量
-
-
-//use_person 使用人数
+        /*use_person 使用人数*/
         if ($rule->order->count() > 0) {
             if ($rule->order->groupBy('user_id')->count() >= $rule->userd_num) {
                 return false;
             }
         }
 
-//userd_num 使用次数
+        /*userd_num 使用次数*/
         if ($rule->order->count() >= $rule->userd_num) {
             return false;
         }
 
-//per_num 每人/每天使用
-//当天开始
+        /*当天开始*/
         $dayStart = strtotime(date('Y-m-d', time()));
-//当天结束
+        /*当天结束*/
         $dayEnd = date('Y-m-d H:m:s', $dayStart + 24 * 60 * 60);
-//当天开始 date-time
+        /*当天开始 date-time*/
         $dayStart = date('Y-m-d H:m:s', $dayStart);
 
         if (Source_Order_OrtderFavoutable::where('pmt_id', $rule->id)
@@ -425,7 +428,10 @@ class CartMemberController extends \BaseController
         switch ($rul->type) {
             case 'subtotal':
                 if ($this->compare($money, "$rul->yunsuanfu", $rul->value)) {
+
+
                     if ($rule->action_type == 1) {
+
                         return ['rule' => $rule, 'amount' => $rule->discount_amount];
                     } elseif ($rule->action_type == 2) {
                         return ['rule' => $rule, 'amount' => $money * $rule->discount_amount];
@@ -445,7 +451,6 @@ class CartMemberController extends \BaseController
                 break;
 
             case 'weight':
-
 
                 if ($this->compare($weight, "$rul->yunsuanfu", $rul->value)) {
                     if ($rule->action_type == 1) {
@@ -521,7 +526,7 @@ class CartMemberController extends \BaseController
          * sku
          * shop_id
          */
-//        $input = decode(trim(Input::get('id')));
+        $id = decode($id);
 
         $item = Source_Cart_CartItem::where('id', $id)->first();
         $colle['user_id'] = Session::get('member')->id;
@@ -529,8 +534,6 @@ class CartMemberController extends \BaseController
         $colle['is_show'] = 1;
         $colle['share_code'] = 'collect' . getMicroTimestamp();
         $colle['entity_name'] = $item->product_name;
-        $colle['price'] = $item->price;
-        $colle['sku'] = $item->sku;
         $colle['shop_id'] = $item->shop_id;
 
 
@@ -553,18 +556,29 @@ class CartMemberController extends \BaseController
         $input = trimValue(Input::all());
 
         /*test rowIds: 15 17 18*/
-        $input['rowIds'] = [
-            'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxNQ==',
-            'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxNw==',
-            'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxOA=='
-        ];
+//        $input['rowIds'] = [
+//            'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxNQ==',
+//            'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxNw==',
+//            'Y29tcG9zZXJSZXF1aXJlZTg3ZmJmZDhiYjMzOGQ3MTIxY2E0YjI1YWJlNDkwMWMxOA=='
+//        ];
 
 
+        if (empty($input['rowIds'])) {
+            return 'false';
+        }
 
-        /*用户商品总数和件数*/
+        if (empty($input['couponCode'])) {
+            $couponCode = '';
+        } else {
+            $couponCode = $input['couponCode'];
+        }
+
+
+        /*用户商品总价和件数*/
         $payment = 0;
         $itemnum = 0;
-        $orderNewId = '';
+        $discount = 0;
+
 
         /*用户地址信息*/
         $user = Session::get('member');
@@ -577,13 +591,18 @@ class CartMemberController extends \BaseController
                 $rowIds[] = decode($rowId);
             }
         }
+
         /*更新商品总数 和 总价*/
-        if (!empty($rowIds)) {
-            foreach ($rowIds as $rowId) {
-                $item = Source_Cart_CartItem::where('id', $rowId)->first();
-                $payment += $item->price * $item->num;
-                $itemnum += $item->num;
-            }
+
+        foreach ($rowIds as $rowId) {
+            $item = Source_Cart_CartItem::where('id', $rowId)->first();
+            $payment += $item->price * $item->num;
+            $itemnum += $item->num;
+        }
+
+        $discount = $this->payCheck($rowIds, $couponCode);
+        if ($discount == 'false') {
+            $discount = 0;
         }
 
 
@@ -594,7 +613,9 @@ class CartMemberController extends \BaseController
         $orderInfo['status'] = 1;
         $orderInfo['pay_status'] = 1;
         $orderInfo['payment_id'] = 'pay' . getMicroTimestamp();
-        $orderInfo['payment'] = $payment;
+//        $orderInfo['payment'] = $payment;
+        $orderInfo['total_amount'] = $payment;
+        $orderInfo['pay_amount'] = $payment - $discount;
         $orderInfo['itemnum'] = $itemnum;
         $orderInfo['ship_name'] = $address->name;
         $orderInfo['ship_addr'] = $address->address;
@@ -647,8 +668,8 @@ class CartMemberController extends \BaseController
 
 
         //成功 返回加密的对应的订单id号
-        if(is_null($res)){
-            return encode(Source_Order_OrderInfo::where('user_id',Session::get('member')->id)->max('id'));
+        if (is_null($res)) {
+            return encode(Source_Order_OrderInfo::where('user_id', Session::get('member')->id)->max('id'));
         }
     }
 
@@ -664,11 +685,75 @@ class CartMemberController extends \BaseController
         $orderId = decode($orderId);
         $order = Source_Order_OrderInfo::find($orderId);
 
+        /*商品总价*/
+        $total = 0;
 
-        $address = Source_User_UserInfoAdd::where('user_id',$this->userId)->get();
-        return $this->view('member.cart.pay_order',compact('order','address'));
+        $address = Source_User_UserInfoAdd::where('user_id', $this->userId)->get();
+        return $this->view('member.cart.pay_order', compact('order', 'address'));
 
 
+    }
+
+
+    /**
+     * @param $rowIds
+     * 根据传入的购物车rowIds数组 返回对应的折扣信息
+     */
+    private function payCheck($rowIds, $couponCode)
+    {
+
+        /*$rowIds
+        $couponCode */
+
+        if (empty($rowIds)) {
+            return false;
+        }
+
+        //对应总的重量
+        $weight = 0;
+        //对应总的价格
+        $money = 0;
+        //商品数量
+        $num = 0;
+        //商品列表
+        $productIds = [];
+
+        //对应对应总的折扣价格  减少的价格
+        $discount = 0;
+
+
+        foreach ($rowIds as $rowId) {
+            $item = Source_Cart_CartItem::where('id', $rowId)->first();
+            $money += $item->price * $item->num;
+            $weight += $item->weight * $item->num;
+            $num += $item->num;
+            $productIds[] = $item->product_id;
+        }
+
+        //优惠券检测
+        $couponRes = $this->checkCoupon($money, $weight, $num, $productIds, $couponCode);
+        //满减检测
+        $discountRes = $this->CheckDiscount($money, $weight);
+
+
+        //都不为空
+        if ($couponRes && $discountRes) {
+            if ($couponRes['amount'] >= $discountRes['amount']) {
+                return $couponRes['amount'];
+            }
+            return $discountRes['amount'];
+        }
+
+        //都为空
+        if (!$couponRes && !$discountRes) {
+            return false;
+        }
+        if (!$couponRes) {
+            return $discountRes['amount'];
+
+        } else {
+            return $couponRes['amount'];
+        }
     }
 
 }

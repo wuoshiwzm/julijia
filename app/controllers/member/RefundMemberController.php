@@ -35,24 +35,19 @@ class RefundMemberController extends CommonController
      */
     public function index()
     {
-        //当前对应的用户退款信息
-        $data = Source_Order_OrderBack::where('user_id',$this->user_id);
-
-        $refundInfos = $data->get();
-
         //分页
-        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
-        $data = $data->paginate($setPage);
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
+        $data = Source_Order_OrderBack::where('user_id',$this->user_id)->paginate($setPage);
         $set['setpage'] = $setPage;
 
 
         //搜索条件
-        if (!empty(Input::all())) {
-            die('input here');
+        if (!empty(Input::get('orderId')) || !empty(Input::get('orderBackId'))) {
+            die('searching...');
         }
 
 
-        return $this->view('member.refund', compact('refundInfos', 'data', 'set'));
+        return $this->view('member.refund', compact( 'data', 'set'));
 
     }
 

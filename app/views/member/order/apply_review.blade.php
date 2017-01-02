@@ -8,6 +8,13 @@
 
 @section(('content'))
 
+
+
+
+
+
+
+
     <div class="ge_admin_nei_right">
         <div class="spinner">
             <div class="double-bounce1"></div>
@@ -94,60 +101,44 @@
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show">
                             <div class="admin_form">
-                                <form class="layui-form m-form form" action="{{url('member/review/create_review')}}"
+                                <form class="layui-form m-form" action="{{url('member/review/create_review')}}"
                                       method="post">
+                                    {{Form::token()}}
                                     <input type="hidden" name="orderId" value="{{$orderInfo->id}}">
                                     <input type="hidden" name="itemId" value="{{$orderItem->id}}">
 
-                                    {{Form::token()}}
-
-
-                                    <div class="simple-form-field">
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">
-                                                <span class="text-danger ng-binding">*</span>
-                                                <span class="ng-binding">评价说明：</span>
-                                            </label>
-                                            <div class="col-sm-8">
-                                                <div class="form-control-box">
-
-                                                    <select name="leavel" id="">
-                                                        <option value="1">很差</option>
-                                                        <option value="2">差</option>
-                                                        <option value="3">一般</option>
-                                                        <option value="4" selected="selected">好</option>
-                                                        <option value="5">很好</option>
-
-                                                    </select>
-                                               </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    
-
-                                    <div class="simple-form-field">
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">
-                                                <span class="text-danger ng-binding">*</span>
-                                                <span class="ng-binding">评价说明：</span>
-                                            </label>
-                                            <div class="col-sm-8">
-                                                <div class="form-control-box">
-                                                    <textarea type="text" class="form-control valid" name="content" placeholder="填写评价说明"
-                                                           datatype="*"
-                                                           errormsg="请输入评价" tipsrmsg="请输入评价" ></textarea>
-                                                    <span class="Validform_checktip"></span>
-                                                </div>
-                                            </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label"><span class="red">*</span>打 分</label>
+                                        <div class="layui-input-block box_163css">
+                                            <ul class="star_ul fl">
+                                                <li><a class="one-star" title="很差" star=1 href="#"></a></li>
+                                                <li><a class="two-star" title="差" star=2 href="#"></a></li>
+                                                <li><a class="three-star" title="还行" star=3 href="#"></a></li>
+                                                <li><a class="four-star" title="好" star=4 href="#"></a></li>
+                                                <li><a class="five-star" title="很好" star=5 href="#"></a></li>
+                                            </ul>
+                                            <span class="s_result fl" style="color: rgb(51, 51, 51);"
+                                                  name="test">请打分</span>
+                                            <input type="hidden"  name="leavel" class="star_result"
+                                                   datatype="*" errormsg="请选择等级" tipsrmsg="请输入评价">
+                                            <label class="Validform_checktip"></label>
                                         </div>
                                     </div>
 
-
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label"><span class="red">*</span>评价说明</label>
+                                        <div class="layui-input-block">
+                                            <textarea name="content" class="layui-textarea w80b f_left"
+                                                      placeholder="填写评价说明" autocomplete="off"
+                                                      datatype="*" errormsg="评价内容不能为空" tipsrmsg="请输入评价"
+                                            ></textarea>
+                                            <label class="Validform_checktip"></label>
+                                        </div>
+                                    </div>
 
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
-                                            <button class="layui-btn">提交退款申请</button>
+                                            <button class="layui-btn">提交评价</button>
                                         </div>
                                     </div>
                                 </form>
@@ -169,19 +160,33 @@
 
 
     <script>
-        layui.use('element', function(){
+        layui.use('element', function () {
             var element = layui.element(); //Tab的切换功能，切换事件监听等，需要依赖element模块
 
         });
 
-        $(function(){
-            $('.star_ul a').hover(function(){$(this).addClass('active-star');$('.s_result').css('color','#c00').html($(this).attr('title'))},function(){$(this).removeClass('active-star');$('.s_result').css('color','#333').html('请打分')});
+        $(function () {
+            $('.star_ul a').click(function () {
+                $(this).addClass('activeactive-star');
+                $('.s_result').css('color', '#c00').html($(this).attr('title'))
+                $('.star_result').val($(this).attr('star'))
+            });
+
+//            $('.star_ul a').hover(function () {
+//                $(this).addClass('active-star');
+//                $('.s_result').css('color', '#c00').html($(this).attr('title'))
+//            }, function () {
+//                $(this).removeClass('active-star');
+//                $('.s_result').css('color', '#333').html('请打分')
+//            });
 
         })
     </script>
 
-    <script type="text/javascript" >
-        $(document).ready(function () { $(".spinner").hide();});//页面加载特效
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".spinner").hide();
+        });//页面加载特效
     </script>
 
 

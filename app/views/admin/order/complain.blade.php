@@ -132,6 +132,7 @@
                 <tbody>
                 <!--以下为循环内容-->
                 @foreach($data as $row)
+
                     <tr>
                         <td>{{$row->feedback_sn}}</td>
                         <td>
@@ -140,9 +141,9 @@
                             </div>
                             <div class="ng-binding refund-message">
                                 <div class="name">
-                                    <a href="##" target="_blank" class="c-blue">{{$row->item->product_name}}</a>
+                                    <a href="##" target="_blank" class="c-blue">{{isset($row->item->product_name)?$row->item->product_name:''}}</a>
                                 </div>
-                                <div class="time">订单编号： {{$row->order->order_sn}}</div>
+                                <div class="time">订单编号： {{isset($row->order->order_sn)?$row->order->order_sn:''}}</div>
                             </div>
                         </td>
                         <td>
@@ -151,7 +152,7 @@
                                 <span>普通会员</span>
                             </div>
                         </td>
-                        <td>{{$row->reason->value}}</td>
+                        <td>{{isset($row->reason->value)?$row->reason->value:''}}</td>
                         <td><font class="c-red">
                             @if($row->status ==  1 )
                                 买家提起投诉，等待平台处理

@@ -41,13 +41,11 @@ class FeedbackMemberController extends CommonController
     public function index()
     {
         //当前对应的用户退款信息
-        $data = Source_Feedback_FeedbackInfo::where('user_id',$this->user_id);
-
-//        Feedback::getFeedbackByUser($this->user_id);
-        $feedbackInfos = $data->get();
+        $data = Source_Feedback_FeedbackInfo::where('user_id', $this->user_id);
+//        $feedbackInfos = $data->get();
 
         //分页
-        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
         $data = $data->paginate($setPage);
         $set['setpage'] = $setPage;
 //
@@ -63,12 +61,12 @@ class FeedbackMemberController extends CommonController
 //        }
 
         //搜索条件
-        if (!empty(Input::all())) {
+        if (!empty(Input::get('feedbackId')) || !empty(Input::get('feedbackType')) || !empty(Input::get('feedbackId'))) {
             die('input here');
         }
 
 
-        return $this->view('member.feedback', compact('feedbackInfos', 'data', 'set'));
+        return $this->view('member.feedback', compact('data', 'set'));
 
     }
 
@@ -91,11 +89,9 @@ class FeedbackMemberController extends CommonController
         $reasons = Feedback::getAllReason();
 
 
-
-        return $this->view('member.order.apply_feedback', compact('orderItem', 'orderInfo','reasons'));
+        return $this->view('member.order.apply_feedback', compact('orderItem', 'orderInfo', 'reasons'));
 
     }
-
 
 
     /**
@@ -126,7 +122,7 @@ class FeedbackMemberController extends CommonController
         $feedback['content'] = Input::get('content');
         //投诉当前状态 1：平台未确认 2：平台已确认
         $feedback['status'] = 1;
-        $feedback['feedback_sn'] ='feedback'.getMicroTimestamp();
+        $feedback['feedback_sn'] = 'feedback' . getMicroTimestamp();
         $feedback['reason_id'] = Input::get('reasonId');
 
         $feedback['shop_id'] = 1;
@@ -179,9 +175,6 @@ class FeedbackMemberController extends CommonController
 
 
     }
-
-
-
 
 
 }

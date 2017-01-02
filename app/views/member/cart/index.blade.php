@@ -1,4 +1,4 @@
-    @section('title')
+@section('title')
     购物车
 @stop
 
@@ -74,17 +74,16 @@
                                     <td>
                                         <input type="number" name="number" lay-verify="number"
                                                class="layui-input" id="itemNum"
-                                               onchange="changeQuantity(this,{{"'".encode($item->id)."'"}})"
-                                               placeholder=""  value="{{$item->num}}">
+                                               onchange="changeQuantity(this, {{"'".encode($item->id)."'"}})"
+                                               placeholder="" value="{{$item->num}}">
                                     </td>
 
-                                    <td>¥<font class="price"> {{$item->price * $item->num}}</font></td>
+                                    <td>¥<font class="price"> 0</font></td>
                                     <td class="operation ">
                                         <a href="##" class="dele_d"
                                            onclick="delItem({{"'".encode($item->id)."'"}})">删除</a>
-
-
-                                        <a href="##" class="margin_top">移入收藏夹</a>
+                                        <a href="##" class="margin_top"
+                                           onclick="collect({{"'".encode($item->id)."'"}})">移入收藏夹</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -93,7 +92,8 @@
                             <tr>
                                 <td><input type="checkbox" class="checkbox_checkall" width="30"></td>
                                 <td colspan="5" class="quan padding_left">
-                                    <a href="##">全选</a><a href="##" onclick="multiDelItem()">删除选中的商品</a><a href="##">移入收藏夹</a>
+                                    <a href="##">全选</a><a href="##" onclick="multiDelItem()">删除选中的商品</a>
+                                    <a href="##" onclick="multiCollect()">移入收藏夹</a>
                                 </td>
                             </tr>
 
@@ -103,12 +103,12 @@
 
                             <div class="jiesuan_left">
                                 <dl>
-                                    <dt><a href="##" target="_blank"><img src="{{asset('images/frontend/yhq.jpg')}}"
-                                                                          width="80"
-                                                                          height="80"></a></dt>
-                                    <dd class="order_btn"><input type="text" name="coupon" class="coupon"
-                                                                 autocomplete="off" class="layui-input"
-                                                                 placeholder="请输入优惠码"></dd>
+                                    <dt><a href="##" target="_blank">\
+                                            <img src="{{asset('images/frontend/yhq.jpg')}}"
+                                                 width="80" height="80"></a></dt>
+                                    <dd class="order_btn">
+                                        <input type="text" name="coupon" class="coupon"
+                                               autocomplete="off" class="layui-input" placeholder="请输入优惠码"></dd>
                                     <dd>
                                         <button class="layui-btn layui-btn-primary">使用</button>
                                     </dd>
@@ -116,7 +116,7 @@
                             </div>
                             <div class="jiesuan_center">支付的商品<br><font>2</font>件</div>
                             <div class="jiesuan_btn">
-                                <button class="layui-btn layui-btn-danger jieshuan">结 算</button>
+                                <button class="layui-btn layui-btn-danger jieshuan" onclick="checkout()">结 算</button>
                             </div>
                             <div class="jiesuan_right">
                                 <ul>
@@ -157,13 +157,12 @@
 
     {{--购物车js--}}
     <script type="text/javascript" src="{{asset('js/member/member.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/member/cart.js')}}"></script>
     <script src="{{asset('js/member/layer-v1.9.3/layer/layer.js')}}"></script>
 
     <script>
         layui.use('element', function () {
             var element = layui.element(); //导航的hover效果、二级菜单等功能，需要依赖element模块
-
         });
-
     </script>
 @stop

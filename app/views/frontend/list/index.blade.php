@@ -14,5 +14,6 @@
     </div>
 @stop
 @section('footer_js')
+    <script type="text/javascript" src="{{url('js/public/layer/layer.js')}}"></script>
     <script type="text/javascript" src="{{url('js/frontend/list.js?v='.Config::get('tools.frontendJsTime'))}}"></script>
 @stop

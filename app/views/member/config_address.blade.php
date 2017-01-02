@@ -10,7 +10,7 @@
 
 @section('content')
     <style>
-        .layui-form-label{
+        .layui-form-label {
             width: 120px !important;
         }
     </style>
@@ -26,9 +26,8 @@
                 收货地址<font>Shipping Address</font>
             </div>
 
-            <form class="layui-form m-form form" action="{{url('member/config/address')}}" method="post">
+            <form class="layui-form m-form" action="{{url('member/config/address')}}" method="post">
                 {{ Form::token() }}
-
 
 
                 <div class="layui-form-item">
@@ -51,125 +50,82 @@
                     </div>
                 </div>
 
-                <div class="simple-form-field">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">
-                            <span class="text-danger ng-binding">*</span>
-                            <span class="ng-binding">详细地址：</span>
-                        </label>
-                        <div class="col-sm-8">
-                            <div class="form-control-box">
-                                <input type="text" class="form-control valid"
-                                       name="address"
-                                       placeholder="详细地址"
-                                       datatype="*"
-                                       errormsg="详细地址" tipsrmsg="详细地址">
-                                <span class="Validform_checktip"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-              　
-
-                <div class="simple-form-field">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">
-                            <span class="text-danger ng-binding">*</span>
-                            <span class="ng-binding">收货人信息：</span>
-                        </label>
-                        <div class="col-sm-8">
-                            <div class="form-control-box">
-                                <input type="text" class="form-control valid"
-                                       name="name"
-                                       placeholder="填写收货人姓名"
-                                       datatype="*"
-                                       errormsg="填写收货人姓名" tipsrmsg="填写收货人姓名">
-                                <span class="Validform_checktip"></span>
-                            </div>
-                        </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="red">*</span>详细地址</label>
+                    <div class="layui-input-block">
+                                            <textarea class="layui-textarea w80b f_left"
+                                                      placeholder="填写具体详细地址" autocomplete="off"
+                                                      datatype="*" name="address"
+                                                      errormsg="请填写说明" tipsrmsg="请填写说明"
+                                            ></textarea>
+                        <span class="Validform_checktip"></span>
                     </div>
                 </div>
 
 
-　
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="red">*</span>收货人信息</label>
+                    <div class="layui-input-block">
 
-                <div class="simple-form-field">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">
-                            <span class="text-danger ng-binding">*</span>
-                            <span class="ng-binding">手机号码：</span>
-                        </label>
-                        <div class="col-sm-8">
-                            <div class="form-control-box">
-                                <input type="text" class="form-control valid"
-                                       name="phone"
-                                       placeholder="手机号码"
-                                       datatype="m"
-                                       errormsg="手机号码" tipsrmsg="手机号码">
-                                <span class="Validform_checktip"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-              　
-
-                <div class="simple-form-field">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">
-                            <span class="text-danger ng-binding">*</span>
-                            <span class="ng-binding">邮政编码：</span>
-                        </label>
-                        <div class="col-sm-8">
-                            <div class="form-control-box">
-                                <input type="text" class="form-control valid"
-                                       name="zipcode"
-                                       placeholder="邮政编码"
-                                       datatype="n"
-                                       errormsg="邮政编码" tipsrmsg="邮政编码">
-                                <span class="Validform_checktip"></span>
-                            </div>
-                        </div>
+                        <input type="text" class="layui-input w80b f_left"
+                               placeholder="填写具体收货人信息" autocomplete="off"
+                               datatype="*" name="name"
+                               errormsg="请填写收货人信息" tipsrmsg="请填写说明"/>
+                        <span class="Validform_checktip"></span>
                     </div>
                 </div>
 
 
-　
+                　
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="red">*</span>手机号码</label>
+                    <div class="layui-input-block">
 
-
-                <div class="simple-form-field">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">
-                            <span class="text-danger ng-binding">*</span>
-                            电话                        </label>
-                        <div class="col-sm-8">
-                            <div class="form-control-box">
-                                <input type="text" class="form-control valid"
-                                       name="tel"
-                                       placeholder="电话"
-                                       datatype="n"
-                                       errormsg="电话" tipsrmsg="电话">
-                                <span class="Validform_checktip"></span>
-                            </div>
-                        </div>
+                        <input type="text" class="layui-input w80b f_left"
+                               placeholder="填写具体收货人信息" autocomplete="off"
+                               datatype="m" name="phone"
+                               errormsg="请填写手机号码" tipsrmsg="请填写手机号码"/>
+                        <span class="Validform_checktip"></span>
                     </div>
                 </div>
 
+                　
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="red">*</span>邮政编码</label>
+                    <div class="layui-input-block">
 
-　
+                        <input type="text" class="layui-input w80b f_left"
+                               placeholder="填写具体邮政编码" autocomplete="off"
+                               datatype="n" name="zipcode"
+                               errormsg="请填写邮政编码" tipsrmsg="请填写邮政编码"/>
+                        <span class="Validform_checktip"></span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="red">*</span>电话</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" class="layui-input w80b f_left"
+                               placeholder="电话" autocomplete="off"
+                               datatype="n" name="tel"
+                               errormsg="电话" tipsrmsg="电话"/>
+                        <span class="Validform_checktip"></span>
+                    </div>
+                </div>
+
+                　
 
 
                 <div class="layui-form-item">
                     <label class="layui-form-label"> </label>
                     <div class="layui-input-block">
-                        <input type="checkbox" name="status" title="设为默认地址" >
+                        <input type="checkbox" name="status" title="设为默认地址">
                         <div class="layui-unselect layui-form-checkbox layui-form-checked"><span>设为默认地址</span><i
                                     class="layui-icon"></i></div>
                     </div>
                 </div>
-
-
 
 
                 <div class="layui-form-item">
@@ -179,7 +135,7 @@
                 </div>
 
 
-            　
+                　
             </form>
         </div>
 
@@ -201,7 +157,7 @@
 
                             <td>{{$addr->name}}</td>
                             <td>{{isset($addr->province)?$addr->province:''}}，{{isset($addr->city)?$addr->city:''}}
-                                ，{{isset($addr->area)?$addr->area:''}}</td>
+                                ，{{isset($addr->district)?$addr->district:''}}</td>
                             <td>{{$addr->address}}</td>
                             <td>{{$addr->zipcode}}</td>
                             <td>{{$addr->phone}}</td>
@@ -231,7 +187,6 @@
 @stop
 
 @section('js')
-
-    <script type="text/javascript" src="{{asset('js/public/location_pick/location_pick.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/member/config.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/public/location_pick/location_pick.js')}}"></script>
 @stop

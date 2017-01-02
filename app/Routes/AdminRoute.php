@@ -105,3 +105,12 @@
     Route::post('/editsort', 'PublicController@editSort');
     //图片上传模板调用
     Route::get('/get/imgtemplet/{index}', 'PublicController@getImgTemplet');
+
+    //财务控制器AccountRuHuizong
+    Route::get('/finance/accountzhuizong', 'FinanceController@AccountRuHuizong');
+    Route::get('/finance/gongyingshang', 'FinanceController@GingYingshangJieKuan');
+    Route::get('/finance/mingxihuizong', 'FinanceController@MingXiHuiZong');
+    Route::get('/finance/mingxihuzongexport', 'FinanceController@MingXiHuzongExport');
+/* Route::get('/finance/accountzhuizong', 'FinanceController@AccountChuHuizong');
+Route::get('/finance/gongyingshang', 'FinanceController@GingYingshangJieKuan');
+Route::get('/finance/mingxihuizong', 'FinanceController@MingXiChuHuiZong');*/

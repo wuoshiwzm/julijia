@@ -6,6 +6,7 @@
     @yield('seo')
     <meta name="viewport" content="width=device-width">
     <meta name="_token" content="{{ csrf_token() }}"/>
+    <meta name="redirectURL" content="{{Request::getUri()}}"/>
     <title>@yield('title')</title>
     <link rel="stylesheet" type="text/css" href="{{url('css/frontend/css_all.css?v='.Config::get('tools.frontendCssTime'))}}">
     <link rel="stylesheet" type="text/css" href="{{url('css/frontend/style_shop.css?v='.Config::get('tools.frontendCssTime'))}}">

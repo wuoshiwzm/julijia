@@ -1,5 +1,5 @@
 @section('title')
-    购物车
+    支付
 @stop
 
 @section('css')
@@ -53,7 +53,7 @@
                     <div class="table_div_h">
                         <h2>收货人</h2><a href="Javascript:void(0)" class="add_adress add_adress_tt">新增收货地址</a>
                         <ul class="shou_huo">
-                            @if(empty($addrss))
+                            @if(!empty($address))
                                 @foreach($address as $add)
                                     <li>
                                         <input type="checkbox" name="like[write]" title="{{$add->name}}">
@@ -115,24 +115,35 @@
 
                                     @foreach($order->item as $item)
                                         <tr>
-
                                             <td class="padding_left">
                                                 <dl>
                                                     <dt><a href="##" target="_blank">
-
-                                                            <img src="{{ getImgSize( 'goods', $item->product_id, $item->small_image )}}"
-                                                                 class="goods-thumb" width="60" height="60"></a></dt>
+                                                            <img src="{{ getImgSize( 'goods', $item->product_id,$item->product->small_image )}}"
+                                                                 class="goods-thumb" width="60" height="60">
+                                                        </a></dt>
                                                     <dd><a href="##"
                                                            target="_blank">{{$item->product_name}}</a>
                                                     </dd>
-                                                    <dd class="order_tab_color">颜色：40*30*1.8适用2-3人</dd>
+                                                    <dd class="order_tab_color">
+                                                        @if(!empty($item->guige))
+                                                            @foreach(json_decode($item->guige) as $k=>$v)
+                                                                {{$k}}:{{$v}}
+                                                            @endforeach
+                                                        @endif
+                                                    </dd>
                                                 </dl>
                                             </td>
-                                            <td>有货</td>
                                             <td>
-                                                x1
+                                                @if($item->product->kc_qty>$item->num)
+                                                    有库存
+                                                @else
+                                                    库存不足
+                                                @endif
                                             </td>
-                                            <td><font class="price">¥ 9605</font></td>
+                                            <td>
+                                                x{{$item->num}}
+                                            </td>
+                                            <td><font class="price">¥ {{$item->price * $item->num}}</font></td>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -150,16 +161,28 @@
 
                             <div class="jiesuan_fu">
                                 <ul>
-                                    <li><span>商品总价：</span><font>¥&nbsp;9999.00</font></li>
-                                    <li><span>优 惠 券：</span><font>-&nbsp;¥&nbsp;6.00</font></li>
-                                    <li><span>运 费：</span><font>¥&nbsp;1.00</font></li>
-                                    <li class="jiesuan_right_li"><span>应付总额:</span><font><i>¥&nbsp;9994.00</i></font>
+                                    <li><span>商品总价：</span><font>¥&nbsp;{{$order->total_amount}}</font></li>
+                                    <li><span>优 惠 券：</span><font>-&nbsp;¥&nbsp;{{$order->total_amount -$order->pay_amount}}</font></li>
+                                    <li><span>运 费：</span><font>¥&nbsp;0.00</font></li>
+                                    <li class="jiesuan_right_li"><span>应付总额:</span><font><i>¥&nbsp;{{$order->pay_amount}}</i></font>
                                     </li>
                                     <li class="">
                                     </li>
                                 </ul>
                                 <div>
-                                    <span>寄送至：</span><span>张三</span><span>陕西</span><span>西安市</span><span>灞桥区</span><span>城区灞柳良居浐灞生态区十四中南门斜对面</span><span>183****5759</span>
+                                    <span>寄送至：</span>
+                                        @foreach($address as $add)
+                                            @if($add->status ==1 )
+                                            <span>{{$add->name}}</span>
+                                            <span>{{$add->province}}</span>
+                                            <span>{{$add->city}}</span>
+                                            <span>{{$add->area}}</span>
+                                            <span>{{$add->address}}</span>
+                                            <span>{{$add->phone}}</span>
+
+                                            @endif
+                                        @endforeach
+
                                 </div>
                             </div>
 

@@ -56,7 +56,8 @@
                         <th width="14%">操作</th>
                     </tr>
 
-                    @foreach($refundInfos as $refund)
+                    @foreach($data as $refund)
+
                         <tr>
                             <td>
                                 <dl class="tab_dl">
@@ -125,7 +126,7 @@
 
                 <div id="paging">
 
-                    @include('admin.public.page',array('data'=>$data,'set'=>$set))
+                    @include('member.public.page',array('data'=>$data,'set'=>$set))
                 </div>
 
 

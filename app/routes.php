@@ -13,17 +13,28 @@ Route::group(array('domain' => 'shop.julijia.cn'), function () {
     //此位置放置所有前端的控制器
     //首页
     Route::get('/', 'HomeController@GetIndex');
+    //列表页或者详情页
     Route::get('/{name}.html{str?}','HomeController@ListOrDetails');
     //收藏
-    Route::post('/goods/keep','GoodsController@keep');
+    Route::post('/goods/keep','KeepAndCartController@keep');
     //购物车
-    Route::post('/goods/collect','GoodsController@shoppingCart');
-    //确认订单
-    Route::get('/order/confirm_order.html{order?}','GoodsController@confirmOrder');
-    //下单支付
-    Route::post('/order/save','GoodsController@orderSave');
+    Route::post('/goods/collect','KeepAndCartController@shoppingCart');
+    //购物车确认订单
+    Route::get('/order/confirm_order.html{order?}','AuctionBuyController@cartOrder');
+
+    //立即购买post转get
+    Route::post('/goods/purchase','AuctionBuyController@purchase');
     //立即购买
-    Route::post('/goods/purchase','GoodsController@purchase');
+    Route::get('/auction/buy_now.html{pid?}','AuctionBuyController@auctionBuyNow');
+    //立即下单支付
+    Route::post('/noworder/save','AuctionBuyController@nowOrderSave');
+    
+    //修改收货默认地址
+    Route::post('/order/address','AuctionBuyController@defaultAddress');
+    //添加收货地址
+    Route::any('/order/saveaddress','AuctionBuyController@saveAddress');
+    //修改收货地址
+    Route::any('/order/editaddress','AuctionBuyController@editAddress');
 
 
 
@@ -33,9 +44,7 @@ Route::group(array('domain' => 'shop.julijia.cn'), function () {
 
 
     //用户登录
-    Route::get('member/login', 'MemberController@login');
-    //用户登录验证
-    Route::any('member/loginVerify', 'MemberController@loginVerify');
+    Route::any('member/login/{url?}', 'MemberController@login');
     //用户注册
     Route::get('member/register', 'MemberController@register');
     Route::post('user/store', 'MemberController@store');

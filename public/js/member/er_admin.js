@@ -89,7 +89,7 @@ $('.photo_fa').click(function(){
                });
             });
             //单选
-			var s = $(this).find('.radio_model')
+			var s = $(this).find('.radio_model');
             s.click(function(){
 				 s.removeClass('radio_model_on');
 				 $(this).addClass('radio_model_on');
@@ -102,3 +102,7 @@ $('.photo_fa').click(function(){
 	
 	
 	jQuery(".admin_form").slide({trigger:"click"});
+    var msg =  $("#msg").val();
+	if(msg!=''){
+		layer.alert(msg);
+	}

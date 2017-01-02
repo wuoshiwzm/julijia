@@ -113,20 +113,7 @@ class User
 
         $info['name'] = $data['name'];
         $info['password'] = encode($data['password']);
-
-//        $info['email'] = $data['email'];
-//        $info['office_phone'] = $data['office_phone'];
-
-//        $info['real_name'] = $data['real_name'];
-
         $info['mobile_phone'] = $data['mobile_phone'];
-
-//        $info['home_phone'] = $data['home_phone'];
-//        $info['sex'] = $data['sex'];
-//        $info['qq'] = $data['qq'];
-//        $info['wechat'] = $data['wechat'];
-
-
         $info['group_id'] = Source_User_UserInfoGroup::orderBy('beg_points')->first()->id;
         $info['user_points'] = 0;
         $info['pay_points'] = 0;
@@ -289,12 +276,18 @@ class User
     }
 
     /**
-     * @param $userId用户id
+     * @param $userId
+     * @param bool $status 是否显示
+     * @return mixed
      * 获取用户的收藏商品
      */
-    static function getCollectByUser($userId)
+    static function getCollectByUser($userId,$status =true)
     {
-        return Source_User_UserInfoCollect::where('user_id', $userId);
+        $sql = Source_User_UserInfoCollect::where('user_id', $userId);
+        if(!$status){
+            $sql->where('is_show','0');
+        }
+        return $sql;
     }
 
 

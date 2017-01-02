@@ -25,6 +25,31 @@ class CollectMemberController extends CommonController
         }
         $userInfo = Session::get('member');
         $this->user_id = $userInfo->id;
+
+        if (!Session::has('member')) {
+            return Redirect::to('member/login');
+        }
+        $userInfo = Session::get('member');
+        $this->user_id = $userInfo->id;
+        $this->orders = Source_Order_OrderInfo::where('user_id', $this->user_id);
+
+        //计数信息
+        $numAll = 0;
+        $numNotShow = 0;
+
+        $collects = Source_User_UserInfoCollect::where('user_id',$this->user_id)->get();
+
+
+        foreach ($collects as $collect) {
+
+            $numAll++;
+            if ($collect->is_show === 0) {
+                $numNotShow++;
+            }
+        }
+
+        View::share('numAll', $numAll);
+        View::share('numNotShow', $numNotShow);
     }
 
     /**

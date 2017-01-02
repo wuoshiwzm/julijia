@@ -309,3 +309,16 @@ function myTrim( $str )
     $replace = array("","","","","","");
     return str_replace( $search, $replace, $str);
 }
+
+
+/**
+ * @param $phone
+ * @return mixed
+ * 隐藏手机号码中间的数字
+ */
+function conversionPhone( $phone )
+{
+    $pattern = "/(1\d{1,2})\d\d(\d{0,3})/";
+    $replacement = "\$1*****\$3";
+    return preg_replace($pattern, $replacement, $phone);
+}

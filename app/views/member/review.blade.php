@@ -9,6 +9,8 @@
 @section(('content'))
 
 
+
+
     <div class="ge_admin_nei_right">
         <div class="spinner">
             <div class="double-bounce1"></div>
@@ -25,9 +27,9 @@
                     <label class="layui-form-label">评价等级</label>
                     <div class="layui-input-inline">
                         <select name="quiz1">
-                            <option value="好评">好评</option>
-                            <option value="中评" selected="">中评</option>
-                            <option value="差评">差评</option>
+                            <option value="3">好评</option>
+                            <option value="2" selected="">中评</option>
+                            <option value="1">差评</option>
                         </select>
                     </div>
                 </div>
@@ -52,22 +54,26 @@
                     </tr>
 
 
-                    @foreach($feedbackInfos as $feedback)
-
-
+                    @foreach($data as $feedback)
+                        @if($feedback->item)
                         <tr>
                             <td>{{$feedback->id}}</td>
                             <td>
                                 <dl>
                                     <dt><a href="##" target="_blank">
-                                            <img src="{{ getImgSize( 'goods', $feedback->item->product_id,  $feedback->item->product->small_image ) }}">
-                                            <img src="../images/04.jpg" class="goods-thumb"
-                                                 width="60" height="60"></a></dt>
+
+
+                                            <img src="{{ getImgSize( 'goods', $feedback->item->product_id,  $feedback->item->product->small_image) }}">
+                                           </a></dt>
+
                                     <dd><a href="##" target="_blank">
-                                            {{$feedback->item->product->name}}
+                                            {{$feedback->item->product_name}}
                                         </a></dd>
                                 </dl>
                             </td>
+
+
+
                             <td>
                                 <div class="ng-binding">
 							<span class="text-c">
@@ -114,7 +120,7 @@
                                         <!---->
                                         <!---->
                                         <!---->
-								<i class="icon-0"></i>
+								<i class="icon-1"></i>
                                         <!---->
                                         <!---->
                                         <!---->
@@ -127,16 +133,15 @@
                             <td>{{$feedback->content}}</td>
                             <td class="operation"><a href="##">查看详情</a></td>
                         </tr>
+                        @endif
                     @endforeach
 
 
                 </table>
 
-
                 <div id="paging">
-                    @include('admin.public.page',array('data'=>$data,'set'=>$set))
+                    @include('member.public.page',array('data'=>$data,'set'=>$set))
                 </div>
-
 
             </div>
         </div>

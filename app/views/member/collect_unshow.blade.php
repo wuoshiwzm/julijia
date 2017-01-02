@@ -33,8 +33,8 @@
                 <div class="soucang">
                     @foreach($collects as $collect)
                         <dl>
-                            <dt><a href="##"><img src="{$collect->pic}}"/></a></dt>
-                            <dd class="c_dd"><a href="#">{{$collect->entity_name}}</a></dd>
+                            <dt><a href="/{{$collect->entity_id}}.html"><img src="{{$collect->pic}}"/></a></dt>
+                            <dd class="c_dd"><a href="/{{$collect->entity_id}}.html">{{$collect->entity_name}}</a></dd>
                             @if(!$collect->is_show)
                             <dd class="c_can">
                                 <font class="font01 ">
@@ -44,25 +44,8 @@
                                 @endif
                         </dl>
                     @endforeach
-
-
                 </div>
-
-                <div id="paging">
-                    <div class="layui-box layui-laypage layui-laypage-default">
-                        <a href="javascript:;" class="layui-laypage-prev"><em>&lt;</em></a>
-                        <a href="javascript:;">1</a>
-                        <a href="javascript:;">2</a>
-                        <a href="javascript:;" class="paging_on">3</a>
-                        <a href="javascript:;">4</a>
-                        <a href="javascript:;">5</a>
-                        <a href="javascript:;">…</a>
-                        <a href="javascript:;" title="尾页" data-page="100">100</a>
-                        <a href="javascript:;" class="layui-laypage-next" data-page="3"><em>&gt;</em></a>
-                    </div>
-                </div>
-
-
+                @include('member.public.page',array('data'=>$collects,'set'=>$set))
             </div>
         </div>
     </div>

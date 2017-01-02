@@ -34,18 +34,17 @@ class HistoryMemberController extends CommonController
      */
     public function index()
     {
-
         //获取我的足迹
         $goods = Session::get('member')->visitor->filter(function ($r) {
             return $r->type == 1;
         });
 
         //分页
-        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
-        $data = $goods = Source_System_Log_VisitorsLog::where('user_id',Session::get('member')->id)
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
+        $data = Source_System_Log_VisitorsLog::where('user_id',Session::get('member')->id)
             ->where('type',1)
             ->paginate($setPage);
-        $set['setpage'] = $setPage;
+        $set['setpage'] = 1;
 
         return $this->view('member.history',compact('goods','data', 'set'));
     }
