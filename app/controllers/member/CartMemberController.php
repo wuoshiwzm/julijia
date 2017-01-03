@@ -134,6 +134,13 @@ class CartMemberController extends \BaseController
 
         $input = trimValue(Input::all());
 
+        if($input['num']<=0){
+            $obj = new stdClass();
+            $obj->status = 1;
+            $obj->msg = '已经达到最小数量 ';
+            return json_encode($obj);
+        }
+
         $res = Cart::updateQty(decode($input['rowId']), $input['num']);
 
         if ($res == true) {
@@ -586,6 +593,7 @@ class CartMemberController extends \BaseController
             ->where('user_id', $user->id)->first();
 
 
+
         if (is_array($input['rowIds'])) {
             foreach ($input['rowIds'] as $rowId) {
                 $rowIds[] = decode($rowId);
@@ -617,10 +625,21 @@ class CartMemberController extends \BaseController
         $orderInfo['total_amount'] = $payment;
         $orderInfo['pay_amount'] = $payment - $discount;
         $orderInfo['itemnum'] = $itemnum;
-        $orderInfo['ship_name'] = $address->name;
-        $orderInfo['ship_addr'] = $address->address;
-        $orderInfo['ship_post'] = $address->zipcode;
-        $orderInfo['ship_phone'] = $address->phone;
+
+        if (is_null($address)) {
+            $orderInfo['ship_name'] = '';
+            $orderInfo['ship_addr'] = '';
+            $orderInfo['ship_post'] = '';
+            $orderInfo['ship_phone'] = '';
+            $orderItem['shipping_name'] = '';
+        }else{
+            $orderInfo['ship_name'] = $address->name;
+            $orderInfo['ship_addr'] = $address->address;
+            $orderInfo['ship_post'] = $address->zipcode;
+            $orderInfo['ship_phone'] = $address->phone;
+            $orderItem['shipping_name'] = $address->name;
+        }
+
 
         /*生成订单 和 订单相应商品  order_info order_item*/
 
@@ -640,7 +659,7 @@ class CartMemberController extends \BaseController
             $orderItem['mendian_name'] = '';
             $orderItem['num'] = $item->num;
             $orderItem['guige'] = $item->guige;
-            $orderItem['shipping_name'] = $address->name;
+
             $orderItem['shipping_m_code'] = '';
             $orderItem['shipping_id'] = '';
             $orderItem['shipping_status'] = 1;

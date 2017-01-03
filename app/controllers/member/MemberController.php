@@ -36,7 +36,11 @@ class MemberController extends \BaseController
 
             $username = Input::get('name');
             $password = Input::get('password');
-            $url = decode(Input::get('url'));
+
+            if (!empty(Input::get('url'))) {
+                $url = decode(Input::get('url'));
+            }
+
             if (Input::get('_token') != csrf_token()) {
                 return Redirect::back()->with('msg', 'failed to login')->withInput();
             }
@@ -57,7 +61,7 @@ class MemberController extends \BaseController
         if (isset(Session::get('member')->id)) {
             return Redirect::to('member');
         }
-        return $this->view('frontend.login',compact('url'));
+        return $this->view('frontend.login', compact('url'));
     }
 
 

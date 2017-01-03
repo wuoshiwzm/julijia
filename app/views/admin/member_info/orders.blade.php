@@ -18,7 +18,7 @@
                 <h5>
                     (&nbsp;共
                     <span data - total - record="true"> {{$data->count()}}</span>
-                    条记录 & nbsp;)
+                    条记录 &nbsp;)
                 </h5>
 
             </div>
@@ -97,14 +97,11 @@
                             {{$orders->total_amount}}
                         </td>
                         <td class="handle">
-                            <a href="##"> 查看详情</a>
+                            <a href="{{url('member/order/detail/'.$orders->id)}}"> 查看详情</a>
                         </td>
                     </tr>
                 @endforeach
-
-
                 </tbody>
-
             </table>
 
             <div class="pull-right page-box">

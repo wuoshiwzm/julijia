@@ -53,16 +53,21 @@ class Address
     static function createAddr($input)
     {
 
+        if(Source_User_UserInfoAdd::where('user_id', $input['user_id'])->count() == 0){
+            $input['status'] == 1;
+        }
+
+        dd($input);
         //如果status为1，则设为默认地址，改变其他地址对应的属性
         if (isset($input['status'])) {
             if ($input['status'] == 1) {
-
                 Source_User_UserInfoAdd::where('user_id', $input['user_id'])
                     ->update(['status' => 0]);
-
                 $res = Source_User_UserInfoAdd::create($input);
                 return $res;
             }
+            $res = Source_User_UserInfoAdd::create($input);
+            return $res;
         }
         //如果status没有值 ，则插入数据即可
         $res = Source_User_UserInfoAdd::create($input);

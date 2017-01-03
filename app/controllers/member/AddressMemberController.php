@@ -65,8 +65,9 @@ class AddressMemberController extends CommonController
 
 
         if (Input::get('_token') == csrf_token()) {
-
             $input = trimValue(Input::except('_token', 'area', 'status'));
+
+
             $input['province'] = Source_Area_Province::where('provinceID',Input::get('province'))->first()->province;
             $input['city'] = Source_Area_City::where('cityID',Input::get('city'))->first()->city;
             $input['district'] = Source_Area_Area::where('areaID',Input::get('area'))->first()->area;
@@ -76,11 +77,9 @@ class AddressMemberController extends CommonController
             } else {
                 $input['status'] = 0;
             }
-
         }
 
         $input['user_id'] = $this->user_id;
-
         $res = Address::createAddr($input);
 
         if ($res) {

@@ -27,7 +27,7 @@
                 @if(Session::has('msg'))
                     @if(is_array(Session::has('msg')))
                         @foreach(Session::has('msg') as $msg)
-                            <p class="alert">{{$msg}}</p>
+                            <p class="alert"></p>
                     @endforeach
                 @endif
             @endif
@@ -54,7 +54,7 @@
                                     <span class="red">*</span>验 证 码</label>
                                 <div class="layui-input-block">
                                     <input type="text" name="code" placeholder="验证码" autocomplete="off"
-                                           class="layui-input w20b f_left02"  datatype="*" ajaxurl =""
+                                           class="layui-input w20b f_left02"  datatype="*"  ajaxurl =""
                                            errormsg="请输入验证码" tipsrmsg="请输入验证码">
                                     <input type="button" class="layui-btn w30b yzm" onclick="sendSms()" value="发送验证码"/>
                                     <span class="Validform_checktip"></span>
@@ -67,7 +67,7 @@
                                     <input type="text" name="name" placeholder="用户名" autocomplete="off"
                                            class="layui-input w40b f_left02"
                                            datatype="*3-30"
-                                           errormsg="用户名不合符条件" tipsrmsg="请输入3-30位的用户名">
+                                           errormsg="请输入3-30位的用户名" tipsrmsg="请输入3-30位的用户名">
                                     <span class="Validform_checktip"></span>
                                 </div>
                             </div>
@@ -117,12 +117,13 @@
 <input type="hidden"  id="msg" value="{{Session::get('msg')}}"/>
 @stop
 @section('footer_js')
-    <script type="text/javascript" src="{{asset('js/frontend/member.js')}}"></script>
-    <script type="text/javascript" src="{{url('js/public/Validform/Validform_v5.3.2_min.js')}}"></script>
-    <script type="text/javascript" src="{{url('js/public/Validform/rules.js')}}"></script>
+
     <script type="text/javascript" src="{{url('js/public/layer/layer.js')}}"></script>
     <script type="text/javascript" src="{{url('js/public/layui/layui.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/public/Validform/Validform_v5.3.2_min.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/public/Validform/rules.js')}}"></script>
     <script type="text/javascript" src="{{url('js/member/er_admin.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/frontend/member.js')}}"></script>
     <script>
         //Demo
         layui.use('form', function(){

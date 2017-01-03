@@ -86,11 +86,13 @@ function multiDelItem() {
 
 //更改购物车数量
 function changeQuantity(obj, rowId) {
-
     num = $(obj).val();
+    if(num <= 0){
+        $(obj).val(1);
+    }
+
 
     var token = $("input[name='_token']").val();
-
     $.post('/member/cart/change_quantity', {_token: token, rowId: rowId, num: num}, function (msg) {
         if (msg.status == '0') {
             layer.msg(msg.msg, {icon: 1});
@@ -99,7 +101,6 @@ function changeQuantity(obj, rowId) {
         }
     }, 'json');
     checkDiscount();
-
 }
 
 //支付
@@ -130,10 +131,7 @@ function checkout() {
             location = '/member/cart/pay_order/' + a;
             /*如果成功，跳转至付款页面*/
         });
-
     });
-
-
 }
 
 /**
@@ -144,10 +142,6 @@ function checkout() {
  */
 function checkDiscount() {
 
-
-
-
-
     //更新每个商品的小计
     $(".price").each(function (i) {
         $(this).html(
@@ -157,7 +151,6 @@ function checkDiscount() {
         );
     });
 
-
     //生成rowId的数组
     var token = $("input[name='_token']").val();
     var rowIds = new Array();
@@ -165,19 +158,27 @@ function checkDiscount() {
     //检测折扣
     if ($('input:checkbox[name=item]:checked').length >= 1) {
         //有选择商品，对选择商品进行结算
+        $num = 0;
+
         $('input:checkbox[name=item]:checked').each(function (i) {
             rowIds[i] = $(this).val();
+            $num += Number($(this).parent().parent().find("#itemNum").val());
         });
 
         //更新商品件数 <span id="Pics">2</span>  {{$item->num}}  name="number"
-        //alert($("#itemNum").parent().parent().find().prop("tagName"));
-
+        $("#Pics").html($num);
 
     } else if ($('input:checkbox[name=item]:checked').length <= 1) {
         //未选择商品，对所有商品进行结算
         $('input:checkbox[name=item]').not("input:checked").each(function (i) {
             rowIds[i] = $(this).val();
         });
+
+        $num = 0;
+        $("input[name='number']").each(function (i) {
+            $num += Number($(this).val());
+        });
+        $("#Pics").html($num);
     }
     //更新显示区域
     $.post('/member/cart/check_item', {_token: token, rowIds: rowIds, couponCode: coupon}, function (msg) {
@@ -185,15 +186,17 @@ function checkDiscount() {
         //alert(msg['amount']);
         //说明没有折扣信息
         if (!msg['amount']) {
+
+
             //清空对应折扣信息
-            $("#discount").html(0);
+            $("#discount").html(0.00);
             $("#total").html(msg['total']);
             $("#pay").html($("#total").html() - $("#discount").html());
 
         } else {
             //有折扣信息，处理
             $("#total").html(msg['total']);
-            $("#discount").html(msg['amount']);
+            $("#discount").html(Float(msg['amount']));
             $("#discount_info").html(msg['rule']['name']);
             $("#pay").html($("#total").html() - $("#discount").html());
         }
@@ -218,7 +221,6 @@ function collect(id) {
     }, function () {
 
     });
-
 
 }
 

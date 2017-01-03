@@ -8,10 +8,10 @@
             @if(exiturl('notshow'))layui-this  @endif"
         ><a href="{{url('member/collect')}}">失效&nbsp;(&nbsp; {{$numNotShow}}&nbsp;)</a>
         </li>
-        <li class="layui-nav-item
+      {{--  <li class="layui-nav-item
             @if(exiturl('toship'))layui-this @endif"
         ><a href="{{url('member/collect')}}">网店宝贝&nbsp;(&nbsp; &nbsp;)</a>
-        </li>
+        </li>--}}
 
     </ul>
 </div>

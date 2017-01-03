@@ -7,7 +7,7 @@
  * Time: 16:08
  */?>
 
-
+<div>
 <h5>
       <span class="action-span">
             <a href="/admin/member" class="btn btn-warning click-loading">
@@ -51,3 +51,4 @@
         </a>
     </li>
 </ul>
+</div>

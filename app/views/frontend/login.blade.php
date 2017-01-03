@@ -19,8 +19,18 @@
                     <a href="/">我的曼蒂</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;用户登录
                 </div>
                 <!--找回密码-->
+
                 <div class="table_div">
                     <div class="login_zhao02">
+                        @if(Session::has('msg'))
+                            @if(is_array(Session::has('msg')))
+                                @foreach(Session::has('msg') as $msg)
+                                    <p class="alert">{{$msg}}</p>
+                                @endforeach
+                            @endif
+                        @endif
+
+
                         <h2 class="iconfont fize18">&#xe60b;</h2>
                         <form class="layui-form m-form form" action="{{url('member/login')}}">
                             {{Form::token()}}

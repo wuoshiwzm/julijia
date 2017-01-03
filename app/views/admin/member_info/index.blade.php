@@ -79,7 +79,7 @@
                 </thead>
                 <tbody>
                 <!--以下为循环内容-->
-                @foreach($userinfos as $info )
+                @foreach($data as $info )
                 <tr>
                     <td>
                         {{$info->id}}
@@ -98,11 +98,11 @@
                     </td>
                     <td>
                         <div class="ng-binding">
-                            <span>{{$info->group_name}}</span><br>
+                            <span>{{$info->group->name}}</span><br>
                             {{--<span>折扣:9.5折</span>--}}
                         </div>
                     </td>
-                    <td>{{$info->orderCount}}笔</td>
+                    <td>{{$info->order->count()}}笔</td>
                     <td>
                         {{$info->orderLasttime}}
                     </td>
@@ -116,56 +116,7 @@
 
             </table>
 
-            <div class="pull-right page-box">
-                <div id="pagination" class=" pull-right">
-
-                    <div class="pagination-info">
-                        共7条记录，每页显示：
-                        <select class="select m-r-5" data-page-size="10">
-
-                            <option value="1">1</option>
-
-                            <option value="10" selected="selected">10</option>
-
-                            <option value="20">20</option>
-
-                            <option value="30">30</option>
-
-                            <option value="50">50</option>
-
-                        </select>
-                        条
-                    </div>
-
-                    <ul class="pagination">
-                        <li class="disabled" style="display: none;">
-                            <a class="fa fa-angle-double-left" data-go-page="1" title="第一页"></a>
-                        </li>
-
-                        <li class="disabled">
-                            <a class="iconfont" title="上一页">&#xe70a;</a>
-                        </li>
-
-                        <li class="active">
-                            <a data-cur-page="1">1</a>
-                        </li>
-
-                        <li class="disabled">
-                            <a class="iconfont" title="下一页">&#xe709;</a>
-                        </li>
-
-                        <li class="disabled" style="display: none;">
-                            <a class="fa fa-angle-double-right" data-go-page="1" title="最后一页"></a>
-                        </li>
-                    </ul>
-
-                    <div class="pagination-goto">
-                        <input class="ipt form-control goto-input" type="text">
-                        <button class="btn btn-default goto-button" title="点击跳转到指定页面">GO</button>
-                        <a class="goto-link" data-go-page="" style="display: none;"></a>
-                    </div>
-                </div>
-            </div>
+            @include('admin.public.page',array('data'=>$data,'set'=>$set))
 
 
         </div>

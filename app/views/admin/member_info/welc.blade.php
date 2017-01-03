@@ -58,7 +58,7 @@
                     </dl>
                     <dl>
                         <dt>账号来源：</dt>
-                        <dd>???</dd>
+                        <dd>电脑端</dd>
                     </dl>
                 </div>
             </div>
@@ -67,9 +67,14 @@
                 <div class="title">收货信息</div>
                 <div class="content">
                     <dl>
-                        <dd>{{$address['province']}}&nbsp;&nbsp;&nbsp;{{$address['city']}}
-                            &nbsp;&nbsp;&nbsp;{{$address['district']}}&nbsp;&nbsp;&nbsp;{{$address['address']}}
-                            &nbsp;&nbsp;&nbsp;{{$welc->name}}，&nbsp;&nbsp;&nbsp;{{$welc->mobile_phone}} ，&nbsp;&nbsp;&nbsp;{{$address['zip_code']}}
+                        <dd>
+                            {{$address['province']}}&nbsp;&nbsp;&nbsp;
+                            {{$address['city']}}&nbsp;&nbsp;&nbsp;
+                            {{$address['district']}}&nbsp;&nbsp;&nbsp;
+                            {{$address['address']}}&nbsp;&nbsp;&nbsp;
+                            {{$welc->name}} &nbsp;&nbsp;&nbsp;
+                            {{$welc->mobile_phone}}  &nbsp;&nbsp;&nbsp;
+                            {{$address['zip_code']}}
                         </dd>
                     </dl>
                 </div>

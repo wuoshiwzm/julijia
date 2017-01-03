@@ -15,9 +15,10 @@ class User
     static function login($username, $password)
     {
         $password = encode($password);
-//        dd($password);
+        /*dd($password);*/
 
         $user = Source_User_UserInfo::where('name', $username)->first();
+       /* dd($user->password);*/
         if ($user) {
             if ($password == $user->password) {
                 return true;

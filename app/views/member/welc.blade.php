@@ -100,6 +100,8 @@
                         <a href="##" class="ge_tou_a" onclick="receive({{"'".encode($item->id)."'"}})">确认收货</a>
 
                     @endforeach
+                    @else
+                    无物流信息
                 @endif
 
             </div>

@@ -48,15 +48,11 @@
                                     <td class="padding_left">
                                         <dl>
                                             <dt><a href="##" target="_blank">
-
                                                     <img src="{{getImagesUrl('goods',$item->product_id,$item->product->small_image)}}">
-
                                                     width="60" height="60"></a></dt>
                                             <dd><a href="##" target="_blank">{{$item->product_name}}</a>
                                             </dd>
                                             <dd class="order_tab_color">
-
-
                                                 @if(isset($item->guige))
                                                     @foreach (json_decode(stripslashes($item->guige)) as $name=>$guige)
                                                         {{$name}}:{{$guige}}
@@ -73,7 +69,7 @@
                                     </td>
                                     <td>
                                         <input type="number" name="number" lay-verify="number"
-                                               class="layui-input" id="itemNum"
+                                               class="layui-input" class="itemNum" id="itemNum"
                                                onchange="changeQuantity(this, {{"'".encode($item->id)."'"}})"
                                                placeholder="" value="{{$item->num}}">
                                     </td>
@@ -103,7 +99,7 @@
 
                             <div class="jiesuan_left">
                                 <dl>
-                                    <dt><a href="##" target="_blank">\
+                                    <dt><a href="##" target="_blank">
                                             <img src="{{asset('images/frontend/yhq.jpg')}}"
                                                  width="80" height="80"></a></dt>
                                     <dd class="order_btn">

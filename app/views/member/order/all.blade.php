@@ -177,7 +177,7 @@
                                                 <a href="{{url('member/order/detail/'.$order->id)}}">详情</a>
                                             {{--如果未付款 可以删除订单--}}
                                             @if($order->status == 1)
-                                                <a href="#"  onclick="deleOrder({{"'".encode($order->id)."'"}})">删除订单</a></td>
+                                                <a href="#"  onclick="deleOrder({{"'".encode($order->id)."'"}})">删除订单</a>
                                             @endif
                                             </td>
                                         @endif

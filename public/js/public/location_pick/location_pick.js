@@ -23,7 +23,7 @@ $(function () {
             $("#address3").empty();
             $.each(data, function (n, value) {
                 //clear the select options then add the new info
-                $("#address2").append("<option value=" + value["id"] + ">" + value["city"] + "</option>");
+                $("#address2").append("<option value=" + value["city"] + ">" + value["city"] + "</option>");
             });
         });
     });
@@ -39,7 +39,7 @@ $(function () {
             var data = $.parseJSON(data);
             $.each(data, function (n, value) {
                 //clear the select options then add the new info
-                $("#address3").append("<option value=" + value["id"] + ">" + value["area"] + "</option>");
+                $("#address3").append("<option value=" + value["area"] + ">" + value["area"] + "</option>");
             });
         });
     });

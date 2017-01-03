@@ -35,8 +35,16 @@ class MemberInfoController extends CommonController
      */
     function index()
     {
-        $userinfos = User::userlist();
-        return $this->view('admin.member_info.index', compact('userinfos'));
+
+
+
+        $userinfos = Source_User_UserInfo::orderBy('id', 'desc');
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
+        $data = $userinfos->paginate($setPage);
+        $set['setpage'] = $setPage;
+
+//        $userinfos = User::userlist();
+        return $this->view('admin.member_info.index', compact('userinfos','data','set'));
     }
 
 

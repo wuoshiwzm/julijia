@@ -18,11 +18,13 @@
             <div class="table-content m-t-30 ">
 
                 <h5 class="tab_h5"><font class="iconfont">&#xe64e;</font>基本信息</h5>
+
                 <div class="simple-form-field">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">
                             <span class="ng-binding">用户名：</span>
                         </label>
+
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
                                 {{$user->name}}</label>
@@ -35,6 +37,7 @@
                         <label class="col-sm-4 control-label">
                             <span class="ng-binding">用户昵称：</span>
                         </label>
+
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
                                 {{$user->alias}}</label>
@@ -48,6 +51,7 @@
                             <span class="ng-binding">性别：</span>
 
                         </label>
+
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
                                 <?php if ($user->sex == 1) {
@@ -67,16 +71,13 @@
                         <label class="col-sm-4 control-label">
                             <span class="ng-binding">出生日期：</span>
                         </label>
+
                         <div class="col-sm-8">
-                            <?php
-                            //$time = mktime(Auth::user()->birthday);
-                            $t = strtotime($user->birthday);
-                            echo '<label class="control-label cur-p m-r-10">';
-                            echo date('Y年 m月 d日', $t);
-                            echo '</label>';
-                            ?>
-
-
+                            @if($user->birthday)
+                                <label class="control-label cur-p m-r-10">
+                                    {{date('Y年 m月 d日', strtotime($user->birthday));}}
+                                </label>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -86,6 +87,7 @@
                         <label class="col-sm-4 control-label">
                             <span class="ng-binding">邮 箱：</span>
                         </label>
+
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
                                 {{$user->email}}</label>
@@ -99,31 +101,35 @@
                         <label class="col-sm-4 control-label">
                             <span class="ng-binding">手机号码：</span>
                         </label>
+
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
-                                {{$user->mobile_phone}} ?>
-                             </label>
-                         </div>
-                     </div>
-                 </div>
+                                {{$user->mobile_phone}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
-                 <h5 class="tab_h5"><font class="iconfont">&#xe693;</font>账户信息</h5>
-                 <div class="simple-form-field">
-                     <div class="form-group">
-                         <label class="col-sm-4 control-label">
-                             <span class="ng-binding">用户积分：</span>
-                         </label>
-                         <div class="col-sm-8">
-                             <label class="control-label cur-p m-r-10">
-                                 {{$user->user_points}}</label>
-                         </div>
-                     </div>
-                     <div class="form-group">
-                         <label class="col-sm-4 control-label">
-                             <span class="ng-binding">用户等级：</span>
-                         </label>
-                         <div class="col-sm-8">
-                             <label class="control-label cur-p m-r-10">{{$group_name}}</label>
+                <h5 class="tab_h5"><font class="iconfont">&#xe693;</font>账户信息</h5>
+
+                <div class="simple-form-field">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">
+                            <span class="ng-binding">用户积分：</span>
+                        </label>
+
+                        <div class="col-sm-8">
+                            <label class="control-label cur-p m-r-10">
+                                {{$user->user_points}}</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">
+                            <span class="ng-binding">用户等级：</span>
+                        </label>
+
+                        <div class="col-sm-8">
+                            <label class="control-label cur-p m-r-10">{{$group_name}}</label>
                         </div>
                     </div>
                 </div>
@@ -133,9 +139,10 @@
                         <label class="col-sm-4 control-label">
                             <span class="ng-binding">是否登录：</span>
                         </label>
+
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
-                                <?php if (isset($user->last_time))
+                                <?php if ((time() - $user->last_time) < 7200)
                                     echo '是';
                                 else
                                     echo '否';
@@ -145,8 +152,6 @@
                 </div>
                 <div class="simple-form-field">
                 </div>
-
-
             </div>
         </div>
     </div>
