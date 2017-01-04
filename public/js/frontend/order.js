@@ -54,6 +54,23 @@ $(".add_adress_edit").click(function () {
 });
 
 /**
+ * 判断地址是否存在
+ * @type {number|jQuery}
+ */
+var address = $("#addressList li").length;
+if( address == false )
+{
+    layer.open({
+        type: 2,
+        title:false,
+        shadeClose: true,
+        shade: 0.8,
+        area: ['800px', '550px'],
+        content: ['/order/saveaddress','no']
+    });
+}
+
+/**
  * 展开收缩
  */
 $(".shou_adress_top").click(function(){
@@ -103,3 +120,4 @@ $(".address_default").click(function () {
         }
     });
 });
+

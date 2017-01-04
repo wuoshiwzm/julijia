@@ -51,6 +51,7 @@ if( $("#second").find('font').length )
  * @param maxtime
  * @param index
  */
+
 function countDown( maxtime  )
 {
     var timer = setInterval(function()
@@ -72,7 +73,6 @@ function countDown( maxtime  )
         }
     }, 1000);
 }
-
 
 /**
  *  输入数字验证
