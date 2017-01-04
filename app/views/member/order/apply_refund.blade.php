@@ -61,8 +61,8 @@
                                 <dt><a href="##" target="_blank">
                                         <img src="{{getImgSize( 'goods', $orderItem->product_id, $orderItem->product->small_image ) }}"
                                              class="goods-thumb" width="60" height="60"></a></dt>
-                                <dd><a href="##" target="_blank">
-                                        {{$orderItem->product_name}}</a></dd>
+                                <dd>
+                                    <a href="##" target="_blank"> {{$orderItem->product_name}}</a></dd>
                             </dl>
                         </td>
                     </tr>
@@ -136,9 +136,7 @@
 
                                             <select name="reason"
                                                     datatype="*"
-                                                    errormsg="请输入评价" tipsrmsg="请输入评价" >
-
-
+                                                    errormsg="请输入评价" tipsrmsg="请输入评价">
                                                 <option value="">请选原因</option>
                                                 @foreach($orderBackReasons as $reason)
                                                     <option value="{{$reason->id}}">{{$reason->value}}</option>
@@ -147,8 +145,6 @@
                                             <span class="Validform_checktip"></span>
                                         </div>
                                     </div>
-
-
 
 
                                     <div class="layui-form-item">
@@ -182,14 +178,11 @@
                                                          src="/images/admin/addimg.png"
                                                          width="100" height="100"></a>
                                                 <input type="hidden" id="refund" name="refund"/>
-                                                <span>删除</span>
+
                                             </div>
                                             <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
                                         </div>
                                     </div>
-
-
-
 
 
                                     <div class="layui-form-item">
@@ -205,7 +198,7 @@
                         {{--form2--}}
                         <div class="layui-tab-item">
                             <div class="admin_form">
-                                <form class="layui-form m-form form"  action="{{url('member/refund/create_refund')}}"
+                                <form class="layui-form m-form form" action="{{url('member/refund/create_refund')}}"
                                       method="post">
                                     {{Form::token()}}
                                     <input type="hidden" name="type" value="1">
@@ -219,7 +212,8 @@
                                             <input type="radio" name="is_delivery" value="1" title="已收货">
                                             <div class="layui-unselect layui-form-radio"><i
                                                         class="layui-anim layui-icon"></i><span>已收货</span></div>
-                                            <input type="radio" name="is_delivery" value="0" title="未收货" checked="checked">
+                                            <input type="radio" name="is_delivery" value="0" title="未收货"
+                                                   checked="checked">
                                             <div class="layui-unselect layui-form-radio layui-form-radioed"><i
                                                         class="layui-anim layui-icon"></i><span>未收货</span></div>
                                         </div>
@@ -233,7 +227,7 @@
 
                                             <select name="reason"
                                                     datatype="*"
-                                                    errormsg="请输入评价" tipsrmsg="请输入评价" >
+                                                    errormsg="请输入评价" tipsrmsg="请输入评价">
 
 
                                                 <option value="">请选原因</option>
@@ -244,7 +238,6 @@
                                             <span class="Validform_checktip"></span>
                                         </div>
                                     </div>
-
 
 
                                     <div class="layui-form-item">
@@ -304,6 +297,9 @@
 @section('js')
     <script type="text/javascript" src="{{asset('js/member/layui.js')}}"></script>
     <script>
+        layui.use('form', function () {
+            var form = layui.form(); //只有执行了这一步，部分表单元素才会修饰成功
+        });
         layui.use('element', function () {
             var element = layui.element(); //Tab的切换功能，切换事件监听等，需要依赖element模块
         });

@@ -1,19 +1,13 @@
 @section('title')
     购物车
 @stop
-
+@section('categoryCss','banner_nav02')
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{asset('css/frontend/order.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/frontend/css.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/frontend/layui.css')}}">
-
-
-
 @stop
-
-
-@section(('content'))
-
+@section('content')
     <div class="shopping">
         <div class="shopping_nei">
             <div class="shopping_nei_order">
@@ -27,9 +21,9 @@
                 </div>
                 <!--订单切换-->
                 <div class="table_div">
+                    {{ Form::open(array('url' => 'goods/settlement', 'method'=>'post')) }}
                     <div class="table_div_hd table_div_hd_table">
                         <table border="0" cellpadding="0" cellspacing="0" class="order_tab">
-
                             <tr>
                                 <th width="3%"></th>
                                 <th>商品信息</th>
@@ -38,13 +32,12 @@
                                 <th width="12%">金额(元)</th>
                                 <th width="14%">操作</th>
                             </tr>
-                            {{Form::token()}}
-
-
                             @foreach($items as $item)
                                 <tr>
-                                    <td><input type="checkbox" class="item_checkbox" width="30" name="item"
-                                               value="{{encode($item->id)}}"></td>
+                                    <td><input type="checkbox" class="item_checkbox" width="30" name="item[]"
+                                               value="{{encode($item->product_id)}}" checked="checked">
+                                        <input type="hidden" value="{{encode($item->id)}}" name="rowId" class="rowId">
+                                    </td>
                                     <td class="padding_left">
                                         <dl>
                                             <dt><a href="##" target="_blank">
@@ -61,8 +54,6 @@
                                                 @endif
                                             </dd>
                                         </dl>
-
-
                                     </td>
                                     <td>
                                         ¥ <font class="price_y">{{$item->price}}</font><br>¥ {{$item->price}}
@@ -73,7 +64,6 @@
                                                onchange="changeQuantity(this, {{"'".encode($item->id)."'"}})"
                                                placeholder="" value="{{$item->num}}">
                                     </td>
-
                                     <td>¥<font class="price"> 0</font></td>
                                     <td class="operation ">
                                         <a href="##" class="dele_d"
@@ -83,18 +73,14 @@
                                     </td>
                                 </tr>
                             @endforeach
-
-
                             <tr>
-                                <td><input type="checkbox" class="checkbox_checkall" width="30"></td>
+                                <td><input type="checkbox" class="checkbox_checkall" width="30" checked="checked"></td>
                                 <td colspan="5" class="quan padding_left">
                                     <a href="##">全选</a><a href="##" onclick="multiDelItem()">删除选中的商品</a>
                                     <a href="##" onclick="multiCollect()">移入收藏夹</a>
                                 </td>
                             </tr>
-
                         </table>
-
                         <div class="jiesuan">
 
                             <div class="jiesuan_left">
@@ -112,8 +98,9 @@
                             </div>
                             <div class="jiesuan_center">支付的商品<br><font><span id="Pics">2</span></font>件</div>
                             <div class="jiesuan_btn">
-                                <button class="layui-btn layui-btn-danger jieshuan" onclick="checkout()">结 算</button>
+                                <button class="layui-btn layui-btn-danger jieshuan">结 算</button>
                             </div>
+
                             <div class="jiesuan_right">
                                 <ul>
                                     <li class="jiesuan_right_li">
@@ -125,28 +112,20 @@
 
                                     </li>
                                     <li>
-                                        <span>优&nbsp;&nbsp;惠&nbsp;&nbsp;额：-&nbsp;¥</span><font>&nbsp;<span
-                                                    id="discount"></span> </font>
+                                        <span>优&nbsp;&nbsp;惠&nbsp;&nbsp;额：-&nbsp;¥</span><font>&nbsp;<span id="discount"></span> </font>
                                     </li>
                                     <li>
                                         <span>优惠信息：</span><font><span id="discount_info"></span> </font>
                                     </li>
                                 </ul>
                             </div>
-
-
                         </div>
-
                     </div>
+                    {{ Form::close() }}
                 </div>
-
-
             </div>
         </div>
     </div>
-
-
-
 @stop
 @section('footer_js')
     <script type="text/javascript" src="{{asset('js/member/layui.js')}}"></script>

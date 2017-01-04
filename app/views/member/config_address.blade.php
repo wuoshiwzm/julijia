@@ -56,8 +56,8 @@
                     <div class="layui-input-block">
                                             <textarea class="layui-textarea w80b f_left"
                                                       placeholder="填写具体详细地址" autocomplete="off"
-                                                      datatype="*" name="address"
-                                                      errormsg="请填写说明" tipsrmsg="请填写说明"
+                                                      datatype="*3-100" name="address"
+                                                      errormsg="详细地址长度不足" tipsrmsg="请填写详细地址"
                                             ></textarea>
                         <span class="Validform_checktip"></span>
                     </div>
@@ -85,7 +85,7 @@
                         <input type="text" class="layui-input w80b f_left"
                                placeholder="填写具体收货人信息" autocomplete="off"
                                datatype="m" name="phone"
-                               errormsg="请填写手机号码" tipsrmsg="请填写手机号码"/>
+                               errormsg="手机号码格式错误" tipsrmsg="请填写手机号码"/>
                         <span class="Validform_checktip"></span>
                     </div>
                 </div>
@@ -97,8 +97,8 @@
 
                         <input type="text" class="layui-input w80b f_left"
                                placeholder="填写具体邮政编码" autocomplete="off"
-                               datatype="n" name="zipcode"
-                               errormsg="请填写邮政编码" tipsrmsg="请填写邮政编码"/>
+                               datatype="n6-6" name="zipcode"
+                               errormsg="邮政编码格式错误" tipsrmsg="请填写邮政编码"/>
                         <span class="Validform_checktip"></span>
                     </div>
                 </div>
@@ -109,9 +109,7 @@
 
                         <input type="text" class="layui-input w80b f_left"
                                placeholder="电话" autocomplete="off"
-                               datatype="n" name="tel"
-                               errormsg="电话" tipsrmsg="电话"/>
-                        <span class="Validform_checktip"></span>
+                               />
                     </div>
                 </div>
 
@@ -162,14 +160,12 @@
                             <td>{{$addr->zipcode}}</td>
                             <td>{{$addr->phone}}</td>
                             <td class="border_rn">
-                                <a href="{{url('member/config/address/'.$addr->id."/edit")}}">修改</a>&nbsp;&nbsp;&nbsp;
-                                &nbsp;&nbsp;
-
+                                <a href="{{url('member/config/address/'.$addr->id."/edit")}}">修改</a>
+                                <a href="javascript:;" onclick="delAddr({{"'".encode($addr->id)."'"}});">删除</a>
                                 @if($addr->status == 1)
-                                    这是默认地址
+
+                                    <a href="##" class="color_on">默认地址</a>
                                 @else
-                                    <a href="javascript:;" onclick="delAddr({{"'".encode($addr->id)."'"}});">删除</a>
-                                    &nbsp;
                                     <a href="{{url('member/config/address/set_default/'.encode($addr->id))}}">设为默认</a>
                                 @endif
                             </td>

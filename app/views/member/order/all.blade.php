@@ -127,10 +127,7 @@
                                         <td width="16%" class="operation">
 
 
-                                            {{--没有付款--}}
-                                            @if($order->pay_status == 1 || $order->pay_status == 2)
-                                                <a href="##" class="margin_top">付款</a>
-                                            @endif
+
 
                                             {{--已经付款 已经收货--}}
                                             @if($item->shipping_status == 3 && $order->pay_status == 3 )
@@ -152,7 +149,7 @@
                                                 @if($item->refund->count())
                                                     <a href="{{url('member/refund')}}">退货详情</a>
                                                 @else
-                                                    <a href="{{url('member/refund/'.encode($order->id).'/'.encode($item->id))}}"
+                                                    <a href="{{url('member/refund/apply_refund/'.encode($order->id).'/'.encode($item->id))}}"
                                                        class="margin_top">退货</a>
                                                 @endif
                                             @endif
@@ -164,7 +161,7 @@
                                                 @if($item->refund->count())
                                                     <a href="{{url('member/refund')}}">点击查看退款/退货详情</a>
                                                 @else
-                                                    <a href="{{url('member/refund/'.encode($order->id).'/'.encode($item->id))}}">
+                                                    <a href="{{url('member/refund/apply_refund/'.encode($order->id).'/'.encode($item->id))}}">
                                                         退款 </a>
                                                 @endif
                                                 <a href="##" class="margin_top"
@@ -179,6 +176,11 @@
                                             @if($order->status == 1)
                                                 <a href="#"  onclick="deleOrder({{"'".encode($order->id)."'"}})">删除订单</a>
                                             @endif
+
+                                                {{--没有付款--}}
+                                                @if($order->pay_status == 1 || $order->pay_status == 2)
+                                                    <a href="##" class="margin_top">付款</a>
+                                                @endif
                                             </td>
                                         @endif
 

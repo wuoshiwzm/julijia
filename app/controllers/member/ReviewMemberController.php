@@ -59,15 +59,15 @@ class ReviewMemberController extends CommonController
      * 提交评价
      * url : 'get('/review/apply_review/{order_id}/{item_id}', 'ReviewMemberController@applyReview')'
      */
-    public function applyReview($orderId, $ItemId)
+    public function applyReview($orderId, $itemId)
     {
 
 
         $orderId = decode(trim($orderId));
-        $ItemId = decode(trim($ItemId));
+        $itemId = decode(trim($itemId));
 
-        $orderInfo = Order::getOrdersById($orderId);
-        $orderItem = Order::getOrderItemsById($ItemId);
+        $orderInfo = Source_Order_OrderInfo::where('id',$orderId)->first();
+        $orderItem = Source_Order_OrderItem::where('id',$itemId)->first();
 
 
         return $this->view('member.order.apply_review', compact('orderItem', 'orderInfo'));

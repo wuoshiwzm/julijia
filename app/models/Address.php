@@ -42,6 +42,16 @@ class Address
      */
     static function update($id, $input)
     {
+
+        $userId = Session::get('member')->id;
+
+        if(isset($input['status']) && $input['status']==1){
+            Source_User_UserInfoAdd::where('user_id',$userId)->update([
+                'status'=>0
+            ]);
+        }
+
+
         $res = Source_User_UserInfoAdd::where('id', $id)->update($input);
         return $res;
     }
@@ -57,7 +67,7 @@ class Address
             $input['status'] == 1;
         }
 
-        dd($input);
+
         //如果status为1，则设为默认地址，改变其他地址对应的属性
         if (isset($input['status'])) {
             if ($input['status'] == 1) {

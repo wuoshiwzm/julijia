@@ -183,7 +183,7 @@
                         <ul>
                             <li><strong>配送信息</strong></li>
                             <li><span>配送方式：</span><font>普通快递</font></li>
-                            <li><span>运费：</span><font>¥{{$order->cost_freight}}</font></li>
+                            <li><span>运费：</span><font>¥{{$order->shipping_amount}}</font></li>
                             <li><span>送货日期：</span><font>{{$order->ship_time}}</font></li>
                         </ul>
                     </div>

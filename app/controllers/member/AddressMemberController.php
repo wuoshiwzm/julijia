@@ -123,6 +123,11 @@ class AddressMemberController extends CommonController
     {
         $input = trimValue(Input::except('_token', '_method', 'quiz1', 'quiz2', 'quiz3'));
         $validator = Address::validatorAddress($input);
+
+
+
+
+
         if ($validator === true) {
 
             $res = Address::update($id, $input);

@@ -76,7 +76,7 @@ $router->any('/review/create_review', 'ReviewMemberController@createReview');
 //我的退款
 $router->get('/refund', 'RefundMemberController@index');
 //提交退款
-$router->get('/refund/{order_id}/{order_item_id}', 'RefundMemberController@applyRefund');
+$router->get('/refund/apply_refund/{order_id}/{order_item_id}', 'RefundMemberController@applyRefund');
 $router->any('/refund/create_refund', 'RefundMemberController@createRefund');
 $router->any('/refund/ship_back/{id?}', 'RefundMemberController@shipBack');
 

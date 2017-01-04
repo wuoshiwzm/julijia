@@ -1,4 +1,5 @@
 @section('title','用户注册')
+@section('categoryCss','banner_nav02')
 @section('css')
     {{--    <link type="text/css" rel="stylesheet" href="{{asset('css/images/icon.png')}}">--}}
     <link type="text/css" rel="stylesheet" href="{{asset('css/admin/iconfont.css')}}">
@@ -44,7 +45,7 @@
                                     <input type="text" name="mobile_phone" placeholder="手机号" autocomplete="off"
                                            class="layui-input w40b f_left02"
                                            datatype="m" id="phone"
-                                           errormsg="请输入手机号" tipsrmsg="请输入手机号">
+                                           errormsg="手机号格式错误" tipsrmsg="请输入手机号" nullmsg="您未输入手机号">
                                     <span class="Validform_checktip"></span>
                                 </div>
                             </div>
@@ -67,7 +68,7 @@
                                     <input type="text" name="name" placeholder="用户名" autocomplete="off"
                                            class="layui-input w40b f_left02"
                                            datatype="*3-30"
-                                           errormsg="请输入3-30位的用户名" tipsrmsg="请输入3-30位的用户名">
+                                           errormsg="请输入3-30位的用户名" tipsrmsg="请输入3-30位的用户名" nullmsg="您未输入用户名">
                                     <span class="Validform_checktip"></span>
                                 </div>
                             </div>
@@ -77,8 +78,8 @@
                                 <div class="layui-input-block">
                                     <input type="password" name="password" placeholder="新密码" autocomplete="off"
                                            class="layui-input w40b f_left02"
-                                           datatype="*3-20"
-                                           errormsg="密码输入不对" tipsrmsg="请输入3-20位密码">
+                                           datatype="*6-20"
+                                           errormsg="密码输入为6-20位" tipsrmsg="请输入位密码" nullmsg="您未输入密码">
                                     <span class="Validform_checktip"></span>
                                 </div>
                             </div>
@@ -90,7 +91,7 @@
                                            class="layui-input w40b f_left02"
                                            datatype="*"
                                            recheck="password"
-                                           errormsg="输入的确认密码不正确" tipsrmsg="请输入确认密码">
+                                           errormsg="确认密码与原密码不一致" tipsrmsg="确认密码必须与原密码一致" nullmsg="您未输入确认密码">
                                     <span class="Validform_checktip"></span>
                                 </div>
                             </div>
@@ -98,10 +99,17 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label"> </label>
                                 <div class="layui-input-block">
-                                    <input type="checkbox" name="like" title="同意协议">
+                                    <input type="checkbox" name="like" title="同意协议"
+                                           datatype="*"
+                                           errormsg="您未勾选协议" tipsrmsg="请您勾选协议" nullmsg="您未勾选协议">
                                     <a href="http://xian.julijia.cn/website/agreement.html" target="_blank" class="xieyi">《居利家协议》</a>
+                                    <span class="Validform_checktip"></span>
                                 </div>
+
                             </div>
+
+
+
 
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
@@ -120,10 +128,12 @@
 
     <script type="text/javascript" src="{{url('js/public/layer/layer.js')}}"></script>
     <script type="text/javascript" src="{{url('js/public/layui/layui.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/public/layer/layer.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/public/layui/layui.js')}}"></script>
     <script type="text/javascript" src="{{url('js/public/Validform/Validform_v5.3.2_min.js')}}"></script>
     <script type="text/javascript" src="{{url('js/public/Validform/rules.js')}}"></script>
     <script type="text/javascript" src="{{url('js/member/er_admin.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/frontend/member.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/frontend/sms.js')}}"></script>
     <script>
         //Demo
         layui.use('form', function(){

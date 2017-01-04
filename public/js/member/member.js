@@ -27,13 +27,13 @@ function deleOrder(rowId) {
         btn: ['确定', '取消']
     }, function () {
 
-        $.post('/member/order/remove/'+rowId, {_token: token}, function (msg) {
-          if(msg == 'true'){
+        $.post('/member/order/remove/' + rowId, {_token: token}, function (msg) {
+            if (msg == 'true') {
                 layer.msg('成功');
                 fresh();
             }
         }, 'text');
-    },function () {
+    }, function () {
 
     });
 }
@@ -84,25 +84,6 @@ function multiDelItem() {
 }
 
 
-//更改购物车数量
-function changeQuantity(obj, rowId) {
-    num = $(obj).val();
-    if(num <= 0){
-        $(obj).val(1);
-    }
-
-
-    var token = $("input[name='_token']").val();
-    $.post('/member/cart/change_quantity', {_token: token, rowId: rowId, num: num}, function (msg) {
-        if (msg.status == '0') {
-            layer.msg(msg.msg, {icon: 1});
-        } else {
-            layer.msg(msg.msg, {icon: 2});
-        }
-    }, 'json');
-    checkDiscount();
-}
-
 //支付
 function checkout() {
     var token = $("input[name='_token']").val();
@@ -134,6 +115,28 @@ function checkout() {
     });
 }
 
+//更改购物车数量
+function changeQuantity(obj, rowId) {
+
+
+    num = $(obj).val();
+    if (num <= 0) {
+        $(obj).val(1);
+    }
+
+    var token = $("input[name='_token']").val();
+    $.post('/member/cart/change_quantity', {_token: token, rowId: rowId, num: num}, function (msg) {
+        if (msg.status == '0') {
+            layer.msg(msg.msg, {icon: 1});
+        } else {
+            layer.msg(msg.msg, {icon: 2});
+        }
+    }, 'json');
+
+
+    checkDiscount();
+}
+
 /**
  *
  * @param $rowIds 购物车商品的 rowid
@@ -155,48 +158,65 @@ function checkDiscount() {
     var token = $("input[name='_token']").val();
     var rowIds = new Array();
     var coupon = $(".coupon").val();
-    //检测折扣
-    if ($('input:checkbox[name=item]:checked').length >= 1) {
-        //有选择商品，对选择商品进行结算
-        $num = 0;
 
-        $('input:checkbox[name=item]:checked').each(function (i) {
-            rowIds[i] = $(this).val();
-            $num += Number($(this).parent().parent().find("#itemNum").val());
+    //更新显示区域  更新总数量
+
+    if ($('input:checkbox[class=item_checkbox]:checked').length >= 1) {
+        //有选择商品，对选择商品进行结算
+        rowIds = [];
+        total = 0;
+        num = 0;
+        $('input:checkbox[class=item_checkbox]:checked').each(function (i) {
+            rowIds[i] = $(this).parent().find(".rowId").val();
+
+            num += Number($(this).parent().parent().find("#itemNum").val());
+            total += Number($(this).parent().parent().find(".price").html());
         });
 
         //更新商品件数 <span id="Pics">2</span>  {{$item->num}}  name="number"
-        $("#Pics").html($num);
+        $("#Pics").html(num);
+        $("#total").html(total);
 
-    } else if ($('input:checkbox[name=item]:checked').length <= 1) {
-        //未选择商品，对所有商品进行结算
-        $('input:checkbox[name=item]').not("input:checked").each(function (i) {
-            rowIds[i] = $(this).val();
-        });
+    } else if ($('input:checkbox[class=item_checkbox]:checked').length < 1) {
 
-        $num = 0;
-        $("input[name='number']").each(function (i) {
-            $num += Number($(this).val());
-        });
-        $("#Pics").html($num);
+        //未选择商品，对所有商品进行计算
+        /*$('input:checkbox[class=item_checkbox]').not("input:checked").each(function (i) {
+         rowIds[i] = $(this).parent().find(".rowId").val();
+         });
+
+         num = 0;
+         total = 0;
+         $("input[name='number']").each(function (i) {
+         num += Number($(this).val());
+         });
+
+         $(".price").each(function (i) {
+         total += Number($(this).html());
+         });*/
+
+
+        $("#Pics").html('0');
+        $("#total").html('0.00');
     }
-    //更新显示区域
+
+    //更新显示区域  检测折扣
     $.post('/member/cart/check_item', {_token: token, rowIds: rowIds, couponCode: coupon}, function (msg) {
 
-        //alert(msg['amount']);
+
         //说明没有折扣信息
         if (!msg['amount']) {
 
-
             //清空对应折扣信息
             $("#discount").html(0.00);
-            $("#total").html(msg['total']);
-            $("#pay").html($("#total").html() - $("#discount").html());
 
+            $("#pay").html($("#total").html() - $("#discount").html());
+            $("#discount").parent().parent().hide();
+            $("#discount_info").parent().parent().hide();
         } else {
             //有折扣信息，处理
-            $("#total").html(msg['total']);
-            $("#discount").html(Float(msg['amount']));
+            $("#discount").parent().parent().show();
+            $("#discount_info").parent().parent().show();
+            $("#discount").html(msg['amount']);
             $("#discount_info").html(msg['rule']['name']);
             $("#pay").html($("#total").html() - $("#discount").html());
         }
@@ -207,7 +227,7 @@ function checkDiscount() {
 function collect(id) {
     var id = id;
     var token = $("input[name='_token']").val();
-    location = location;
+
 
     layer.confirm('确定要转移到收藏夹吗？', {
         btn: ['确定', '取消'] //按钮
@@ -221,6 +241,7 @@ function collect(id) {
     }, function () {
 
     });
+    refresh();
 
 }
 
@@ -240,13 +261,11 @@ function multiCollect() {
                 }
             });
         });
-     }, function () {
+    }, function () {
 
     });
 
 }
-
-
 
 
 function fresh() {

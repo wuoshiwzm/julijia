@@ -16,19 +16,25 @@ $(function () {
         } else {
             $(".item_checkbox").prop("checked", false);
         }
+
+
         checkDiscount();
     });
 
 
     $(".item_checkbox").bind("click", function () {
+
+        if ($('input:checkbox[class=item_checkbox]:checked').length ==
+            $('input:checkbox[class=item_checkbox]').length) {
+            $(".checkbox_checkall").prop("checked", true);
+        } else {
+            $(".checkbox_checkall").prop("checked", false);
+        }
+
         checkDiscount();
     });
 
     $(".coupon").bind("change", function () {
-        checkDiscount();
-    })
-
-    $("#itemNum").bind("change", function () {
         checkDiscount();
     })
 

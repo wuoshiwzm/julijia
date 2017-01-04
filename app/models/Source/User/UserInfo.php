@@ -87,7 +87,7 @@ class Source_User_UserInfo extends \Eloquent
      */
     public function refund()
     {
-        
+        return $this->hasMany('Source_Order_OrderBack','user_id');
     }
 
     public function order(){

@@ -141,7 +141,7 @@
                                                          src="/images/admin/addimg.png"
                                                          width="100" height="100"></a>
                                                 <input type="hidden" id="feedback" name="feedback"/>
-                                                <span>删除</span>
+
                                             </div>
                                             <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
                                         </div>

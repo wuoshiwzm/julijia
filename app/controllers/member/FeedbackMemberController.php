@@ -76,19 +76,16 @@ class FeedbackMemberController extends CommonController
      * 提交评价
      * url : 'get('/feedback/apply_feedback/{order_id}/{item_id}', 'FeedbackMemberController@applyFeedback')'
      */
-    public function applyFeedback($orderId, $ItemId)
+    public function applyFeedback($orderId, $itemId)
     {
 
-
         $orderId = decode(trim($orderId));
-        $ItemId = decode(trim($ItemId));
+        $itemId = decode(trim($itemId));
 
-        $orderInfo = Order::getOrdersById($orderId);
-        $orderItem = Order::getOrderItemsById($ItemId);
+        $orderInfo = Source_Order_OrderInfo::where('id',$orderId)->first();
+        $orderItem = Source_Order_OrderItem::where('id',$itemId)->first();
 
         $reasons = Feedback::getAllReason();
-
-
         return $this->view('member.order.apply_feedback', compact('orderItem', 'orderInfo', 'reasons'));
 
     }

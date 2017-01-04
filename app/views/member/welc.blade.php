@@ -8,6 +8,9 @@
 
 
 @section('content')
+
+
+
     <div class="ge_admin_nei_right">
         <div class="spinner">
             <div class="double-bounce1"></div>
@@ -69,8 +72,10 @@
                                 <dt><img src="{{asset('images/member/li05.png')}}"/></dt>
                                 <dd>退款维权
                                     <font>
-                                        @if(Session::get('member')->feedback)
-                                            {{Session::get('member')->feedback->count()}}
+
+
+                                        @if(Session::get('member')->refund()->count())
+                                            {{Session::get('member')->refund()->count()}}
                                         @else
                                             0
                                         @endif
@@ -81,6 +86,7 @@
                 </ul>
             </div>
         </div>
+
 
         <div class="ge_xin02">
             <h2>我的物流</h2>
@@ -111,21 +117,24 @@
             <h2>我的浏览，我的喜欢</h2>
             <div>
 
+
                 @if(count($goods))
                     @foreach($goods as $visit)
 
                         <dl>
-                            <dt><a href="##"><img
+                            <dt><a href="{{url('$visit->vs_value')}}"><img
                                             src="{{ getImgSize( 'goods', $visit->vs_value, $visit->small_image )}} "/></a>
                             </dt>
-                            <dd class="c_dd"><a href="##">{{$visit->product->name}}</a></dd>
+
+                            {{--<dd class="c_dd"><a href="##">{{$visit->product->name}}</a></dd>
                             <dd class="c_can">
                                 <span><font class="font01">￥{{$visit->product->preferential_price}}</font><br><font
                                             class="font02">￥{{$visit->product->cost_price}}</font></span><i><a
                                             href="##"><font class="iconfont">
-                                            &#xe629;</font></a></i></dd>
+                                            &#xe629;</font></a></i></dd>--}}
                         </dl>
                     @endforeach
+
                 @else
                     <p style="margin-left: 15px">没有浏览记录</p>
                 @endif

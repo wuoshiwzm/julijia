@@ -37,9 +37,8 @@ class MemberController extends \BaseController
             $username = Input::get('name');
             $password = Input::get('password');
 
-            if (!empty(Input::get('url'))) {
-                $url = decode(Input::get('url'));
-            }
+            $url = !empty(Input::get('url'))?decode(Input::get('url')):'member';
+
 
             if (Input::get('_token') != csrf_token()) {
                 return Redirect::back()->with('msg', 'failed to login')->withInput();
@@ -48,14 +47,12 @@ class MemberController extends \BaseController
             if ($res) {
                 //更新上次登录时间
                 $user = User::getUserByName(Input::get('name'))->first();
-
-                $user->update(array('last_time' => date('Y-m-d h:m:s')));
+                $user->update(array('last_time' => date('Y-m-d h:m:s'),'last_ip' => clientIP()));
                 // 存入session
                 Session::put('member', $user);
-
                 return Redirect::to($url);
             }
-            return Redirect::back()->with('msg', 'failed to login')->withInput();
+            return Redirect::back()->with('msg', '登录失败')->withInput();
         }
 
         if (isset(Session::get('member')->id)) {
@@ -86,16 +83,27 @@ class MemberController extends \BaseController
     function store()
     {
         $input = Input::all();
+
         if ($input['_token'] = csrf_token() || isset($input['like']) && $input['like'] == 'on') {
             $err = [];
             $res = User::checkName($input['name']);
             if (!$res) {
                 $err[] = '该用户名已被占用！';
             }
+
+            if(Source_User_UserInfo::where('mobile_phone',$input['mobile_phone'])->count()){
+                $err[] = '该手机号码已经占用！';
+            }
+
             $res = User::validatorUser($input);
             $res ?: $err = array_merge($res->all(), $err);
             if ($res === true && $err != []) {
                 User::addUser($input);
+                $user = User::getUserByName(Input::get('name'))->first();
+                $user->update(array('last_time' => date('Y-m-d h:m:s'),'last_ip' => clientIP()));
+                // 存入session
+                Session::put('member', $user);
+                return Redirect::to('member');
             } else {
                 return Redirect::back()->with('msg', '注册失败')->withInput();
             }
@@ -110,6 +118,7 @@ class MemberController extends \BaseController
     function quit()
     {
         Session::forget('member');
+        Session::forget('cartCount');
         return Redirect::to('member');
     }
 

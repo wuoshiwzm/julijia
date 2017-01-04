@@ -48,10 +48,10 @@ class CartMemberController extends \BaseController
         //Cart::updateQty('sad3',1);
 
         /*测试添加商品*/
-        Cart::addItem('1479370490', 2, ["size" => "超大", "color" => "银灰"]);
+        /*Cart::addItem('1479370490', 2, ["size" => "超大", "color" => "银灰"]);
         Cart::addItem('1479372520', 2, ["size" => "超大", "color" => "银灰"]);
         Cart::addItem('1479970726', 2, ["size" => "超大", "color" => "银灰"]);
-        Cart::addItem('1480497516', 2, ["size" => "超大", "color" => "银灰"]);
+        Cart::addItem('1480497516', 2, ["size" => "超大", "color" => "银灰"]);*/
 
 
         //测试优惠券
@@ -77,10 +77,19 @@ class CartMemberController extends \BaseController
 
 
         $items = $this->items;
+
+
+        if($items->count() === 0){
+
+            return  $this->view('member.cart.empty');
+        }
+
         $total = 0;
         foreach ($items as $item) {
             $total += $item->price * $item->num;
         }
+
+
         return $this->view('member.cart.index', compact('items', 'total'));
 
     }
@@ -134,13 +143,12 @@ class CartMemberController extends \BaseController
 
         $input = trimValue(Input::all());
 
-        if($input['num']<=0){
+        if ($input['num'] <= 0) {
             $obj = new stdClass();
             $obj->status = 1;
             $obj->msg = '已经达到最小数量 ';
             return json_encode($obj);
         }
-
         $res = Cart::updateQty(decode($input['rowId']), $input['num']);
 
         if ($res == true) {
@@ -167,19 +175,23 @@ class CartMemberController extends \BaseController
         //判断rowIds 和 coupon 是否为空数据
         //获取对应 quoteSn数组
 
+
         $input = trimValue(Input::all());
-        if (is_array($input['rowIds'])) {
-            foreach ($input['rowIds'] as $rowid) {
-                $rowIds[] = decode($rowid);
+        if (isset($input['rowIds'])) {
+            if (is_array($input['rowIds'])) {
+                foreach ($input['rowIds'] as $rowid) {
+                    $rowIds[] = decode($rowid);
+                }
             }
+
+        } else {
+            return 'false';
         }
+
 
 
         $couponCode = $input['couponCode'];
 
-        if (empty($rowIds)) {
-            return false;
-        }
 
         //对应总的重量
         $weight = 0;
@@ -209,8 +221,11 @@ class CartMemberController extends \BaseController
         $discountRes = $this->CheckDiscount($money, $weight);
         $discountRes['total'] = $money;
 
+
+//        dd($couponRes);
+
         //都不为空
-        if ($couponRes && $discountRes) {
+        if (isset($couponRes['amount']) && isset($discountRes['amount'])) {
             if ($couponRes['amount'] >= $discountRes['amount']) {
                 return $couponRes;
             }
@@ -219,12 +234,12 @@ class CartMemberController extends \BaseController
 
 
         //都为空
-        if (!$couponRes && !$discountRes) {
+        if (!isset($couponRes['amount']) && !isset($discountRes['amount'])) {
             $res['total'] = $money;
             return $res;
         }
 
-        if (!$couponRes) {
+        if (!isset($couponRes['amount'])) {
             return $discountRes;
 
         } else {
@@ -593,7 +608,6 @@ class CartMemberController extends \BaseController
             ->where('user_id', $user->id)->first();
 
 
-
         if (is_array($input['rowIds'])) {
             foreach ($input['rowIds'] as $rowId) {
                 $rowIds[] = decode($rowId);
@@ -632,7 +646,7 @@ class CartMemberController extends \BaseController
             $orderInfo['ship_post'] = '';
             $orderInfo['ship_phone'] = '';
             $orderItem['shipping_name'] = '';
-        }else{
+        } else {
             $orderInfo['ship_name'] = $address->name;
             $orderInfo['ship_addr'] = $address->address;
             $orderInfo['ship_post'] = $address->zipcode;

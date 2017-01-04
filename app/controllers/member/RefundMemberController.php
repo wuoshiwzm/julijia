@@ -65,13 +65,19 @@ class RefundMemberController extends CommonController
         $orderId = decode($orderId);
         $orderItemId = decode($orderItemId);
 
-        $orderInfo = Order::getOrdersById($orderId);
-        $orderItem = Order::getOrderItemsById($orderItemId);
+        $orderInfo = Order::getOrderById($orderId);
+        $orderItem = Order::getOrderItemById($orderItemId);
 
         //退款原因
         $orderBackReasons = OrderBack::getReason();
 
-        return $this->view('member.order.apply_refund', compact('orderItem', 'orderInfo', 'orderBackReasons'));
+        if($orderItem->shipping_status == 3){
+            //退货退款
+            return $this->view('member.order.apply_refund_money_goods', compact('orderItem', 'orderInfo', 'orderBackReasons'));
+        }else{
+            //退款
+            return $this->view('member.order.apply_refund_money', compact('orderItem', 'orderInfo', 'orderBackReasons'));
+        }
 
     }
 
@@ -99,8 +105,8 @@ class RefundMemberController extends CommonController
             die('已经提交过此商品的提款');
         }
 
-        $orderInfo = Order::getOrdersById($orderId);
-        $orderItem = Order::getOrderItemsById($orderItemId);
+        $orderInfo = Order::getOrderById($orderId);
+        $orderItem = Order::getOrderItemById($orderItemId);
 
         $product = Product::getProductById($orderItem->product_id);
 

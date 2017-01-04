@@ -50,7 +50,7 @@
                         <th width="8%">商品数量</th>
                         <th width="8%">退款金额</th>
                         <th width="10%">申请时间</th>
-                        <th width="10%">超时时间</th>
+
                         <th width="10%">类型</th>
                         <th width="10%">状态</th>
                         <th width="14%">操作</th>
@@ -77,7 +77,7 @@
                             </td>
 
                             <td>{{date('Y-m-d h:i:s',strtotime($refund->created_at))}}</td>
-                            <td>???</td>
+
                             <td>@if($refund->type == 1)
                                     退款
                                 @else($refund->type == 2)
