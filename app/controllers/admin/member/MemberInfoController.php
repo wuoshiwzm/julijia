@@ -210,4 +210,9 @@ class MemberInfoController extends CommonController
         return $this->view('admin.member_info.feedback',compact('user_id','list','set'));
     }
 
+    /*用户导出*/
+    function getUserList(){
+        $data = Source_User_UserInfo::orderBy('id')->get();
+    }
+
 }

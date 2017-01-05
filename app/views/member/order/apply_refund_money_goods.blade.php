@@ -201,7 +201,7 @@
                                 <form class="layui-form m-form form" action="{{url('member/refund/create_refund')}}"
                                       method="post">
                                     {{Form::token()}}
-                                    <input type="hidden" name="type" value="1">
+                                    <input type="hidden" name="type" value="2">
                                     <input type="hidden" name="orderId" value="{{$orderInfo->id}}">
                                     <input type="hidden" name="orderItemId" value="{{$orderItem->id}}">
                                     <div class="layui-form-item">
@@ -243,7 +243,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">退款金额</label>
                                         <div class="layui-input-block">
-                                            <label class="layui-form-txt">{{$orderInfo->pay_amount}}元</label>
+                                            <label class="layui-form-txt">{{{$orderInfo->pay_amount*($orderItem->row_total / $orderInfo->total_amount)}}元</label>
                                         </div>
                                     </div>
 

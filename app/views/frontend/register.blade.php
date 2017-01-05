@@ -29,100 +29,114 @@
                     @if(is_array(Session::has('msg')))
                         @foreach(Session::has('msg') as $msg)
                             <p class="alert"></p>
-                    @endforeach
-                @endif
-            @endif
+                            @endforeach
+                            @endif
+                            @endif
 
-            <!--找回密码-->
-                <div class="table_div">
-                    <div class="login_zhao">
-                        <h2>用户注册</h2>
-                        <form class="layui-form m-form" action="{{url('member/store')}}">
-                            {{ Form::token() }}
-                            <div class="layui-form-item">
-                                <label class="layui-form-label"><span class="red">*</span>手机号码</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="mobile_phone" placeholder="手机号" autocomplete="off"
-                                           class="layui-input w40b f_left02"
-                                           datatype="m" id="phone"
-                                           errormsg="手机号格式错误" tipsrmsg="请输入手机号" nullmsg="您未输入手机号">
-                                    <span class="Validform_checktip"></span>
+                                    <!--找回密码-->
+                            <div class="table_div">
+                                <div class="login_zhao">
+                                    <h2>用户注册</h2>
+
+                                    <form class="layui-form m-form" action="{{url('member/store')}}">
+                                        {{ Form::token() }}
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label"><span class="red">*</span>手机号码</label>
+
+                                            <div class="layui-input-block">
+                                                <input type="text" name="mobile_phone" placeholder="手机号"
+                                                       autocomplete="off"
+                                                       class="layui-input w40b f_left02"
+                                                       datatype="m" id="phone"
+                                                       ajaxurl="/member/register/check_mobile"
+                                                       errormsg="手机号格式错误" tipsrmsg="请输入手机号" nullmsg="您未输入手机号">
+                                                <span class="Validform_checktip"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">
+                                                <span class="red">*</span>验 证 码</label>
+
+                                            <div class="layui-input-block">
+                                                <input type="text" name="code" placeholder="验证码" autocomplete="off"
+                                                       class="layui-input w20b f_left02" datatype="*" ajaxurl=""
+                                                       errormsg="请输入验证码" tipsrmsg="请输入验证码">
+                                                <input type="button" class="layui-btn w30b yzm" onclick="sendSms()"
+                                                       value="发送验证码"/>
+                                                <span class="Validform_checktip"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label"><span class="red">*</span>用 户 名</label>
+
+                                            <div class="layui-input-block">
+                                                <input type="text" name="name" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input w40b f_left02"
+                                                       datatype="*3-30"
+                                                       ajaxurl="/member/register/check_name"
+                                                       errormsg="请输入3-30位的用户名" tipsrmsg="请输入3-30位的用户名"
+                                                       nullmsg="您未输入用户名">
+                                                <span class="Validform_checktip"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">设置密码</label>
+
+                                            <div class="layui-input-block">
+                                                <input type="password" name="password" placeholder="新密码"
+                                                       autocomplete="off"
+                                                       class="layui-input w40b f_left02"
+                                                       datatype="*6-20"
+                                                       errormsg="密码输入为6-20位" tipsrmsg="请输入位密码" nullmsg="您未输入密码">
+                                                <span class="Validform_checktip"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">确认密码</label>
+
+                                            <div class="layui-input-block">
+                                                <input type="password" name="password2" placeholder="确认密码"
+                                                       autocomplete="off"
+                                                       class="layui-input w40b f_left02"
+                                                       datatype="*"
+                                                       recheck="password"
+                                                       errormsg="确认密码与原密码不一致" tipsrmsg="确认密码必须与原密码一致"
+                                                       nullmsg="您未输入确认密码">
+                                                <span class="Validform_checktip"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label"> </label>
+
+                                            <div class="layui-input-block">
+                                                <input type="checkbox" name="like" title="同意协议"
+                                                       datatype="*"
+                                                       errormsg="您未勾选协议" tipsrmsg="请您勾选协议" nullmsg="您未勾选协议">
+                                                <a href="http://xian.julijia.cn/website/agreement.html" target="_blank"
+                                                   class="xieyi">《居利家协议》</a>
+                                                <span class="Validform_checktip"></span>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block">
+                                                <input type="submit" class="layui-btn w30b" value="立即注册"/>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">
-                                    <span class="red">*</span>验 证 码</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="code" placeholder="验证码" autocomplete="off"
-                                           class="layui-input w20b f_left02"  datatype="*"  ajaxurl =""
-                                           errormsg="请输入验证码" tipsrmsg="请输入验证码">
-                                    <input type="button" class="layui-btn w30b yzm" onclick="sendSms()" value="发送验证码"/>
-                                    <span class="Validform_checktip"></span>
-                                </div>
-                            </div>
-
-                            <div class="layui-form-item">
-                                <label class="layui-form-label"><span class="red">*</span>用 户 名</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="name" placeholder="用户名" autocomplete="off"
-                                           class="layui-input w40b f_left02"
-                                           datatype="*3-30"
-                                           errormsg="请输入3-30位的用户名" tipsrmsg="请输入3-30位的用户名" nullmsg="您未输入用户名">
-                                    <span class="Validform_checktip"></span>
-                                </div>
-                            </div>
-
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">设置密码</label>
-                                <div class="layui-input-block">
-                                    <input type="password" name="password" placeholder="新密码" autocomplete="off"
-                                           class="layui-input w40b f_left02"
-                                           datatype="*6-20"
-                                           errormsg="密码输入为6-20位" tipsrmsg="请输入位密码" nullmsg="您未输入密码">
-                                    <span class="Validform_checktip"></span>
-                                </div>
-                            </div>
-
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">确认密码</label>
-                                <div class="layui-input-block">
-                                    <input type="password" name="password2" placeholder="确认密码" autocomplete="off"
-                                           class="layui-input w40b f_left02"
-                                           datatype="*"
-                                           recheck="password"
-                                           errormsg="确认密码与原密码不一致" tipsrmsg="确认密码必须与原密码一致" nullmsg="您未输入确认密码">
-                                    <span class="Validform_checktip"></span>
-                                </div>
-                            </div>
-
-                            <div class="layui-form-item">
-                                <label class="layui-form-label"> </label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" name="like" title="同意协议"
-                                           datatype="*"
-                                           errormsg="您未勾选协议" tipsrmsg="请您勾选协议" nullmsg="您未勾选协议">
-                                    <a href="http://xian.julijia.cn/website/agreement.html" target="_blank" class="xieyi">《居利家协议》</a>
-                                    <span class="Validform_checktip"></span>
-                                </div>
-
-                            </div>
-
-
-
-
-                            <div class="layui-form-item">
-                                <div class="layui-input-block">
-                                    <input type="submit" class="layui-btn w30b" value="立即注册" />
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-<input type="hidden"  id="msg" value="{{Session::get('msg')}}"/>
+        <input type="hidden" id="msg" value="{{Session::get('msg')}}"/>
 @stop
 @section('footer_js')
 
@@ -136,7 +150,7 @@
     <script type="text/javascript" src="{{asset('js/frontend/sms.js')}}"></script>
     <script>
         //Demo
-        layui.use('form', function(){
+        layui.use('form', function () {
             var form = layui.form();
         });
     </script>

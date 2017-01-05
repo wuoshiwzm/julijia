@@ -25,9 +25,9 @@ class MemberController extends \BaseController
         parent::__construct();
     }
 
-
     /**
      * 登录页
+     * 用户手机 用户名都可以登录
      */
     function login($url = null)
     {
@@ -37,17 +37,19 @@ class MemberController extends \BaseController
             $username = Input::get('name');
             $password = Input::get('password');
 
-            $url = !empty(Input::get('url'))?decode(Input::get('url')):'member';
+            $url = !empty(Input::get('url')) ? decode(Input::get('url')) : 'member';
 
 
             if (Input::get('_token') != csrf_token()) {
-                return Redirect::back()->with('msg', 'failed to login')->withInput();
+                return Redirect::back()->with('msg', '登录失败')->withInput();
             }
             $res = User::login($username, $password);
             if ($res) {
                 //更新上次登录时间
-                $user = User::getUserByName(Input::get('name'))->first();
-                $user->update(array('last_time' => date('Y-m-d h:m:s'),'last_ip' => clientIP()));
+                $user = User::getUserByName(Input::get('name'))
+                    ->orwhere('mobile_phone',Input::get('name'))
+                    ->first();
+                $user->update(array('last_time' => date('Y-m-d h:m:s'), 'last_ip' => clientIP()));
                 // 存入session
                 Session::put('member', $user);
                 return Redirect::to($url);
@@ -91,7 +93,7 @@ class MemberController extends \BaseController
                 $err[] = '该用户名已被占用！';
             }
 
-            if(Source_User_UserInfo::where('mobile_phone',$input['mobile_phone'])->count()){
+            if (Source_User_UserInfo::where('mobile_phone', $input['mobile_phone'])->count()) {
                 $err[] = '该手机号码已经占用！';
             }
 
@@ -100,7 +102,7 @@ class MemberController extends \BaseController
             if ($res === true && $err != []) {
                 User::addUser($input);
                 $user = User::getUserByName(Input::get('name'))->first();
-                $user->update(array('last_time' => date('Y-m-d h:m:s'),'last_ip' => clientIP()));
+                $user->update(array('last_time' => date('Y-m-d h:m:s'), 'last_ip' => clientIP()));
                 // 存入session
                 Session::put('member', $user);
                 return Redirect::to('member');
@@ -162,4 +164,68 @@ class MemberController extends \BaseController
         };
 
     }
+
+    /**
+     * 验证用户名是否被占用
+     */
+    public function checkName()
+    {
+        $sql = Source_User_UserInfo::where('name', Input::get('param'))->count();
+
+        if ($sql < 1) {
+            $res = [
+                'info' => '该用户名可以使用',
+                'status' => 'y'
+            ];
+        } else {
+            $res = [
+                'info' => '已经被注册',
+                'status' => 'n'
+            ];
+        }
+        return json_encode($res);
+    }
+
+    /**
+     * 验证手机是否被占用
+     */
+    public function checkMobile()
+    {
+        $sql = Source_User_UserInfo::where('mobile_phone', Input::get('param'))->count();
+
+        if ($sql < 1) {
+            $res = [
+                'info' => '验证成功',
+                'status' => 'y'
+            ];
+        } else {
+            $res = [
+                'info' => '该手机号码已经被注册',
+                'status' => 'n'
+            ];
+        }
+        return json_encode($res);
+    }
+
+    /**
+     * 验证手机是否被占用
+     */
+    public function checkEmail()
+    {
+        $sql = Source_User_UserInfo::where('email', Input::get('param'))->count();
+
+        if ($sql < 1) {
+            $res = [
+                'info' => '验证成功',
+                'status' => 'y'
+            ];
+        } else {
+            $res = [
+                'info' => '该邮箱已经被注册',
+                'status' => 'n'
+            ];
+        }
+        return json_encode($res);
+    }
+
 }

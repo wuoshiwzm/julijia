@@ -1,5 +1,5 @@
 @section('title')
-    会员积分
+    我的积分
 @stop
 @section('left')
     @include('member.public.left_center')
@@ -20,7 +20,9 @@
             <ul class="jifen">
                 <li>总积分：<font>{{$pointsAvailable}}</font>分</li>
                 <li>会员等级<span>{{$memberGroupInfo->name}}</span></li>
-                <li><i>再有{{$nextGroupGap}}分升级到{{$nextGroupName}}</i></li>
+                @if($nextGroup)
+                <li><i>再有{{$nextGroup->beg_points - $userInfo->user_points}}分升级到{{$nextGroup->name}}</i></li>
+                    @endif
             </ul>
         </div>
         <!--订单切换-->

@@ -40,14 +40,33 @@ class ReviewMemberController extends CommonController
 
         //分页
         $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
-        $data = $data->paginate($setPage);
-        $set['setpage'] = $setPage;
+
 
         //搜索条件
+
+        /* <option value="3">好评</option>
+                            <option value="2" selected="">中评</option>
+                            <option value="1">差评</option>
+        */
         if (!empty(Input::get('reviewClass'))) {
-            die('searching');
+            $class = Input::get('reviewClass');
+            switch($class){
+                case 1:
+                    $data = $data->where('leavel',1);
+                    break;
+                case 2:
+                    $data = $data->where('leavel',2)
+                    ->orwhere('leavel',3);
+                    break;
+                case 3:
+                    $data = $data->where('leavel',4)
+                        ->orwhere('leavel',5);
+                    break;
+            }
         }
 
+        $data = $data->paginate($setPage);
+        $set['setpage'] = $setPage;
         return $this->view('member.review', compact('data', 'set'));
 
     }
@@ -131,7 +150,14 @@ class ReviewMemberController extends CommonController
     }
 
 
-
+    /*评论详情页*/
+    public function detail($id)
+    {
+        $id = decode($id);
+        $data = Source_Order_OrderReview::find($id);
+        $orderItem = $data->item;
+        $this->view('member.order.detail_review',compact('data','orderItem'));
+    }
 
 
 

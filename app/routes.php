@@ -48,8 +48,17 @@ Route::group(array('domain' => 'shop.julijia.cn'), function () {
 
     //用户登录
     Route::any('member/login/{url?}', 'MemberController@login');
+
+
     //用户注册
     Route::get('member/register', 'MemberController@register');
+    //用户名验证
+    Route::any('member/register/check_name', 'MemberController@checkName');
+    //用户手机号码验证
+    Route::any('member/register/check_mobile', 'MemberController@checkMobile');
+    //用户邮箱验证
+    Route::any('member/register/check_email', 'MemberController@checkEmail');
+
     Route::post('user/store', 'MemberController@store');
     Route::get('member/logout', 'MemberController@quit');
     Route::get('member/store', 'MemberController@store');

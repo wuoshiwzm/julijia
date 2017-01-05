@@ -108,7 +108,7 @@
                                errormsg="请输入QQ号码"
                                tipsrmsg="请输入您常用的QQ号码"
                                value="{{$userInfo->qq}}"
-                        ><span class="Validform_checktip"></span>
+                        >
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -123,7 +123,7 @@
                                errormsg="请输入微信号码"
                                tipsrmsg="请输入您常用的微信账号"
                                value="{{$userInfo->wechat}}"
-                        ><span class="Validform_checktip"></span>
+                        >
                     </div>
                 </div>
                 <div class="layui-form-item">

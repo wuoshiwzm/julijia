@@ -1,5 +1,5 @@
 @section('title')
-    会员积分
+    我的足迹
 @stop
 
 @section('left')

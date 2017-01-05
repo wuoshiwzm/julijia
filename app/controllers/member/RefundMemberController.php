@@ -90,7 +90,6 @@ class RefundMemberController extends CommonController
 
         //$user = Session::get('member');
 
-
         if (!Input::all())
             return Redirect::back();
 

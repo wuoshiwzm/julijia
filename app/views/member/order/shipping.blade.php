@@ -29,13 +29,10 @@
 
                     <tr>
                         <td class="order_tab_td">物流编号</td>
-                        <td>{{$item->shipping_id}}</td>
+                        <td>{{$item->shipping_m_code}}</td>
                     </tr>
 
-                    <tr>
-                        <td class="order_tab_td">发货方式</td>
-                        <td>商家负责</td>
-                    </tr>
+
 
                     <tr>
                         <td class="order_tab_td">物流公司</td>

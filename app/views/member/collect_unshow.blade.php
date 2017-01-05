@@ -1,5 +1,5 @@
 @section('title')
-    全部收藏
+    全部收藏 - 失效
 @stop
 
 @section('left')

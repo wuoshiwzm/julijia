@@ -36,10 +36,26 @@ class RankMemberController extends CommonController
     {
         //获取当前用户信息
         $userInfo = User::getUserinfoById($this->user_id);
+
+        //更新用户的等级
+        $group = Source_User_UserInfoGroup::where('beg_points','<',$userInfo->user_points)
+            ->where('end_points','>',$userInfo->user_points)->orderBy('beg_points','desc')->first();
+
+
+        if($group && $group->id != $userInfo->group_id){
+            Source_User_UserInfo::where('id',$userInfo->id)->update([
+                'group_id'=>$group->id
+            ]);
+        }
+
+
+
         //当前对应的用户等级信息
         $memberGroupInfo = Group::getGroupById($userInfo->group_id);
         //当前可用积分
         $pointsAvailable = $userInfo->user_points - $userInfo->pay_points;
+
+
 
 
 
@@ -54,8 +70,11 @@ class RankMemberController extends CommonController
         $userPoint = $userInfo->user_points;
         $nextGroup = $allGroup->where('beg_points','>',$userPoint)
             ->orderBy('beg_points','asc')->first();
-        $nextGroupName = $nextGroup->name;
-        $nextGroupGap = $nextGroup->beg_points - $userPoint;
+//
+//        if(!empty($nextGroup)){
+//            $nextGroup[] = $nextGroup->name;
+//            $nextGroupGap = $nextGroup->beg_points - $userPoint;
+//        }
 
         $allGroup = Group::getGroup()->get();
 
@@ -65,7 +84,7 @@ class RankMemberController extends CommonController
 
 
         return $this->view('member.rank',
-            compact('pointsAvailable','nextGroupName','nextGroupGap','allGroup','memberGroupInfo'));
+            compact('pointsAvailable','nextGroup','allGroup','memberGroupInfo','userInfo'));
 
     }
 

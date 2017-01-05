@@ -1,5 +1,5 @@
 @section('title')
-    会员积分
+    我的退款
 @stop
 
 @section('left')
@@ -22,6 +22,7 @@
             <form class="layui-form so_from" action="">
                 <div class="layui-form-item">
                     <label class="layui-form-label">订单编号</label>
+
                     <div class="layui-input-inline">
                         <input type="text" name="title" placeholder="订单编号" autocomplete="off" class="layui-input w40b ">
                     </div>
@@ -29,6 +30,7 @@
 
                 <div class="layui-form-item">
                     <label class="layui-form-label w120">退款退货单编号</label>
+
                     <div class="layui-input-inline">
                         <input type="text" name="title" placeholder="退款退货单编号" autocomplete="off"
                                class="layui-input w40b "><span class="Validform_checktip"></span>
@@ -58,66 +60,69 @@
 
                     @foreach($data as $refund)
 
-                        <tr>
-                            <td>
-                                <dl class="tab_dl">
-                                    <dt><a href="##" target="_blank">
-                                            <img src="../images/04.jpg"
-                                                 class="goods-thumb" width="60" height="60"></a></dt>
-                                    <dd><a href="##" target="_blank">的软</a></dd>
-                                    <dd><font>订单编号</font>{{$refund->order_sn}}</dd>
-                                    <dd><font>退款编号</font>{{$refund->back_sn}}</dd>
-                                </dl>
-                            </td>
-                            <td>1件</td>
-                            <td>¥
-                                @if($refund->item)
-                                    {{$refund->item->row_total}}
-                                @endif
-                            </td>
 
-                            <td>{{date('Y-m-d h:i:s',strtotime($refund->created_at))}}</td>
+                        @if(!empty($refund->item()))
+                            <tr>
+                                <td>
+                                    <dl class="tab_dl">
+                                        <dt><a href="##" target="_blank">
+                                                <img src="../images/04.jpg"
+                                                     class="goods-thumb" width="60" height="60"></a></dt>
+                                        <dd><a href="##" target="_blank">{{$refund->item->product_name}}</a></dd>
+                                        <dd><font>订单编号</font>{{$refund->order_sn}}</dd>
+                                        <dd><font>退款编号</font>{{$refund->back_sn}}</dd>
+                                    </dl>
+                                </td>
+                                <td>1件</td>
+                                <td>¥
+                                    @if($refund->item)
+                                        {{$refund->item->row_total}}
+                                    @endif
+                                </td>
 
-                            <td>@if($refund->type == 1)
-                                    退款
-                                @else($refund->type == 2)
-                                    退货退款
-                                @endif
-                            </td>
-                            <td>
-                                <?php
-                                switch ($refund->status) {
-                                    case 1:
-                                        echo "未确认";
-                                        break;
+                                <td>{{date('Y-m-d H:i:s',strtotime($refund->created_at))}}</td>
 
-                                    case 2:
-                                        if ($refund->type == 1) {
-                                            echo "已经安排退款";
-                                        } elseif ($refund->type == 2) {
-                                            echo "<a href=" . url('member/refund/ship_back/' . encode($refund->id)) . ">已经审核通过，点击输入你的退货信息</a>";
-                                        }
-                                        break;
+                                <td>@if($refund->type == 1)
+                                        退款
+                                    @else($refund->type == 2)
+                                        退货退款
+                                    @endif
+                                </td>
+                                <td>
+                                    <?php
+                                    switch ($refund->status) {
+                                        case 1:
+                                            echo "未确认";
+                                            break;
 
-                                    case 3:
-                                        echo "未发货";
-                                        break;
-                                    case 4:
-                                        echo "运输中";
-                                        break;
+                                        case 2:
+                                            if ($refund->type == 1) {
+                                                echo "已经安排退款";
+                                            } elseif ($refund->type == 2) {
+                                                echo "<a href=" . url('member/refund/ship_back/' . encode($refund->id)) . ">已经审核通过，点击输入你的退货信息</a>";
+                                            }
+                                            break;
 
-                                    case 5:
-                                        echo "已收货";
-                                        break;
-                                    case 6:
-                                        echo "退款";
-                                        break;
+                                        case 3:
+                                            echo "未发货";
+                                            break;
+                                        case 4:
+                                            echo "运输中";
+                                            break;
 
-                                }
-                                ?>
-                            </td>
-                            <td class="operation"><a href="##">详情</a></td>
-                        </tr>
+                                        case 5:
+                                            echo "已收货";
+                                            break;
+                                        case 6:
+                                            echo "退款";
+                                            break;
+
+                                    }
+                                    ?>
+                                </td>
+                                <td class="operation"><a href="##">详情</a></td>
+                            </tr>
+                        @endif
                     @endforeach
 
 

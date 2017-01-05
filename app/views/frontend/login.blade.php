@@ -42,7 +42,7 @@
                                     <input type="text" name="name" placeholder="请输入用户名" autocomplete="off"
                                            class="layui-input w40b f_left font_deng"
                                            name="name" value="{{Input::old('name')}}"
-                                           datatype="*" errormsg="请输入用户名1" tipsrmsg="请输入用户名"
+                                           datatype="*" errormsg="请 输入用户名" tipsrmsg="请输入用户名"
                                            name="name" value="{{Input::old('name')}}"/>
                                     <label class="Validform_checktip"></label>
                                 </div>

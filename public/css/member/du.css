@@ -112,14 +112,14 @@
 .order-an02 .content .on dd{ color:#e4393c!important;font-weight:bold; }
 
 /*发货进度条*/
-.order-step{ padding:110px 0px 0px 50px; float:left;}
+.order-step02{ padding:110px 0px 0px 50px; float:left;}
 
-.order-step dl{ float:left; text-align:center; }
+.order-step02 dl{ float:left; text-align:center; }
 .order-step_bg{ float:left; width:40px; background:url(../images/bg_dd.png) no-repeat -5px -38px; height:70px; }
 .order-step_bg_on{ background:url(../images/bg_dd.png) no-repeat -5px 30px!important;}
-.order-step dl .iconfont{ font-size:32px; color:#d7d7d7;}
-.order-step .current .iconfont{ color:#73b449;}
+.order-step02 dl .iconfont{ font-size:32px; color:#d7d7d7;}
+.order-step02 .current .iconfont{ color:#73b449;}
 
-.order-step dl .bg{ font-size:14px; color:#999;}
-.order-step dl .bg02{ font-size:12px; color:#aaa; margin-top:2px;}
-.order-step .current .bg{ color:#333 !important;}
+.order-step02 dl .bg{ font-size:14px; color:#999;}
+.order-step02 dl .bg02{ font-size:12px; color:#aaa; margin-top:2px;}
+.order-step02 .current .bg{ color:#333 !important;}

@@ -1,5 +1,7 @@
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/du.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/member/css_all.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/member/order.css')}}">
 @stop
 
 @section('content')
@@ -13,7 +15,7 @@
                 </div>
 
                 <div class="table_div_map">
-                    <a href="#">我的曼蒂</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;订单：{{$order->order_sn}}
+                    <a href="#">我的订单</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;订单：{{$order->order_sn}}
                 </div>
 
                 <!--完成步骤-->
@@ -132,6 +134,7 @@
                     </div>
 
                 </div>
+
 
 
                 <!--配送信息-->

@@ -22,11 +22,11 @@
         </div>
         <!--订单切换-->
         <div class="table_div">
-            <form class="layui-form so_from" action="">
+            <form class="layui-form so_from" action="{{url('member/review')}}">
                 <div class="layui-form-item">
                     <label class="layui-form-label">评价等级</label>
                     <div class="layui-input-inline">
-                        <select name="quiz1">
+                        <select name="reviewClass">
                             <option value="3">好评</option>
                             <option value="2" selected="">中评</option>
                             <option value="1">差评</option>
@@ -57,7 +57,7 @@
                     @foreach($data as $feedback)
                         @if($feedback->item)
                         <tr>
-                            <td>{{$feedback->id}}</td>
+                            <td>{{$feedback->order->order_sn}}</td>
                             <td>
                                 <dl>
                                     <dt><a href="##" target="_blank">
@@ -131,7 +131,7 @@
                                 </div>
                             </td>
                             <td>{{$feedback->content}}</td>
-                            <td class="operation"><a href="##">查看详情</a></td>
+                            <td class="operation"><a href="{{url('member/review/detail/'.encode($feedback->id))}}">查看详情</a></td>
                         </tr>
                         @endif
                     @endforeach

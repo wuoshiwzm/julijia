@@ -21,7 +21,7 @@
 
 
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/css.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/admin/iconfont.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/member/iconfont.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/layui.css')}}">
 
 

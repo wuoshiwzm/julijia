@@ -17,7 +17,9 @@ class User
         $password = encode($password);
         /*dd($password);*/
 
-        $user = Source_User_UserInfo::where('name', $username)->first();
+        $user = Source_User_UserInfo::where('name', $username)
+            ->orwhere('mobile_phone',$username)
+            ->first();
        /* dd($user->password);*/
         if ($user) {
             if ($password == $user->password) {

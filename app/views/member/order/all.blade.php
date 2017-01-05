@@ -168,7 +168,7 @@
                                                    onclick="receive({{"'".encode($item->id)."'"}})">确认收货</a>
                                             @endif
                                         </td>
-                                        <td width="16%"><font class="price_y">91.00</font>{{$item->row_total}}</td>
+                                        <td width="16%"><font class="price_y"></font>{{$item->row_total}}</td>
                                         @if($k === 0)
                                             <td width="14%" class="operation" rowspan="{{$order->item->count()}}">
                                                 <a href="{{url('member/order/detail/'.$order->id)}}">详情</a>

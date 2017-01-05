@@ -71,6 +71,8 @@ $router->get('/review', 'ReviewMemberController@index');
 //我的评论 - 提交评论
 $router->get('/review/apply_review/{order_id}/{item_id}', 'ReviewMemberController@applyReview');
 $router->any('/review/create_review', 'ReviewMemberController@createReview');
+//评论详情
+$router->any('/review/detail/{id}', 'ReviewMemberController@detail');
 
 
 //我的退款
