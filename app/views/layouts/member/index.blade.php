@@ -103,7 +103,6 @@
 
     <!-- footer -->
     <div class="g-footer g-footer02">
-
         <div class="footer_nav">
             <div class="link_about_left_ul">
 
@@ -134,7 +133,6 @@
             <div class="link_about_right"><img src="../images/er.jpg"/>
                 <p>手机端曼蒂</p></div>
         </div>
-
     </div>
 
 </div>

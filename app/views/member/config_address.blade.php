@@ -6,8 +6,6 @@
     @include('member.public.left_config')
 @stop
 
-
-
 @section('content')
     <style>
         .layui-form-label {
@@ -29,7 +27,6 @@
             <form class="layui-form m-form" action="{{url('member/config/address')}}" method="post">
                 {{ Form::token() }}
 
-
                 <div class="layui-form-item">
                     <label class="layui-form-label">选择省市区</label>
                     <div class="layui-input-inline">
@@ -50,7 +47,6 @@
                     </div>
                 </div>
 
-
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>详细地址</label>
                     <div class="layui-input-block">
@@ -63,7 +59,6 @@
                     </div>
                 </div>
 
-
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>收货人信息</label>
                     <div class="layui-input-block">
@@ -75,8 +70,6 @@
                         <span class="Validform_checktip"></span>
                     </div>
                 </div>
-
-
                 　
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>手机号码</label>
@@ -89,7 +82,6 @@
                         <span class="Validform_checktip"></span>
                     </div>
                 </div>
-
                 　
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>邮政编码</label>
@@ -113,9 +105,6 @@
                     </div>
                 </div>
 
-                　
-
-
                 <div class="layui-form-item">
                     <label class="layui-form-label"> </label>
                     <div class="layui-input-block">
@@ -125,14 +114,11 @@
                     </div>
                 </div>
 
-
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn">保存</button>
                     </div>
                 </div>
-
-
                 　
             </form>
         </div>
