@@ -32,8 +32,6 @@
                         <td>{{$item->shipping_m_code}}</td>
                     </tr>
 
-
-
                     <tr>
                         <td class="order_tab_td">物流公司</td>
                         <td>{{$item->shipping_name}}</td>
@@ -56,10 +54,15 @@
 
                     <div class="content content02">
                         <dl class="on">
-
                             @foreach($item->shipping as $shipping)
-                                <dt>{{$shipping['AcceptTime']}}</dt>
-                                <dd>{{$shipping['AcceptStation']}}</dd>
+
+                                @if(is_array($shipping))
+                                    <dt>{{$shipping['AcceptTime']}}</dt>
+                                    <dd>{{$shipping['AcceptStation']}}</dd>
+                                @else
+                                    <dt>{{$shipping->AcceptTime}}</dt>
+                                    <dd>{{$shipping->AcceptStation}}</dd>
+                                @endif
                             @endforeach
                         </dl>
 
@@ -70,6 +73,7 @@
 
 
                     <h4>宝贝信息</h4>
+
                     <div class="table_div_hd">
                         <table cellpadding="0" cellspacing="0" class="order_tab">
                             <tbody>

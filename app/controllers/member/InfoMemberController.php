@@ -56,11 +56,9 @@ class InfoMemberController extends CommonController
                     ['AcceptTime'=>date('Y-m-d H:m:s', time()),
                     'AcceptStation'=>'处理中']
                 );
-
             } else {
                 $item->shipping = $res['Traces'];
             }
-
         }
 
         return $this->view('member.order.detail',compact('order','items'));
@@ -75,11 +73,15 @@ class InfoMemberController extends CommonController
     {
         $item = Source_Order_OrderItem::find($itemId);
 
+        //快递公司编码 EMS
         $Orderinfo['shiptype'] = $item->shipping_m_code;
         $Orderinfo['shipno'] = $item->shipping_id;
+
+
         //物流信息
         $shipper = new ShippingApi();
         $res = json_decode($shipper->getOrderTracesByJson($Orderinfo));
+        /*dd($res->Traces);*/
 
         if (!$res->Success) {
             $item->shipping = array(
@@ -88,9 +90,12 @@ class InfoMemberController extends CommonController
             );
 
         } else {
-            $item->shipping = $res['Traces'];
+            $item->shipping = $res->Traces;
         }
 
+//        dd($item->shipping);
+
+       /* dd($item);*/
         return $this->view('member.order.shipping',compact('item'));
     }
 

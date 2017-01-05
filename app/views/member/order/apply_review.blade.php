@@ -8,13 +8,6 @@
 
 @section(('content'))
 
-
-
-
-
-
-
-
     <div class="ge_admin_nei_right">
         <div class="spinner">
             <div class="double-bounce1"></div>
