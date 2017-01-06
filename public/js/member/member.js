@@ -43,14 +43,11 @@ function deleOrder(rowId) {
 
 function delItem(rowId) {
     var token = $("input[name='_token']").val();
-
-
     layer.confirm('确定要删除此商品吗？', {
         btn: ['确定', '取消']
     }, function () {
 
         $.post('/member/del_cart_item', {_token: token, rowId: rowId}, function (msg) {
-
             if (msg.status == '0') {
                 layer.msg(msg.msg, {icon: 1});
                 fresh();
@@ -66,18 +63,17 @@ function delItem(rowId) {
 //批量删除商品
 function multiDelItem() {
     var token = $("input[name='_token']").val();
-
     layer.confirm('确定要删除所选的商品吗？', {
         btn: ['确定', '取消']
     }, function () {
         layer.msg('删除中');
-        $('input:checkbox[name=item]:checked').each(function (i) {
+        $('input:checkbox[class=item_checkbox]:checked').each(function (i) {
             rowId = $(this).val();
-            $.post('/member/del_cart_item', {rowId: rowId, _token: token}, function (msg) {
-            });
+            $.post('/member/del_cart_item', {_token: token, rowId: rowId}, function (msg) {
+
+            }, 'json');
         });
-        fresh();
-        //checkDiscount();
+        //fresh();
     });
 
 
@@ -117,8 +113,6 @@ function checkout() {
 
 //更改购物车数量
 function changeQuantity(obj, rowId) {
-
-
     num = $(obj).val();
     if (num <= 0) {
         $(obj).val(1);

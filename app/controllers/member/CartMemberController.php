@@ -48,10 +48,10 @@ class CartMemberController extends \BaseController
         //Cart::updateQty('sad3',1);
 
         /*测试添加商品*/
-        Cart::addItem('1479370490', 2, ["size" => "超大", "color" => "银灰"]);
+       /* Cart::addItem('1479370490', 2, ["size" => "超大", "color" => "银灰"]);
         Cart::addItem('1479372520', 2, ["size" => "超大", "color" => "银灰"]);
         Cart::addItem('1479970726', 2, ["size" => "超大", "color" => "银灰"]);
-        Cart::addItem('1480497516', 2, ["size" => "超大", "color" => "银灰"]);
+        Cart::addItem('1480497516', 2, ["size" => "超大", "color" => "银灰"]);*/
 
 
         //测试优惠券
@@ -113,7 +113,9 @@ class CartMemberController extends \BaseController
     {
 
         $input = trimValue(Input::all());
+
         $rowId = decode($input['rowId']);
+       /* dd($rowId);*/
 
         $res = Cart::remove($rowId);
 

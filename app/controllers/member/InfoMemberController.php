@@ -45,52 +45,12 @@ class InfoMemberController extends CommonController
 
         //物流信息
         foreach ($items as $item) {
+
             $Orderinfo['shiptype'] = $item->shipping_m_code;
             $Orderinfo['shipno'] = $item->shipping_id;
             $shipper = new ShippingApi();
-            if (!empty($Orderinfo['shipno'])) {
-                $res = json_decode($shipper->getOrderTracesByJson($Orderinfo));
 
-
-
-                    if (!$res->Success) {
-                        $item->shipping = array(
-                            ['AcceptTime' => date('Y-m-d H:m:s', time()),
-                                'AcceptStation' => '处理中']
-                        );
-
-
-                    } else {
-                        $item->shipping = $res->Traces;
-                    }
-
-                }
-
-            }
-
-            return $this->view('member.order.detail', compact('order', 'items'));
-        }
-
-
-        /**
-         * @param $orderId
-         * 物流详情
-         */
-        public function shippingDetail($itemId)
-        {
-            $item = Source_Order_OrderItem::find($itemId);
-
-            //快递公司编码 EMS
-            $Orderinfo['shiptype'] = $item->shipping_m_code;
-            /*$Orderinfo['shiptype'] = 'EMS';*/
-            $Orderinfo['shipno'] = $item->shipping_id;
-            /*$Orderinfo['shipno'] = 1116345180996;*/
-
-
-            //物流信息
-            $shipper = new ShippingApi();
             $res = json_decode($shipper->getOrderTracesByJson($Orderinfo));
-            /*dd($res->Traces);*/
 
             if (!$res->Success) {
                 $item->shipping = array(
@@ -98,15 +58,53 @@ class InfoMemberController extends CommonController
                         'AcceptStation' => '处理中']
                 );
 
+
             } else {
                 $item->shipping = $res->Traces;
             }
 
-//        dd($item->shipping);
 
-            /* dd($item);*/
-            return $this->view('member.order.shipping', compact('item'));
         }
 
-
+        return $this->view('member.order.detail', compact('order', 'items'));
     }
+
+
+    /**
+     * @param $orderId
+     * 物流详情
+     */
+    public function shippingDetail($itemId)
+    {
+        $item = Source_Order_OrderItem::find($itemId);
+
+        //快递公司编码 EMS
+        $Orderinfo['shiptype'] = $item->shipping_m_code;
+        /*$Orderinfo['shiptype'] = 'EMS';*/
+        $Orderinfo['shipno'] = $item->shipping_id;
+        /*$Orderinfo['shipno'] = 1116345180996;*/
+
+
+        //物流信息
+        $shipper = new ShippingApi();
+        $res = json_decode($shipper->getOrderTracesByJson($Orderinfo));
+        /*dd($res->Traces);*/
+
+        if (!$res->Success) {
+            $item->shipping = array(
+                ['AcceptTime' => date('Y-m-d H:m:s', time()),
+                    'AcceptStation' => '处理中']
+            );
+
+        } else {
+            $item->shipping = $res->Traces;
+        }
+
+//        dd($item->shipping);
+
+        /* dd($item);*/
+        return $this->view('member.order.shipping', compact('item'));
+    }
+
+
+}

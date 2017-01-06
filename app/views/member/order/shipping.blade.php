@@ -34,7 +34,7 @@
 
                     <tr>
                         <td class="order_tab_td">物流公司</td>
-                        <td>{{$item->shipping_name}}</td>
+                        <td>{{$companyName}}</td>
                     </tr>
 
                     <tr>
@@ -54,6 +54,7 @@
 
                     <div class="content content02">
                         <dl class="on">
+
 
                             @foreach($item->shipping as $shipping)
 

@@ -16,8 +16,6 @@ $(function () {
         } else {
             $(".item_checkbox").prop("checked", false);
         }
-
-
         checkDiscount();
     });
 
