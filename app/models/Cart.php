@@ -137,11 +137,11 @@ class Cart
      */
     static function remove($rowId)
     {
-//        $res = DB::transaction(function () use ($rowId) {
-//
-//        });
-          Source_Cart_CartItem::where('id', $rowId)->delete();
-        return   true;
+        $res = DB::transaction(function () use ($rowId) {
+            Source_Cart_CartItem::where('id', $rowId)->delete();
+        });
+
+        return $res?false:true;
     }
 
     /**

@@ -48,7 +48,7 @@ class CartMemberController extends \BaseController
         //Cart::updateQty('sad3',1);
 
         /*测试添加商品*/
-       /* Cart::addItem('1479370490', 2, ["size" => "超大", "color" => "银灰"]);
+       /*Cart::addItem('1479370490', 2, ["size" => "超大", "color" => "银灰"]);
         Cart::addItem('1479372520', 2, ["size" => "超大", "color" => "银灰"]);
         Cart::addItem('1479970726', 2, ["size" => "超大", "color" => "银灰"]);
         Cart::addItem('1480497516', 2, ["size" => "超大", "color" => "银灰"]);*/
@@ -111,12 +111,9 @@ class CartMemberController extends \BaseController
      */
     public function delItem()
     {
-
         $input = trimValue(Input::all());
 
         $rowId = decode($input['rowId']);
-       /* dd($rowId);*/
-
         $res = Cart::remove($rowId);
 
         if ($res) {
@@ -131,7 +128,6 @@ class CartMemberController extends \BaseController
             $obj->msg = '删除失败';
             return json_encode($obj);
         }
-
     }
 
 
@@ -553,6 +549,14 @@ class CartMemberController extends \BaseController
         $id = decode($id);
 
         $item = Source_Cart_CartItem::where('id', $id)->first();
+
+        //收藏内已经有此商品
+        if(Source_User_UserInfoCollect::where('entity_id',$item->product_id)->count()){
+            Source_Cart_CartItem::where('id', $id)->delete();
+            return 'true';
+        }
+
+        //收藏内无此商品
         $colle['user_id'] = Session::get('member')->id;
         $colle['entity_id'] = $item->product_id;
         $colle['is_show'] = 1;

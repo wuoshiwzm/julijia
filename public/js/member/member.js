@@ -1,18 +1,18 @@
 //收货
 function receive(itemId) {
     var token = $("input[name='_token']").val();
-    phone = $("#phone").val();
+    //phone = $("#phone").val();
     layer.confirm('确定要收货吗？', {
         btn: ['确定', '取消']
     }, function () {
 
         $.post('/member/receive', {_token: token, itemId: itemId}, function (msg) {
-            if (msg.status == '0') {
+            if (msg.status == 0) {
                 layer.msg(msg.msg, {icon: 1});
-                fresh()
+                fresh();
             } else {
                 layer.msg(msg.msg, {icon: 2});
-                fresh()
+                fresh();
             }
         }, 'json')
     });
@@ -58,7 +58,7 @@ function delItem(rowId) {
         // checkDiscount();
     });
 }
-
+//<input type="hidden" value="{{encode($item->id)}}" name="rowId" class="rowId">
 
 //批量删除商品
 function multiDelItem() {
@@ -68,12 +68,13 @@ function multiDelItem() {
     }, function () {
         layer.msg('删除中');
         $('input:checkbox[class=item_checkbox]:checked').each(function (i) {
-            rowId = $(this).val();
+            rowId = $(this).parent().parent().find(".rowId").val();
             $.post('/member/del_cart_item', {_token: token, rowId: rowId}, function (msg) {
-
+                fresh();
             }, 'json');
         });
-        //fresh();
+
+
     });
 
 
@@ -126,8 +127,6 @@ function changeQuantity(obj, rowId) {
             layer.msg(msg.msg, {icon: 2});
         }
     }, 'json');
-
-
     checkDiscount();
 }
 
@@ -239,6 +238,25 @@ function collect(id) {
 
 }
 
+/*function multiDelItem() {
+ var token = $("input[name='_token']").val();
+ layer.confirm('确定要删除所选的商品吗？', {
+ btn: ['确定', '取消']
+ }, function () {
+ layer.msg('删除中');
+ $('input:checkbox[class=item_checkbox]:checked').each(function (i) {
+ rowId = $(this).parent().parent().find(".rowId").val();
+ $.post('/member/del_cart_item', {_token: token, rowId: rowId}, function (msg) {
+
+ }, 'json');
+ });
+
+ fresh();
+ });
+
+
+ }*/
+
 //全部收藏全部选中的商品
 function multiCollect() {
     var token = $("input[name='_token']").val();
@@ -247,15 +265,15 @@ function multiCollect() {
         btn: ['确定', '取消']
     }, function () {
         layer.msg('收藏中');
-        $('input:checkbox[name=item]:checked').each(function (i) {
-            rowId = $(this).val();
-            $.post('/member/cart/collect/' + rowId, {_token: token}, function (msg) {
-                if (msg == 'true') {
-                    fresh();
-                }
-            });
+        $('input:checkbox[class=item_checkbox]:checked').each(function (i) {
+            rowId = $(this).parent().parent().find(".rowId").val();
+
+            $.post('/member/cart/collect/' + rowId, {token: token}, function (a) {
+
+                fresh();
+            }, 'text');
         });
-    }, function () {
+        layer.msg('成功移入收藏夹');
 
     });
 

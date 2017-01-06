@@ -304,7 +304,7 @@ class OrderMemberController extends CommonController
 
 
         $res = Source_Order_OrderItem::where('id', decode($input['itemId']))->update(['shipping_status' => 3]);
-        dd(decode($input['itemId']));
+//        dd(decode($input['itemId']));
         if ($res) {
             $obj = new stdClass();
             $obj->status = 0;

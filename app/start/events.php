@@ -10,3 +10,8 @@
 //定义事件
 Event::listen('event_name', function($log)
 {});
+
+Event::listen('user.test', function()
+{
+    dd('cool!');
+});

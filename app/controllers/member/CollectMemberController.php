@@ -20,6 +20,8 @@ class CollectMemberController extends CommonController
 
     function __construct()
     {
+
+        event::fire('user.test');
         if (!Session::has('member')) {
             return Redirect::to('member/login');
         }

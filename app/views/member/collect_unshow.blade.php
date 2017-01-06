@@ -21,17 +21,16 @@
             <div class="table_div_hd">
                 <ul class="layui-nav">
                     <li class="layui-nav-item"><a href="{{url('member/collect')}}">
-                            全部宝贝&nbsp;(&nbsp;1&nbsp;)</a></li>
+                            全部宝贝&nbsp;(&nbsp;$numAll&nbsp;)</a></li>
                     <li class="layui-nav-item layui-this"><a href="{{url('member/collect/notshow')}}">
-                            失效&nbsp;(&nbsp;6&nbsp;)</a></li>
-                    <li class="layui-nav-item"><a href="{{url('member/collect')}}">
-                            网店宝贝&nbsp;(&nbsp;0&nbsp;)</a></li>
+                            失效&nbsp;(&nbsp;$numNotShow&nbsp;)</a></li>
                 </ul>
             </div>
             <div class="table_div_hd table_div_hd_table">
 
                 <div class="soucang">
                     @foreach($collects as $collect)
+                        @if(($collect->is_show == 0) || ($collect->product->status == 0))
                         <dl>
                             <dt><a href="/{{$collect->entity_id}}.html"><img src="{{$collect->pic}}"/></a></dt>
                             <dd class="c_dd"><a href="/{{$collect->entity_id}}.html">{{$collect->entity_name}}</a></dd>
@@ -43,6 +42,7 @@
                             </dd>
                                 @endif
                         </dl>
+                        @endif
                     @endforeach
                 </div>
                 @include('member.public.page',array('data'=>$collects,'set'=>$set))

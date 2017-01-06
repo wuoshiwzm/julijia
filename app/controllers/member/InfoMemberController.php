@@ -84,6 +84,12 @@ class InfoMemberController extends CommonController
         $Orderinfo['shipno'] = $item->shipping_id;
         /*$Orderinfo['shipno'] = 1116345180996;*/
 
+        if(!empty($item->shipping_m_code))
+        {
+            $companyName = Source_Shipping_Code::where('code',$item->shipping_m_code)->first()->shipping_name;
+        }else{
+            $companyName = '信息更新中';
+        }
 
         //物流信息
         $shipper = new ShippingApi();
@@ -103,7 +109,7 @@ class InfoMemberController extends CommonController
 //        dd($item->shipping);
 
         /* dd($item);*/
-        return $this->view('member.order.shipping', compact('item'));
+        return $this->view('member.order.shipping', compact('item','companyName'));
     }
 
 
