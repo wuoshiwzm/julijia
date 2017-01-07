@@ -33,10 +33,10 @@
                     </tr>
                 </table>
 
-                @include('member.public.order_content')
+                @include('member.public.order_content',array('orders'=>$orders))
 
                 <div id="paging">
-                    @include('member.public.page',array('data'=>$data,'set'=>$set))
+                    {{$orders->appends($set)->links()}}
                 </div>
 
 
