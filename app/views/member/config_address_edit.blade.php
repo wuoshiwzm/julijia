@@ -26,6 +26,25 @@
                 <input type="hidden" name="_method" value="PUT">
                 {{ Form::token() }}
 
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择省市区</label>
+                    <div class="layui-input-inline">
+                        <select name="province" id="address" lay-filter="province">
+                            <option value="">请选择省</option>
+
+                        </select>
+                    </div>
+                    <div class="layui-input-inline">
+                        <select name="city" id="address1" lay-filter="city">
+                            <option value="">请选择市</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline">
+                        <select name="area" id="address2" lay-filter="area">
+                            <option value="">请选择县/区</option>
+                        </select>
+                    </div>
+                </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>详细地址</label>
@@ -67,8 +86,6 @@
                 </div>
 
 
-
-
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>电话</label>
                     <div class="layui-input-block">
@@ -76,7 +93,7 @@
                         <input type="text" class="layui-input w80b f_left"
                                placeholder="电话" autocomplete="off"
                                value="{{$addrEdit->tel}}"
-                               datatype="*8-18" name="tel"
+                               datatype="n8-18" name="tel"
                                errormsg="电话格式错误" tipsrmsg="电话"
                         />
                         <span class="Validform_checktip"></span>
@@ -84,12 +101,10 @@
                 </div>
 
 
-
-
                 <div class="layui-form-item">
                     <label class="layui-form-label"> </label>
                     <div class="layui-input-block">
-                        <input type="checkbox" name="status" title="设为默认地址" value="1">
+                        <input type="checkbox" name="status" title="设为默认地址">
                         <div class="layui-unselect layui-form-checkbox layui-form-checked"><span>设为默认地址</span><i
                                     class="layui-icon"></i></div>
                     </div>
@@ -103,11 +118,50 @@
             </form>
         </div>
 
+        <div class="admin_table">
+            <div class="h-title">
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th width="10%">收货人</th>
+                        <th width="20%">所在地区</th>
+                        <th>详细地址</th>
+                        <th width="10%">邮编</th>
+                        <th width="16%">电话/手机</th>
+                        <th width="18%" class="border_rn">操作</th>
+                    </tr>
 
+                    @foreach($addrs as $addr)
+                        <tr>
+
+
+                            <td>{{$addr->name}}</td>
+                            <td>{{isset($addr->province)?$addr->province:''}}，{{isset($addr->city)?$addr->city:''}}
+                                ，{{isset($addr->district)?$addr->district:''}}</td>
+                            <td>{{$addr->address}}</td>
+                            <td>{{$addr->zipcode}}</td>
+                            <td>{{$addr->phone}}</td>
+                            <td class="border_rn">
+                                <a href="{{url('member/config/address/'.$addr->id."/edit")}}">修改</a>
+                                <a href="javascript:;" onclick="delAddr({{"'".encode($addr->id)."'"}});">删除</a>
+                                @if($addr->status == 1)
+
+                                    <a href="##" class="color_on">默认地址</a>
+                                @else
+                                    <a href="{{url('member/config/address/set_default/'.encode($addr->id))}}">设为默认</a>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+
+
+                </table>
+            </div>
+        </div>
     </div>
 
 @stop
 
 @section('js')
     <script type="text/javascript" src="{{asset('js/member/config.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/public/location_pick/location_pick.js')}}"></script>
 @stop

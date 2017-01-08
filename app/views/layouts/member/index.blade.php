@@ -16,14 +16,12 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('images/member/icon.png')}}">
 
 
-    {{--此文件与订单详情页面冲突--}}
+
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/admin.css')}}">
-
-
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/css.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/iconfont.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/member/layui.css')}}">
 
+    <link rel="stylesheet" type="text/css" href="{{asset('css/member/layui.css')}}">
 
     @yield('css')
 </head>
@@ -40,9 +38,11 @@
             <li><a href="{{url('/')}}">商城首页</a></li>
             <li><a href="{{url('member/cart')}}">购物车 ( <font>
 
-                        @if(Session::get('member')->cart)
-                            @if(Session::get('member')->cart)
-                                {{Session::get('member')->cart->count()}}
+
+
+                        @if(Session::get('member')->first()->cart)
+                            @if(Session::get('member')->first()->cart)
+                                {{Session::get('member')->first()->cart->count()}}
                             @else
                                 0
                             @endif
@@ -51,16 +51,16 @@
                         @endif
                     </font>)</a></li>
             <li><a href="{{url('member/collect')}}">收藏夹 ( <font>
-                        @if(Session::get('member')->collect)
-                            {{Session::get('member')->collect->count()}}
+                        @if(Session::get('member')->first()->collect)
+                            {{Session::get('member')->first()->collect->count()}}
                         @else
                             0
                         @endif
                     </font>
                     )</a></li>
             <li><a href="{{url('member/config/notice')}}">消息 ( <font>
-                        @if(Session::get('member')->userlog)
-                            {{Session::get('member')->userlog->count()}}
+                        @if(Session::get('member')->first()->userlog)
+                            {{Session::get('member')->first()->userlog->count()}}
                         @else
                             0
                         @endif
@@ -137,13 +137,18 @@
 </div>
 </body>
 <script type="text/javascript" src="{{asset('js/member/jquery-1.9.1.min.js')}}"></script>
+<script type="text/javascript" src="{{url('js/public/Validform/Validform_v5.3.2_min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/member/er_admin.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/member/rules.js')}}"></script>
+
+
+
 <script src="{{asset('js/member/layer-v1.9.3/layer/layer.js')}}"></script>
 <script type="text/javascript" src="{{asset('js/member/layui.js')}}"></script>
-<script type="text/javascript" src="{{url('js/public/Validform/Validform_v5.3.2_min.js')}}"></script>
+
 <script type="text/javascript" src="{{url('js/public/Validform/public.js')}}"></script>
 <!-- 表单验证公共js -->
 <script type="text/javascript" src="{{url('js/admin/adminpublic.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/member/er_admin.js')}}"></script>
 
 
 <script type="text/javascript" src="{{asset('js/member/member.js')}}"></script>

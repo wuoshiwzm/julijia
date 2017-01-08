@@ -121,15 +121,13 @@
 
             <div class="order-an02">
 
-                @if($refund->status == 2)
+                @if($refund->status >= 2 && $refund->status < 6)
                 <div class="pingtai">
                     <font class="iconfont">&#xe608;</font>平台正在审核退款申请，等待审核中！
                 </div>
-                @endif
-
-                @if($refund->status == 6)
+                @elseif($refund->status == 6)
                 <div class="pingtai">
-                    <font class="iconfont">&#xe604;</font>平台已经通过退款申请，正在退款中！
+                    <font class="iconfont">&#xe604;</font>已经完成退款处理！
                 </div>
                     @endif
 

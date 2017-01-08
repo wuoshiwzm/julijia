@@ -89,6 +89,14 @@ class OrderMemberController extends CommonController
      */
     function welc()
     {
+
+        //判断是否无商品
+        $collectNum = Source_User_UserInfoCollect::where('user_id',$this->user_id)->count();
+        if($this->orders->count() == 0 && $collectNum == 0){
+            return $this->view('member.empty');
+        }
+
+
         //获取待收货订单
         $orders = Source_Order_OrderInfo::where('user_id',$this->user_id)->get();
 
@@ -187,19 +195,29 @@ class OrderMemberController extends CommonController
      */
     function toComment()
     {
+
         $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
         $set['setpage'] = $setPage;
+
+
+
+
         //获取订单
         $sql = $this->orders;
         $sql->whereHas('item', function ($q)
         {
             $q->where('shipping_status','3');
+            $q->whereNotIn('id',function($q){
+                $q->select('item_id')->from('order_review');
+            });
         });
         $orders= $sql->paginate($setPage);
-        $action['orderid']='16';
+
+
+        /*$action['orderid']='16';
         $action['user']=Session::get('member');
         $action['content']='ces';
-        event::fire('option.order',array($action));
+        event::fire('option.order',array($action));*/
         //订单内无商品对应此页,则不显示该订单内容
         return $this->view('member.order.to_comment', compact('orders', 'data', 'set'));
     }
@@ -240,6 +258,8 @@ class OrderMemberController extends CommonController
         });
 
         if(is_null($res)){
+            //订单删除事件
+            Event::fire('order.remove',$rowId);
             return 'true';
         }
 

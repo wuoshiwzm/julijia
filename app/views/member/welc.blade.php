@@ -26,11 +26,12 @@
                 <dl class="ge_tou_xx">
 
                     <dt class="qie_img">
-                        <img onclick="getImgTemplet( this,'user' )"
-                             src="{{isset($userinfo->header)?$userinfo->header:'/images/member/tou.png'}}"
+
+                        <img
+                             onclick="getImgTemplet( this,'user' )"
+                             src="{{isset($userinfo->header)?$userinfo->header:'/images/member/tou.jpg'}}"
                              width="80"
                              height="80">
-
 
 
                     {{--<dt style="float: left; height: 100px; margin-right: 8px; text-align: center;width: 100px;" class="addimg">
@@ -155,7 +156,6 @@
 @stop
 
 @section('js')
-    <script type="text/javascript" src="{{asset('js/member/member.js')}}"></script>
     <script>
         function getImgTemplet(index, id) {
             layer.open({
@@ -174,7 +174,7 @@
                 if(msg['path']!=0){
                     $("#"+index).parents('.addimg').find('img').attr('src',msg['path']);
                 }else{
-                    $("#"+index).parents('.addimg').find('img').attr('src','/images/member/tou.png');
+                    $("#"+index).parents('.addimg').find('img').attr('src','/images/member/tou.jpg');
                 }
 
             })

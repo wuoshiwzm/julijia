@@ -27,7 +27,7 @@ class Source_User_UserInfo extends \Eloquent
      */
     public function cart()
     {
-        return $this->hasOne('Source_Cart_CartInfo', 'user_id');
+        return $this->hasMany('Source_Cart_CartItem', 'user_id','id');
     }
 
     /**
@@ -35,7 +35,7 @@ class Source_User_UserInfo extends \Eloquent
      */
     public function collect()
     {
-        return $this->hasMany('Source_User_UserInfoCollect', 'user_id');
+        return $this->hasMany('Source_User_UserInfoCollect', 'user_id','id');
     }
 
     /**

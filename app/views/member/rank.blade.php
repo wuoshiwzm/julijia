@@ -56,12 +56,12 @@
                         <tr>
                             <td>{{$group->name}}</td>
                             <td>{{$group->beg_points}} - {{$group->end_points}}</td>
-                            <td><img src="{{$group->ico}}" width='20' height='20'></td>
+                            <td>
+                                {{--<img src="{{$group->ico}}" width='20' height='20'>--}}
+                                <img src="{{ getImgSize( 'goods', $group->id, $group->ico ) }}" width='20' height='20'/>
+                            </td>
                         </tr>
                     @endforeach
-
-
-
 
                 </table>
 

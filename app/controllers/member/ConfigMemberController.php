@@ -82,25 +82,58 @@ class ConfigMemberController extends CommonController
 
             $passOld = encode($input['pass_origin']);//输入的原始密码
             $passNew = encode($input['pass_new']);//新密码
-            $passConfirm = encode(Input::get('pass_double'));//确认密码
-
-//            dd($passOld,$passNew,$passConfirm);
 
             $passNow = Session::get('member')->password;//当前的密码
 
             //原始密码输入正常
             if ($passOld != $passNow)
                 return Redirect::back()->with('msg', '原始密码错误');
-            //更新密码
-            $res = User::changePass($this->user_id, $passNew);
-            if (!$res)
-                return Redirect::back()->with('msg', '更新失败');
 
-            return Redirect::to('member/config/index');
+            //更新密码
+            $res = Source_User_UserInfo::where('id',$this->user_id)
+            ->update([
+                'password'=>$passNew
+            ]);
+
+            if (!$res){
+                return Redirect::back()->with('msg', '更新失败');
+            }
+
+            //修改成功， 退出重新登录
+            Session::forget('member');
+            Session::forget('cartCount');
+            return Redirect::to('member');
 
         }
         return $this->view('member.config_pass');
     }
+
+    /**
+     * 测试更改密码的原始密码
+     */
+    public function checkPass()
+    {
+//        dd(Input::all());
+
+        $passInput = encode(Input::get('param'));
+        $passNow = Session::get('member')->password;
+
+
+        if ($passInput != $passNow) {
+            $res = [
+                'info' => '原始密码错误',
+                'status' => 'n'
+            ];
+        } else {
+            $res = [
+                'info' => '验证成功！',
+                'status' => 'y'
+            ];
+        }
+        return $res;
+
+    }
+
 
     /**
      * 网站提醒

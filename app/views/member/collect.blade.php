@@ -30,7 +30,8 @@
                         @if($collect->is_show)
                         <dl>
                             <dt><a href="/{{$collect->entity_id}}.html">
-                                    <img src="{{ getImgSize( 'goods', $collect->entity_id, $collect->product->small_image ) }}"/></a>
+                                    <img src="{{ getImgSize( 'goods', $collect->entity_id, $collect->product->small_image ) }}"/>
+                                </a>
                             </dt>
                             <dd class="c_dd">
                                 <a href="##">{{$collect->entity_name}}</a></dd>

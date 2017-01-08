@@ -76,11 +76,11 @@ $router->any('/review/detail/{id}', 'ReviewMemberController@detail');
 
 
 //我的退款
-$router->get('/refund', 'RefundMemberController@index');
+$router->any('/refund', 'RefundMemberController@index');
 //提交退款
 $router->get('/refund/apply_refund/{order_id}/{order_item_id}', 'RefundMemberController@applyRefund');
 $router->any('/refund/create_refund', 'RefundMemberController@createRefund');
-$router->any('/refund/ship_back/{id?}', 'RefundMemberController@shipBack');
+$router->any('/refund/process/{id?}', 'RefundMemberController@process');
 
 
 //我的投诉
@@ -114,6 +114,8 @@ $router->get('/config/address/set_default/{id}', 'AddressMemberController@setDef
 
 //账号设置 - 密码设置
 $router->any('/config/pass', 'ConfigMemberController@changePass');
+//账号设置 - 密码设置 验证密码
+$router->any('/config/pass/check', 'ConfigMemberController@checkPass');
 
 //账号设置 - 网站提醒
 $router->get('/config/notice', 'ConfigMemberController@notice');

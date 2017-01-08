@@ -223,6 +223,7 @@ class ProductController extends CommonController
 		});
 		if( is_null( $result ) )
 		{
+		    Event::fire('product.changeStatus',array(Input::get('entity_id'),Input::get('status')));
 			$obj = new stdClass();
 			$obj->ststus = 0;
 			$obj->msg = '操作成功';

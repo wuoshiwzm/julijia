@@ -37,16 +37,23 @@ class RefundMemberController extends CommonController
     {
         //分页
         $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
-        $data = Source_Order_OrderBack::where('user_id', $this->user_id)->paginate($setPage);
+        $data = Source_Order_OrderBack::where('user_id', $this->user_id);
         $set['setpage'] = $setPage;
 
 
         //搜索条件
-        if (!empty(Input::get('orderId')) || !empty(Input::get('orderBackId'))) {
-            die('searching...');
+        if (!empty(Input::get('orderId'))) {
+            $orderId = Input::get('orderId');
+            $data = $data->where('order_sn', 'like', '%' . $orderId . '%');
+
+        }
+        if (!empty(Input::get('refundId'))) {
+            $refundId = Input::get('refundId');
+            $data = $data->where('back_sn', 'like', '%' . $refundId . '%');
         }
 
 
+        $data = $data->paginate($setPage);
         return $this->view('member.refund', compact('data', 'set'));
 
     }
@@ -150,6 +157,7 @@ class RefundMemberController extends CommonController
 
             if ($res) {
                 //添加成功
+                Event::fire('item.refund',$orderItem->id);
                 return Redirect::to('member/refund')->with('msg', '添加成功');
 
             } else {
@@ -165,7 +173,7 @@ class RefundMemberController extends CommonController
     /**
      * 退款通过审核 如果是退货退款 提交退货物流信息
      */
-    public function shipBack($id = null)
+    public function process($id = null)
     {
         $refundId = decode(trim($id));
         $refund = Source_Order_OrderBack::find($refundId);
@@ -175,7 +183,7 @@ class RefundMemberController extends CommonController
         if (!$orderItem) {
             die('无此投诉对应的商品！');
         }
-        return $this->view('member.refund_process', compact('orderItem', 'orderInfo','refund'));
+        return $this->view('member.refund_process', compact('orderItem', 'orderInfo', 'refund'));
 
 
         /*if ($id) {

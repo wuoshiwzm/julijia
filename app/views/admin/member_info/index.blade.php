@@ -43,7 +43,7 @@
 
                 <div class="simple-form-field">
                     <input type="submit" id="btn_search" value="查询" class="btn btn-primary m-r-5">
-                    <input type="button" id="btn_search" value="导出" class="btn btn-primary m-r-5">
+                    <a href="{{url('admin/member/download_user_list')}}" > <input type="button" id="btn_search" value="导出" class="btn btn-primary m-r-5"></a>
                 </div>
             </form>
         </div>
@@ -53,7 +53,7 @@
                 <h3>会员列表</h3>
                 <h5>
                     (&nbsp;共
-                    <span data-total-record="true">309</span>
+                    <span data-total-record="true">{{$data->count()}}</span>
                     条记录&nbsp;)
                 </h5>
             </div>
@@ -82,25 +82,27 @@
 
 
                 <!--以下为循环内容-->
-                @foreach($userinfos as $info )
-                    <tr>
-                        <td>
-                            {{$info->id}}
-                        </td>
-                        <td>
-                            <div class="userPicBox pull-left m-r-10">
-                                <img src="../images/pic01.png" class="user-avatar" width="44px">
-                            </div>
-                            <div class="ng-binding user-message w250">
+                @if($data->count())
+                    @foreach($data as $info )
+
+                        <tr>
+                            <td>
+                                {{$info->id}}
+                            </td>
+                            <td>
+                                <div class="userPicBox pull-left m-r-10">
+                                    <img src="../images/pic01.png" class="user-avatar" width="44px">
+                                </div>
+                                <div class="ng-binding user-message w250">
 							<span class="mail">
 								<i class="fa fa-envelope-o"></i>{{$info->name}}</span><br>
-                                <span class="tel">
+                                    <span class="tel">
 								<i class="iconfont">&#xe6c7;</i>：{{$info->mobile_phone}}
 							</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="ng-binding">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ng-binding">
 
                             <span>
                                 @if($info->group)
@@ -108,24 +110,25 @@
                                 @endif
                             </span><br>
 
-                                {{--<span>折扣:9.5折</span>--}}
-                            </div>
-                        </td>
-                        <td>{{isset($info->order)?$info->order->count():'0'}}笔</td>
-                        <td>
-                            {{$info->orderLasttime}}
-                        </td>
-                        <td class="handle">
-                            <a href="{{url('admin/member/welc/'.$info->id)}}">详情</a>
-                        </td>
-                    </tr>
+                                    {{--<span>折扣:9.5折</span>--}}
+                                </div>
+                            </td>
+                            <td>{{isset($info->order)?$info->order->count():'0'}}笔</td>
+                            <td>
+                                {{$info->orderLasttime}}
+                            </td>
+                            <td class="handle">
+                                <a href="{{url('admin/member/welc/'.$info->id)}}">详情</a>
+                            </td>
+                        </tr>
 
-                @endforeach
+                    @endforeach
+                @endif
                 </tbody>
 
             </table>
 
-            {{-- @include('admin.public.page',array('data'=>$userinfos,'set'=>$set))--}}
+             @include('admin.public.page',array('data'=>$data,'set'=>$set))
 
 
         </div>

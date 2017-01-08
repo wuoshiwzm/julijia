@@ -27,8 +27,6 @@ class MemberInfoController extends CommonController
     }
 
 
-
-
     /**
      * @param $user_id 用户id
      * 显示会员列表
@@ -37,29 +35,29 @@ class MemberInfoController extends CommonController
     {
 
 
-
         $userinfos = Source_User_UserInfo::orderBy('id', 'desc');
+        /*dd($userinfos->count());*/
         $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
 
-        if(Input::get('keyword')){
+        if (Input::get('keyword')) {
             $keyword = trim(Input::get('keyword'));
-            $userinfos = $userinfos->where('name','like','%'.$keyword.'%')
-                ->orWhere('email','like','%'.$keyword.'%')
-                ->orWhere('office_phone','like','%'.$keyword.'%')
-                ->orWhere('mobile_phone','like','%'.$keyword.'%')
-                ->orWhere('home_phone','like','%'.$keyword.'%')
-                ->orWhere('alias','like','%'.$keyword.'%');
+            $userinfos = $userinfos->where('name', 'like', '%' . $keyword . '%')
+                ->orWhere('email', 'like', '%' . $keyword . '%')
+                ->orWhere('office_phone', 'like', '%' . $keyword . '%')
+                ->orWhere('mobile_phone', 'like', '%' . $keyword . '%')
+                ->orWhere('home_phone', 'like', '%' . $keyword . '%')
+                ->orWhere('alias', 'like', '%' . $keyword . '%');
         }
 
-        if(Input::get('group')){
+        if (Input::get('group')) {
             $group = Input::get('group');
             $lowGroup = Source_User_UserInfoGroup::orderBy('beg_points')->first();
 
             //普通会员
-            if($group == 1){
+            if ($group == 1) {
                 $userinfos = $userinfos->where('group_id', $lowGroup->id);
-            }elseif ($group == 2){
-                $userinfos = $userinfos->where('group_id','!=', $lowGroup->id);
+            } elseif ($group == 2) {
+                $userinfos = $userinfos->where('group_id', '!=', $lowGroup->id);
             }
 
         }
@@ -69,10 +67,8 @@ class MemberInfoController extends CommonController
         $set['setpage'] = $setPage;
 
 //        $userinfos = User::userlist();
-        return $this->view('admin.member_info.index', compact('userinfos','data','set'));
+        return $this->view('admin.member_info.index', compact('userinfos', 'data', 'set'));
     }
-
-
 
 
     /**
@@ -86,15 +82,12 @@ class MemberInfoController extends CommonController
         //用户组信息
         $group = User::getGroup($user_id);
 
-        $group_name =$group?$group->name:'无分组Group信息';
+        $group_name = $group ? $group->name : '无分组Group信息';
 
         //用户地址信息
         $address = User::getUsingAddrByUser($user_id);
         return $this->view('admin.member_info.welc', compact('welc', 'group_name', 'address', 'user_id'));
     }
-
-
-
 
 
     /**
@@ -107,13 +100,10 @@ class MemberInfoController extends CommonController
         $address = User::getUsingAddrByUser($user_id);
         //用户组信息
         $group = User::getGroup($user_id);
-        $group_name =$group?$group->name:'无分组Group信息';
+        $group_name = $group ? $group->name : '无分组Group信息';
 
-        return $this->view('admin.member_info.info', compact('address','group_name','user','user_id'));
+        return $this->view('admin.member_info.info', compact('address', 'group_name', 'user', 'user_id'));
     }
-
-
-
 
 
     /**
@@ -129,7 +119,7 @@ class MemberInfoController extends CommonController
         $address = User::getAllAddrByUser($user_id);
 
         $data = $address->paginate($setPage);
-        return $this->view('admin.member_info.address', compact('address','user','user_id','data','set'));
+        return $this->view('admin.member_info.address', compact('address', 'user', 'user_id', 'data', 'set'));
     }
 
     /**
@@ -145,7 +135,7 @@ class MemberInfoController extends CommonController
         $set['setpage'] = $setPage;
         $data = $ordersInfo->paginate($setPage);
 
-        return $this->view('admin.member_info.orders',compact('user_id','data','set'));
+        return $this->view('admin.member_info.orders', compact('user_id', 'data', 'set'));
     }
 
     /**
@@ -162,7 +152,7 @@ class MemberInfoController extends CommonController
         $set['setpage'] = $setPage;
         $data = $ordersInfo->paginate($setPage);
 
-        return $this->view('admin.member_info.cart',compact('user_id','data','set'));
+        return $this->view('admin.member_info.cart', compact('user_id', 'data', 'set'));
     }
 
     /**,
@@ -172,11 +162,11 @@ class MemberInfoController extends CommonController
     function collect($user_id)
     {
         $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
-        $list  = Source_User_UserInfoCollect::where('user_id',$user_id)
+        $list = Source_User_UserInfoCollect::where('user_id', $user_id)
             ->paginate($setPage);
         $set['setpage'] = $setPage;
         $set['user_id'] = $user_id;
-        return $this->view('admin.member_info.collect',compact('list','user_id','set'));
+        return $this->view('admin.member_info.collect', compact('list', 'user_id', 'set'));
     }
 
     /**
@@ -192,7 +182,7 @@ class MemberInfoController extends CommonController
         $set['setpage'] = $setPage;
         $data = $comments->paginate($setPage);
 
-        return $this->view('admin.member_info.comment',compact('user_id','data','set'));
+        return $this->view('admin.member_info.comment', compact('user_id', 'data', 'set'));
     }
 
     /**
@@ -203,16 +193,19 @@ class MemberInfoController extends CommonController
     {
 
         $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
-        $list  = Source_Feedback_FeedbackInfo::where('user_id',$user_id)->with('user')->with('reason')
+        $list = Source_Feedback_FeedbackInfo::where('user_id', $user_id)->with('user')->with('reason')
             ->paginate($setPage);
         $set['setpage'] = $setPage;
         $set['user_id'] = $user_id;
-        return $this->view('admin.member_info.feedback',compact('user_id','list','set'));
+        return $this->view('admin.member_info.feedback', compact('user_id', 'list', 'set'));
     }
 
     /*用户导出*/
-    function getUserList(){
+    function getUserList()
+    {
         $data = Source_User_UserInfo::orderBy('id')->get();
     }
+
+
 
 }

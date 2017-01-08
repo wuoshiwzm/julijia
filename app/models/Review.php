@@ -20,18 +20,14 @@ class Review
      */
     public static function getReview($order_sn = "",$status = 0,$rank = 0,$setPage = 0)
     {
-        $model = Source_Order_OrderReview::where("order_review.status","=",$status);
-        if (is_string($order_sn) && ! empty($order_sn)) {
-            $model->leftjoin("order_info","order_review.order_id","=","order_info.id")
-            ->where("order_info.order_sn","like","{$order_sn}");
-        }
+        $model = Source_Order_OrderReview::where("status",$status);
         if (is_int($rank) && $rank != 0) {
             $model->where("order_review.leavel","=",$rank);
         }
         if ($setPage == 0 || ! is_int($setPage))
             $setPage = self::$setPage;
-
-        return $model->paginate($setPage);
+         $res =  $model->paginate($setPage);
+        return $res;
     }
 
 

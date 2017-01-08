@@ -22,6 +22,7 @@ class CommentController extends CommonController
         //分页
         $setPage = (int)Input::get("setpage",self::$adminPage);
         $data = Review::getReview($order_sn,$status,$rank,$setPage);
+       
         $set["order_sn"] = $order_sn;
         $set['setpage'] = $setPage;
         $set["rank"] = $rank;
@@ -33,7 +34,7 @@ class CommentController extends CommonController
     public function getChecking()
     {
         //待审核的评论
-        $status = 1;
+        $status = 0;
         //订单编号
         $order_sn = trim(Input::get("order_sn"));
         //评论星级

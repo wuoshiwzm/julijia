@@ -20,14 +20,7 @@
         </div>
         <!--订单切换-->
         <div class="table_div">
-            <div class="table_div_hd">
-                <ul class="layui-nav">
-                    <li class="layui-nav-item"><a href="{{url('member/collect')}}">
-                            全部宝贝&nbsp;(&nbsp;$numAll&nbsp;)</a></li>
-                    <li class="layui-nav-item layui-this"><a href="{{url('member/collect/notshow')}}">
-                            失效&nbsp;(&nbsp;$numNotShow&nbsp;)</a></li>
-                </ul>
-            </div>
+            @include('member.public.collect_nav')
             <div class="table_div_hd table_div_hd_table">
 
                 <div class="soucang">

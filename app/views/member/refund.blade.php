@@ -19,12 +19,14 @@
         </div>
         <!--订单切换-->
         <div class="table_div">
-            <form class="layui-form so_from" action="">
+            <form class="layui-form so_from" action="{{url('member/refund')}}" method="post">
+                {{Form::token()}}
                 <div class="layui-form-item">
                     <label class="layui-form-label">订单编号</label>
 
                     <div class="layui-input-inline">
-                        <input type="text" name="title" placeholder="订单编号" autocomplete="off" class="layui-input w40b ">
+                        <input type="text" name="orderId" placeholder="订单编号"
+                               autocomplete="off" class="layui-input w40b ">
                     </div>
                 </div>
 
@@ -32,7 +34,7 @@
                     <label class="layui-form-label w120">退款退货单编号</label>
 
                     <div class="layui-input-inline">
-                        <input type="text" name="title" placeholder="退款退货单编号" autocomplete="off"
+                        <input type="text" name="refundId" placeholder="退款退货单编号" autocomplete="off"
                                class="layui-input w40b "><span class="Validform_checktip"></span>
                     </div>
                 </div>
@@ -61,7 +63,7 @@
                     @foreach($data as $refund)
 
 
-                         @if($refund->item)
+                        @if($refund->item)
 
                             <tr>
                                 <td>
@@ -90,6 +92,8 @@
                                     @endif
                                 </td>
                                 <td>
+                                    {{-- $refund->status 状态 1 未确认 2 确认 3 未发货 4 运输中 5 已收货 6 退款--}}
+                                    {{-- $refund->type 类型1 退款2 退货退款 --}}
                                     <?php
                                     switch ($refund->status) {
                                         case 1:
@@ -100,7 +104,8 @@
                                             if ($refund->type == 1) {
                                                 echo "已经安排退款";
                                             } elseif ($refund->type == 2) {
-                                                echo "<a href=" . url('member/refund/ship_back/' . encode($refund->id)) . ">已经审核通过，点击输入你的退货信息</a>";
+                                                echo "已经确认";
+
                                             }
                                             break;
 
@@ -120,7 +125,14 @@
                                     }
                                     ?>
                                 </td>
-                                <td class="operation"><a href="##">详情</a></td>
+                                <td class="operation">
+                                    @if($refund->status>=2)
+
+                                        <a href="{{url('member/refund/process/' . encode($refund->id))}}">详情</a>
+                                    @else
+                                        等待商家确认
+                                    @endif
+                                </td>
                             </tr>
                         @endif
                     @endforeach

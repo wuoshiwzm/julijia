@@ -135,8 +135,8 @@ class ReviewMemberController extends CommonController
             $res = Review::createReview($review);
 
             if ($res) {
-                //添加成功
-
+                //添加成功 提交评论事件
+                Event::fire('item.review',$orderItemId);
                 return Redirect::to('member/review')->with('msg', '添加成功');
 
             } else {

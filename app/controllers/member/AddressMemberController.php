@@ -68,9 +68,9 @@ class AddressMemberController extends CommonController
             $input = trimValue(Input::except('_token', 'area', 'status'));
 
 
-            $input['province'] = Source_Area_Province::where('provinceID',Input::get('province'))->first()->province;
-            $input['city'] = Source_Area_City::where('cityID',Input::get('city'))->first()->city;
-            $input['district'] = Source_Area_Area::where('areaID',Input::get('area'))->first()->area;
+            $input['province'] = Source_Area_Province::where('provinceID', Input::get('province'))->first()->province;
+            $input['city'] = Source_Area_City::where('cityID', Input::get('city'))->first()->city;
+            $input['district'] = Source_Area_Area::where('areaID', Input::get('area'))->first()->area;
 
             if (Input::get('status') == 'on') {
                 $input['status'] = 1;
@@ -108,8 +108,9 @@ class AddressMemberController extends CommonController
      */
     public function edit($id)
     {
+        $addrs = Source_User_UserInfoAdd::where('user_id', $this->user_id)->get();
         $addrEdit = Address::getAddress($id);
-        return $this->view('member.config_address_edit', compact('addrEdit'));
+        return $this->view('member.config_address_edit', compact('addrEdit', 'addrs'));
     }
 
 
@@ -121,12 +122,28 @@ class AddressMemberController extends CommonController
      */
     public function update($id)
     {
-        $input = trimValue(Input::except('_token', '_method', 'quiz1', 'quiz2', 'quiz3'));
+
+
+        $input = trimValue(Input::except('_token', 'area', 'status', '_method'));
+
+        if (!empty(Input::get('province'))) {
+            $input['province'] = Source_Area_Province::where('provinceID', Input::get('province'))->first()->province;
+        }
+        if (!empty(Input::get('city'))) {
+            $input['city'] = Source_Area_City::where('cityID', Input::get('city'))->first()->city;
+        }
+        if (!empty(Input::get('area'))) {
+            $input['district'] = Source_Area_Area::where('areaID', Input::get('area'))->first()->area;
+        }
+
+
+        if (Input::get('status') == 'on') {
+            $input['status'] = 1;
+        } else {
+            $input['status'] = 0;
+        }
+
         $validator = Address::validatorAddress($input);
-
-
-
-
 
         if ($validator === true) {
 
