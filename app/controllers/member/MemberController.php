@@ -33,7 +33,7 @@ class MemberController extends \BaseController
     {
         //登录验证
         if (!(Input::get('url'))) {
-            //未传递url 
+            //未传递url
         }
 
         if (isset(Session::get('member')->id)) {
