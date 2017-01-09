@@ -33,9 +33,9 @@
 
 
                         <h2 class="iconfont fize18">&#xe60b;</h2>
-                        <form class="layui-form m-form form" action="{{url('member/login')}}">
+                        <form class="layui-form m-form form" action="{{url('member/login_verify')}}" method="post">
                             {{Form::token()}}
-                            <input type="hidden" name="url" value="{{$url}}">
+                            <input type="hidden" name="url" value={{$url}}>
                             <div class="layui-form-item">
                                 <div class="layui-input-block input_po">
                                     <span class="iconfont">&#xe657;</span>

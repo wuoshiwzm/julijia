@@ -29,41 +29,49 @@ class MemberController extends \BaseController
      * 登录页
      * 用户手机 用户名都可以登录
      */
-    function login($url=null)
+    function login($url = null)
     {
-        //登录验证
-        if (!(Input::get('url'))) {
-            //未传递url
-        }
 
+        //$url 要跳转的页面
+        $url = $url ? decode($url) : '';
+
+        //已登录
         if (isset(Session::get('member')->id)) {
             return Redirect::to('member');
         }
+
         return $this->view('frontend.login', compact('url'));
     }
 
 
     public function loginVerify()
     {
+
+
         $username = Input::get('name');
         $password = Input::get('password');
 
         $url = Input::get('url');
-        dd($url) ;
         if (Input::get('_token') != csrf_token()) {
             return Redirect::back()->with('msg', '登录失败')->withInput();
         }
         $res = User::login($username, $password);
         if ($res) {
-            dd($url);
+
             //更新上次登录时间
             $user = User::getUserByName(Input::get('name'))
                 ->orwhere('mobile_phone', Input::get('name'))
                 ->first();
+
+
             $user->update(array('last_time' => date('Y-m-d h:m:s'), 'last_ip' => clientIP()));
             // 存入session
             Session::put('member', $user);
-            dd($url);
+
+            if (empty($url)) {
+                return Redirect::to('member');
+            }
+
             return Redirect::to($url);
         }
         return Redirect::back()->with('msg', '登录失败')->withInput();
@@ -159,8 +167,8 @@ class MemberController extends \BaseController
         $input = trimValue(Input::all());
 
         $phone = $input['phone'];
-        $user = Source_User_UserInfo::where('mobile_phone',$phone)->first();
-        if(empty($user)){
+        $user = Source_User_UserInfo::where('mobile_phone', $phone)->first();
+        if (empty($user)) {
             return '此手机号并未注册！';
         }
 

@@ -140,9 +140,16 @@ class ConfigMemberController extends CommonController
      */
     public function notice()
     {
-        $notices = Source_User_UserInfoLog::where('user_id', $this->user_id)->get();
 
-        return $this->view('member.config_notice', compact('notices'));
+        //分页
+        $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
+        $data = Source_User_UserInfoLog::where('user_id', $this->user_id);
+        $set['setpage'] = $setPage;
+
+
+        $data = $data->paginate($setPage);
+        return $this->view('member.config_notice', compact('data', 'set'));
+
     }
 
     public function  UploadHeader(){

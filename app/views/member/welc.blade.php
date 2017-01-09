@@ -25,7 +25,7 @@
             <div class="ge_tou">
                 <dl class="ge_tou_xx">
 
-                    <dt class="qie_img">
+                    <dt class="qie_img1">
 
                         <img
                              onclick="getImgTemplet( this,'user' )"

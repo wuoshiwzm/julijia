@@ -47,6 +47,9 @@ $router->get('/order/toship', 'OrderMemberController@toShip');
 //用户订单 等待收货
 $router->get('/order/toreceive', 'OrderMemberController@toReceive');
 
+//用户中心订单支付
+$router->get('/order/pay', 'OrderMemberController@PayOrder');
+
 //用户订单 等待评论
 $router->get('/order/tocomment', 'OrderMemberController@toComment');
 //用户订单 详情

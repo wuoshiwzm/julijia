@@ -133,6 +133,17 @@
                                         <label class="layui-form-label">
                                             <span class="red">*</span>是否收货
                                         </label>
+
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label"><span class="red">*</span>是否收货</label>
+                                            <div class="layui-input-block">
+                                                <input type="radio" name="sex" value="已收货" title="已收货"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>已收货</span></div>
+                                                <input type="radio" name="sex" value="未收货" title="未收货" checked=""><div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><span>未收货</span></div>
+                                            </div>
+                                        </div>
+
+
+
                                         <div class="layui-input-block">
                                             <input type="radio" name="is_delivery" value="1" title="已收货">
                                             <div class="layui-unselect layui-form-radio"><i

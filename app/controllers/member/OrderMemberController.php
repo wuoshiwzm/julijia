@@ -141,6 +141,7 @@ class OrderMemberController extends CommonController
 
     /**
      * 全部订单信息
+     * 1待付款; 2已取消; 3无效; 4待发货 5待收货 6部分完成 7完成 8退款退货 9退款完成 10部分发货
      */
     function index()
     {
@@ -179,6 +180,7 @@ class OrderMemberController extends CommonController
 
     /**
      * 等待收货
+     * 1待付款; 2已取消; 3无效; 4待发货 5待收货 6部分完成 7完成 8退款退货 9退款完成 10部分发货
      */
     function toReceive()
     {
@@ -232,6 +234,7 @@ class OrderMemberController extends CommonController
         $itemId = decode($input['itemId']);
         $res = Source_Order_OrderItem::where('id',$itemId )->update(['shipping_status' => 3]);
 
+//        dd($itemId);
         if ($res) {
 
             Event::fire('item.receive',$itemId);

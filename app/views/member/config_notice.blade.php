@@ -27,7 +27,7 @@
                 <ul>
 
 
-                    @foreach($notices as $notice)
+                    @foreach($data as $notice)
 
                         <li>
                             <span>{{$notice->created_at}}</span>
@@ -42,17 +42,7 @@
 
                 </ul>
                 <div id="paging">
-                    <div class="layui-box layui-laypage layui-laypage-default">
-                        <a href="javascript:;" class="layui-laypage-prev"><em>&lt;</em></a>
-                        <a href="javascript:;">1</a>
-                        <a href="javascript:;">2</a>
-                        <a href="javascript:;" class="paging_on">3</a>
-                        <a href="javascript:;">4</a>
-                        <a href="javascript:;">5</a>
-                        <a href="javascript:;">…</a>
-                        <a href="javascript:;" title="尾页" data-page="100">100</a>
-                        <a href="javascript:;" class="layui-laypage-next" data-page="3"><em>&gt;</em></a>
-                    </div>
+                    @include('member.public.page',array('data'=>$data,'set'=>$set))
                 </div>
             </div>
 

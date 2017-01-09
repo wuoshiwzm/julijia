@@ -50,6 +50,8 @@ Route::group(array('domain' => 'shop.julijia.cn'), function () {
 
     //用户登录
     Route::any('member/login/{url?}', 'MemberController@login');
+    //用户登录验证
+    Route::any('member/login_verify', 'MemberController@loginVerify');
 
     //用户注册
     Route::get('member/register', 'MemberController@register');

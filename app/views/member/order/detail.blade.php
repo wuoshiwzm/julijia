@@ -148,7 +148,9 @@
                                         <img src="{{ getImgSize( 'goods', $item->product->product_id, $item->product->small_image )}}">
                                     </dt>
                                     <dd><span>送货方式：</span><font>普通快递</font></dd>
+                                    @if(!$item->shipper)
                                     <dd><span>承运人：</span><font>{{$item->shipper->shipping_name}}</font></dd>
+                                        @endif
                                 </dl>
                             </div>
 

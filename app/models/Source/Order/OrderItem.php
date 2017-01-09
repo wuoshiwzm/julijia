@@ -87,7 +87,7 @@ class Source_Order_OrderItem extends \Eloquent
 
     public function shipper()
     {
-        return $this->belongsTo('Source_Shipping_Code','shipping_m_code');
+        return $this->belongsTo('Source_Shipping_Code','shipping_m_code','code');
     }
 
 }

@@ -37,7 +37,6 @@ class InfoMemberController extends CommonController
     function orderDetail($orderId)
     {
 
-
         $order = Source_Order_OrderInfo::find($orderId);
         $items = Source_Order_OrderItem::where('order_id', $orderId)->get();
         //配送信息
@@ -63,7 +62,7 @@ class InfoMemberController extends CommonController
                 $item->shipping = $res->Traces;
             }
 
-
+//            dd($item->shipping);
         }
 
         return $this->view('member.order.detail', compact('order', 'items'));
