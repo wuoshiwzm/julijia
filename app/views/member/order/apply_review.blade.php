@@ -160,18 +160,19 @@
 
         $(function () {
             $('.star_ul a').click(function () {
+
                 $(this).addClass('activeactive-star');
-                $('.s_result').css('color', '#c00').html($(this).attr('title'))
-                $('.star_result').val($(this).attr('star'))
+                $('.s_result').css('color', '#c00').html($(this).attr('title'));
+                $('.star_result').val($(this).attr('star'));
             });
 
-//            $('.star_ul a').hover(function () {
-//                $(this).addClass('active-star');
-//                $('.s_result').css('color', '#c00').html($(this).attr('title'))
-//            }, function () {
-//                $(this).removeClass('active-star');
-//                $('.s_result').css('color', '#333').html('请打分')
-//            });
+            $('.star_ul a').hover(function () {
+                $(this).addClass('active-star');
+                $('.s_result').css('color', '#c00').html($(this).attr('title'));
+            }, function () {
+                $(this).removeClass('active-star');
+                $('.s_result').css('color', '#333').html('请打分');
+            });
 
         })
     </script>

@@ -356,6 +356,8 @@ class AuctionBuy
                 $orderItem->guige = $goods->guige;
                 $orderItem->shipping_status = 1;
                 $orderItem->save();
+                //删除购物车
+                Source_Cart_CartItem::where('user_id',$adr->user_id)->where('product_id',$goods->product_id)->delete();
             }
 
             //订单动作表

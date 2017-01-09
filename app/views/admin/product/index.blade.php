@@ -134,8 +134,6 @@
                     <input type="text" class="form-control small" value="420">
                 </td>
                 <td class="handle">
-                    <a href="javascript:void(0);" class="d_er" >生成二维码</a>
-                    <span>|</span>
                     <a href="javascript:void(0);" target="_blank">查看</a>
                     <span>|</span>
                     @if( $row->status == 1)

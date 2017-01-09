@@ -17,11 +17,12 @@
 
 
 
-    <link rel="stylesheet" type="text/css" href="{{asset('css/member/admin.css')}}">
+
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/css.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/iconfont.css')}}">
 
     <link rel="stylesheet" type="text/css" href="{{asset('css/member/layui.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/member/admin.css')}}">
 
     @yield('css')
 </head>

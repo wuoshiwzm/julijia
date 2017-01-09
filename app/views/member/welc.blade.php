@@ -2,28 +2,23 @@
 
 @stop
 @section('title')
-    欢迎！
+    欢迎！{{Session::get('member')->alias}} 回来
 @stop
 
 @section('left')
     @include('member.public.left_center')
 @stop
-
-
 @section('content')
-
-
-
     <div class="ge_admin_nei_right">
         <div class="spinner">
             <div class="double-bounce1"></div>
             <div class="double-bounce2"></div>
         </div>
 
-
         <div class="ge_xin">
             <div class="ge_tou">
                 <dl class="ge_tou_xx">
+
 
                     <dt class="qie_img1">
 
@@ -34,9 +29,7 @@
                              height="80">
 
 
-                    {{--<dt style="float: left; height: 100px; margin-right: 8px; text-align: center;width: 100px;" class="addimg">
-                        <img onclick="getImgTemplet( this,'user' )" src="{{!empty(Session::get('member')->header)?Config::get('tools.imagePath').'/user/'.Session::get('member')->id.'/'.Session::get('member')->header:'/images/member/tou.png'}}" width="80" height="80">
---}}
+
                         <br><font>修改头像</font>
                         <input type="hidden" id="user" value="{{Session::get('member')->header}}">
                     </dt>
@@ -94,8 +87,6 @@
                                 <dt><img src="{{asset('images/member/li05.png')}}"/></dt>
                                 <dd>退款维权
                                     <font>
-
-
                                         @if(Session::get('member')->refund()->count())
                                             {{Session::get('member')->refund()->count()}}
                                         @else
@@ -112,9 +103,10 @@
 
         <div class="ge_xin02">
             <h2>我的物流</h2>
-            <div class="ge_tou">
+
                 @if($numToReceive)
                     @foreach($items as $item)
+                    <div class="ge_tou">
                         <dl class="ge_tou_xx">
                             {{$item->product_name}}
                             <dt class="qie_img_img">
@@ -126,11 +118,11 @@
                             <dd class="dd_dd01">{{$item['shipping_time']}}<i><a href="##">查看物流信息</a></i></dd>
                         </dl>
                         <a href="##" class="ge_tou_a" onclick="receive({{"'".encode($item->id)."'"}})">确认收货</a>
+                    </div>
                     @endforeach
                 @else
                     无物流信息
                 @endif
-            </div>
         </div>
 
         <div class="collection">
@@ -140,14 +132,16 @@
                     @foreach($goods as $visit)
 
                         <dl>
-                            <dt><a href="{{url('$visit->vs_value')}}"><img
-                                            src="{{ getImgSize( 'goods', $visit->vs_value, $visit->small_image )}} "/></a>
+                            <dt>
+                                <a href="{{url('$visit->vs_value')}}">
+                                    <img src="{{ getImgSize( 'goods', $visit->vs_value, $visit->small_image )}} "/>
+                                </a>
                             </dt>
                         </dl>
                     @endforeach
 
                 @else
-                    <p style="margin-left: 15px">没有浏览记录</p>
+                    <p style="margin: 15px ;">没有浏览记录</p>
                 @endif
 
             </div>
@@ -156,6 +150,7 @@
 @stop
 
 @section('js')
+    <script type="text/javascript" src="{{asset('js/member/member.js')}}"></script>
     <script>
         function getImgTemplet(index, id) {
             layer.open({
@@ -174,7 +169,7 @@
                 if(msg['path']!=0){
                     $("#"+index).parents('.addimg').find('img').attr('src',msg['path']);
                 }else{
-                    $("#"+index).parents('.addimg').find('img').attr('src','/images/member/tou.jpg');
+                    $("#"+index).parents('.addimg').find('img').attr('src','/images/member/tou.png');
                 }
 
             })

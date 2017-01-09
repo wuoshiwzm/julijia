@@ -55,14 +55,14 @@
                     </dl>
                 </div>
             </div>
-            <div class="order-details">
+        {{--    <div class="order-details">
                 <div class="title">发货人信息</div>
                 <div class="content">
                     <dl>
                         <dd>西安市高新区高科广场&nbsp;&nbsp;&nbsp;刘广成&nbsp;&nbsp;&nbsp;152952635241&nbsp;&nbsp;&nbsp;710065  </dd>
                     </dl>
                 </div>
-            </div>
+            </div>--}}
 
         </div>
         <!--商品信息-->
@@ -95,8 +95,8 @@
                         </td>
                         <td class="item" width="30%">
                             <div class="pic-info">
-                                <a href="##" class="goods-thumb" title="查看商品详情" target="_blank">
-                                    <img src="../images/pic01.png" alt="查看商品详情">
+                                <a href="##" class="goods-thumb" title=" {{$row->product_name}}" target="_blank">
+                                    <img src="{{ getImgSize( 'goods', $row->product_id, $row->product->small_image ) }}" alt=" {{$row->product_name}}">
                                 </a>
                             </div>
                             <div class="txt-info">
@@ -147,5 +147,10 @@
     <script type="text/javascript" src="{{url("js/admin/jquery.js")}}"></script>
     <script type="text/javascript" src="{{url('js/public/layer/layer.js')}}"></script>
     <script type="text/javascript" src="{{url('js/admin/order/deliverPage.js')}}"></script>
+    <script>
+        function  fresh() {
+            window.location.reload();
+        }
+    </script>
 @stop
 

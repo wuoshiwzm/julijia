@@ -26,7 +26,7 @@
             //取消
             $(".cancel").click(function(){
                 closeLayer();
-            })
+            });
 
             //发货
             $(".confirm").click(function(){
@@ -46,7 +46,9 @@
                         if (data.status == 1) {
                             //layer.msg("发货成功");
                             alert("发货成功");
+                            parent.fresh();
                             closeLayer();
+
                         }else {
                             layer.msg("发货失败",{icon:2,time:1000})
                         }
@@ -56,7 +58,7 @@
                     }
                 })
 
-            })
+            });
             //关闭弹出层
             function closeLayer()
             {

@@ -16,6 +16,7 @@ class HomeController extends \BaseController
      */
     public function GetIndex()
     {
+        
         //banner广告
         $banner = Home::getIndexBanner( 'banner', self::$cache, self::$time );
         //限时抢购
@@ -104,7 +105,7 @@ class HomeController extends \BaseController
             $goods = Home::getGoodsDetails( self::$cache, $id );
 
             $data = $goods['data'];
-            $price = json_encode($data['price']);
+            $price = json_encode($goods['price']);
             //可配置信息
             $attribute = $goods['attribute'];
          

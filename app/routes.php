@@ -43,7 +43,7 @@ Route::group(array('domain' => 'shop.julijia.cn'), function () {
     Route::any('/order/saveaddress','AuctionBuyController@saveAddress');
     //修改收货地址
     Route::any('/order/editaddress','AuctionBuyController@editAddress');
-   
+
 
 
 

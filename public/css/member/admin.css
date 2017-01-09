@@ -33,7 +33,7 @@ a:focus{outline:none;}
 .ge_admin_nei .ge_admin_nei_right .ge_xin .ge_tou{ float:left; width:224px; padding:15px;}
 
 /*我的物流*/
-.ge_admin_nei .ge_admin_nei_right .ge_xin02{ background:#fff; height:152px; margin-bottom:10px;margin-top:16px;}
+.ge_admin_nei .ge_admin_nei_right .ge_xin02{ background:#fff; height:152px; width:100%; margin-bottom:10px;margin-top:16px;display:inline-block;}
 .ge_admin_nei .ge_admin_nei_right .ge_xin02 h2{ font-size:14px; height:36px; line-height:36px; background:#f5f5f5; text-indent:16px; }
 .ge_admin_nei .ge_admin_nei_right .ge_xin02 .dd_h{ font-size:15px; margin-top:10px;margin-bottom:6px; color:#666 }
 .ge_admin_nei .ge_admin_nei_right .ge_xin02 .dd_dd01{font-size:14px; color:#666; }
@@ -44,7 +44,7 @@ a:focus{outline:none;}
 /*.ge_admin_nei .ge_admin_nei_right .ge_xin02 .ge_xin .ge_tou{ padding:10px 0px 10px 10px; height:1024px;  }*/
 .ge_admin_nei .ge_admin_nei_right .ge_xin02 .ge_xin .ge_tou_xx{ padding:10px 0px 10px 10px; height:104px; }
 .ge_admin_nei .ge_admin_nei_right .ge_xin02 .ge_tou_a{ float:right; display:block; padding:0px 20px; height:32px; line-height:30px; border-radius:32px; margin:40px 30px 10px 0px;transition:all 0.6s ease-in;border:1px solid #f47474;background:#fff;color:#e03131; font-size:14px; }
-.ge_admin_nei .ge_admin_nei_right .ge_xin02 .ge_tou_a:hover{ border:1px solid #f47474;background:#f47474; color:#fff;}
+.ge_admin_nei .ge_admin_nei_right .ge_xin02 .ge_tou{ background:#fff; display:inline-table;width:100%; }
 
 /*我的收藏*/
 .ge_admin_nei .ge_admin_nei_right .collection{ background:#fff; width:100%;padding:0px 0px 22px 0px; margin-bottom:10px;margin-top:16px; display:inline-block;}
@@ -295,9 +295,10 @@ a:focus{outline:none;}
 .ge_admin_nei .ge_admin_nei_right .table_div_hd table td .price_y { color:#999; text-decoration: line-through; margin-right:10px;}
 .ge_admin_nei .ge_admin_nei_right .table_div_hd table td .wl { color:#09C; }
 
-.ge_admin_nei .ge_admin_nei_right .table_div_hd table .operation a{ color:#333; display:block; padding:3px 0 3px; background:#f5f5f5; border:1px solid #ddd; width:85px; border-radius:2px; margin:0 auto; font-size:12px; }
-.ge_admin_nei .ge_admin_nei_right .table_div_hd table .operation a:hover{ color:#e4393c;  background:#fff; border:1px solid #e4393c;  }
-.ge_admin_nei .ge_admin_nei_right .table_div_hd table .operation .margin_top{ margin-top:10px!important;}
+.ge_admin_nei .ge_admin_nei_right .table_div_hd table .operation a{ color:#0185b1;  display:block; margin:0 auto 4px;  font-size:12px; }
+.ge_admin_nei .ge_admin_nei_right .table_div_hd table .operation a:hover{ color:#e4393c; }
+.ge_admin_nei .ge_admin_nei_right .table_div_hd table .operation .margin_top02{ color:#333; display:block; padding:3px 0 3px; background:#f5f5f5; border:1px solid #ddd; width:85px; border-radius:2px; margin:0 auto; font-size:12px; }
+.ge_admin_nei .ge_admin_nei_right .table_div_hd table .operation .margin_top02:hover{ color:#e4393c;  background:#fff; border:1px solid #e4393c;  }
 
 .ge_admin_nei .ge_admin_nei_right .table_div_hd table .order_ding{ text-align:left; background:#f5f5f5; margin-top:10px;}
 .ge_admin_nei .ge_admin_nei_right .table_div_hd table .order_ding span a{font-size:12px; color:#09C; }
@@ -452,10 +453,10 @@ a:focus{outline:none;}
 .box_163css{ width: 480px; height: 30px;}
 .box_163css ul{ margin-top:6px;}
 
-.star_ul{float:left;background: url(../images/star.png) no-repeat 0 -150px; width: 132px; z-index: 10; position: relative; height: 25px; }
+.star_ul{float:left;background: url(/public/css/images/star.png) no-repeat 0 -150px; width: 132px; z-index: 10; position: relative; height: 25px; }
 .star_ul li{ float: left;  margin-right:1px;width: 25px; height: 25px; }
 .star_ul li a{ display: block; height: 25px; position: absolute; left: 0; top: 0; text-indent: -999em;}
-.star_ul li .active-star{background: url(../images/star.png) no-repeat;}
+.star_ul li .active-star{background: url(/public/css/images/star.png) no-repeat;}
 .star_ul li .one-star{width: 25px;background-position:0 -120px; z-index: 50;}
 .star_ul li .two-star{width: 51px;background-position:0 -90px;z-index: 40;}
 .star_ul li .three-star{width:79px; background-position:0 -60px;z-index: 30;}

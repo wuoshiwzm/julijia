@@ -63,7 +63,7 @@
                     </label>
                     <div class="col-sm-8">
                         <div class="form-control-box">
-                            <input type="text"  class="form-control valid" placeholder="输入自定义url，便于优化" name="url" ajaxurl="/admin/getonlyinfo?type=category_url" datatype="*2-30" maxlength="30" tipsrmsg="请输入url地址" errormsg="url为2-30字符" >
+                            <input type="text"  class="form-control valid" placeholder="输入自定义url，便于优化" name="url" ajaxurl="/admin/getonlyinfo?type=category_url" datatype="/^[a-z]{2-30}$/" maxlength="30" tipsrmsg="请输入url地址" errormsg="url为2-30个小写英文字母" >
                             <span class="Validform_checktip"></span>
                         </div>
                     </div>

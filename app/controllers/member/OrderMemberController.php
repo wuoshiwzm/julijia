@@ -1,6 +1,7 @@
 <?php
 
 // use app\controllers\user\user\LeonEvent;
+use Omnipay\Omnipay;
 
 class OrderMemberController extends CommonController
 {
@@ -31,7 +32,7 @@ class OrderMemberController extends CommonController
         }
         $userInfo = Session::get('member');
         $this->user_id = $userInfo->id;
-        $this->orders = Source_Order_OrderInfo::where('user_id', $this->user_id)->orderBy('created_at','desc');
+        $this->orders = Source_Order_OrderInfo::where('user_id', $this->user_id)->whereNotIn('status',array(2,3))->orderBy('created_at','desc');
 
 
 
@@ -257,7 +258,7 @@ class OrderMemberController extends CommonController
     {
         $rowId = decode($rowId);
         $res = DB::transaction(function () use($rowId){
-            Source_Order_OrderInfo::where('id',$rowId)->update('status',2);
+            Source_Order_OrderInfo::where('id',$rowId)->update(array('status'=>2));
         });
 
         if(is_null($res)){
@@ -265,6 +266,39 @@ class OrderMemberController extends CommonController
             Event::fire('order.remove',$rowId);
             return 'true';
         }
+
+    }
+
+    public function  PayOrder()
+    {
+        $orderid = decode(trim(Input::get('order_id'))) ;
+        $orderinfo = Source_Order_OrderInfo::find($orderid);
+        if($orderinfo){
+            $items =  $orderinfo->item()->get();
+            $name ='';
+            foreach ($items as $item){
+                $name.=$item->product_name.',';
+            }
+            if($orderinfo->payment ==1){
+                $return_url = Input::getUriForPath('/pay/return');
+                $notify_url = Input::getUriForPath('/pay/notify');
+                $gateway = Omnipay::create('Alipay_Express');
+                $gateway->setPartner(Config::get('pay.id'));
+                $gateway->setKey(Config::get('pay.key'));
+                $gateway->setSellerEmail(Config::get('pay.email'));
+                $gateway->setNotifyUrl($notify_url);
+                $gateway->setReturnUrl($return_url);
+                $order = array(
+                    'out_trade_no' => $orderinfo->order_sn,
+                    'subject' =>$name,
+                    'total_fee' => $orderinfo->pay_amount,
+                );
+                $response = $gateway->purchase($order)->send();
+                return Redirect::to($response->getRedirectUrl());
+            }
+
+        }
+        return  false;
 
     }
 

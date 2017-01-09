@@ -278,9 +278,25 @@ class Home
                         //排序
                         if( $nameOrValue[1] )
                         {
-                            $sql->orderBy( 'cost_price', $nameOrValue[1]);
+                            $sql->orderBy( 'price', $nameOrValue[1]);
                         }
-                    }else
+                    }elseif( $nameOrValue[0] == 'price' )
+                    {
+
+                        $price = explode('-',$nameOrValue[1]);
+                        if( count($price) == 1 )
+                        {
+                            if( (int)$price[0] )
+                            {
+                                $sql->where( 'price', '>', (int)$price[0] );
+                            }
+                        }elseif( count($price) == 2 )
+                        {
+                            $sql->whereRaw( 'price >= ? and price <= ?',array((int)$price[0],(int)$price[1]));
+                        }
+
+                    }
+                    else
                     {
                         //正常查询
                         if ( Schema::hasColumn('product_flat', $nameOrValue[0]) )
@@ -342,41 +358,36 @@ class Home
             //价格区间
             $maxPrice = (int)Source_Product_ProductFlat::where(['category_id'=>$id,'status'=>1])->max('price');
             $price = ceil($maxPrice/5);
-            for ( $i=0; $i<=5; $i++ )
+            for ( $i=0; $i<6; $i++ )
             {
                 if( $i == 0 )
                 {
                     $obj = new stdClass();
-                    $obj->tilte = '0-'.$price;
+                    $obj->tilte = 'price';
                     $obj->value = '0-'.$price;
                     $prices[] = $obj;
 
                 }
-
+                if( $i == 5 )
+                {
+                    $obj = new stdClass();
+                    $obj->tilte = 'price';
+                    $obj->value = $maxPrice.'以上';
+                    $prices[] = $obj;
+                }
                 if( $i != 5 && $i != 0 )
                 {
                     $obj = new stdClass();
-                    $obj->tilte = $price*$i.'-'.$price*($i+1);
+                    $obj->tilte = 'price';
                     $obj->value = $price*$i.'-'.$price*($i+1);
                     $prices[] = $obj;
-
                 }
-
-                if( $i == 5 )
-                {
-                    $obj->tilte = $maxPrice.'以上';
-                    $obj->value = $maxPrice.'以上';
-                    $prices[] = $obj;
-                    break;
-                }
-
             }
             $obj = new stdClass();
             $obj->name = '价格';
             $obj->value = $prices;
-            $url = '';
             $list[ isset($list)?count($list):0 ] = $obj;
-
+            $url.= '&price=';
             $arr['data'] = $list;
             $arr['url'] = $url;
             return $arr;

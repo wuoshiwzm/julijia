@@ -5,7 +5,7 @@
                 <tr>
                     <td colspan="7" class="order_ding">
                             <span>订单编号：
-                                    <a href="order/detail/{{$order->id}}">{{$order->order_sn}}</a>
+                                    <a href="/member/order/detail/{{$order->id}}">{{$order->order_sn}}</a>
                             </span>
                         <span>下单时间：{{$order->created_at}}</span>
                         <span>订单来源：
@@ -20,19 +20,19 @@
                                     echo '待付款';
                                     break;
                                 case(2):
-                                    echo '已取消';
+                                    echo '已取消订单';
                                     break;
                                 case(3):
-                                    echo '无效';
+                                    echo '无效订单';
                                     break;
                                 case(4):
-                                    echo '待发货';
+                                    echo '已付款,待发货';
                                     break;
                                 case(5):
-                                    echo '待收货';
+                                    echo '运输中,待收货';
                                     break;
                                 case(6):
-                                    echo '部分完成';
+                                    echo '部分商品已完成';
                                     break;
                                 case(7):
                                     echo '完成';
@@ -78,7 +78,7 @@
                                     break;
                                 case 2:
                                     echo '运输中';
-                                    echo "<br><a target='_blank' href=" . url('member/order/shipping/' . $item->id) . " class='btn'>查看物流</a>";
+                                    echo "<br><a target='_blank' href=" . url('member/order/shipping/' . $item->id) . " class='wl'>查看物流</a>";
                                     break;
                                 case 3:
                                     echo '已收货';
@@ -89,27 +89,18 @@
                         {{--操作--}}
                         <td width="16%" class="operation">
 
-                            {{-- --}}{{--已经提交退款--}}{{--
-                             @if($item->refund->count())
-                                 <a href="{{url('member/refund')}}">已经退款 点击查看详情</a>
-                             @elseif($item->review->count())
-                                 <a href="{{url('member/review')}}">已经评论 点击查看详情</a>
-                             @elseif($item->feedback->count())
-                                 <a href="{{url('member/feedback')}}">已经投诉 点击查看详情</a>
-                             @else--}}
-                            {{--已经付款 已经收货--}}
                             @if($item->shipping_status == 3 && $order->pay_status == 3 )
                                 {{--评论--}}
-                                @if($item->review->count())
-                                    <a href="{{url('member/review')}}">已经评论 点击查看详情</a>
-                                @else
+                                @if($item->review->count()&&!$item->refund->count())
+                                    <a href="{{url('member/review')}}" class="wl">已评论</a>
+                                @elseif(!$item->refund->count())
                                     <a href="{{url('member/review/apply_review/' .encode($order->id).'/'.encode($item->id))}}"
-                                       class="margin_top">评价</a>
+                                       class="wl">评价</a>
                                 @endif
 
                                 {{--投诉--}}
                                 @if($item->refund->count())
-                                    <a href="{{url('member/refund')}}">已经退货 点击查看详情</a>
+                                    <a href="{{url('member/refund')}}">已退货</a>
                                 @else
                                     <a href="{{url('member/refund/apply_refund/' .encode($order->id).'/'.encode($item->id))}}"
                                        class="margin_top">退货</a>
@@ -117,8 +108,8 @@
 
                                 {{--投诉--}}
                                 @if($item->feedback->count())
-                                    <a href="{{url('member/feedback')}}">已经投诉 点击查看详情</a>
-                                @else
+                                    <a href="{{url('member/feedback')}}">已投诉</a>
+                                @elseif(!$item->refund->count())
                                     <a href="{{url('member/feedback/apply_feedback/'.encode($order->id).'/'.encode($item->id))}}"
                                        class="margin_top">投诉</a>
                                 @endif
@@ -128,28 +119,28 @@
                             @if($order->pay_status == 3 && $item->shipping_status!=3)
 
                                 @if($item->refund()->count()&& $item->shipping_status ==1)
-                                    <a href="{{url('member/refund')}}">已经退款 点击查看详情</a>
+                                    <a href="{{url('member/refund')}}">已退款</a>
                                 @elseif($item->refund()->count()&& $item->shipping_status ==2 )
-                                    <a href="{{url('member/refund')}}">已经退货 点击查看详情</a>
+                                    <a href="{{url('member/refund')}}">已退货 </a>
                                 @endif
 
-
+                           {{--待发货--}}
                             @elseif($order->status ==4 )
                                 @if($item->refund()->count()&& $item->shipping_status ==1)
-                                    <a href="{{url('member/refund')}}">已经退款 点击查看详情</a>
+                                    <a href="{{url('member/refund')}}">已退款</a>
                                 @else
                                     <a href="{{url('member/refund/apply_refund/'.encode($order->id).'/'.encode($item->id))}}">退款</a>
                                 @endif
                             @elseif($order->status ==5 )
                                 @if($item->refund()->count()&& $item->shipping_status ==1)
-                                    <a href="{{url('member/refund')}}">已经退货 点击查看详情</a>
+                                    <a href="{{url('member/refund')}}">已退货</a>
                                 @else
                                     <a href="{{url('member/refund/apply_refund/'.encode($order->id).'/'.encode($item->id))}}">退货</a>
                                 @endif
                             @endif
 
                             @if($item->shipping_status ==2 && !$item->refund()->count())
-                                <a href="javascript:void(0)" class="margin_top"
+                                <a href="javascript:void(0)" class="margin_top02"
                                    onclick="receive('{{encode($item->id)}}','{{encode($item->id)}}')">确认收货</a>
                             @endif
                             {{--@endif--}}
@@ -167,7 +158,7 @@
                                 @endif
                                 {{--没有付款--}}
                                 @if($order->pay_status == 1 || $order->pay_status == 2)
-                                    <a href="javascript:void(0)" class="margin_top">付款</a>
+                                    <a href="/member/order/pay?order_id={{encode($order->id)}}" class="margin_top">去付款</a>
                                 @endif
                             </td>
 
