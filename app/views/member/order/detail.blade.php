@@ -28,37 +28,37 @@
                                 switch ($order->status) {
 
                                     case 1:
-                                        echo "待付款";
+                                        echo "等待付款中";
 //                                        echo "<dd><a target='_blank' href=".url(encode('test'))." class='btn'>评价</a></dd>";
                                         break;
 
                                     case 2:
-                                        echo "已取消";
+                                        echo "此订单已取消";
                                         break;
 
 
                                     case 3:
-                                        echo "无效";
+                                        echo "无效订单";
                                         break;
 
 
                                     case 4:
-                                        echo "待发货";
+                                        echo "卖家正在准备发货";
                                         break;
 
 
                                     case 5:
-                                        echo "待收货";
+                                        echo "卖家已经发货，待收货";
                                         break;
 
 
                                     case 6:
-                                        echo "部分完成";
+                                        echo "订单部分商品已经签收，主准备签收剩余商品";
                                         break;
 
 
                                     case 7:
-                                        echo "完成";
+                                        echo "订单完成";
                                         break;
 
                                 }
@@ -148,7 +148,7 @@
                                         <img src="{{ getImgSize( 'goods', $item->product->product_id, $item->product->small_image )}}">
                                     </dt>
                                     <dd><span>送货方式：</span><font>普通快递</font></dd>
-                                    <dd><span>承运人：</span><font>西北众包站</font></dd>
+                                    <dd><span>承运人：</span><font>{{$item->shipper->shipping_name}}</font></dd>
                                 </dl>
                             </div>
 
@@ -191,7 +191,7 @@
                                     <li><strong>配送信息</strong></li>
                                     <li><span>配送方式：</span><font>普通快递</font></li>
                                     <li><span>运费：</span><font>¥{{$order->shipping_amount}}</font></li>
-                                    <li><span>送货日期：</span><font>{{$order->ship_time}}</font></li>
+
                                 </ul>
                             </div>
 

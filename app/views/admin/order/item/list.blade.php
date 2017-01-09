@@ -9,7 +9,7 @@
 <tr class="order-item">
     <td class="item">
         <div class="pic-info">
-            <a href="##" class="goods-thumb" title="{{$item->product_name}}" target="_blank">
+            <a    href="{{url($item->product_id.'.html')}}"    class="goods-thumb" title="{{$item->product_name}}" target="_blank">
                 @if(isset($item->product->entity_id))
                   <img src="{{ getImgSize( 'goods', $item->product->entity_id, $item->product->small_image ) }}">
                 @endif
@@ -29,7 +29,7 @@
     <td class="num">{{$item->num}}</td>
     <!--买家信息-->
     <td class="trouble">
-        <font class="nickname">{{$order->real_name}}</font>
+        <font class="nickname">{{isset($order->belongsToUser->name)?$order->belongsToUser->name:''}}</font>
     </td>
 
     <!--下线门店-->

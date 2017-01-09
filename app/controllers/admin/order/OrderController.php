@@ -25,8 +25,10 @@ class OrderController extends CommonController
                 $query->orwhereHas("item",function($q) use ($keyword){
                     $q->where("product_name","like","%{$keyword}%");
                 });
-                $query->orwhere("order_info.order_sn","like","%{$keyword}%")
-                      ->orwhere("userinfo.name","like","%{$keyword}%");
+                $query->orwhereHas("belongsToUser",function($q) use ($keyword){
+                    $q->where("name","like","%{$keyword}%");
+                });
+                $query->orwhere("order_sn","like","%{$keyword}%");
             });
         }
         if (! empty($status)) {

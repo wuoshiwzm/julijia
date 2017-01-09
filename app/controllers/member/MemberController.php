@@ -29,32 +29,11 @@ class MemberController extends \BaseController
      * 登录页
      * 用户手机 用户名都可以登录
      */
-    function login($url = null)
+    function login($url=null)
     {
         //登录验证
-        if (!empty(Input::all())) {
-
-            $username = Input::get('name');
-            $password = Input::get('password');
-
-            $url = !empty(Input::get('url')) ? decode(Input::get('url')) : 'member';
-
-
-            if (Input::get('_token') != csrf_token()) {
-                return Redirect::back()->with('msg', '登录失败')->withInput();
-            }
-            $res = User::login($username, $password);
-            if ($res) {
-                //更新上次登录时间
-                $user = User::getUserByName(Input::get('name'))
-                    ->orwhere('mobile_phone', Input::get('name'))
-                    ->first();
-                $user->update(array('last_time' => date('Y-m-d h:m:s'), 'last_ip' => clientIP()));
-                // 存入session
-                Session::put('member', $user);
-                return Redirect::to($url);
-            }
-            return Redirect::back()->with('msg', '登录失败')->withInput();
+        if (!(Input::get('url'))) {
+            //未传递url 
         }
 
         if (isset(Session::get('member')->id)) {
@@ -63,6 +42,32 @@ class MemberController extends \BaseController
         return $this->view('frontend.login', compact('url'));
     }
 
+
+    public function loginVerify()
+    {
+        $username = Input::get('name');
+        $password = Input::get('password');
+
+        $url = Input::get('url');
+        dd($url) ;
+        if (Input::get('_token') != csrf_token()) {
+            return Redirect::back()->with('msg', '登录失败')->withInput();
+        }
+        $res = User::login($username, $password);
+        if ($res) {
+            dd($url);
+            //更新上次登录时间
+            $user = User::getUserByName(Input::get('name'))
+                ->orwhere('mobile_phone', Input::get('name'))
+                ->first();
+            $user->update(array('last_time' => date('Y-m-d h:m:s'), 'last_ip' => clientIP()));
+            // 存入session
+            Session::put('member', $user);
+            dd($url);
+            return Redirect::to($url);
+        }
+        return Redirect::back()->with('msg', '登录失败')->withInput();
+    }
 
     function index()
     {

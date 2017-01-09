@@ -85,4 +85,9 @@ class Source_Order_OrderItem extends \Eloquent
         return $this->belongsTo("Source_Product_ProductEntitySupplier","product_id","entity_id");
     }
 
+    public function shipper()
+    {
+        return $this->belongsTo('Source_Shipping_Code','shipping_m_code');
+    }
+
 }

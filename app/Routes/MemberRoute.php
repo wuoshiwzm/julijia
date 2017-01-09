@@ -26,7 +26,6 @@ Route::any('/cart/pay_order/{order_id}', 'CartMemberController@payOrder');
 //购物车 移到收藏夹
 Route::any('/cart/collect/{item_id}', 'CartMemberController@collect');
 
-
 //会员积分
 $router->get('/rank', 'RankMemberController@index');
 

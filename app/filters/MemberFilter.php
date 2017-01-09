@@ -14,10 +14,12 @@ class MemberFilter{
 
         //登录了
     }else {
-
         //获取当前url(不含主页部分)
-        $url=Request::getRequestUri();
-//        dd($url);
+        if(!empty(Input::get('redirectUrl'))){
+            dd(Input::get('redirectUrl'));
+            return Redirect::to('member/login/'.encode(Input::get('redirectUrl')));
+        }
+        $url=URL::current();
         return Redirect::to('member/login/'.encode($url));
         //未登录
     }
