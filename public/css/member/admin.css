@@ -22,6 +22,7 @@ a:focus{outline:none;}
 .ge_admin_nei .ge_admin_nei_right .ge_xin dl{ padding:26px 0px 20px 16px; }
 .ge_admin_nei .ge_admin_nei_right .ge_xin .ge_tou_xx{ padding:10px 0px 10px 10px; height:104px; }
 
+.ge_admin_nei .ge_admin_nei_right .ge_xin dl .qie_img1{float: left; height: 100px; margin-right: 8px; text-align: center;width: 100px;}
 .ge_admin_nei .ge_admin_nei_right .ge_xin dl .qie_img{ height:100px; width:100px; float:left; text-align:center; margin-right:8px;}
 .ge_admin_nei .ge_admin_nei_right .ge_xin dl .qie_img1{ height:100px; width:100px; float:left; text-align:center; margin-right:8px;}
 .ge_admin_nei .ge_admin_nei_right .ge_xin dl .qie_img font{ color:#999; margin-top:6px;}

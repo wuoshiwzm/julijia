@@ -8,7 +8,8 @@ layui.use('form', function(){
      */
     form.on('submit(confirmgoods)', function(data){
         var address = $("#addressList li").length;
-        if( address == false ) {
+        var addressCheck =  $("#addressList li").find('.layui-form-checked').length;
+        if( address == false || addressCheck == false ) {
 
             layer.open({
                 type: 2,
@@ -32,8 +33,8 @@ layui.use('form', function(){
      */
     form.on('submit(buynowgoods)', function(data){
         var address = $("#addressList li").length;
-        if( address == false ) {
-
+        var addressCheck =  $("#addressList li").find('.layui-form-checked').length;
+        if( address == false || addressCheck == false ) {
             layer.open({
                 type: 2,
                 title:false,

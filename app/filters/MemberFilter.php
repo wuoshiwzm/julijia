@@ -16,6 +16,7 @@ class MemberFilter{
     }else {
         //获取当前url(不含主页部分)
         if(!empty(Input::get('redirectURL'))){
+//dd(Input::get('redirectURL'));
             return Redirect::to('member/login/'.encode(Input::get('redirectURL')));
         }
         $url=URL::current();

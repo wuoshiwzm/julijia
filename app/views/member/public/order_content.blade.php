@@ -141,7 +141,7 @@
 
                             @if($item->shipping_status ==2 && !$item->refund()->count())
                                 <a href="javascript:void(0)" class="margin_top02"
-                                   onclick="receive('{{encode($item->id)}}','{{encode($item->id)}}')">确认收货</a>
+                                   onclick="receive('{{encode($order->id)}}','{{encode($item->id)}}')">确认收货</a>
                             @endif
                             {{--@endif--}}
 

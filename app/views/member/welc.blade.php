@@ -18,18 +18,12 @@
         <div class="ge_xin">
             <div class="ge_tou">
                 <dl class="ge_tou_xx">
-
-
                     <dt class="qie_img1">
-
                         <img
-                             onclick="getImgTemplet( this,'user' )"
-                             src="{{isset($userinfo->header)?$userinfo->header:'/images/member/tou.jpg'}}"
-                             width="80"
-                             height="80">
-
-
-
+                                onclick="getImgTemplet( this,'user' )"
+                                src="{{!empty($userheader)?$userheader:'/images/member/tou.jpg'}}"
+                                width="80"
+                                height="80">
                         <br><font>修改头像</font>
                         <input type="hidden" id="user" value="{{Session::get('member')->header}}">
                     </dt>
@@ -167,9 +161,9 @@
             $.post('/member/user/header',{path:path},function (msg) {
                 msg=  eval("("+msg+")");
                 if(msg['path']!=0){
-                    $("#"+index).parents('.addimg').find('img').attr('src',msg['path']);
+                    $("#"+index).parents('.qie_img1').find('img').attr('src',msg['path']);
                 }else{
-                    $("#"+index).parents('.addimg').find('img').attr('src','/images/member/tou.png');
+                    $("#"+index).parents('.qie_img1').find('img').attr('src','/images/member/tou.png');
                 }
 
             })

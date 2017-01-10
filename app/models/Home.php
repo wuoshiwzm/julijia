@@ -484,7 +484,7 @@ class Home
                             $i = trim($i);
                         }
                     }
-                    $details['price'][$i] = trim($price);
+                    $details['price'][$i] = isset($price)?trim($price):[];
                 }
             }
             return $details;

@@ -1,12 +1,12 @@
 //收货
-function receive(itemId) {
+function receive(OrderId,itemId) {
     var token = $("input[name='_token']").val();
     //phone = $("#phone").val();
     layer.confirm('确定要收货吗？', {
         btn: ['确定', '取消']
     }, function () {
 
-        $.post('/member/receive', {_token: token,itemId: itemId}, function (msg) {
+        $.post('/member/receive', {_token: token, OrderId:OrderId,itemId: itemId}, function (msg) {
             if (msg.status == 0) {
                 layer.msg(msg.msg, {icon: 1});
                 fresh();

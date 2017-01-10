@@ -31,15 +31,18 @@ class MemberController extends \BaseController
      */
     function login($url = null)
     {
-
-        //$url 要跳转的页面
-        $url = $url ? decode($url) : '';
-
         //已登录
         if (isset(Session::get('member')->id)) {
             return Redirect::to('member');
         }
 
+        if(Input::get('redirectURL')){
+            $url = Input::get('redirectURL');
+            return $this->view('frontend.login', compact('url'));
+        }
+
+        //$url 要跳转的页面
+        $url = $url ? decode($url) : '';
         return $this->view('frontend.login', compact('url'));
     }
 
@@ -67,6 +70,7 @@ class MemberController extends \BaseController
             $user->update(array('last_time' => date('Y-m-d h:m:s'), 'last_ip' => clientIP()));
             // 存入session
             Session::put('member', $user);
+            Cache::put('userheader',$user->header,'5000');
 
             if (empty($url)) {
                 return Redirect::to('member');
@@ -118,6 +122,7 @@ class MemberController extends \BaseController
                 $user->update(array('last_time' => date('Y-m-d h:m:s'), 'last_ip' => clientIP()));
                 // 存入session
                 Session::put('member', $user);
+                Cache::put('userheader',$user->header);
                 return Redirect::to('member');
             } else {
                 return Redirect::back()->with('msg', '注册失败')->withInput();

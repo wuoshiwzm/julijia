@@ -161,6 +161,7 @@ class ConfigMemberController extends CommonController
         $obj = new stdClass();
         if($res){
             $obj->path = Config::get('tools.imagePath').'/user/'.Session::get('member')->id.'/'.$name;
+            Cache::put('userheader',$name,'5000');
             return json_encode($obj);
         }
         $obj->path='0';

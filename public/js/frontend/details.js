@@ -68,6 +68,7 @@ function countDown( maxtime  )
         {
             clearInterval( timer );
             $("#second").find('font').html( '活动结束' );
+            location = location;
         }
     }, 1000);
 }
@@ -196,9 +197,11 @@ $(".keepYes").click(function () {
  */
 $(".keepNo").click(function () {
     layer.confirm('登录后才能收藏', {
-        btn: ['去登录', '暂不登录']
+        btn: ['去登录','暂不登录']
     },function( index ){
-        location.href = '/member/login?redirectURL='+encodeURIComponent($('meta[name="redirectURL"]').attr('content'));
+        var url = 'http://shop.julijia.cn/member/login?redirectURL='+encodeURIComponent($('meta[name="redirectURL"]').attr('content'));
+        window.location = url;
+        layer.close(index);
     });
 });
 

@@ -180,7 +180,7 @@
                                                 <input type="hidden" id="refund" name="refund"/>
 
                                             </div>
-                                            <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
+                                            <div class="zhuce">单张图片不能超过3M，可最多上传三张图片，支持JPG、BMP、GIF、PNG</div>
                                         </div>
                                     </div>
 

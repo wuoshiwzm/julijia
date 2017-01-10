@@ -130,13 +130,13 @@
         function delFeedback(id) {
 
             var token = $("input[name='_token']").val();
-            layer.confirm('确定要删除此等级信息吗？', {
+            layer.confirm('确定要删除此投诉吗？', {
                 btn: ['确定', '取消']
             }, function () {
                 $.post('/member/feedback/remove_feedback/' + id, {_token: token}, function (msg) {
                     if (msg.status == '0') {
                         layer.msg(msg.msg, {icon: 1});
-                        location = location;
+                        window.location.reload();
                     } else {
                         layer.msg(msg.msg, {icon: 2});
                     }

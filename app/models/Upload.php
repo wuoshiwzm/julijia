@@ -12,12 +12,13 @@ class Upload {
 
     //定义链接
     private  $connect ;
-    public  $filepath = "/media";
+    public  $filepath ;
     public  $fileFrom = "/media/temp/";
 
     public function __construct()
     {
         $this->connect = FTP::connection('connection1');;
+        $this->filepath = '/'.Config::get('tools.ftppath');
     }
 
 
@@ -30,6 +31,7 @@ class Upload {
      */
     public function  uploadProductImage( $iPid, $fileName, $uploadtype )
     {
+
         switch ( $uploadtype )
         {
             case "goods":

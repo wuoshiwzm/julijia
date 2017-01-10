@@ -91,6 +91,7 @@ class OrderMemberController extends CommonController
     function welc()
     {
 
+
         //判断是否无商品
         $collectNum = Source_User_UserInfoCollect::where('user_id',$this->user_id)->count();
         if($this->orders->count() == 0 && $collectNum == 0){
@@ -137,7 +138,11 @@ class OrderMemberController extends CommonController
         $goods = Session::get('member')->visitor->filter(function ($r) {
             return $r->type == 1;
         });
-        return $this->view('member.welc', compact('items', 'goods'));
+
+        $userinfo = Cache::get('userheader');
+        $userheader=Config::get('tools.imagePath').'/user/'.$this->user_id.'/'.$userinfo;
+
+        return $this->view('member.welc', compact('items', 'goods','userheader'));
     }
 
     /**
@@ -150,6 +155,7 @@ class OrderMemberController extends CommonController
         $set['setpage'] = $setPage;
         //获取订单下的商品并插入订单表 $orders
         $orders = $this->orders->whereIn('status',array(1,4,5,6,7,8,9,10))->paginate($setPage);
+
         return $this->view('member.order.all', compact('orders', 'set'));
     }
 
@@ -230,15 +236,22 @@ class OrderMemberController extends CommonController
      */
     public function receive()
     {
-
         $input = trimValue(Input::all());
-        $itemId = decode($input['itemId']);
-        $res = Source_Order_OrderItem::where('id',$itemId )->update(['shipping_status' => 3]);
 
-//        dd($itemId);
+        $res = Source_Order_OrderItem::where('id', decode($input['itemId']))->update(['shipping_status' => 3]);
+        $n= Source_Order_OrderItem::where('order_id',decode($input['OrderId']))->count();
+        $b=  Source_Order_OrderItem::where('order_id',decode($input['OrderId']))->where('shipping_status',3)->count();
+        if($n==$b){
+            Source_Order_OrderInfo::where('id',decode($input['OrderId']))->update(array('status'=>7));
+        }else{
+            Source_Order_OrderInfo::where('id',decode($input['OrderId']))->update(array('status'=>6));
+        }
         if ($res) {
-
-            Event::fire('item.receive',$itemId);
+            //订单操作日志
+            $action['orderid']=decode($input['OrderId']);
+            $action['user']=Session::get('member');
+            $action['conent']='订单'.decode($input['OrderId']).'已经收货';
+            event::fire('option.order',array($action));
             $obj = new stdClass();
             $obj->status = 0;
             $obj->msg = '确认收货成功';
@@ -250,8 +263,6 @@ class OrderMemberController extends CommonController
             $obj->msg = '失败';
             return json_encode($obj);
         }
-
-
     }
 
     public function remove($rowId)
