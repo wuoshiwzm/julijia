@@ -8,7 +8,7 @@
  *     后台以此类推.
  *  说明时间：2016.12.10
  */
-Route::group(array('domain' => 'shop.julijia.cn'), function () {
+Route::group(array('domain' => 'shop.julijia.com'), function () {
 
     //此位置放置所有前端的控制器
     //首页
