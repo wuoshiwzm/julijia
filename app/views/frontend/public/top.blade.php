@@ -34,14 +34,20 @@
         <!-- 搜索 -->
         <div class="list_nav_so">
             <div class="er_so">
-                <form class="m-form">
-                    <input type="text" placeholder="找宝贝" class="input"/>
-                    <input type="button" class="u-btn" value="搜索"/>
+                <form class="m-form" action="{{url('Search')}}" method="get">
+                    <input type="text" placeholder="找宝贝"  name="keyword" value="{{Input::get('keyword')}}" class="input"/>
+                    <input type="hidden"  name="s"  value="{{Input::get('s')}}"/>
+                    <input type="submit" class="u-btn" value="搜索"/>
                     <div class="clear"></div>
                 </form>
-                <span><a href="##" class="color_red">制氧机</a><a href="##">代步车</a><a href="##"
-                                                                                   class="color_red">电动轮椅</a><a
-                            href="##">血糖仪</a><a href="##">血压计</a><a href="##">木制柺杖</a><a href="##">足浴盆</a></span>
+                <span>
+                    <a href="{{url('Search?keyword=制氧机&s=')}}">制氧机</a>
+                    <a href="{{url('Search?keyword=代步车&s=')}}">代步车</a>
+                    <a href="{{url('Search?keyword=血糖仪&s=')}}">血糖仪</a>
+                    <a href="{{url('Search?keyword=血压计&s=')}}">血压计</a>
+                    <a href="{{url('Search?keyword=木制柺杖&s=')}}">木制柺杖</a>
+                    <a href="{{url('Search?keyword=足浴盆&s=')}}">足浴盆</a>
+                </span>
             </div>
             <div class="er_che">
                 <div class="er_che_di">

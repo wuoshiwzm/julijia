@@ -1,7 +1,7 @@
 <div class="qiang">
     <div class="wow fadeInUp animated">
         <div class="qiang_h">
-            <h1>限时抢购</h1><a href="#">更多</a>
+            <h1>限时抢购</h1>
         </div>
         <div class="qiang_div qiang_div02">
             <ul>

@@ -1,8 +1,8 @@
 <div class="chanpin_left">
     <div class="chanpin_left_pai">
         <ul class="order-list">
-            <li class="active"><a href="##" >推荐</a></li>
-            <li><a href="##" >新品</a></li>
+            <li><a href="JavaScript:;" >推荐</a></li>
+            <li><a href="JavaScript:;" >新品</a></li>
             <?php
             $price = Input::get('s');
             if( $price == 'desc' )
@@ -49,9 +49,9 @@
         </ul>
     </div>
     <!-- 分页 -->
-    @if( $data->getTotal() > 15 )
+    @if( $data->getTotal()  )
     <div id="pagination">
-        {{$data->links()}}
+        {{$data->appends(setUrlToArray(Request::getQueryString()))->links()}}
         <div class="pagination-info">
             共<font>{{$data->getTotal()}}</font>条
         </div>

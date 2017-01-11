@@ -2,7 +2,7 @@
 <div class="qiang qiang0{{$kf+3}}">
     <div class="wow fadeInUp animated">
         <div class="qiang_h">
-            <h1>{{$kf+1}}F {{$f['name']}}</h1><a href="#">更多</a>
+            <h1>{{$kf+1}}F {{$f['name']}}</h1><a href="{{url($f['url'].'.html')}}">更多</a>
         </div>
         <div class="qiang_div">
             <ul>
