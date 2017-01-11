@@ -7,7 +7,19 @@
 
 
 @section(('content'))
+ <style>
+     .admin_form .addimg02 {
+         float: left;
+         margin-bottom: 10px;
+         margin-right: 8px;
+     }
 
+     .zhuce {
+         clear: both;
+         color: #999;
+         font-size: 12px;
+     }
+ </style>
     <div class="ge_admin_nei_right">
         <div class="spinner">
             <div class="double-bounce2"></div>
@@ -169,15 +181,16 @@
                                         </div>
                                     </div>
 
+
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">上传图片</label>
                                         <div class="layui-input-block">
-                                            <div class="form-control-box addimg img_border">
-                                                <a href="javascript:;" class="">
+                                            <div class="addimg addimg02">
+                                                <a href="javascript:;" class="qie_img02">
                                                     <img onclick="getImgTemplet( this,'refund' )"
                                                          src="/images/admin/addimg.png"
-                                                         width="100" height="100"></a>
-                                                <input type="hidden" id="refund" name="refund"/>
+                                                         width="80" height="80"></a>
+                                                <input type="hidden" id="refund" name="refund" autocomplete="off"/>
                                             </div>
                                             <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
                                         </div>
@@ -186,7 +199,7 @@
 
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
-                                            <button class="layui-btn">提交退款申请</button>
+                                            <button class="layui-btn">提交退货申请</button>
                                         </div>
                                     </div>
                                 </form>
@@ -261,16 +274,17 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">上传图片</label>
                                         <div class="layui-input-block">
-                                            <div class="form-control-box addimg img_border">
-                                                <a href="javascript:;" class="">
+                                            <div class="addimg addimg02">
+                                                <a href="javascript:;" class="qie_img02">
                                                     <img onclick="getImgTemplet( this,'refund' )"
                                                          src="/images/admin/addimg.png"
-                                                         width="100" height="100"></a>
+                                                         width="80" height="80"></a>
                                                 <input type="hidden" id="refund" name="refund"/>
 
                                             </div>
-                                            <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
+
                                         </div>
+                                        <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
                                     </div>
 
 
