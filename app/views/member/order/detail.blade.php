@@ -287,7 +287,7 @@
 
                                 <div class="jiesuan">
 
-                                    <div class="jiesuan_center">支付的商品<br><font>2</font>件</div>
+                                    <div class="jiesuan_center">支付的商品<br><font>{{$pics}}</font>件</div>
 
                                     <div class="jiesuan_right">
                                         <ul>

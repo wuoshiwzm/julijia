@@ -7,7 +7,19 @@
 
 
 @section(('content'))
+    <style>
+        .admin_form .addimg02 {
+            float: left;
+            margin-bottom: 10px;
+            margin-right: 8px;
+        }
 
+        .zhuce {
+            clear: both;
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
     <div class="ge_admin_nei_right">
         <div class="spinner">
             <div class="double-bounce1"></div>
@@ -203,13 +215,11 @@
                                                     <img onclick="getImgTemplet( this,'refund' )"
                                                          src="/images/admin/addimg.png"
                                                          width="80" height="80"></a>
-                                                <input type="hidden" id="refund" name="refund"/>
-
-
-
+                                                <input type="hidden" id="refund" name="refund" autocomplete="off"/>
                                             </div>
-
                                             <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
+
+
                                         </div>
                                     </div>
 
@@ -281,10 +291,8 @@
                                                     <img onclick="getImgTemplet( this,'refund' )"
                                                          src="/images/admin/addimg.png"
                                                          width="80" height="80"></a>
-                                                <input type="hidden" id="refund" name="refund" />
-
+                                                <input type="hidden" id="refund" name="refund" autocomplete="off"/>
                                             </div>
-
                                             <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
                                         </div>
                                     </div>

@@ -36,7 +36,7 @@ class MemberController extends \BaseController
             return Redirect::to('member');
         }
 
-        if(Input::get('redirectURL')){
+        if (Input::get('redirectURL')) {
             $url = Input::get('redirectURL');
             return $this->view('frontend.login', compact('url'));
         }
@@ -49,7 +49,6 @@ class MemberController extends \BaseController
 
     public function loginVerify()
     {
-
 
         $username = Input::get('name');
         $password = Input::get('password');
@@ -70,7 +69,7 @@ class MemberController extends \BaseController
             $user->update(array('last_time' => date('Y-m-d h:m:s'), 'last_ip' => clientIP()));
             // 存入session
             Session::put('member', $user);
-            Cache::put('userheader',$user->header,'5000');
+            Cache::put('userheader', $user->header, '5000');
 
             if (empty($url)) {
                 return Redirect::to('member');
@@ -122,7 +121,7 @@ class MemberController extends \BaseController
                 $user->update(array('last_time' => date('Y-m-d h:m:s'), 'last_ip' => clientIP()));
                 // 存入session
                 Session::put('member', $user);
-                Cache::put('userheader',$user->header);
+                Cache::put('userheader', $user->header);
                 return Redirect::to('member');
             } else {
                 return Redirect::back()->with('msg', '注册失败')->withInput();
@@ -305,5 +304,28 @@ class MemberController extends \BaseController
         }
         return json_encode($res);
     }
+
+
+    /**
+     * 验证登录用户名是否存在
+     */
+    public function ajaxNameCheck()
+    {
+
+        $sql = Source_User_UserInfo::where('name', Input::get('param'))->count();
+        if ($sql > 0) {
+            $res = [
+                'info' => '验证成功',
+                'status' => 'y'
+            ];
+        } else {
+            $res = [
+                'info' => '该用户名不存在',
+                'status' => 'n'
+            ];
+        }
+        return json_encode($res);
+    }
+
 
 }

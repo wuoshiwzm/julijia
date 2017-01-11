@@ -123,7 +123,40 @@
 
                 @if($refund->status >= 2 && $refund->status < 6)
                 <div class="pingtai">
-                    <font class="iconfont">&#xe608;</font>平台正在审核退款申请，等待审核中！
+                    <font class="iconfont">&#xe608;</font>
+
+                    <?php
+                    switch ($refund->status) {
+                        case 1:
+                            echo "未确认";
+                            break;
+
+                        case 2:
+                            if ($refund->type == 1) {
+                                echo "已经安排退款";
+                            } elseif ($refund->type == 2) {
+                                echo "已经确认";
+
+                            }
+                            break;
+
+                        case 3:
+                            echo "未发货";
+                            break;
+                        case 4:
+                            echo "运输中";
+                            break;
+
+                        case 5:
+                            echo "已收货";
+                            break;
+                        case 6:
+                            echo "退款";
+                            break;
+                    }
+                    ?>
+
+
                 </div>
                 @elseif($refund->status == 6)
                 <div class="pingtai">

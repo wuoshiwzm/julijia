@@ -187,10 +187,10 @@
                                         <div class="layui-input-block">
                                             <div class="addimg addimg02">
                                                 <a href="javascript:;" class="qie_img02">
-                                                    <img onclick="getImgTemplet( this,'refund' )"
+                                                    <img onclick="getImgTemplet( this,'refund_huo' )"
                                                          src="/images/admin/addimg.png"
                                                          width="80" height="80"></a>
-                                                <input type="hidden" id="refund" name="refund" autocomplete="off"/>
+                                                <input type="hidden" id="refund_huo" name="refund" autocomplete="off"/>
                                             </div>
                                             <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
                                         </div>
@@ -279,12 +279,12 @@
                                                     <img onclick="getImgTemplet( this,'refund' )"
                                                          src="/images/admin/addimg.png"
                                                          width="80" height="80"></a>
-                                                <input type="hidden" id="refund" name="refund"/>
+                                                <input type="hidden" id="refund" name="refund" autocomplete="off"/>
 
                                             </div>
-
+                                            <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
                                         </div>
-                                        <div class="zhuce">单张图片不能超过3M，可多上传三张图片，支持JPG、BMP、GIF、PNG</div>
+
                                     </div>
 
 

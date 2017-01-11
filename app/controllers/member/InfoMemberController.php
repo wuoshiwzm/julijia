@@ -39,6 +39,7 @@ class InfoMemberController extends CommonController
 
         $order = Source_Order_OrderInfo::find($orderId);
         $items = Source_Order_OrderItem::where('order_id', $orderId)->get();
+        $pics = 0;
         //配送信息
 
 
@@ -48,7 +49,7 @@ class InfoMemberController extends CommonController
             $Orderinfo['shiptype'] = $item->shipping_m_code;
             $Orderinfo['shipno'] = $item->shipping_id;
             $shipper = new ShippingApi();
-
+            $pics += $item->num;
             $res = json_decode($shipper->getOrderTracesByJson($Orderinfo));
 
             if (!$res->Success) {
@@ -62,10 +63,9 @@ class InfoMemberController extends CommonController
                 $item->shipping = $res->Traces;
             }
 
-//            dd($item->shipping);
         }
 
-        return $this->view('member.order.detail', compact('order', 'items'));
+        return $this->view('member.order.detail', compact('order', 'items','pics'));
     }
 
 
@@ -105,9 +105,6 @@ class InfoMemberController extends CommonController
             $item->shipping = $res->Traces;
         }
 
-//        dd($item->shipping);
-
-        /* dd($item);*/
         return $this->view('member.order.shipping', compact('item','companyName'));
     }
 
