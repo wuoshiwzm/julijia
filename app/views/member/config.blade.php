@@ -30,7 +30,7 @@
                                autocomplete="off"
                                class="layui-input w40b f_left"
                                datatype="s3-16"
-                               errormsg="请输入昵称"
+                               errormsg="昵称应为3-16个字符"
                                tipsrmsg="请输入昵称"
                                value="{{$userInfo->alias}}"
                         ><span class="Validform_checktip"></span>
@@ -46,7 +46,7 @@
                                autocomplete="off"
                                class="layui-input w40b f_left"
                                datatype="un"
-                               errormsg="请输入真实名称"
+                               errormsg="请输入中文真实名称"
                                tipsrmsg="请输入真实名称"
                                value="{{$userInfo->real_name}}"
                         ><span class="Validform_checktip"></span>
@@ -62,7 +62,7 @@
                                autocomplete="off"
                                class="layui-input w40b f_left"
                                datatype="*"
-                               errormsg="请输入mail地址"
+                               errormsg="输入mail地址格式错误"
                                tipsrmsg="请输入mail地址"
                                value="{{$userInfo->email}}"
                         ><span class="Validform_checktip"></span>

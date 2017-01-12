@@ -18,7 +18,7 @@
             <!--中部导航-->
             @include('frontend.details.navigation')
             <!--推荐-->
-            @include('frontend.details.recommend')
+           {{-- @include('frontend.details.recommend')--}}
             <!--信息展示-->
             @include('frontend.details.configinfo',array('configInfo'=>$configInfo))
             <!--产品详细信息-->
@@ -32,6 +32,7 @@
 @section('footer_js')
     <script>
         var priceStr = {{$price}};
+        jQuery(".bulid_ch").slide({trigger:"click"});
     </script>
     <script type="text/javascript" src="{{url('js/public/layer/layer.js')}}"></script>
     <!--放大镜jquery库-->

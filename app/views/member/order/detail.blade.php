@@ -149,7 +149,7 @@
                                     </dt>
                                     <dd><span>送货方式：</span><font>普通快递</font></dd>
                                     @if(!$item->shipper)
-                                    <dd><span>承运人：</span><font>{{$item->shipper->shipping_name}}</font></dd>
+                                    <dd><span>物流公司：</span><font>{{isset($item->shipper->shipping_name)?$item->shipper->shipping_name:''}}</font></dd>
                                         @endif
                                 </dl>
                             </div>
@@ -256,10 +256,9 @@
                                             <td class="padding_left">
                                                 <dl>
                                                     <dt><a href="##" target="_blank">
-                                                            <img src="{{ getImgSize( 'goods', $item->product->product_id, $item->product->small_image )}}">
+                                                            <img src="{{ getImgSize( 'goods', $item->product_id, $item->product->small_image )}}">
                                                         </a></dt>
-                                                    <dd><a href="##"
-                                                           target="_blank">{{$item->name}}</a>
+                                                    <dd><a href="/{{$item->product_id}}.html" target="_blank">{{$item->product_name}}</a>
                                                     </dd>
                                                     <dd class="order_tab_color">
                                                         @if($item->guige)
@@ -277,9 +276,25 @@
                                                 <font class="price">¥ {{$item->row_total}}</font>
                                             </td>
                                             <td>{{$item->num}}</td>
-                                            <td class="operation "><a href="##">申请退款退货</a></td>
+                                              @if($item->shipping_status ==1&&$order->pay_status ==3 )
+                                                <td class="operation ">
+                                                    <a href="{{url('member/refund/apply_refund/'.encode($order->id).'/'.encode($item->id))}}">退款</a>
+                                                </td>
+                                              @elseif($item->shipping_status ==3&& $order->pay_status ==3)
+                                                <td class="operation ">
+                                                    <a href="{{url('member/refund/apply_refund/'.encode($order->id).'/'.encode($item->id))}}">退货</a>
+                                                </td>
+                                               @elseif($item->shipping_status ==2 && !$item->refund()->count())
+                                                <td class="operation ">
+                                                    <a href="javascript:void(0)" class="margin_top02"
+                                                       onclick="receive('{{encode($order->id)}}','{{encode($item->id)}}')">确认收货</a>
+                                                </td>
+                                                  @else
+                                                  <td>
+                                                      <a>删除商品</a>
+                                                  </td>
+                                              @endif
                                         </tr>
-
                                     @endforeach
 
 

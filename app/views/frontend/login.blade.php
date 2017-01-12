@@ -32,7 +32,7 @@
                             <div class="layui-form-item">
                                 <div class="layui-input-block input_po">
                                     <span class="iconfont">&#xe657;</span>
-                                    <input type="text" name="name" placeholder="请输入用户名" autocomplete="off"
+                                    <input type="text" name="name" placeholder="请输入用户名/注册手机号码" autocomplete="off"
                                            class="layui-input w40b f_left font_deng"
                                            datatype="*" errormsg="请 输入用户名" tipsrmsg="请输入用户名"
                                            ajaxurl="/member/login_check/ajax_check_name"

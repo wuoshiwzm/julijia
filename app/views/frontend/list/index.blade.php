@@ -9,7 +9,7 @@
             <!--产品-->
             @include('frontend.list.goods',array('data'=>$data,'screen'=>$screen))
             <!--推荐-->
-            @include('frontend.list.recommend',array('recommend'=>''))
+            {{--@include('frontend.list.recommend',array('recommend'=>''))--}}
         </div>
     </div>
 @stop

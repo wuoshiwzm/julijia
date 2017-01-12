@@ -24,8 +24,9 @@
 
                 <div class="soucang">
 
-                    @if(!empty($goods))
-                        @foreach($goods as $visit)
+                    @if(!empty($data))
+                        @foreach($data as $visit)
+
                             @if($visit->product)
                                 <dl>
                                     <dt><a href="##"><img

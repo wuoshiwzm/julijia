@@ -28,6 +28,14 @@
             <div class="h-title">
                 收货地址<font>Shipping Address</font>
             </div>
+
+            <?php
+            $province = Source_Area_Province::where('province', $addrEdit->province)->first();
+            $city = Source_Area_City::where('city', $addrEdit->city)->where('parent',$province->provinceID)->first();
+            $district = Source_Area_Area::where('area', $addrEdit->district)->where('parent', $city->cityID)->first();
+            ?>
+
+
             <form class="layui-form m-form" action="{{url('member/config/address/'.$addrEdit->id)}}" method="post"
                   novalidate>
                 <input type="hidden" name="_method" value="PUT">
@@ -37,18 +45,18 @@
                     <label class="layui-form-label"><span class="red">*</span>选择省市区</label>
                     <div class="layui-input-inline">
                         <select name="province" id="address" lay-filter="province">
-                            <option value="">请选择省</option>
+                            <option value="{{$province->provinceID}}" selected="selected">{{$province->province}}</option>
 
                         </select>
                     </div>
                     <div class="layui-input-inline">
                         <select name="city" id="address1" lay-filter="city">
-                            <option value="">请选择市</option>
+                            <option value="{{$city->cityID}}" selected="selected">{{$city->city}}</option>
                         </select>
                     </div>
                     <div class="layui-input-inline">
                         <select name="area" id="address2" lay-filter="area">
-                            <option value="">请选择县/区</option>
+                            <option value="{{$district->areaID}}" selected="selected">{{$district->area}}</option>
                         </select>
                     </div>
                 </div>
@@ -56,11 +64,11 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>详细地址</label>
                     <div class="layui-input-block">
-                                            <textarea class="layui-textarea w80b f_left"
-                                                      placeholder="填写具体详细地址" autocomplete="off"
-                                                      datatype="*3-100" name="address"
-                                                      errormsg="详细地址长度不足" tipsrmsg="请填写详细地址"
-                                            >{{$addrEdit->address}}</textarea>
+                            <textarea class="layui-textarea w80b f_left"
+                                      placeholder="填写具体详细地址" autocomplete="off"
+                                      datatype="*3-100" name="address"
+                                      errormsg="详细地址长度不足" tipsrmsg="请填写详细地址"
+                            >{{$addrEdit->address}}</textarea>
                         <span class="Validform_checktip"></span>
                     </div>
                 </div>
@@ -84,7 +92,7 @@
                     <div class="layui-input-block">
 
                         <input type="text" class="layui-input w80b f_left"
-                               placeholder="填写具体收货人信息" autocomplete="off"
+                               placeholder="填写收货人手机号码" autocomplete="off"
                                datatype="m" name="phone"
                                errormsg="手机号码格式错误" tipsrmsg="请填写手机号码"
                                value="{{$addrEdit->phone}}"/>
@@ -100,7 +108,7 @@
                         <input type="text" class="layui-input w80b f_left"
                                placeholder="电话" autocomplete="off"
                                value="{{$addrEdit->tel}}"
-                               datatype="n8-18" name="tel" ignore="ignore"
+                               datatype="*8-18" name="tel" ignore="ignore"
                                errormsg="电话格式错误" tipsrmsg="电话"
                         />
                         <span class="Validform_checktip"></span>
@@ -139,8 +147,6 @@
 
                     @foreach($addrs as $addr)
                         <tr>
-
-
                             <td>{{$addr->name}}</td>
                             <td>{{isset($addr->province)?$addr->province:''}}，{{isset($addr->city)?$addr->city:''}}
                                 ，{{isset($addr->district)?$addr->district:''}}</td>
@@ -148,7 +154,7 @@
                             <td>{{$addr->zipcode}}</td>
                             <td>{{$addr->phone}}</td>
                             <td class="border_rn">
-                                <a href="{{url('member/config/address/'.$addr->id."/edit")}}">修改</a>
+                                <a href="{{url('member/config/address/'.encode($addr->id)."/edit")}}">修改</a>
                                 <a href="javascript:;" onclick="delAddr({{"'".encode($addr->id)."'"}});">删除</a>
                                 @if($addr->status == 1)
 

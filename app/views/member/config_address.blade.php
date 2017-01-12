@@ -79,7 +79,7 @@
                     <div class="layui-input-block">
 
                         <input type="text" class="layui-input w80b f_left "
-                               placeholder="填写具体收货人信息" autocomplete="off"
+                               placeholder="请填写收货人手机号码" autocomplete="off"
                                datatype="m" name="phone"
                                errormsg="手机号码格式错误" tipsrmsg="请填写手机号码"/>
                         <span class="Validform_checktip"></span>
@@ -103,7 +103,7 @@
                     <div class="layui-input-block">
 
                         <input type="text" class="layui-input w80b f_left "
-                               placeholder="电话" autocomplete="off"
+                               placeholder="电话" autocomplete="off"  name="tel"
                                />
                     </div>
                 </div>
@@ -112,7 +112,8 @@
                     <label class="layui-form-label"> </label>
                     <div class="layui-input-block">
                         <input type="checkbox" name="status" title="设为默认地址">
-                        <div class="layui-unselect layui-form-checkbox layui-form-checked"><span>设为默认地址</span><i
+                        <div class="layui-unselect layui-form-checkbox layui-form-checked">
+                            <span>设为默认地址</span><i>
                                     class="layui-icon"></i></div>
                     </div>
                 </div>
@@ -140,8 +141,6 @@
 
                     @foreach($addrs as $addr)
                         <tr>
-
-
                             <td>{{$addr->name}}</td>
                             <td>{{isset($addr->province)?$addr->province:''}}，{{isset($addr->city)?$addr->city:''}}
                                 ，{{isset($addr->district)?$addr->district:''}}</td>
@@ -149,7 +148,7 @@
                             <td>{{$addr->zipcode}}</td>
                             <td>{{$addr->phone}}</td>
                             <td class="border_rn">
-                                <a href="{{url('member/config/address/'.$addr->id."/edit")}}">修改</a>
+                                <a href="{{url('member/config/address/'.encode($addr->id)."/edit")}}">修改</a>
                                 <a href="javascript:;" onclick="delAddr({{"'".encode($addr->id)."'"}});">删除</a>
                                 @if($addr->status == 1)
 

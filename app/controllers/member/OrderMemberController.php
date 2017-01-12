@@ -138,10 +138,8 @@ class OrderMemberController extends CommonController
         $goods = Session::get('member')->visitor->filter(function ($r) {
             return $r->type == 1;
         });
-
-        $userinfo = Cache::get('userheader');
+        $userinfo = (Cache::get('userheader'))!=null?Cache::get('userheader'):Session::get('member')->header;
         $userheader=Config::get('tools.imagePath').'/user/'.$this->user_id.'/'.$userinfo;
-
         return $this->view('member.welc', compact('items', 'goods','userheader'));
     }
 

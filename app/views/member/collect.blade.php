@@ -28,21 +28,30 @@
                 <div class="soucang">
                     @foreach($collects as $collect)
                         @if($collect->is_show)
-                        <dl>
-                            <dt><a href="/{{$collect->entity_id}}.html">
-                                    <img src="{{ getImgSize( 'goods', $collect->entity_id, $collect->product->small_image ) }}"/>
-                                </a>
-                            </dt>
-                            <dd class="c_dd">
-                                <a href="##">{{$collect->entity_name}}</a></dd>
-                            @if(!$collect->is_show)
-                                <dd class="c_can">
-                                    <font class="font01 ">
-                                        <span class="iconfont">&#xe602;</span>
-                                        已失效</font>
-                                </dd>
-                            @endif
-                        </dl>
+                            <dl>
+                                <dt><a href="/{{$collect->entity_id}}.html">
+                                        <img src="{{ getImgSize( 'goods', $collect->entity_id, $collect->product->small_image ) }}"/>
+                                    </a>
+                                </dt>
+                                <dd class="c_dd">
+                                    <a href="##">{{$collect->entity_name}}</a></dd>
+                                @if(!$collect->is_show)
+                                    <dd class="c_can">
+                                        <font class="font01 ">
+                                            <span class="iconfont">&#xe602;</span>
+                                            已失效</font>
+                                    </dd>
+                                @endif
+                            </dl>
+                        @else
+                            <dl>
+                                <dt><a onclick="unShow()">
+                                        <img src="{{ getImgSize( 'goods', $collect->entity_id, $collect->product->small_image ) }}"/>
+                                    </a>
+                                </dt>
+                                <dd class="c_dd">
+                                    <a href="##">{{$collect->entity_name}}</a></dd>
+                            </dl>
                         @endif
                     @endforeach
                 </div>
@@ -54,5 +63,9 @@
     </div>
 @stop
 @section('js')
-
+    <script>
+        function unShow(){
+            layer.alert('此商品已经下架！');
+        }
+    </script>
 @stop

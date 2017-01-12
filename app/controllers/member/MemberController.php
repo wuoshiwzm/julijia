@@ -312,7 +312,7 @@ class MemberController extends \BaseController
     public function ajaxNameCheck()
     {
 
-        $sql = Source_User_UserInfo::where('name', Input::get('param'))->count();
+        $sql = Source_User_UserInfo::where('name', Input::get('param'))->orwhere('mobile_phone',Input::get('param'))->count();
         if ($sql > 0) {
             $res = [
                 'info' => '验证成功',
@@ -320,7 +320,7 @@ class MemberController extends \BaseController
             ];
         } else {
             $res = [
-                'info' => '该用户名不存在',
+                'info' => '该用户名或手机号码不存在',
                 'status' => 'n'
             ];
         }

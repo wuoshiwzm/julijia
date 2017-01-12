@@ -192,6 +192,7 @@
                                         <label class="layui-form-label">退款金额</label>
                                         <div class="layui-input-block">
                                             <label class="layui-form-txt">{{$orderInfo->pay_amount*($orderItem->row_total / $orderInfo->total_amount)}}元</label>
+                                            <input type="hidden" name="price" value="{{$orderInfo->pay_amount*($orderItem->row_total / $orderInfo->total_amount)}}">
                                         </div>
                                     </div>
 
@@ -267,6 +268,7 @@
                                             <label class="layui-form-txt">
                                                 {{$orderInfo->pay_amount}}元
                                             </label>
+
                                         </div>
                                     </div>
 

@@ -109,7 +109,7 @@ class AddressMemberController extends CommonController
     public function edit($id)
     {
         $addrs = Source_User_UserInfoAdd::where('user_id', $this->user_id)->get();
-        $addrEdit = Address::getAddress($id);
+        $addrEdit = Address::getAddress(decode($id));
         return $this->view('member.config_address_edit', compact('addrEdit', 'addrs'));
     }
 

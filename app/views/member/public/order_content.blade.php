@@ -5,7 +5,7 @@
                 <tr>
                     <td colspan="7" class="order_ding">
                             <span>订单编号：
-                                    <a href="/member/order/detail/{{$order->id}}">{{$order->order_sn}}</a>
+                                    <a href="/member/order/detail/{{encode($order->id)}}">{{$order->order_sn}}</a>
                             </span>
                         <span>下单时间：{{$order->created_at}}</span>
                         <span>订单来源：
@@ -78,7 +78,7 @@
                                     break;
                                 case 2:
                                     echo '运输中';
-                                    echo "<br><a target='_blank' href=" . url('member/order/shipping/' . $item->id) . " class='wl'>查看物流</a>";
+                                    echo "<br><a target='_blank' href=" . url('member/order/shipping/' . encode($item->id)) . " class='wl'>查看物流</a>";
                                     break;
                                 case 3:
                                     echo '已收货';
@@ -155,7 +155,7 @@
                         <td width="16%"><font class="price_y"></font>{{$item->row_total}}</td>
                         @if($k === 0)
                             <td width="14%" class="operation" rowspan="{{$order->item->count()}}">
-                                <a href="{{url('member/order/detail/'.$order->id)}}">详情</a>
+                                <a href="{{url('member/order/detail/'.encode($order->id))}}">详情</a>
                                 {{--如果未付款 可以删除订单--}}
                                 @if($order->status == 1)
                                     <a href="javascript:void(0)" onclick="deleOrder({{"'".encode($order->id)."'"}})">取消订单</a>

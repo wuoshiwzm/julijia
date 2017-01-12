@@ -38,7 +38,7 @@
                     <label class="layui-form-label"><span class="red">*</span>原始密码</label>
                     <div class="layui-input-block">
 
-                        <input type="text" class="layui-input w80b f_left"
+                        <input type="text" class="layui-input w40b f_left"
                                placeholder="原始密码" autocomplete="off"
                                datatype="*" name="pass_origin"
                                ajaxurl="/member/config/pass/check"
@@ -51,7 +51,7 @@
                     <label class="layui-form-label"><span class="red">*</span>新密码</label>
                     <div class="layui-input-block">
 
-                        <input type="password" class="layui-input w80b f_left"
+                        <input type="password" class="layui-input w40b f_left"
                                placeholder="新密码" autocomplete="off"
                                datatype="*" name="pass_new"
                                errormsg="新密码" tipsrmsg="新密码"/>
@@ -63,7 +63,7 @@
                     <label class="layui-form-label"><span class="red">*</span>确认密码</label>
                     <div class="layui-input-block">
 
-                        <input type="password" class="layui-input w80b f_left"
+                        <input type="password" class="layui-input w40b f_left"
                                placeholder="确认密码" autocomplete="off"
                                datatype="*"
                                recheck="pass_new" name="pass_new"

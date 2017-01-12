@@ -7,6 +7,18 @@
 @stop
 
 @section(('content'))
+    <style>
+        .pingtai {
+            font-size: 18px;
+            padding: 130px 0 0 130px;
+        }
+
+        .pingtai font {
+            color: #81c737;
+            font-size: 28px;
+            margin-right: 6px;
+        }
+    </style>
     <div class="ge_admin_nei_right">
         <div class="spinner">
             <div class="double-bounce1"></div>
@@ -120,7 +132,6 @@
             </div>
 
             <div class="order-an02">
-
                 @if($refund->status >= 2 && $refund->status < 6)
                 <div class="pingtai">
                     <font class="iconfont">&#xe608;</font>
@@ -130,28 +141,26 @@
                         case 1:
                             echo "未确认";
                             break;
-
                         case 2:
                             if ($refund->type == 1) {
                                 echo "已经安排退款";
                             } elseif ($refund->type == 2) {
-                                echo "已经确认";
-
+                                echo "客服已经审核退货单，请提交发货单";
                             }
                             break;
 
                         case 3:
-                            echo "未发货";
+                            echo "您还未发货，请您发货";
                             break;
                         case 4:
-                            echo "运输中";
+                            echo "货品已经在运输中";
                             break;
 
                         case 5:
-                            echo "已收货";
+                            echo "客户已经已收货";
                             break;
                         case 6:
-                            echo "退款";
+                            echo "财务已经退款，请查收您的收款账号";
                             break;
                     }
                     ?>

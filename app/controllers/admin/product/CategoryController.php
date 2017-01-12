@@ -54,6 +54,8 @@ class CategoryController extends CommonController
             $res = ProductCategory::addCategory( $Input );
             if ( $res )
             {
+                //清理缓存
+                Event::fire('admin.operational.data',array(2));
                 //添加成功
                 return Redirect::to('admin/product/category')->with('msg','添加成功');
 
@@ -108,6 +110,8 @@ class CategoryController extends CommonController
             $res = Source_Product_ProductCategory::where('id',$id)->update( $Input );
             if ( $res )
             {
+                //清理缓存
+                Event::fire('admin.operational.data',array(2));
                 //修改成功
                 return Redirect::to('admin/product/category')->with('msg','修改成功');
 
@@ -156,6 +160,8 @@ class CategoryController extends CommonController
                 }
                 if( $res->delete() )
                 {
+                    //清理缓存
+                    Event::fire('admin.operational.data',array(2));
                     //删除上传的图片
                     (new Upload())->delDir( 'category', $id );
                     $obj = new stdClass();

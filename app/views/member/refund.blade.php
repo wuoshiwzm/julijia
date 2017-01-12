@@ -61,17 +61,14 @@
                     </tr>
 
                     @foreach($data as $refund)
-
-
                         @if($refund->item)
-
                             <tr>
                                 <td>
                                     <dl class="tab_dl">
-                                        <dt><a href="##" target="_blank">
-                                                <img src="{{ getImgSize( 'goods', $refund->item->entity_id, $refund->item->small_image ) }}"
+                                        <dt><a href="/{{$refund->item->product_id}}.html" target="_blank">
+                                                <img src="{{ getImgSize( 'goods', $refund->item->product_id, $refund->item->product->small_image ) }}"
                                                      class="goods-thumb" width="60" height="60"></a></dt>
-                                        <dd><a href="##" target="_blank">{{$refund->item->product_name}}</a></dd>
+                                        <dd><a href="/{{$refund->item->product_id}}.html" target="_blank">{{$refund->item->product_name}}</a></dd>
                                         <dd>订单 {{$refund->order_sn}}</dd>
                                         <dd>{{$refund->back_sn}}</dd>
                                     </dl>
@@ -92,8 +89,6 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{-- $refund->status 状态 1 未确认 2 确认 3 未发货 4 运输中 5 已收货 6 退款--}}
-                                    {{-- $refund->type 类型1 退款2 退货退款 --}}
                                     <?php
                                     switch ($refund->status) {
                                         case 1:
@@ -120,17 +115,20 @@
                                             echo "已收货";
                                             break;
                                         case 6:
-                                            echo "退款";
+                                            echo "已退款";
                                             break;
                                     }
                                     ?>
                                 </td>
                                 <td class="operation">
-                                    @if($refund->status>=2)
-
+                                    @if($refund->status==2)
                                         <a href="{{url('member/refund/process/' . encode($refund->id))}}">详情</a>
-                                    @else
-                                        等待商家确认
+                                    @endif
+                                    @if($refund->status==2&& $refund->type ==2)
+                                        <a href="{{url('member/refund/sendhuo/' . encode($refund->id))}}">发货</a>
+                                    @endif
+                                    @if($refund->status==1)
+                                            <a href="{{url('member/refund/process/' . encode($refund->id))}}">详情</a>
                                     @endif
                                 </td>
                             </tr>
