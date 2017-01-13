@@ -164,11 +164,14 @@
                     <tr>
                         <td>
                             <div class="goodsPicBox pull-left m-r-10">
-                                <img src="../images/pic01.png" class="goods-thumb" width="50">
+                                <img src="{{ getImgSize( 'goods', $row->item->product_id, $row->item->product->small_image )}}" class="goods-thumb" width="50">
                             </div>
                             <div class="ng-binding refund-message ">
                                 <div class="name">
-                                    <a href="##" target="_blank" data-toggle="tooltip" data-placement="auto bottom" title="" class="c-blue" data-original-title="测试退款">测试退款</a>
+                                    <a href="javascript:void(0)" target="_blank" data-toggle="tooltip" data-placement="auto bottom" title="" class="c-blue"
+                                       data-original-title=" {{ isset($row->item->product_name)?$row->item->product_name:''}}">
+                                        {{ isset($row->item->product_name)?$row->item->product_name:''}}
+                                    </a>
                                 </div>
                                 <div class="order-num">订单编号:{{$row->order_sn}}</div>
                                 <div class="refund-num">退款编号：{{$row->back_sn}}</div>

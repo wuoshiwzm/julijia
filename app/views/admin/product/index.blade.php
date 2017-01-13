@@ -38,6 +38,22 @@
             <div class="simple-form-field">
                 <div class="form-group">
                     <label class="control-label">
+                        <span>商品属性集：</span>
+                    </label>
+                    <?php $attbute_set =  Source_Eav_AttrbuteSet::where('type','product')->get();?>
+                    <div class="form-control-wrap">
+                        <select  class="form-control chosen-select" name="attbuteset">
+                            <option value="" @if($set['attbuteset']== '') selected="selected" @endif> 请选择属性集 </option>
+                            @foreach( $attbute_set  as $ca )
+                                <option value="{{$ca->id}}" @if($set['attbuteset'] == $ca->id) selected="selected" @endif>{{$ca->attribute_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="simple-form-field">
+                <div class="form-group">
+                    <label class="control-label">
                         <span>分类：</span>
                     </label>
                     <div class="form-control-wrap">
@@ -59,6 +75,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="simple-form-field">
                 <div class="form-group">
                     <label class="control-label">
@@ -95,6 +112,7 @@
                     <input type="checkbox"  onclick="CheckAll(this.checked)" class="table-list-checkbox-all" title="全选/全不选">
                 </th>
                 <th class="text-c w100" >编号</th>
+                <th class="w200">属性集</th>
                 <th class="w200">商品名称</th>
                 <th class="w150">SKU</th>
                 <th class="w100">库存</th>
@@ -112,10 +130,11 @@
                     <input type="checkbox" class="checkBox table-list-checkbox" name='check[]' value="{{$row->entity_id}}" onclick="CheckOne(this.checked,this);">
                 </td>
                 <td class="text-c">{{$row->entity_id}}</td>
+                <td>{{isset($row->productAttbuteSet->attribute_name)?$row->productAttbuteSet->attribute_name:''}}</td>
                 <td>
                     <div class="goodsPicBox pull-left m-r-10">
-                        <a href="javascript:;" target="_blank">
-                            <img src="{{getImagesUrl( 'goods', $row->entity_id, $row->small_image)}}" class="goods-thumb" width="44">
+                        <a  @if( $row->status == 1) href="{{url($row->entity_id.'.html')}}" @else href="javascript:;" @endif target="_blank">
+                            <img src="{{getImgSize( 'goods', $row->entity_id, $row->small_image,68,68)}}" class="goods-thumb" width="44">
                         </a>
                     </div>
                     <div class="ng-binding goods-message w200">
@@ -124,6 +143,7 @@
                         </div>
                     </div>
                 </td>
+
                 <td>{{$row->sku}}</td>
                 <td>{{$row->kc_qty}}</td>
                 <td>{{$row->price}}

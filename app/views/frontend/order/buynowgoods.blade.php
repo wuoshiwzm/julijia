@@ -11,7 +11,7 @@
             <tr>
                 <td class="padding_left">
                     <dl>
-                        <dt><a href="{{url($row->product_id.'.html')}}"><img src="{{getImagesUrl('goods', $row->product_id, $row->small_image)}}" class="goods-thumb" width="60" height="60"></a></dt>
+                        <dt><a href="{{url($row->product_id.'.html')}}"><img src="{{getImgSize('goods', $row->product_id, $row->small_image,68,68)}}" class="goods-thumb" width="68" height="68"></a></dt>
                         <dd><a href="{{url($row->product_id.'.html')}}">{{$row->product_name}}</a></dd>
                         <dd class="order_tab_color">
                             @if( $row->guige )

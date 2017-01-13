@@ -81,7 +81,7 @@
                                 <li class="goodspic-upload image-item">
                                     <div class="upload-thumb">
                                         @if( isset($data[$i]['id']))
-                                            <img src="{{getImagesUrl( 'goods', $id, $data[$i]['value'])}}">
+                                            <img src="{{getImgSize( 'goods', $id, $data[$i]['value'],210,210)}}">
                                         @else
                                             <img src="/images/admin/pic_cn.jpg">
                                         @endif

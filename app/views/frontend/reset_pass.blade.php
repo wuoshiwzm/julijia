@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="table_div_map">
-                    <a href="/">曼蒂首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;忘记密码
+                    <a href="/">商城首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;忘记密码
                 </div>
 
 

@@ -6,6 +6,21 @@
 @stop
 
 @section("content")
+<style>
+    /* css 重置 */
+    *{margin:0; padding:0; list-style:none; }
+    .phone{ padding:20px 30px 0px 30px; font-family:"微软雅黑";}
+    .phone h1{ height:40px; line-height:34px; font-size:16px; color:##24A0D6; border-bottom:1px solid #24A0D6; }
+    .phone ul { padding:20px; }
+    .phone ul li{ height:44px; line-height:44px; font-size:16px;}
+    .phone ul li font{  float:left; display:block; width:100px; text-align:right;}
+    .phone ul li .txt{ height:30px;width:188px; padding:0 10px; line-height:30px; font-size:16px; border:1px solid #ddd;float:left; margin-top:6px;}
+    .phone ul li .txt2{ width:100px;}
+    ul li .textarea{ height:120px;width:340px; padding:6px 10px; line-height:30px; font-size:16px; border:1px solid #ddd;float:left; margin-top:6px;}
+    .phone .button{ width:158px; color:#fff; height:36px; line-height:36px; background:#24A0D6; border:0; float:left;margin-top:6px;font-weight:bold; font-size:16px; margin-top:16px;}
+    .button02{ margin-left:14px; background:#aaa !important;}
+    #order_status{height:30px;width:210px; padding:0 10px; line-height:30px; font-size:16px; border:1px solid #ddd;float:left; margin-top:6px;}
+</style>
 <div class="page">
     <div class="fixed-bar">
         <div class="item-title">
@@ -56,7 +71,7 @@
             <h3>用户列表</h3>
             <h5>
                 (&nbsp;共
-                <span data-total-record="true">{{$number}}}</span>
+                <span data-total-record="true">{{$number}}</span>
                 条记录&nbsp;)
             </h5>
 
@@ -75,7 +90,7 @@
             <thead>
             <tr>
                 <th class="tcheck w60">
-                    <input class="table-list-checkbox-all" title="全选/全不选" type="checkbox">
+                    {{--<input class="table-list-checkbox-all" title="全选/全不选" type="checkbox">--}}
                 </th>
                 {{--<th class=" w100">排序<span class="sort"></span></th>--}}
                 <th class=" w100">编号</th>
@@ -126,9 +141,9 @@
                 <td class="handle">
                     <a href="{{url("/admin/manage/edit?".http_build_query(['user_id' => $row->user_id]))}}">编辑</a>
                 <span>|</span>
-                    <a href="javascript:void(0);" class="user_mi">重置密码</a>
+                    <a href="javascript:void(0);" class="user_mi" data-id="{{$row->user_id}}">重置密码</a>
                 <span>|</span>
-                    <a href="javascript:void(0);" class="offsale-goods dele_user">删除</a>
+                    <a href="javascript:void(0);" class="offsale-goods dele_user" data-id="{{$row->user_id}}">删除</a>
                 </td>
                 </tr>
             @endforeach
@@ -151,10 +166,26 @@
         </table>
     </div>
 </div>
+<div class="phone" style="display: none">
+    <h1>重置密码</h1>
+    <form>
+        <ul>
+            <li><font>新密码：</font>
+                <input name="newpassword" type="password" class="txt" id="password">
+            </li>
+            <li>
+                <input name="confirm" type="button" value="确认"  class="button" id="confirm">
+                <input name="cancel" type="button" value="取消"  class="button button02" id="cancel">
+            </li>
+        </ul>
+    </form>
+</div>
 @stop
 @section("footer_js")
     <script type="text/javascript" src="{{url('js/admin/jquery.js')}}"></script>
     <script type="text/javascript" src="{{url('js/admin/bootstrap.merge.min.js')}}"></script>
     <script type="text/javascript" src="{{url('js/admin/bootstrap-switch.min.js')}}"></script>
     <script type="text/javascript" src="{{url('js/admin/common.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/public/layer/layer.js')}}"></script>
+    <script type="text/javascript" src="{{url("js/admin/manage/index.js")}}"></script>
 @stop

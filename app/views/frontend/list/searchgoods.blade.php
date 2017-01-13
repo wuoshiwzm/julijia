@@ -31,7 +31,7 @@
             @foreach( $data as $row )
                 <li>
                     <dl>
-                        <dt><a href="{{url($row->entity_id.'.html')}}"  target="_blank"  title="{{$row->name}}" ><img src="{{ getImgSize( 'goods', $row->entity_id, $row->small_image ) }}"></a></dt>
+                        <dt><a href="{{url($row->entity_id.'.html')}}"  target="_blank"  title="{{$row->name}}" ><img src="{{ getImgSize( 'goods', $row->entity_id, $row->small_image,210,210 ) }}"></a></dt>
                         <dd class="qiang_div_a"><a href="{{url($row->entity_id.'.html')}}"  target="_blank"  title="{{$row->name}}" >{{$row->name}}</a></dd>
                         <dd class="qiang_div_jia">
                             <font>¥</font>

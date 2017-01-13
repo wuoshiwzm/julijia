@@ -16,7 +16,7 @@
                 <div class="simple-form-field">
                     <div class="form-group">
                         <label class="control-label">
-                            <span>状 态：</span>
+                            <span>分   类：</span>
                         </label>
                         <div class="form-control-wrap">
                             <select name="pid" class="form-control" >

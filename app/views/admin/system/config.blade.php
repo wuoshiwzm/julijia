@@ -94,7 +94,7 @@
                             <div class="form-control-box addimg">
                                 <a href="javascript:;">
                                     <img  onclick="getImgTemplet( this,'img' )"
-                                          src="{{!empty(getConfig('core','website_logo'))?Config::get('tools.imagePath').'config/core/'.getConfig('core','website_logo'):'/images/admin/addimg.png'}}"
+                                          src="{{!empty(getConfig('core','website_logo'))?getConfig('core','website_logo'):'/images/admin/addimg.png'}}"
                                           width="100" height="100">
                                 </a>
                                 <input type="hidden" id="img"  name="core[website_logo][file]" value="{{getConfig('core','website_logo')}}"/>

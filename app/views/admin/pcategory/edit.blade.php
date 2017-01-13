@@ -73,11 +73,11 @@
             <div class="simple-form-field">
                 <div class="form-group">
                     <label class="col-sm-4 control-label">
-                        <span class="ng-binding">关键字：</span>
+                        <span class="ng-binding">Title：</span>
                     </label>
                     <div class="col-sm-8">
                         <div class="form-control-box">
-                            <input type="text"  class="form-control valid" placeholder="关键字"  name="keywords" ignore="ignore" value="{{$data->keywords}}" datatype="s3-100" tipsrmsg="请输入关键字（不包含特殊字符）" errormsg="长度在3-100内的汉字或字符（不包含特殊字符）">
+                            <input type="text"  class="form-control valid" placeholder="seo-title"  name="title" value="{{$data->title}}" ignore="ignore" datatype="*3-80" tipsrmsg="请输入3-80个字符" errormsg="长度为3-80个字符">
                             <span class="Validform_checktip"></span>
                         </div>
                     </div>
@@ -86,11 +86,24 @@
             <div class="simple-form-field">
                 <div class="form-group">
                     <label class="col-sm-4 control-label">
-                        <span class="ng-binding">关键字描述：</span>
+                        <span class="ng-binding">Keywords：</span>
                     </label>
                     <div class="col-sm-8">
                         <div class="form-control-box">
-                            <input type="text"  class="form-control valid" placeholder="关键字描述"  name="meta_desc" ignore="ignore" value="{{$data->meta_desc}}"  datatype="s3-200" tipsrmsg="请输入关键字描述（不包含特殊字符）" errormsg="长度在3-200内的汉字或字符（不包含特殊字符）">
+                            <input type="text"  class="form-control valid" placeholder="seo-keywords"  name="keywords" value="{{$data->keywords}}" ignore="ignore" datatype="*3-100" tipsrmsg="请输入3-100个字符" errormsg="长度为3-100个字符">
+                            <span class="Validform_checktip"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="simple-form-field">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">
+                        <span class="ng-binding">Description：</span>
+                    </label>
+                    <div class="col-sm-8">
+                        <div class="form-control-box">
+                            <input type="text"  class="form-control valid" placeholder="seo-description"  name="meta_desc" value="{{$data->meta_desc}}"  ignore="ignore" datatype="s3-200" tipsrmsg="请输入3-200个字符" errormsg="长度为3-200个字符">
                             <span class="Validform_checktip"></span>
                         </div>
                     </div>

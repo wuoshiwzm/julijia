@@ -17,9 +17,9 @@
 
                     <h5>
 				<span class="action-span">
-					<a href="order_all01.html" class="btn btn-warning click-loading">
+					<a href="/admin/deliver/gone" class="btn btn-warning click-loading">
                         <i class="iconfont"></i>
-                        返回订单列表
+                        返回发货列表
                     </a>
 				</span>
                     </h5>

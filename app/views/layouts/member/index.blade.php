@@ -26,45 +26,26 @@
 
     @yield('css')
 </head>
-
 <body>
 <div class="nav_top">
     <div>
-        <span>{{Session::get('member')->name}}
+        <span>{{$userinfo->name}}
 
-            <font>{{Session::get('member')->group->name}}</font>
+            <font>{{$userinfo->group->name}}</font>
 
             <a href="{{url('member/logout')}}">退出</a></span>
         <ul>
             <li><a href="{{url('/')}}">商城首页</a></li>
             <li><a href="{{url('member/cart')}}">购物车 ( <font>
+                        {{$userinfo->cart()->count()}}
 
-
-
-                        @if(Session::get('member')->first()->cart)
-                            @if(Session::get('member')->first()->cart)
-                                {{Session::get('member')->first()->cart->count()}}
-                            @else
-                                0
-                            @endif
-                        @else
-                            0
-                        @endif
                     </font>)</a></li>
             <li><a href="{{url('member/collect')}}">收藏夹 ( <font>
-                        @if(Session::get('member')->first()->collect)
-                            {{Session::get('member')->first()->collect->count()}}
-                        @else
-                            0
-                        @endif
+                        {{$userinfo->collect->count()}}
                     </font>
                     )</a></li>
             <li><a href="{{url('member/config/notice')}}">消息 ( <font>
-                        @if(Session::get('member')->first()->userlog)
-                            {{Session::get('member')->first()->userlog->count()}}
-                        @else
-                            0
-                        @endif
+                        {{ $userinfo->userlog->count()}}
                     </font>
                     )</a></li>
         </ul>
@@ -80,11 +61,7 @@
             <li class="nav_on02"><a href="{{url('member/config/index')}}">账号设置</a></li>
             <li class="nav_on03"><a href="{{url('member/config/notice')}}">消息
                     <span>
-                        @if(Session::get('member')->userlog)
-                            {{Session::get('member')->userlog->count()}}
-                        @else
-                            0
-                        @endif
+                      {{ $userinfo->userlog->count()}}
                     </span></a></li>
         </ul>
         <div class="tui"><a href="{{url('member/logout')}}">退出</a></div>

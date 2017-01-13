@@ -95,9 +95,16 @@
                         </td>
                         <td class="item" width="30%">
                             <div class="pic-info">
-                                <a href="##" class="goods-thumb" title=" {{$row->product_name}}" target="_blank">
-                                    <img src="{{ getImgSize( 'goods', $row->product_id, $row->product->small_image ) }}" alt=" {{$row->product_name}}">
-                                </a>
+                                @if((isset($row->product->id)&&$row->product->count()))
+                                    <a href="##" class="goods-thumb" title=" {{$row->product_name}}" target="_blank">
+                                        <img src="{{ getImgSize( 'goods', $row->product_id, $row->product->small_image ) }}" alt=" {{$row->product_name}}">
+                                    </a>
+                                @else
+                                    <a href="##" class="goods-thumb" title=" {{$row->product_name}}" target="_blank">
+                                        <img src="{{ getImgSize( 'goods', $row->product_id, '111') }}" alt=" {{$row->product_name}}">
+                                    </a>
+                                @endif
+
                             </div>
                             <div class="txt-info">
                                 <div class="desc">
@@ -108,6 +115,7 @@
                             </div>
                         </td>
                         <td class="price" width="10%">￥{{$row->price}} </td>
+                        <td class="price" width="10%">{{isset($row->product->id)&&$row->product->count()?"正常":"下架或者删除"}} </td>
                         <td class="num" width="10%">{{$row->num}}</td>
                         <td class="" sumrows="1" rowspan="1">
                             @if($row->shipping_status == 1)

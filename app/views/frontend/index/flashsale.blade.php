@@ -8,7 +8,7 @@
                 @foreach( $flashSale as $flash )
                 <li>
                     <dl>
-                        <dt><a href="{{url($flash->entity_id.'.html')}}"  target="_blank"  title="{{$flash->name}}" ><img src="{{ getImgSize( 'goods', $flash->entity_id, $flash->small_image ) }}"></a></dt>
+                        <dt><a href="{{url($flash->entity_id.'.html')}}"  target="_blank"  title="{{$flash->name}}" ><img src="{{ getImgSize( 'goods', $flash->entity_id, $flash->small_image, 210,210 ) }}"></a></dt>
                         <dd class="qiang_div_a"><a href="{{url($flash->entity_id.'.html')}}"  target="_blank"  title="{{$flash->name}}" >{{$flash->name}}</a></dd>
                         <dd class="qiang_div_gou flashtime">
                             <span><font>00&nbsp;:&nbsp;00&nbsp;:&nbsp;00</font>后结束</span>

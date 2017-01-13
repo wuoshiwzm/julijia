@@ -2,7 +2,7 @@
     <div id="vertical" class="bigImg">
         @foreach( $carousel as $key=>$car )
             @if( $key == 0)
-            <img src="{{ getImgSize( 'goods', $car->entity_id, $car->value ) }}" width="400" height="400" id="midimg" />
+            <img src="{{ getImgSize( 'goods', $car->entity_id, $car->value,430,430 ) }}" width="430" height="430" id="midimg" />
             @endif
         @endforeach
         <div style="display:none;" id="winSelector"></div>
@@ -12,7 +12,7 @@
         <div id="imageMenu">
             <ul>
                 @foreach( $carousel as $car )
-                <li><img src="{{ getImgSize( 'goods', $car->entity_id, $car->value ) }}" width="68" height="68" /></li>
+                <li><img src="{{ getImgSize( 'goods', $car->entity_id, $car->value,430,430 ) }}" width="68" height="68" /></li>
                 @endforeach
             </ul>
         </div>

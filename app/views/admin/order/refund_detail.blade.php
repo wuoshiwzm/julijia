@@ -37,24 +37,27 @@
                     <div class="order-goods">
                          <?php  $item =  $refund->item->first();?>
                         <div class="goodsPicBox pull-left m-r-10">
-                            <a href="##" target="_blank">
+                            <a href="/{{$item->product_id}}.html" target="_blank">
                                 <img src="{{ getImgSize( 'goods', $item->product_id, $item->product->small_image ) }}" class="goods-thumb">
                             </a>
                         </div>
                         <div class="ng-binding refund-message">
                             <div class="name">
-                                <a href="##" target="_blank">{{$refund->item->product_name}}</a>
+                                <a href="/{{$item->product_id}}.html" target="_blank">{{$refund->item->product_name}}</a>
                             </div>
 
                         </div>
                     </div>
                     <div class="refund-info">
-                        <dl></dl>
-                        <dt>
-                            <span >买家</span>：
-                        </dt>
-                        <dd>
-                        </dd>                                <span>{{$refund->user->real_name}}</span>
+                        <dl>
+                            <dt>
+                                <span >买家</span>：
+                            </dt>
+                            <dd>
+                                <span>{{$refund->user->real_name}}</span>
+                            </dd>
+                        </dl>
+
 
 
                         <dl>
@@ -83,7 +86,7 @@
                                 ：
                             </dt>
                             <dd>
-                                <span>￥{{$refund->shipping_fee}}</span>
+                                <span>￥{{($refund->shipping_fee !=NULL)?$refund->shipping_fee:'0'}}</span>
                             </dd>
                         </dl>
                     </div>
@@ -103,7 +106,7 @@
                                 ：
                             </dt>
                             <dd>
-                                <span>￥7.00 </span>
+                                <span>￥{{$refund->price}} </span>
                             </dd>
                         </dl>
                         <dl>
@@ -114,17 +117,16 @@
                             <dd>
                                 <span>
                                     @if ($refund->order->payment == 1)
-                                        退换到支付宝
+                                        退款到支付宝
                                     @elseif($refund->order->payment ==2)
-                                        退换到微信
+                                        退款到微信
                                     @endif
                                 </span>
                             </dd>
                         </dl>
                         <dl>
                             <dt>
-                                <span>退款原因</span>
-                                ：
+                                <span>退款原因</span>：
                             </dt>
                             <dd>
                                 <span>{{isset($refund->reason()->first()->value)?$refund->reason()->first()->value:''}}</span>
@@ -146,29 +148,19 @@
                 <div class="order-right">
                     <h3 style=" font-weight:bold;">退款服务</h3>
                     <div class="refund-operate">
-                        <ul>
-                            <li class="operate-steps">
-                                <i class="iconfont"></i>
-                                <span>退款单状态：买家已，等待平台退款</span>
-                            </li>
-                            <li class="operate-prompt">
-                                <input value="去退款" class="btn btn-primary modify" type="button">
-                            </li>
-                            <li class="operate-prompt">
-                                平台已经同意买家退款，款项原来退回
-                            </li>
-                        </ul>
+                        @include('admin.order.refund.status',array('refund'=>$refund))
                     </div>
 
                     <h3 style=" font-weight:bold;">凭 证</h3>
                     <div class="refund-operate">
                         <ul>
                             <li class="operate-steps pic_m_r">
-                                <img src="../images/010.jpg" class="goods-thumb"><img src="../images/011.jpg"
-                                                                                      class="goods-thumb"><img
-                                        src="../images/012.jpg" class="goods-thumb">
+                                @if($refund->image !=NULL)
+                                @foreach( json_decode($refund->image) as $img)
+                                <img src="{{$img}}" class="goods-thumb">
+                                @endforeach
+                                @endif
                             </li>
-
                         </ul>
                     </div>
 
@@ -184,42 +176,23 @@
                                             <td class="w200">
                                                 <a href="javascript:void(0)">
                                                     <dl class="dl_table">
-                                                        <dt><img src="../images/ad.jpg"></dt>
+                                                        <dt></dt>
                                                         <dd>{{$row->option_name}}</dd>
                                                         <br>
                                                     </dl>
                                                 </a>
                                             </td>
                                             <td class="w400">
-                                                客户提交退款，订单号14154145，商品：陕西皮影
+                                                {{$row->remark}}
                                             </td>
                                             <td>
-                                                时间：2016-10-12 09:00:00
+                                                时间：{{$row->created_at}}
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </li>
                             @endforeach
-
-                            <li class="operate-steps pic_m_r color_bg02">
-                                <table>
-                                    <tbody>
-                                    <!--订单内容-->
-                                    <tr class="order-item">
-                                        <td class="w200">
-                                            <a href="##" target="_blank" class="img_40">dingeng0509@11.com</a>
-                                        </td>
-                                        <td class="w400">
-                                            订单管理员
-                                        </td>
-                                        <td class="">
-                                            时间：2016-10-12 09:20:20
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </li>
                         </ul>
                     </div>
                 </div>

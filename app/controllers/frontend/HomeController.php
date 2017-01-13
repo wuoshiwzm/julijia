@@ -129,4 +129,21 @@ class HomeController extends \BaseController
         }
 
     }
+
+
+    /**
+     * 搜索列表
+     */
+    public function searchList()
+    {
+        $keyword = Input::get('keyword');
+        $Input = Input::all();
+        $data = Home::getSearchList( $Input, self::$cache );
+        $obj = new stdClass();
+        $obj->title = $keyword.'- 商品搜索 - 居利家';
+        $obj->keywords = $keyword;
+        $obj->description = '在居利家中找到了'.$data->count().'件'.$keyword.'的类似商品，其中包含了';
+        $seo = $obj;
+        return $this->view('frontend.list.search',compact( 'data','keyword','seo' ));
+    }
 }

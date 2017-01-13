@@ -25,7 +25,7 @@ class ConfigMemberController extends CommonController
             return Redirect::to('member/login');
         }
         $userInfo = Session::get('member');
-        View::share('userinfo',$userInfo);
+        View::share('userinfo', $userInfo);
 
         $this->user_id = $userInfo->id;
         $province = Source_Area_Province::get();
@@ -43,14 +43,14 @@ class ConfigMemberController extends CommonController
 
 
         $userInfo = User::getUserinfoById($this->user_id);
-         $addres['province'] = Source_Area_Province::where('provinceID',$userInfo->province)->first();
-         $addres['city'] = Source_Area_City::where('cityID',$userInfo->city)->first();
-         $citylist  = Source_Area_City::where('parent',$userInfo->province)->get();
-         $addres['area'] = Source_Area_Area::where('areaID',$userInfo->area)->first();
-          $arealist  = Source_Area_Area::where('parent',$userInfo->city)->get();
+        $addres['province'] = Source_Area_Province::where('provinceID', $userInfo->province)->first();
+        $addres['city'] = Source_Area_City::where('cityID', $userInfo->city)->first();
+        $citylist = Source_Area_City::where('parent', $userInfo->province)->get();
+        $addres['area'] = Source_Area_Area::where('areaID', $userInfo->area)->first();
+        $arealist = Source_Area_Area::where('parent', $userInfo->city)->get();
 
-        $userheader=Config::get('tools.imagePath').'/user/'.$userInfo->id.'/'.$userInfo->header;
-          return $this->view('member.config', compact('userInfo','addres','citylist','arealist','userheader'));
+        $userheader = Config::get('tools.imagePath') . '/user/' . $userInfo->id . '/' . $userInfo->header;
+        return $this->view('member.config', compact('userInfo', 'addres', 'citylist', 'arealist', 'userheader'));
 
     }
 
@@ -60,17 +60,17 @@ class ConfigMemberController extends CommonController
     public function store()
     {
 
-        if(csrf_token()==Input::get('_token')){
+        if (csrf_token() == Input::get('_token')) {
             $input = array_except(trimValue(Input::all()), ['_token']);
             $res = DB::transaction(function () use ($input) {
                 Source_User_UserInfo::where('id', $this->user_id)->update($input);
-                (new Upload())->uploadProductImage($this->user_id, Input::get('header'),'user');
+                (new Upload())->uploadProductImage($this->user_id, Input::get('header'), 'user');
             });
         }
         if (empty($res)) {
-            return Redirect::to('/member/config/index')->with('msg','更新成功');
-        }else{
-            return Redirect::to('/member/config/index')->with('msg','更新失败');
+            return Redirect::to('/member/config/index')->with('msg', '更新成功');
+        } else {
+            return Redirect::to('/member/config/index')->with('msg', '更新失败');
         }
 
     }
@@ -95,12 +95,12 @@ class ConfigMemberController extends CommonController
                 return Redirect::back()->with('msg', '原始密码错误');
 
             //更新密码
-            $res = Source_User_UserInfo::where('id',$this->user_id)
-            ->update([
-                'password'=>$passNew
-            ]);
+            $res = Source_User_UserInfo::where('id', $this->user_id)
+                ->update([
+                    'password' => $passNew
+                ]);
 
-            if (!$res){
+            if (!$res) {
                 return Redirect::back()->with('msg', '更新失败');
             }
 
@@ -157,19 +157,20 @@ class ConfigMemberController extends CommonController
 
     }
 
-    public function  UploadHeader(){
-        $name =  Input::get('path');
+    public function  UploadHeader()
+    {
+        $name = Input::get('path');
         (new Upload())->uploadProductImage(Session::get('member')->id, $name, 'user');
-        $user =  Source_User_UserInfo::find(Session::get('member')->id);
-        $user->header=$name;
-        $res =  $user->save();
+        $user = Source_User_UserInfo::find(Session::get('member')->id);
+        $user->header = $name;
+        $res = $user->save();
         $obj = new stdClass();
-        if($res){
-            $obj->path = Config::get('tools.imagePath').'/user/'.Session::get('member')->id.'/'.$name;
-            Cache::put('userheader',$name,'5000');
+        if ($res) {
+            $obj->path = Config::get('tools.imagePath') . '/user/' . Session::get('member')->id . '/' . $name;
+            Cache::put('userheader', $name, '5000');
             return json_encode($obj);
         }
-        $obj->path='0';
+        $obj->path = '0';
         return json_encode($obj);;
     }
 

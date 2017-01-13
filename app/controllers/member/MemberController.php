@@ -77,7 +77,7 @@ class MemberController extends \BaseController
 
             return Redirect::to($url);
         }
-        return Redirect::back()->with('msg', '登录失败')->withInput();
+        return Redirect::back()->with('msg', '用户名或者密码错误')->withInput();
     }
 
     function index()
@@ -102,7 +102,7 @@ class MemberController extends \BaseController
     {
         $input = Input::all();
         $smscode = Input::get('code');
-        if($smscode!=Session::get('smsCode')){
+        if ($smscode != Session::get('smsCode')) {
             return Redirect::back()->with('msg', '验证码不对')->withInput();
         }
 
@@ -125,7 +125,7 @@ class MemberController extends \BaseController
                 $user->update(array('last_time' => date('Y-m-d h:m:s'), 'last_ip' => clientIP()));
                 // 存入session
                 Session::put('member', $user);
-                Cache::put('userheader', $user->header,5000);
+                Cache::put('userheader', $user->header, 5000);
                 return Redirect::to('member');
             } else {
                 return Redirect::back()->with('msg', '注册失败')->withInput();
@@ -152,18 +152,49 @@ class MemberController extends \BaseController
      */
     function sendSms()
     {
-
         $input = trimValue(Input::all());
+        $phone = $input['phone'];
+        //session中没有任何短信内容 或者
+        if (empty(Session::get('sms'))) {
+            $code = sms::create_code();
+            $content = "居利家温馨提示:您注册验证码为：" . $code . "请勿向他人泄 露！";
+            $res = sms::SendSms($input['phone'], $content);
+            if ($res == 1) {
+                //存入session
+                $sms = [];
+                $smsNow['phone'] = $phone;
+                $smsNow['smsCode'] = $code;
+                $smsNow['smsCodeTime'] = time();
+                $sms[] = $smsNow;
+                Session::put('sms', $sms);
+                return '发送验证码成功';
+            } else {
+                return '发送验证码不成功！请重新获取！';
+            }
+        }
+
+        $sms = Session::get('sms');
+        foreach ($sms as $s) {
+            if (($phone == $s['phone']) && (time() - $s['smsCodeTime'] < 60)) {
+                return '1分钟内已经发送过验证码';
+            }
+        }
+
+        //通过验证
         $code = sms::create_code();
         $content = "居利家温馨提示:您注册验证码为：" . $code . "请勿向他人泄 露！";
-        $res = sms::SendSms($input['phone'], $content);
+        $res = sms::SendSms($phone, $content);
 
-        Session::put('smsCode', $code);
-        return  $code;
         if ($res == 1) {
+            //存入session
+            $smsNow['phone'] = $phone;
+            $smsNow['smsCode'] = $code;
+            $smsNow['smsCodeTime'] = time();
+
+            Session::push('sms', $smsNow);
             return '发送验证码成功';
         } else {
-            return '发送验证码！请重新获取！';
+            return '发送验证码不成功！请重新获取！';
         }
     }
 
@@ -174,22 +205,36 @@ class MemberController extends \BaseController
     {
         //确认此手机号码已经注册
         $input = trimValue(Input::all());
-
         $phone = $input['phone'];
         $user = Source_User_UserInfo::where('mobile_phone', $phone)->first();
+        if (empty($phone)) {
+            return '手机号码不正确！';
+        }
         if (empty($user)) {
             return '此手机号并未注册！';
+        }
+
+        //确认是否已经1分钟前发送过短信
+        $sms = Session::get('sms');
+        foreach ($sms as $s) {
+            if (($phone == $s['phone']) && (time() - $s['smsCodeTime'] < 60)) {
+                return '1分钟内已经发送过验证码';
+            }
         }
 
         $code = sms::create_code();
         $content = "居利家温馨提示:您注册验证码为：" . $code . "请勿向他人泄 露！";
         $res = sms::SendSms($input['phone'], $content);
 
-        Session::put('smsCode', $code);
+
         if ($res == 1) {
+            $smsNow['phone'] = $phone;
+            $smsNow['smsCode'] = $code;
+            $smsNow['smsCodeTime'] = time();
+            Session::push('sms', $smsNow);
             return '发送验证码成功';
         } else {
-            return '发送验证码！请重新获取！';
+            return '发送验证码失败！请重新获取！';
         }
     }
 
@@ -200,7 +245,7 @@ class MemberController extends \BaseController
     function checkSms()
     {
         //判断session中是否有smsCode的信息
-        if (!Session::has('smsCode')||Session::has('smsCode')!=Input::get('param')) {
+        if (!Session::has('smsCode') || Session::has('smsCode') != Input::get('param')) {
             //验证失败
             $res = [
                 'info' => '验证码错误',
@@ -275,7 +320,7 @@ class MemberController extends \BaseController
     {
         $sql = Source_User_UserInfo::where('name', Input::get('param'))->count();
 
-        if ($sql <=1) {
+        if ($sql <= 1) {
             $res = [
                 'info' => '该用户名可以使用',
                 'status' => 'y'
@@ -338,7 +383,7 @@ class MemberController extends \BaseController
     public function ajaxNameCheck()
     {
 
-        $sql = Source_User_UserInfo::where('name', Input::get('param'))->orwhere('mobile_phone',Input::get('param'))->count();
+        $sql = Source_User_UserInfo::where('name', Input::get('param'))->orwhere('mobile_phone', Input::get('param'))->count();
         if ($sql > 0) {
             $res = [
                 'info' => '验证成功',

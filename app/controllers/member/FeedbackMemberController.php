@@ -25,7 +25,7 @@ class FeedbackMemberController extends CommonController
             return Redirect::to('member/login');
         }
         $userInfo = Session::get('member');
-        View::share('userinfo',$userInfo);
+        View::share('userinfo', $userInfo);
 
         $this->user_id = $userInfo->id;
     }
@@ -44,29 +44,18 @@ class FeedbackMemberController extends CommonController
     {
         //当前对应的用户退款信息
         $data = Source_Feedback_FeedbackInfo::where('user_id', $this->user_id);
-//        $feedbackInfos = $data->get();
+        if (trim(Input::get('status'))) {
+            $data = $data->where('status', Input::get('status'));
+        }
+
+        if (trim(Input::get('feedbackId'))) {
+            $data = $data->where('feedback_sn', 'like', '%' . trim(Input::get('feedbackId')) . '%');
+        }
 
         //分页
         $setPage = Input::get('setpage') ? Input::get('setpage') : self::$memberPage;
         $data = $data->paginate($setPage);
         $set['setpage'] = $setPage;
-//
-//        foreach ($feedbackInfos as $feedback) {
-//            //商品名称
-//            $product = Source_Feedback_FeedbackInfo::find($feedback->id)->first()->item;
-//            $productName = $product?$product->product_name:'';
-//
-//            $reason = Source_Feedback_FeedbackInfo::find($feedback->id)->first()->reason;
-//            $reason = $reason?$reason->value:'';
-//            $feedback->productName = $productName;
-//            $feedback->reasonName = $reason;
-//        }
-
-        //搜索条件
-        if (!empty(Input::get('feedbackId')) || !empty(Input::get('feedbackType')) || !empty(Input::get('feedbackId'))) {
-            die('input here');
-        }
-
 
         return $this->view('member.feedback', compact('data', 'set'));
 
@@ -84,8 +73,8 @@ class FeedbackMemberController extends CommonController
         $orderId = decode(trim($orderId));
         $itemId = decode(trim($itemId));
 
-        $orderInfo = Source_Order_OrderInfo::where('id',$orderId)->first();
-        $orderItem = Source_Order_OrderItem::where('id',$itemId)->first();
+        $orderInfo = Source_Order_OrderInfo::where('id', $orderId)->first();
+        $orderItem = Source_Order_OrderItem::where('id', $itemId)->first();
 
         $reasons = Feedback::getAllReason();
         return $this->view('member.order.apply_feedback', compact('orderItem', 'orderInfo', 'reasons'));
@@ -130,12 +119,12 @@ class FeedbackMemberController extends CommonController
         // 上传多张图片并生成json
         $imgArr = explode(';', Input::get('feedback'));
 
-        foreach ($imgArr as $k=>&$i) {
-            if(empty($i)){
+        foreach ($imgArr as $k => &$i) {
+            if (empty($i)) {
                 unset($imgArr[$k]);
                 continue;
             }
-                $i = 'http://192.168.2.115:99/feedback/' . $orderId . '/' . $i;
+            $i = 'http://192.168.2.115:99/feedback/' . $orderId . '/' . $i;
         }
         $imgJson = json_encode($imgArr);
         $feedback['img'] = $imgJson;

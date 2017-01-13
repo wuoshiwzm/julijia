@@ -27,9 +27,10 @@
                     <label class="layui-form-label">评价等级</label>
                     <div class="layui-input-inline">
                         <select name="reviewClass">
-                            <option value="3">好评</option>
-                            <option value="2" selected="">中评</option>
-                            <option value="1">差评</option>
+                            <option  value="" @if($set['xingji'] =='' )  selected =selected @endif >请选择</option>
+                            <option value="3" @if($set['xingji'] ==3)  selected =selected @endif>好评</option>
+                            <option value="2"  @if($set['xingji'] ==2)  selected =selected @endif >中评</option>
+                            <option value="1"  @if($set['xingji'] ==1)  selected =selected @endif >差评</option>
                         </select>
                     </div>
                 </div>
@@ -66,7 +67,7 @@
                                             <img src="{{ getImgSize( 'goods', $feedback->item->product_id,  $feedback->item->product->small_image) }}">
                                            </a></dt>
 
-                                    <dd><a href="##" target="_blank">
+                                    <dd><a href="/{{$feedback->item->id}}.html" target="_blank">
                                             {{$feedback->item->product_name}}
                                         </a></dd>
                                 </dl>

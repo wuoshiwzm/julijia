@@ -1,7 +1,6 @@
 function sendSms() {
     var token = $("input[name='_token']").val();
     phone = $("#phone").val();
-
         $.post('/member/send_sms' , {_token: token,phone:phone}, function (msg) {
                 layer.msg(msg);
         }, "text");
@@ -13,10 +12,7 @@ function sendSms() {
 function sendReSms() {
     var token = $("input[name='_token']").val();
     phone = $("#phone").val();
-
-
-
-    $.post('/member/send_resms' , {_token: token,phone:phone}, function (msg) {
+   $.post('/member/send_resms' , {_token: token,phone:phone}, function (msg) {
         layer.msg(msg);
     }, "text");
 

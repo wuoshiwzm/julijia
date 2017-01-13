@@ -43,13 +43,12 @@
                                             <dt><a href="{{url($item->product_id.'.html')}}" target="_blank">
                                                     <img src="{{getImagesUrl('goods',$item->product_id,$item->product->small_image)}}">
                                                     width="60" height="60"></a></dt>
-                                            <dd><a href="##" target="_blank">{{$item->product_name}}</a>
+                                            <dd><a href="/{{$item->product_id}}.html" target="_blank">{{$item->product_name}}</a>
                                             </dd>
                                             <dd class="order_tab_color">
                                                 @if(isset($item->guige))
-                                                    @foreach (json_decode(stripslashes($item->guige)) as $name=>$guige)
-                                                        {{$name}}:{{$guige}}
-                                                        <br>
+                                                    @foreach (json_decode(($item->guige)) as $name=>$guige)
+                                                        {{$name}}:{{$guige}};
                                                     @endforeach
                                                 @endif
                                             </dd>
@@ -66,9 +65,9 @@
                                     </td>
                                     <td>¥<font class="price"> 0</font></td>
                                     <td class="operation ">
-                                        <a href="##" class="dele_d"
+                                        <a href="javascript:void(0)" class="dele_d"
                                            onclick="delItem({{"'".encode($item->id)."'"}})">删除</a>
-                                        <a href="##" class="margin_top"
+                                        <a href="javascript:void(0)" class="margin_top"
                                            onclick="collect({{"'".encode($item->id)."'"}})">移入收藏夹</a>
                                     </td>
                                 </tr>
@@ -76,8 +75,8 @@
                             <tr>
                                 <td><input type="checkbox" class="checkbox_checkall" width="30" checked="checked"></td>
                                 <td colspan="5" class="quan padding_left">
-                                    <a href="##">全选</a><a href="##" onclick="multiDelItem()">删除选中的商品</a>
-                                    <a href="##" onclick="multiCollect()">移入收藏夹</a>
+                                    <a href="javascript:void(0)">全选</a><a href="##" onclick="multiDelItem()">删除选中的商品</a>
+                                    <a href="javascript:void(0)" onclick="multiCollect()">移入收藏夹</a>
                                 </td>
                             </tr>
                         </table>
@@ -85,14 +84,14 @@
 
                             <div class="jiesuan_left">
                                 <dl>
-                                    <dt><a href="##" target="_blank">
+                                    <dt><a href="javascript:void(0) " target="_blank">
                                             <img src="{{asset('images/frontend/yhq.jpg')}}"
                                                  width="80" height="80"></a></dt>
                                     <dd class="order_btn">
                                         <input type="text" name="coupon" class="coupon layui-input"
-                                               autocomplete="off"   placeholder="请输入优惠码"></dd>
+                                               autocomplete="off"   placeholder="请输入优惠码" disabled="disabled"> </dd>
                                     <dd>
-                                        <button class="layui-btn layui-btn-primary">使用</button>
+                                        <input  type="button" class="layui-btn layui-btn-primary" onclick="layer.alert('功能暂未开通')"  value="使用"/>
                                     </dd>
                                 </dl>
                             </div>

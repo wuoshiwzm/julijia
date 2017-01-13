@@ -14,7 +14,7 @@
                 @foreach( $f['goods'] as $goods )
                 <li>
                     <dl>
-                        <dt><a href="{{url($goods->entity_id.'.html')}}"  target="_blank"  title="{{$goods->name}}" ><img src="{{ getImgSize( 'goods', $goods->entity_id, $goods->small_image ) }}"></a></dt>
+                        <dt><a href="{{url($goods->entity_id.'.html')}}"  target="_blank"  title="{{$goods->name}}" ><img src="{{ getImgSize( 'goods', $goods->entity_id, $goods->small_image,210,210 ) }}"></a></dt>
                         <dd class="qiang_div_a"><a href="{{url($goods->entity_id.'.html')}}"  target="_blank"  title="{{$goods->name}}" >{{$goods->name}}</a></dd>
                         <dd class="qiang_div_jia"><font>¥</font>{{$goods->price}}</dd>
                     </dl>

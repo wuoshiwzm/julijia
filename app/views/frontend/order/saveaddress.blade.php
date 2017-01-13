@@ -13,28 +13,35 @@
 <body>
 <form class="layui-form m-form adress_form" @if(isset($data)) action="{{url('order/editaddress')}}" @else action="{{url('order/saveaddress')}}" @endif method="post">
     <div class="layui-form-item">
-        <label class="layui-form-label"><span class="red">*</span>所在地区</label>
+        <label class="layui-form-label"><span class="red">*</span>选择省市区</label>
         <div class="layui-input-inline">
-            <select name="province" id="address6" lay-filter="province">
+            <select name="province" id="address" lay-filter="province" datatype="*|select">
                 <option value="">请选择省</option>
-                @foreach( $province as $val )
-                    <option value="{{$val->province}}">{{$val ->province}}</option>
-                @endforeach
+                @if(isset($data))
+                <option value="{{$data->province}}" selected="selected">{{$data->province}}</option>
+                @endif
             </select>
             <span class="Validform_checktip"></span>
         </div>
         <div class="layui-input-inline">
-            <select name="city" id="address1"  lay-filter="city">
+            <select name="city" id="address1" lay-filter="city" datatype="*|select">
                 <option value="">请选择市</option>
+                @if(isset($data))
+                    <option value="{{$data->city}}" selected="selected">{{$data->city}}</option>
+                @endif
             </select>
             <span class="Validform_checktip"></span>
         </div>
         <div class="layui-input-inline">
-            <select name="area" id="address2" lay-filter="area">
+            <select name="area" id="address2" lay-filter="area" datatype="*|select">
                 <option value="">请选择县/区</option>
+                @if(isset($data))
+                    <option value="{{$data->district}}" selected="selected">{{$data->district}}</option>
+                @endif
             </select>
             <span class="Validform_checktip"></span>
         </div>
+
     </div>
 
     <div class="layui-form-item">
@@ -96,7 +103,6 @@
 <script type="text/javascript" src="{{url('js/public/jquery/jquery-1.9.1.min.js')}}"></script>
 <script type="text/javascript" src="{{url('js/public/Validform/Validform_v5.3.2_min.js')}}"></script>
 <script type="text/javascript" src="{{url('js/public/layui/layui.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/public/location_pick/location_pick.js')}}"></script>
 <script>
     $(".m-form").Validform({
         btnSubmit: '#btn_submit',
@@ -136,5 +142,80 @@
             }
         });
     });
+
+    // set options for #address1 which is for province when page loaded
+    var token = $("input[name='_token']").val();
+    var $form;
+    var form;
+    $(function () {
+        loadProvince();
+    });
+    //使用layui处理弹框
+    layui.use(['jquery', 'form'], function () {
+        $ = layui.jquery;
+        form = layui.form();
+        $form = $('form');
+        //载入省份
+        form.on('select(province)', function (data) {
+            var city = data.value;
+            loadCity(city);
+        });
+        form.on('select(city)', function (data) {
+            var eare = data.value;
+            loadArea(eare);
+        })
+
+    });
+
+    function loadProvince() {
+        var phtml = '';
+        // $form.find('select[name=province]').empty();
+        $.post("/getProvince", {}, function (data) {
+            var data = $.parseJSON(data);
+            $.each(data, function (n, value) {
+                phtml += "<option value=" + value["province"] + " data-id="+value["provinceID"]+">" + value["province"] + "</option>";
+            });
+            $form.find('select[name=province]').append(phtml);
+            form.render('select');
+            form.on('select(province)', function (data) {
+                var citydata = $("#address option:selected").attr('data-id');
+                loadCity(citydata);
+            })
+        });
+    }
+    function loadCity(citydata) {
+        var phtml = '<option value="0">请选择市区</option>';
+        $form.find('select[name=city]').empty();
+        loadArea(0);
+        $.post("/getCity", {province: citydata}, function (data) {
+            var data = $.parseJSON(data);
+            $.each(data, function (n, value) {
+                phtml += "<option value=" + value["city"] + " data-id="+value["cityID"]+">" + value["city"] + "</option>"
+            });
+            $form.find('select[name=city]').append(phtml);
+            form.render('select');
+            form.on('select(city)', function (data) {
+                var areaata = $("#address1 option:selected").attr('data-id');
+                loadArea(areaata);
+            })
+        });
+    }
+
+    function loadArea(areaata) {
+        var phtml = '<option value="0">请选择区/县</option>';
+        $form.find('select[name=area]').empty();
+        if(areaata ==0){
+            $form.find('select[name=area]').append(phtml);
+        }
+        $.post("/getArea", {city: areaata}, function (data) {
+            var data = $.parseJSON(data);
+            $.each(data, function (n, value) {
+                //clear the select options then add the new info
+                phtml += "<option value=" + value["area"] + ">" + value["area"] + "</option>"
+            });
+            $form.find('select[name=area]').append(phtml);
+            form.render('select');
+        });
+    }
 </script>
 </html>

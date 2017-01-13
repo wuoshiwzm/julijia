@@ -123,6 +123,20 @@ class AlipayController extends \BaseController
             $orderAction->option_name = $orderInfo->ship_name;
             $orderAction->remark = '订单支付完成'.$data['out_trade_no'];
             $orderAction->save();
+            //修改产品库存
+            $Item = Source_Order_OrderItem::where('order_id',$orderInfo->id)->select('product_id','num')->get();
+            foreach ( $Item as $i )
+            {
+                $ProductFlat = Source_Product_ProductFlat::where('entity_id',$i->product_id)->select('kc_qty')->first();
+                $ProductFlat->kc_qty = (int)($ProductFlat->kc_qty-$i->num);
+                $ProductFlat->save();
+
+                $Stock = Source_Product_ProductEntityStock::where('entity_id',$i->product_id)->select('stock')->first();
+                $Stock->stock = (int)($Stock->stock-$i->num);
+                $Stock->save();
+            }
+            //清理缓存
+            Event::fire('admin.operational.data',array(1));
         });
 
         if ( is_null($result) )

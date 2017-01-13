@@ -70,7 +70,14 @@ class AuctionBuyController extends \BaseController
     public function auctionBuyNow()
     {
         $data = Input::all();
-        $goodsData = AuctionBuy::buyNow( $data );
+        $pid = decode( $data['pid'] );
+        $productInfo = Source_Product_ProductFlat::where(['entity_id'=>$pid,'status'=>1])->first();
+        //判断库存的真实性
+        if( $productInfo->kc_qty < (int)$data['num'] )
+        {
+            return Redirect::back();
+        }
+        $goodsData = AuctionBuy::buyNow( $data,$productInfo);
         //产品信息
         $goods = $goodsData['goods'];
         //合计信息
@@ -92,7 +99,14 @@ class AuctionBuyController extends \BaseController
             return Redirect::back();
         }
         $order_sn = date('YmdHis').rand(100000,999999);
-        $goodsData = AuctionBuy::buyNow( $data );
+        $pid = decode( $data['pid'] );
+        $productInfo = Source_Product_ProductFlat::where(['entity_id'=>$pid,'status'=>1])->first();
+        //判断库存的真实性
+        if( $productInfo->kc_qty < (int)$data['num'] )
+        {
+            return Redirect::back();
+        }
+        $goodsData = AuctionBuy::buyNow( $data, $productInfo );
         $res = AuctionBuy::orderSave( $goodsData, $data, $order_sn );
         if( $res == false )
         {
@@ -275,7 +289,7 @@ class AuctionBuyController extends \BaseController
 
         }else
         {
-
+            Session::put('cartCount', 0);
             $return_url = Input::getUriForPath('/pay/return');
             $notify_url = Input::getUriForPath('/pay/notify');
             $gateway = Omnipay::create('Alipay_Express');

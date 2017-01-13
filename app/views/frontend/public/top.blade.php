@@ -28,7 +28,7 @@
     </div>
     <div class="top-content">
         <div class="m-logo">
-            <a href="{{url()}}"><img src="{{url('images/frontend/logo03.png')}}"/></a>
+            <a href="{{url()}}"><img src="{{getConfig('core', 'website_logo')}}"/></a>
             <h1>养老商城</h1>
         </div>
         <!-- 搜索 -->
@@ -51,7 +51,8 @@
             </div>
             <div class="er_che">
                 <div class="er_che_di">
-                    <font>{{$cart}}</font><a @if( $user ) href="{{url('member/cart')}}" @else  href="javascript:;" @endif >我的购物车</a>
+                    <font>{{$cart}}</font>
+                    <a @if( $user ) href="{{url('member/cart')}}" @else  href="javascript:;" @endif >我的购物车</a>
                 </div>
             </div>
         </div>

@@ -25,28 +25,18 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">投诉编号</label>
                     <div class="layui-input-inline w150">
-                        <input type="text" name="title" placeholder="投诉编号" autocomplete="off" class="layui-input w40b ">
+                        <input type="text" name="feedbackId" placeholder="投诉编号" autocomplete="off" class="layui-input w40b ">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">投诉类型</label>
                     <div class="layui-input-inline w150">
-                        <select name="quiz1">
-                            <option value="全部" selected="">全部</option>
-                            <option value="买家提交投诉，等待卖家确认">已提交，待平台确认</option>
-                            <option value="处理中">处理中</option>
-                            <option value="投诉撤销">投诉撤销</option>
-                            <option value="投诉已处理">投诉已处理</option>
+                        <select name="status">
+                            <option value="" selected="">全部</option>
+                            <option value="1">平台未确认</option>
+                            <option value="2">平台已确认</option>
                         </select>
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">投诉时间</label>
-                    <div class="layui-input-inline w150">
-                        <input class="layui-input " placeholder="选择时间"
-                               onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                     </div>
                 </div>
 
@@ -75,7 +65,7 @@
                         @if($feedback->item)
                         <tr>
                             <td>{{$feedback->feedback_sn}}</td>
-                            <td>{{$feedback->order_id}}</td>
+                            <td>{{$feedback->order->order_sn}}</td>
 
 
                             <td>
