@@ -39,10 +39,10 @@
                     <div class="layui-input-block">
 
                         <input type="text" class="layui-input w40b f_left"
-                               placeholder="原始密码" autocomplete="off"
+                               placeholder="请输入原始密码" autocomplete="off"
                                datatype="*" name="pass_origin"
                                ajaxurl="/member/config/pass/check"
-                               errormsg="原始密码" tipsrmsg="原始密码"/>
+                               errormsg="原始密码错误" tipsrmsg="请输入原始密码"/>
                         <span class="Validform_checktip"></span>
                     </div>
                 </div>
@@ -52,9 +52,9 @@
                     <div class="layui-input-block">
 
                         <input type="password" class="layui-input w40b f_left"
-                               placeholder="新密码" autocomplete="off"
+                               placeholder="请输入新密码" autocomplete="off"
                                datatype="*" name="pass_new"
-                               errormsg="新密码" tipsrmsg="新密码"/>
+                               errormsg="请输入新密码" tipsrmsg="请输入新密码"/>
                         <span class="Validform_checktip"></span>
                     </div>
                 </div>
@@ -64,10 +64,10 @@
                     <div class="layui-input-block">
 
                         <input type="password" class="layui-input w40b f_left"
-                               placeholder="确认密码" autocomplete="off"
+                               placeholder="请输入确认密码" autocomplete="off"
                                datatype="*"
                                recheck="pass_new" name="pass_new"
-                               errormsg="确认密码必须一致" tipsrmsg="确认密码"/>
+                               errormsg="确认密码必须与新密码一致" tipsrmsg="请输入确认密码"/>
                         <span class="Validform_checktip"></span>
                     </div>
                 </div>

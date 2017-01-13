@@ -50,19 +50,23 @@ class ReviewMemberController extends CommonController
                             <option value="2" selected="">中评</option>
                             <option value="1">差评</option>
         */
+        $set['xingji'] ='';
         if (!empty(Input::get('reviewClass'))) {
             $class = Input::get('reviewClass');
             switch($class){
                 case 1:
                     $data = $data->where('leavel',1);
+                    $set['xingji'] =1;
                     break;
                 case 2:
                     $data = $data->where('leavel',2)
                     ->orwhere('leavel',3);
+                    $set['xingji'] =2;
                     break;
                 case 3:
                     $data = $data->where('leavel',4)
                         ->orwhere('leavel',5);
+                    $set['xingji'] =3;
                     break;
             }
         }

@@ -49,7 +49,9 @@ class FeedbackMemberController extends CommonController
         }
 
         if (trim(Input::get('feedbackId'))) {
-            $data = $data->where('feedback_sn', 'like', '%' . trim(Input::get('feedbackId')) . '%');
+            $feedbackId = trim(Input::get('feedbackId'));
+            if($feedbackId == '%'){$feedbackId = '\''.$feedbackId;}
+            $data = $data->where('feedback_sn', 'like', '%' . $feedbackId . '%');
         }
 
         //分页

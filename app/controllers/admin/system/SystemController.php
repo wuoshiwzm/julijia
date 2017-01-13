@@ -27,11 +27,15 @@ class SystemController extends CommonController
     public function  postCofnig(){
 
            $data  = Input::get();
-           if( isset($data)){
+           if( isset($data))
+           {
                $model   =  new  System();
                $res = $model->SaveConfig($data);
            }
-        if($res){
+        if($res)
+        {
+            //清理缓存
+            Event::fire('admin.operational.data',array(7));
             return Redirect::to('/admin/system/config')->with('msg', '编辑成功');
         }else{
             return Redirect::to('/admin/system/config')->with('msg', '编辑失败');

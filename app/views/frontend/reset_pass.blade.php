@@ -1,4 +1,4 @@
-@section('title','用户注册')
+@section('title','密码重置')
 @section('categoryCss','banner_nav02')
 @section('css')
     {{--    <link type="text/css" rel="stylesheet" href="{{asset('css/images/icon.png')}}">--}}

@@ -27,7 +27,7 @@
 
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
-                                {{$user->name}}</label>
+                                {{$user->name?$user->name:'暂无'}}</label>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
 
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
-                                {{$user->alias}}</label>
+                                {{$user->alias?$user->alias:'暂无'}}</label>
                         </div>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
 
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
-                                {{$user->email}}</label>
+                                {{$user->email?$user->email:'暂无'}}</label>
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
 
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
-                                {{$user->mobile_phone}}
+                                {{$user->mobile_phone?$user->mobile_phone:'暂无'}}
                             </label>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
 
                         <div class="col-sm-8">
                             <label class="control-label cur-p m-r-10">
-                                {{$user->user_points}}</label>
+                                {{$user->user_points?$user->user_points:'暂无'}}</label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -129,7 +129,8 @@
                         </label>
 
                         <div class="col-sm-8">
-                            <label class="control-label cur-p m-r-10">{{$group_name}}</label>
+                            <label class="control-label cur-p m-r-10">
+                                {{$group_name?$group_name:'暂无'}}</label>
                         </div>
                     </div>
                 </div>

@@ -24,6 +24,7 @@ class RankMemberController extends CommonController
             return Redirect::to('member/login');
         }
         $userInfo = Session::get('member');
+        View::share('userinfo',$userInfo);
         $this->user_id = $userInfo->id;
     }
 

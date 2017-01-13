@@ -104,16 +104,16 @@
                                         <label class="layui-form-label"><span class="red">*</span>打 分</label>
                                         <div class="layui-input-block box_163css">
                                             <ul class="star_ul fl">
-                                                <li><a class="one-star" title="很差" star=1 href="#"></a></li>
-                                                <li><a class="two-star" title="差" star=2 href="#"></a></li>
-                                                <li><a class="three-star" title="还行" star=3 href="#"></a></li>
-                                                <li><a class="four-star" title="好" star=4 href="#"></a></li>
-                                                <li><a class="five-star" title="很好" star=5 href="#"></a></li>
+                                                <li><a class="one-star " title="很差" star=1 href="#"></a></li>
+                                                <li><a class="two-star " title="差" star=2 href="#"></a></li>
+                                                <li><a class="three-star " title="还行" star=3 href="#"></a></li>
+                                                <li><a class="four-star " title="好" star=4 href="#"></a></li>
+                                                <li><a class="five-star " title="很好" star=5 href="#"></a></li>
                                             </ul>
                                             <span class="s_result fl" style="color: rgb(51, 51, 51);"
                                                   name="test">请打分</span>
                                             <input type="hidden"  name="leavel" class="star_result"
-                                                   datatype="*" errormsg="请选择等级" tipsrmsg="请输入评价">
+                                                   datatype="*" errormsg="请选择等级" tipsrmsg="请输入评价" index="">
                                             <label class="Validform_checktip"></label>
                                         </div>
                                     </div>
@@ -149,6 +149,7 @@
 
 
 @stop
+
 @section('js')
 
 
@@ -159,20 +160,32 @@
         });
 
         $(function () {
-            $('.star_ul a').click(function () {
 
-                $(this).addClass('activeactive-star');
-                $('.s_result').css('color', '#c00').html($(this).attr('title'));
-                $('.star_result').val($(this).attr('star'));
-            });
+            $('.star_ul').find('a').each(function () {
+                 $(this).mouseenter(function () {
+                     $(this).addClass('active-star');
+                 });
+                $(this).mouseout(function () {
+                    $(this).removeClass('active-star');
+                    var a=$(".star_result").attr('index');
+                    $('.star_ul').find('a:gt(a)').removeClass('active-star');
+                });
+                $(this).click(function () {
 
-            $('.star_ul a').hover(function () {
-                $(this).addClass('active-star');
-                $('.s_result').css('color', '#c00').html($(this).attr('title'));
-            }, function () {
-                $(this).removeClass('active-star');
-                $('.s_result').css('color', '#333').html('请打分');
-            });
+                    $('.star_ul a').removeClass('active-star');
+                    $(this).mouseout(function () {
+                        $(this).addClass('active-star');
+                        $('.s_result').css('color', '#333').html('请打分');
+                    });
+                    $(this).mouseout(function () {
+                        $(this).addClass('active-star');
+                    });
+                    $(".star_result").val($(this).attr('star'));
+                    $(".star_result").attr('index',$('.star_ul').find('a').index(this)+1);
+
+                });
+            })
+
 
         })
     </script>

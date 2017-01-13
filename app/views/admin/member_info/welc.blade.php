@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <?php  //dd(Auth::user()); ?>
+
         <div class="order-info m-b-10">
             <!--概要信息-->
             <div class="order-details">
@@ -21,24 +21,26 @@
                 <div class="content">
                     <dl>
                         <dt>&nbsp;用&nbsp;户&nbsp;名：</dt>
-                        <dd>{{$welc->name}}</dd>
+                        <dd>{{$welc->name?$welc->name:'暂无'}}</dd>
                     </dl>
                     <dl>
                         <dt>性&nbsp;别：</dt>
                         <dd><?php if ($welc->sex == 1) {
                                 echo '男';
-                            } else {
+                            } elseif ($welc->sex == 0){
                                 echo '女';
+                            }else{
+                                echo '暂无';
                             }?></dd>
                     </dl>
                     <dl>
                         <dt>Email：</dt>
-                        <dd>{{$welc->email}}</dd>
+                        <dd>{{$welc->email?$welc->email:'暂无'}}</dd>
                     </dl>
                     <dl>
 
                         <dt>最后一次登录：</dt>
-                        <dd>{{$welc->last_time}}</dd>
+                        <dd>{{$welc->last_time?$welc->last_time:'暂无'}}</dd>
                     </dl>
                     <dl>
                         <dt>账号来源：</dt>

@@ -1,20 +1,57 @@
+<?php
+    $newUrl = $_SERVER["QUERY_STRING"];
+    if( $newUrl )
+    {
+        $strUrl = $newUrl;
+        if( strrpos($newUrl,'page=') )
+        {
+            if( substr( $newUrl,0,strrpos($newUrl,'page=')) == false )
+            {
+                $page = Input::get('page')?'&page='.Input::get('page'):'';
+                $strUrl = $screen['url'].$page;
+            }
+        }
+    }else
+    {
+        $page = Input::get('page')?'&page='.Input::get('page'):'';
+        $strUrl = $screen['url'].$page;
+    }
+    $price = Input::get('sort_price');
+    $created = Input::get('created_at');
+    if( $price == 'desc' )
+    {
+        $pv = 'asc';
+    }else
+    {
+        $pv = 'desc';
+    }
+    if( $created == 'desc' )
+    {
+        $created_at = 'asc';
+    }else
+    {
+        $created_at = 'desc';
+    }
+?>
 <div class="chanpin_left">
     <div class="chanpin_left_pai">
         <ul class="order-list">
-            <li><a href="JavaScript:;" >推荐</a></li>
-            <li><a href="JavaScript:;" >新品</a></li>
-            <?php
-            $price = Input::get('s');
-            if( $price == 'desc' )
-            {
-                $pv = 'asc';
-            }else
-            {
-                $pv = 'desc';
-            }
-            ?>
+            <li @if(Input::get('tuijian'))  class="active" @endif >
+                <a @if( isset($screen['url']) ) href="{{ getScreenUrl( $strUrl, 'tuijian', Input::get('tuijian')?0:1 ) }}" @else href="{{ getScreenUrl( '', 'tuijian', Input::get('tuijian')?0:1 )}}" @endif>推荐</a>
+            </li>
             <li>
-                <a @if( isset($screen['url']) ) href="{{ getScreenUrl( $screen['url'], 's', $pv ) }}" @else href="{{ getScreenUrl( '', 's', $pv )}}" @endif>价格
+                <a @if( isset($screen['url']) ) href="{{ getScreenUrl( $strUrl, 'created_at', $created_at ) }}" @else href="{{ getScreenUrl( '', 'created_at', $created_at )}}" @endif>新品
+                    @if( $created == false )
+                        <em class="bus11"></em>
+                    @elseif( $created == 'desc' )
+                        <em class="bus2"></em>
+                    @elseif( $created == 'asc' )
+                        <em class="bus22"></em>
+                    @endif
+                </a>
+            </li>
+            <li>
+                <a @if( isset($screen['url']) ) href="{{ getScreenUrl( $screen['url'], 'sort_price', $pv ) }}" @else href="{{ getScreenUrl( '', 'sort_price', $pv )}}" @endif>价格
                     @if( $price == false )
                     <em class="bus11"></em>
                     @elseif( $price == 'desc' )
@@ -51,7 +88,7 @@
     <!-- 分页 -->
     @if( $data->getTotal()  )
     <div id="pagination">
-        {{$data->appends(setUrlToArray(Request::getQueryString()))->links()}}
+        {{$data->appends(setUrlToArray($strUrl))->links()}}
         <div class="pagination-info">
             共<font>{{$data->getTotal()}}</font>条
         </div>

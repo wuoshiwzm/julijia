@@ -39,18 +39,26 @@ class ProductController extends CommonController
 				$sql->where('name','like',"%".$name."%" );
 			}
 		}
+		$attbuteset = trim(Input::get('attbuteset'));
+		if(!empty($attbuteset)|| $attbuteset !=''){
+
+			$sql->where('attribute_set_id' ,$attbuteset);
+		}
+
 		//分类
 		$category_id = trim(Input::get('category_id'));
 		if( $category_id )
 		{
 			$sql->where('category_id', $category_id );
 		}
+
 		$setPage = Input::get('setpage')?Input::get('setpage'):self::$adminPage;
 		$data = $sql->paginate($setPage);
 		$set['status'] = $status;
 		$set['name'] = $name;
 		$set['category_id'] = $category_id;
 		$set['setpage'] = $setPage;
+		$set['attbuteset'] = $attbuteset;
 		$category = ProductCategory::getTree( Source_Product_ProductCategory::orderBy('sort','desc')->get(), 0 );
 		$this->view('admin.product.index',compact('data','set','category'));
 	}
@@ -83,6 +91,8 @@ class ProductController extends CommonController
 		if ( $res )
 		{
 			//添加成功
+			//清理缓存
+			Event::fire('admin.operational.data',array(1));
 			return Redirect::to('/admin/product/goodsimg/'.$eID.'?attribute_set_id='.$Input['attribute_set_id']);
 
 		}else
@@ -126,6 +136,8 @@ class ProductController extends CommonController
 		if ( $res )
 		{
 			//修改成功
+			//清理缓存
+			Event::fire('admin.operational.data',array(1));
 			return Redirect::to('/admin/product/goods?status=0');
 
 		}else
@@ -150,6 +162,8 @@ class ProductController extends CommonController
 			$row = Product::delGoods( $id );
 			if( $row )
 			{
+				//清理缓存
+				Event::fire('admin.operational.data',array(1));
 				$obj = new stdClass();
 				$obj->ststus = 0;
 				$obj->msg = '删除成功';
@@ -224,6 +238,8 @@ class ProductController extends CommonController
 		if( is_null( $result ) )
 		{
 		    Event::fire('product.changeStatus',array(Input::get('entity_id'),Input::get('status')));
+			//清理缓存
+			Event::fire('admin.operational.data',array(1));
 			$obj = new stdClass();
 			$obj->ststus = 0;
 			$obj->msg = '操作成功';
@@ -259,6 +275,8 @@ class ProductController extends CommonController
 		$status = $status?0:1;
 		if( is_null( $result ) )
 		{
+			//清理缓存
+			Event::fire('admin.operational.data',array(1));
 			return Redirect::to('/admin/product/goods?status='.$status)->with('msg','操作成功');
 		}else
 		{

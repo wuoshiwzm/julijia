@@ -53,6 +53,8 @@ class ProductBrandController extends CommonController
             $res = ProductBrand::addBrand( $Input );
             if ( $res )
             {
+                //清理缓存
+                Event::fire('admin.operational.data',array(3));
                 //添加成功
                 return Redirect::to('admin/product/brand')->with('msg','添加成功');
 
@@ -98,6 +100,8 @@ class ProductBrandController extends CommonController
             $res = ProductBrand::editBrand( $Input, $id  );
             if ( $res )
             {
+                //清理缓存
+                Event::fire('admin.operational.data',array(3));
                 //修改成功
                 return Redirect::to('admin/product/brand')->with('msg','修改成功');
 
@@ -135,6 +139,8 @@ class ProductBrandController extends CommonController
             }
             if( $res->delete() )
             {
+                //清理缓存
+                Event::fire('admin.operational.data',array(3));
                 //删除上传的图片
                 (new Upload())->delDir( 'brand', $id );
                 $obj = new stdClass();

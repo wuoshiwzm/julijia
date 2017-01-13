@@ -7,12 +7,13 @@
 
 @section('admincss')
     <style>
-         .layui-input{
+        .layui-input {
             width: 70% !important;
         }
-         .admin_form .w80b{
-             width: 73% !important;
-         }
+
+        .admin_form .w80b {
+            width: 73% !important;
+        }
     </style>
 @stop
 
@@ -30,9 +31,15 @@
             </div>
 
             <?php
-            $province = Source_Area_Province::where('province', $addrEdit->province)->first();
-            $city = Source_Area_City::where('city', $addrEdit->city)->where('parent',$province->provinceID)->first();
-            $district = Source_Area_Area::where('area', $addrEdit->district)->where('parent', $city->cityID)->first();
+            //                dd(!empty($addrEdit->province));
+            if (!empty($addrEdit->province) && !empty($addrEdit->city) && !empty($addrEdit->district)) {
+
+                $province = Source_Area_Province::where('province', $addrEdit->province)->first();
+                $city = Source_Area_City::where('city', $addrEdit->city)->where('parent', $province->provinceID)->first();
+                $district = Source_Area_Area::where('area', $addrEdit->district)->where('parent', $city->cityID)->first();
+
+            }
+
             ?>
 
 
@@ -45,21 +52,34 @@
                     <label class="layui-form-label"><span class="red">*</span>选择省市区</label>
                     <div class="layui-input-inline">
                         <select name="province" id="address" lay-filter="province">
-                            <option value="{{$province->provinceID}}" selected="selected">{{$province->province}}</option>
-
+                            @if(!empty($addrEdit->province) && !empty($addrEdit->city) && !empty($addrEdit->district))
+                                <option value="{{$province->provinceID}}"
+                                        selected="selected">{{$province->province}}</option>
+                            @else
+                                <option value="">请选择省</option>
+                            @endif
                         </select>
                     </div>
                     <div class="layui-input-inline">
                         <select name="city" id="address1" lay-filter="city">
-                            <option value="{{$city->cityID}}" selected="selected">{{$city->city}}</option>
+                            @if(!empty($addrEdit->province) && !empty($addrEdit->city) && !empty($addrEdit->district))
+                                <option value="{{$city->cityID}}" selected="selected">{{$city->city}}</option>
+                            @else
+                                <option value="">请选择市</option>
+                            @endif
                         </select>
                     </div>
                     <div class="layui-input-inline">
                         <select name="area" id="address2" lay-filter="area">
-                            <option value="{{$district->areaID}}" selected="selected">{{$district->area}}</option>
+                            @if(!empty($addrEdit->province) && !empty($addrEdit->city) && !empty($addrEdit->district))
+                                <option value="{{$district->areaID}}" selected="selected">{{$district->area}}</option>
+                            @else
+                                <option value="">请选择县/区</option>
+                            @endif
                         </select>
                     </div>
                 </div>
+
 
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="red">*</span>详细地址</label>
@@ -100,6 +120,18 @@
                     </div>
                 </div>
 
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮政编码</label>
+                    <div class="layui-input-block">
+
+                        <input type="text" class="layui-input w80b f_left "
+                               placeholder="填写具体邮政编码" autocomplete="off"
+                               datatype="n6-6" name="zipcode" ignore="ignore"
+                               errormsg="邮政编码格式错误" tipsrmsg="请填写邮政编码"
+                               value="{{$addrEdit->zipcode}}"/>
+                        <span class="Validform_checktip"></span>
+                    </div>
+                </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">电话</label>

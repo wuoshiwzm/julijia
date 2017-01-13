@@ -72,7 +72,9 @@ class HomeController extends \BaseController
 
         }else
         {
-            $screen = false;
+            $arr['data'] = [];
+            $arr['url'] = 'p=&tuijian=&created_at=&sort_price=';
+            $screen = $arr;
         }
         //获取参数
         $parameter = Request::getQueryString();

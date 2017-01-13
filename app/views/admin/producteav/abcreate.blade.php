@@ -31,7 +31,7 @@
                     </label>
                     <div class="col-sm-8">
                         <div class="form-control-box">
-                            <input type="text"  name="name" class="form-control valid" datatype="/^[a-z]{3,20}$/" tipsrmsg="请输入3-20位英文字母" errormsg="3-20位英文字母">
+                            <input type="text"  name="name" class="form-control valid" datatype="/^[a-z_]{3,20}$/" tipsrmsg="请输入3-20位英文字母" errormsg="3-20位英文字母，可以包含下划线">
                             <span class="Validform_checktip"></span>
                         </div>
                     </div>

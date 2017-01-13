@@ -1,3 +1,22 @@
+<?php
+    $newUrl = $_SERVER["QUERY_STRING"];
+    if( $newUrl )
+    {
+        $strUrl = $newUrl;
+        if( strrpos($newUrl,'page=') )
+        {
+            if( substr( $newUrl,0,strrpos($newUrl,'page=')) == false )
+            {
+                $page = Input::get('page')?'&page='.Input::get('page'):'';
+                $strUrl = $screen['url'].$page;
+            }
+        }
+    }else
+    {
+        $page = Input::get('page')?'&page='.Input::get('page'):'';
+        $strUrl = $screen['url'].$page;
+    }
+?>
 <div class="banner_list">
     <!-- 菜单分类 -->
     <div class="area_shu">
@@ -12,7 +31,7 @@
                     <ul class="nav_all">
                         @foreach( $brand as $b )
                             @if( isset($b->screenCategoryToBrand->name))
-                            <li class="brand"><a title="{{$b->screenCategoryToBrand->name}}" @if( isset($screen['url']) ) href="{{ getScreenUrl( $screen['url'], 'b', $b->brand_id ) }}" @else href="{{ getScreenUrl( '', 'b', $b->brand_id )}}" @endif>{{$b->screenCategoryToBrand->name}}</a></li>
+                            <li class="brand"><a title="{{$b->screenCategoryToBrand->name}}" @if( isset($screen['url']) ) href="{{ getScreenUrl( $strUrl, 'p', $b->brand_id ) }}" @else href="{{ getScreenUrl( '', 'p', $b->brand_id )}}" @endif>{{$b->screenCategoryToBrand->name}}</a></li>
                             @endif
                         @endforeach
                     </ul>
@@ -25,7 +44,7 @@
                     <div class="option_b">{{$sc->name}}：</div>
                     <ul class="nav_all">
                         @foreach( $sc->value as $v )
-                        <li class="{{$v->tilte}}"><a title="{{$v->value}}" href="{{ getScreenUrl( $screen['url'], $v->tilte, $v->value ) }}">{{$v->value}}</a></li>
+                        <li class="{{$v->tilte}}"><a title="{{$v->value}}" href="{{ getScreenUrl( $strUrl, $v->tilte, $v->value ) }}">{{$v->value}}</a></li>
                         @endforeach
                     </ul>
                 </div>

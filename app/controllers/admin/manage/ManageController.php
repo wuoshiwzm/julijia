@@ -14,7 +14,7 @@ class ManageController extends  CommonController
      */
     public function  getIndex()
     {
-        //$user =  Source_User_AdminUser::where("account","admin")->restore();
+        //$user =  Source_User_AdminUser::where("user_id",">","0")->restore();
         //每页显示个数
         $setPage = (int)Input::get("setpage",self::$adminPage);
         $keyword = trim(Input::get("keyword"));
@@ -134,7 +134,7 @@ class ManageController extends  CommonController
             $user_id =(int)Input::get("user_id");
             $password = encode(trim(Input::get("password")));
             //修改密码操作
-            if ($user_id != 0 ) {
+            if ($user_id != 0 || empty($password)) {
                 $user_admin = Source_User_AdminUser::find($user_id);
                 $user_admin->password = $password;
                 $user_admin->save();

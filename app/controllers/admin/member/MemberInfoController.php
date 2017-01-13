@@ -36,11 +36,14 @@ class MemberInfoController extends CommonController
 
 
         $userinfos = Source_User_UserInfo::orderBy('id', 'desc');
+
         /*dd($userinfos->count());*/
         $setPage = Input::get('setpage') ? Input::get('setpage') : self::$adminPage;
 
         if (Input::get('keyword')) {
-            $keyword = trim(Input::get('keyword'));
+            $keyword = addslashes(trim(Input::get('keyword')));
+            if($keyword == '%'){$keyword = '\''.$keyword;}
+//            dd($keyword);
             $userinfos = $userinfos->where('name', 'like', '%' . $keyword . '%')
                 ->orWhere('email', 'like', '%' . $keyword . '%')
                 ->orWhere('office_phone', 'like', '%' . $keyword . '%')
@@ -78,7 +81,7 @@ class MemberInfoController extends CommonController
     function welc($user_id)
     {
         //用户详细信息
-        $welc = User::getUserinfoById($user_id);
+        $welc = Source_User_UserInfo::find($user_id);
         //用户组信息
         $group = User::getGroup($user_id);
 
@@ -205,7 +208,6 @@ class MemberInfoController extends CommonController
     {
         $data = Source_User_UserInfo::orderBy('id')->get();
     }
-
 
 
 }

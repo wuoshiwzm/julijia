@@ -165,7 +165,7 @@ class User
         if (!$addrInfo) {
             $province = '未填写';
             $city = '无城市信息';
-            $district = '无无地区信息';
+            $district = '无地区信息';
             return [
                 'province' => $province,
                 'city' => $city,

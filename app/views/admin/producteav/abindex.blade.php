@@ -69,7 +69,7 @@
                 <td>{{$row->valid_rule}}</td>
                 <td>{{$row->created_at}}</td>
                 <td class="handle">
-                    @if( $row->is_system == 0 )
+                    @if( $row->is_system == 0 || $row->is_system == 1)
                     <a href="{{url('admin/product/attribute_edit?id=').encode($row->id)}}">编辑</a>&nbsp;&nbsp;
                     <a href="javascript:;" class="dele_d"  onclick="delAttribute({{"'".encode($row->id)."'"}})">删除</a>
                     @endif

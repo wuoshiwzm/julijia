@@ -43,7 +43,9 @@
 
                 <div class="simple-form-field">
                     <input type="submit" id="btn_search" value="查询" class="btn btn-primary m-r-5">
-                    <a href="{{url('admin/member/download_user_list')}}" > <input type="button" id="btn_search" value="导出" class="btn btn-primary m-r-5"></a>
+                    <a href="{{url('admin/member/download_user_list')}}"> <input type="button" id="btn_search"
+                                                                                 value="导出"
+                                                                                 class="btn btn-primary m-r-5"></a>
                 </div>
             </form>
         </div>
@@ -113,9 +115,20 @@
                                     {{--<span>折扣:9.5折</span>--}}
                                 </div>
                             </td>
-                            <td>{{isset($info->order)?$info->order->count():'0'}}笔</td>
+                            <td>{{$info->order->count()}}笔</td>
                             <td>
-                                {{$info->orderLasttime}}
+                                <?php
+
+                                $order = Source_Order_OrderInfo::where('user_id', $info->id)
+                                        ->orderBy('created_at')->first();
+                                if (!empty($order)) {
+                                    echo $order->created_at;
+                                }else{
+                                    echo '无交易';
+                                }
+
+                                ?>
+
                             </td>
                             <td class="handle">
                                 <a href="{{url('admin/member/welc/'.$info->id)}}">详情</a>
@@ -123,12 +136,33 @@
                         </tr>
 
                     @endforeach
+                    @else
+                    <tr>
+
+                        <td>
+                            无数据
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td> </td>
+                        <td>
+
+                        </td>
+                        <td class="handle">
+
+                        </td>
+                        </tr>
+
                 @endif
                 </tbody>
 
             </table>
 
-             @include('admin.public.page',array('data'=>$data,'set'=>$set))
+            @include('admin.public.page',array('data'=>$data,'set'=>$set))
 
 
         </div>

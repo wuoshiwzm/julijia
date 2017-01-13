@@ -138,7 +138,7 @@
                                     @foreach( $jrow as $t=>$td )
                                     <td>
                                         @if( $t=='p' )
-                                            <input name="p[]" class="form-control w90" type="text" value="{{$td}}"> / 件
+                                            <input name="p[]" class="form-control w90" type="text"  maxlength="6" value="{{$td}}"> / 件
                                         @elseif( $t=='v' )
                                             <input name="p[]"  type="hidden" value="{{$td}}">
                                         @else

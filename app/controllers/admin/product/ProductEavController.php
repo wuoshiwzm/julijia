@@ -168,7 +168,8 @@ class ProductEavController extends CommonController
 	 */
 	public function attributeIndex()
 	{
-		$sql = Source_Eav_Attrbute::where('is_system',0)->orderBy('is_system','asc');
+		//$sql = Source_Eav_Attrbute::where('is_system',0)->orderBy('is_system','asc');
+		$sql = Source_Eav_Attrbute::orderBy('is_system','asc');
 		$name = trim(Input::get('name'));
 		if( $name )
 		{
@@ -207,6 +208,8 @@ class ProductEavController extends CommonController
 			$res = ProductEav::addAb( $Input );
 			if ( $res )
 			{
+				//清理缓存
+				Event::fire('admin.operational.data',array(4));
 				//添加成功
 				return Redirect::to('admin/product/attribute_index')->with('msg','添加成功');
 
@@ -250,6 +253,8 @@ class ProductEavController extends CommonController
 			}
 			if( $res->delete() )
 			{
+				//清理缓存
+				Event::fire('admin.operational.data',array(4));
 				$res->ButeToButeValue()->delete();
 				//删除上传的图片
 				(new Upload())->delDir( 'attribute', $id );
@@ -290,6 +295,8 @@ class ProductEavController extends CommonController
 			$res = ProductEav::editAb( $data, $id  );
 			if ( $res )
 			{
+				//清理缓存
+				Event::fire('admin.operational.data',array(4));
 				//修改成功
 				return Redirect::to('admin/product/attribute_index')->with('msg','修改成功');
 

@@ -31,6 +31,7 @@ class CartMemberController extends \BaseController
     {
         $this->userId = Session::get('member')->id;
         $this->items = Cart::getContent()->get();
+
         parent::__construct();
 
 
@@ -117,6 +118,8 @@ class CartMemberController extends \BaseController
         $res = Cart::remove($rowId);
 
         if ($res) {
+            $count = Cart::getContent()->count();
+            Session::put('cartCount',$count);
             $obj = new stdClass();
             $obj->status = 0;
             $obj->msg = '删除成功';
@@ -553,6 +556,8 @@ class CartMemberController extends \BaseController
         //收藏内已经有此商品
         if(Source_User_UserInfoCollect::where('entity_id',$item->product_id)->count()){
             Source_Cart_CartItem::where('id', $id)->delete();
+            $count = Cart::getContent()->count();
+            Session::put('cartCount',$count);
             return 'true';
         }
 
