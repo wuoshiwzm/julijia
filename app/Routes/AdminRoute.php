@@ -53,6 +53,7 @@ Route::controller('comment', 'CommentController');
 Route::controller('complain', 'ComplainController');
 //发货控制器
 Route::controller('deliver', 'DeliverController');
+//Route::controller('frefund', 'FrefundController');
 
 
 //系统管理配置器
@@ -128,9 +129,12 @@ Route::controller('suite', 'SuiteController');
 
 //广告管理
 Route::controller('ads', 'AdsController');
-Route::controller('cms', 'CmsController');
 //测试控制器
 Route::controller('test', 'TestController');
 //友情链接
-//  Route::controller('link', 'LinkController');
+Route::controller('link', 'LinkController');
+Route::get('cms/page', 'PageController@PageList');
+Route::any('cms/page/addpage', 'PageController@AddPage');
+Route::any('cms/page/delpage', 'PageController@DelPage');
+Route::any('cms/page/savepage', 'PageController@PageSave');
 
